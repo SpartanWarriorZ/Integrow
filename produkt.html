@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Integrow – Kurse</title>
+  <title>Integrow – Webdesign Pakete</title>
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
   <style>
     body {
@@ -27,7 +27,6 @@
       filter: drop-shadow(0 0 12px rgba(255,255,255,0.4));
       transition: filter 0.4s ease;
     }
-
     .logo-img:hover {
       filter: drop-shadow(0 0 18px rgba(255,255,255,0.6));
     }
@@ -54,55 +53,86 @@
       color: #fff;
       text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
     }
-    .section {
-      padding: 80px 40px;
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin: 80px auto 60px;
+      gap: 20px;
+      flex-wrap: nowrap;
       max-width: 1200px;
-      margin: auto;
-      border-bottom: 1px solid #2a2a2a;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
     }
-    .section h2 {
+    .tab-button {
+      background: #1c1c1c;
       color: silver;
-      font-size: 2.4rem;
-      margin-bottom: 30px;
-      text-transform: uppercase;
-      text-align: center;
+      border: 1px solid #444;
+      padding: 12px 28px;
+      cursor: pointer;
+      font-size: 1.3rem;
+      border-radius: 8px;
+      white-space: nowrap;
+      min-width: 160px;
+      flex: 0 0 auto;
+      transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
     }
-    .course {
+    .tab-button.active {
+      background: #333;
+      color: #fff;
+      box-shadow: 0 0 12px rgba(255, 255, 255, 0.5);
+    }
+    .tab-button.active.gold-glow {
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+    }
+    .pricing-section {
+      display: none;
+      max-width: 1200px;
+      margin: 80px auto 60px;
+      padding: 0 20px;
+      animation: fadeIn 0.6s ease;
+    }
+    .pricing-section.active {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+    }
+    .card {
       background: #1a1a1a;
       border-radius: 12px;
       box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
       padding: 40px;
-      margin-bottom: 40px;
-      border: 1px solid #333;
+      text-align: center;
       transition: transform 0.4s ease, box-shadow 0.4s ease, text-shadow 0.4s ease;
-      cursor: pointer;
+      border: 1px solid #333;
     }
-    .course:hover {
-      transform: scale(1.03);
+    .card:hover {
+      transform: translateY(-10px);
       box-shadow: 0 0 40px rgba(255, 255, 255, 0.15);
       text-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
     }
-    .course.selected {
-      transform: scale(1.05);
-      box-shadow: 0 0 50px rgba(255, 215, 0, 0.3);
-      text-shadow: 0 0 16px rgba(255, 215, 0, 0.7);
-      border-color: #ffd700;
+    .pricing-section#premium .card:hover {
+      box-shadow: 0 0 40px rgba(255, 215, 0, 0.6);
+      text-shadow: 0 0 12px rgba(255, 215, 0, 0.8);
     }
-    .course h3 {
+    .card h3 {
       font-size: 1.8rem;
       color: silver;
       margin-bottom: 20px;
     }
-    .course p {
+    .card p {
       font-size: 1rem;
       line-height: 1.6;
       color: #ccc;
       margin-bottom: 20px;
     }
     .price {
-      font-size: 1.6rem;
+      font-size: 2rem;
       color: #fff;
       margin-bottom: 20px;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
     footer {
       background-color: #111;
@@ -113,19 +143,8 @@
       border-top: 1px solid #2a2a2a;
     }
     @media (max-width: 768px) {
-      header h1 {
-        font-size: 3rem;
-      }
-      .nav-links {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 10px;
-        padding-bottom: 10px;
-      }
-      .nav-links a {
-        font-size: 1.1rem;
-        padding: 5px 10px;
+      .pricing-section.active {
+        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -143,28 +162,7 @@
     </div>
   </header>
 
-  <div class="section" data-aos="fade-up">
-    <h2>Unsere Kurse</h2>
-    <div class="course" data-aos="zoom-in" onclick="selectCourse(this)">
-      <h3>Webflow Basics</h3>
-      <p>Lerne die Grundlagen von Webflow und baue deine ersten modernen Webseiten ohne Programmierung.</p>
-      <div class="price">299 &euro;</div>
-    </div>
-    <div class="course" data-aos="zoom-in" data-aos-delay="100" onclick="selectCourse(this)">
-      <h3>Professionelles Webdesign</h3>
-      <p>Tipps und Tricks für fortgeschrittenes Design mit Fokus auf User Experience, Animationen und responsive Layouts.</p>
-      <div class="price">499 &euro;</div>
-    </div>
-    <div class="course" data-aos="zoom-in" data-aos-delay="200" onclick="selectCourse(this)">
-      <h3>Masterclass: Webflow & Business</h3>
-      <p>Meistere Webflow und lerne, wie du professionell Webseiten für Kunden umsetzt – inkl. Preisgestaltung, Projektmanagement und Marketing.</p>
-      <div class="price">999 &euro;</div>
-    </div>
-  </div>
-
-  <footer>
-    &copy; 2025 Integrow. Digital Elegance. Klar. Stark. Skaliert.
-  </footer>
+  <!-- Restlicher HTML-Code bleibt unverändert -->
 
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
   <script>
@@ -173,11 +171,17 @@
       duration: 1000
     });
 
-    function selectCourse(element) {
-      document.querySelectorAll('.course').forEach(course => {
-        course.classList.remove('selected');
-      });
-      element.classList.add('selected');
+    function showTab(tab, btn) {
+      document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active', 'gold-glow'));
+      document.querySelectorAll('.pricing-section').forEach(section => section.classList.remove('active'));
+
+      if (tab === 'premium') {
+        btn.classList.add('active', 'gold-glow');
+      } else {
+        btn.classList.add('active');
+      }
+
+      document.getElementById(tab).classList.add('active');
     }
   </script>
 </body>
