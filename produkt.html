@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Integrow – Webdesign Pakete</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #0a0a0a;
+      color: #e0e0e0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom right, #0a0a0a, #1c1c1c);
+    }
+    header {
+      padding: 80px 40px 60px;
+      background: linear-gradient(to right, #1c1c1c, #000);
+      text-align: center;
+      border-bottom: 1px solid #444;
+      box-shadow: 0 0 40px rgba(192,192,192,0.1);
+    }
+    .logo {
+      display: inline-block;
+      width: 160px;
+      height: 160px;
+      margin-bottom: 20px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #d8d8d8, #a8a8a8);
+      box-shadow: 0 0 35px rgba(255,255,255,0.4);
+      font-size: 48px;
+      font-weight: bold;
+      color: #0a0a0a;
+      line-height: 160px;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+    header h1 {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 4.5rem;
+      color: #c0c0c0;
+      margin-bottom: 10px;
+      letter-spacing: 2px;
+      text-shadow: 0 0 6px #ffffff, 0 0 12px #ffffff;
+      -webkit-text-stroke: 1px black;
+    }
+    .nav-links {
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+      gap: 50px;
+      z-index: 1000;
+      position: relative;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      color: silver;
+      text-decoration: none;
+      font-size: 1.4rem;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 600;
+      letter-spacing: 1px;
+      transition: color 0.3s ease, text-shadow 0.3s ease;
+      position: relative;
+    }
+    .nav-links a:hover {
+      color: #fff;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    }
+    .section {
+      padding: 80px 40px;
+      max-width: 1200px;
+      margin: auto;
+      border-bottom: 1px solid #2a2a2a;
+    }
+    .section h2 {
+      color: silver;
+      font-size: 2.4rem;
+      margin-bottom: 30px;
+      text-transform: uppercase;
+      text-align: center;
+    }
+    .pricing {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+    .card {
+      background: #1a1a1a;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+      padding: 40px;
+      width: 300px;
+      text-align: center;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      border: 1px solid #333;
+    }
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 0 40px rgba(255, 255, 255, 0.15);
+    }
+    .card h3 {
+      font-size: 1.8rem;
+      color: silver;
+      margin-bottom: 20px;
+    }
+    .card p {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #ccc;
+      margin-bottom: 20px;
+    }
+    .price {
+      font-size: 2rem;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+    .cta button {
+      background: linear-gradient(to right, #d8d8d8, #a8a8a8);
+      color: #000;
+      border: none;
+      padding: 12px 28px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: 0.3s ease;
+    }
+    .cta button:hover {
+      background: linear-gradient(to right, #ffffff, #bfbfbf);
+    }
+    footer {
+      background-color: #111;
+      text-align: center;
+      padding: 40px 20px;
+      color: #777;
+      font-size: 1rem;
+      border-top: 1px solid #2a2a2a;
+    }
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 3rem;
+      }
+      .nav-links {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        padding-bottom: 10px;
+      }
+      .nav-links a {
+        font-size: 1.1rem;
+        padding: 5px 10px;
+      }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <div class="logo">IG</div>
+    <h1>Integrow</h1>
+    <div class="nav-links">
+      <a href="index.html">Startseite</a>
+      <a href="produkt.html">Produkt</a>
+      <a href="kurse.html">Kurse</a>
+      <a href="support.html">Support</a>
+      <a href="impressum.html">Impressum</a>
+    </div>
+  </header>
+
+  <div class="section">
+    <h2>Webdesign Pakete</h2>
+    <div class="pricing">
+      <div class="card">
+        <h3>Starter</h3>
+        <p>1 Seite, mobil optimiert<br>Kontaktformular</p>
+        <div class="price">799 &euro;</div>
+        <div class="cta">
+          <button>Jetzt anfragen</button>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Business</h3>
+        <p>bis 5 Seiten<br>mobil optimiert, SEO-Basics<br>Chatbot-Integration</p>
+        <div class="price">1.499 &euro;</div>
+        <div class="cta">
+          <button>Jetzt anfragen</button>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Premium</h3>
+        <p>bis 10 Seiten, Blog<br>SEO-Profi, erweiterter Chatbot<br>Content-Strategie</p>
+        <div class="price">2.499 &euro;</div>
+        <div class="cta">
+          <button>Jetzt anfragen</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 Integrow. Digital Elegance. Klar. Stark. Skaliert.
+  </footer>
+</body>
+</html>
