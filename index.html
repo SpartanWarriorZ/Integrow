@@ -13,54 +13,42 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: linear-gradient(to bottom right, #0a0a0a, #1c1c1c);
     }
- header {
-  padding: 100px 20px 60px;
-  text-align: center;
-  border-bottom: 1px solid #444;
-  box-shadow: 0 0 50px rgba(192,192,192,0.1);
-  background: radial-gradient(circle at center, #1c1c1c 0%, #0a0a0a 100%);
-}
-
-.logo-img {
-  max-width: 180px;
-  height: auto;
-  margin-bottom: 20px;
-  filter: drop-shadow(0 0 12px rgba(255,255,255,0.4));
-  transition: filter 0.4s ease;
-}
-
-.logo-img:hover {
-  filter: drop-shadow(0 0 18px rgba(255,255,255,0.6));
-}
-
-.slogan {
-  font-size: 1.8rem;
-  color: #bbb;
-  letter-spacing: 1px;
-  font-weight: 400;
-  text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
-}
-
-nav {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  flex-wrap: wrap;
-  margin-top: 40px;
-}
-
-nav a {
-  color: silver;
-  text-decoration: none;
-  font-size: 1.2rem;
-  font-weight: 600;
-  transition: color 0.3s ease, text-shadow 0.3s ease;
-}
-
-nav a:hover {
-  color: #fff;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-}
+    header {
+      padding: 80px 40px 60px;
+      background: linear-gradient(to right, #1c1c1c, #000);
+      text-align: center;
+      border-bottom: 1px solid #444;
+      box-shadow: 0 0 40px rgba(192,192,192,0.1);
+    }
+    .logo-img {
+      max-width: 220px;
+      height: auto;
+      margin-bottom: 20px;
+      filter: drop-shadow(0 0 12px rgba(255,255,255,0.4));
+      transition: filter 0.4s ease;
+    }
+    .logo-img:hover {
+      filter: drop-shadow(0 0 18px rgba(255,255,255,0.6));
+    }
+    .nav-links {
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+      gap: 50px;
+      z-index: 1000;
+      position: relative;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      color: silver;
+      text-decoration: none;
+      font-size: 1.4rem;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 600;
+      letter-spacing: 1px;
+      transition: color 0.3s ease, text-shadow 0.3s ease;
+      position: relative;
+    }
     .nav-links a:hover {
       color: #fff;
       text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
@@ -185,16 +173,15 @@ nav a:hover {
 </head>
 <body>
   <header data-aos="fade-down">
-  <img src="DB5A56C2-6537-412D-94B5-4C1A72DA5F3C.png" alt="Integrow Logo" class="logo-img" />
-  <div class="slogan">Wir skalieren Marken durch digitale Lösungen</div>
-  <nav>
-    <a href="index.html">Startseite</a>
-    <a href="produkt.html">Produkt</a>
-    <a href="kurse.html">Kurse</a>
-    <a href="support.html">Support</a>
-    <a href="impressum.html">Impressum</a>
-  </nav>
-</header>
+    <img src="19D09352-8C16-4AD7-9FA7-28DECA2C1410.png" alt="Integrow Logo" class="logo-img" />
+    <div class="nav-links">
+      <a href="index.html">Startseite</a>
+      <a href="produkt.html">Produkt</a>
+      <a href="kurse.html">Kurse</a>
+      <a href="support.html">Support</a>
+      <a href="impressum.html">Impressum</a>
+    </div>
+  </header>
 
   <div class="section" data-aos="fade-up">
     <h2>Unsere Mission</h2>
