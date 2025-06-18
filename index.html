@@ -143,10 +143,28 @@
       font-size: 1rem;
       border-top: 1px solid #2a2a2a;
     }
+    .leistungen-list {
+      font-size: 1.4rem;
+      line-height: 1.8;
+      color: #e0e0e0;
+      max-width: 800px;
+      margin: 0 auto;
+      padding-top: 20px;
+      border-top: 1px solid #444;
+    }
+    .leistungen-list ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .leistungen-list li {
+      margin-bottom: 12px;
+    }
+    .leistungen-list li::before {
+      content: "✔ ";
+      color: silver;
+    }
     @media (max-width: 768px) {
-      header h1 {
-        font-size: 3rem;
-      }
       .nav-links {
         flex-direction: row;
         flex-wrap: wrap;
@@ -217,12 +235,14 @@
 
   <div class="section" data-aos="fade-up">
     <h2>Unsere Leistungen</h2>
-    <p style="font-size: 1.4rem; line-height: 1.8; color: #e0e0e0; max-width: 800px; margin: 0 auto; padding-top: 20px; border-top: 1px solid #444;">
-      ✔ Individuelles Webdesign je nach Kundenwunsch<br>
-      ✔ Integration leistungsstarker KI-Chatbots<br>
-      ✔ Automatisierte Vertriebs- & Kommunikationsprozesse<br>
-      ✔ Technische Beratung & dauerhafte Betreuung
-    </p>
+    <div class="leistungen-list">
+      <ul>
+        <li>Individuelles Webdesign je nach Kundenwunsch</li>
+        <li>Integration leistungsstarker KI-Chatbots</li>
+        <li>Automatisierte Vertriebs- & Kommunikationsprozesse</li>
+        <li>Technische Beratung & dauerhafte Betreuung</li>
+      </ul>
+    </div>
   </div>
 
   <div class="cta" data-aos="zoom-in">
