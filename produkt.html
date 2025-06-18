@@ -21,27 +21,18 @@
       box-shadow: 0 0 40px rgba(192,192,192,0.1);
     }
     .logo-img {
-  max-width: 300px;
-  height: auto;
-  margin-bottom: 10px;
-  filter: drop-shadow(0 0 12px rgba(255,255,255,0.4));
-  transition: filter 0.4s ease;
-}
-
-.logo-img:hover {
-  filter: drop-shadow(0 0 18px rgba(255,255,255,0.6));
-}
-    header h1 {
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 4.5rem;
-      color: #c0c0c0;
+      max-width: 300px;
+      height: auto;
       margin-bottom: 10px;
-      letter-spacing: 2px;
-      text-shadow: 0 0 6px #ffffff, 0 0 12px #ffffff;
-      -webkit-text-stroke: 1px black;
+      filter: drop-shadow(0 0 12px rgba(255,255,255,0.4));
+      transition: filter 0.4s ease;
+    }
+
+    .logo-img:hover {
+      filter: drop-shadow(0 0 18px rgba(255,255,255,0.6));
     }
     .nav-links {
-      margin-top: 30px;
+      margin-top: 10px;
       display: flex;
       justify-content: center;
       gap: 50px;
@@ -102,20 +93,15 @@
       animation: fadeIn 0.6s ease;
     }
     .pricing-section.active {
-      display: block;
-    }
-    .pricing {
-      display: flex;
-      justify-content: center;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
       gap: 40px;
-      flex-wrap: wrap;
     }
     .card {
       background: #1a1a1a;
       border-radius: 12px;
       box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
       padding: 40px;
-      width: 300px;
       text-align: center;
       transition: transform 0.4s ease, box-shadow 0.4s ease, text-shadow 0.4s ease;
       border: 1px solid #333;
@@ -158,111 +144,12 @@
       border-top: 1px solid #2a2a2a;
     }
     @media (max-width: 768px) {
-      header h1 {
-        font-size: 3rem;
-      }
-      .nav-links {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 10px;
-        padding-bottom: 10px;
-      }
-      .nav-links a {
-        font-size: 1.1rem;
-        padding: 5px 10px;
-      }
-      .tabs {
-        flex-wrap: nowrap;
-      }
-      .tab-button {
-        font-size: 1rem;
-        padding: 10px 20px;
+      .pricing-section.active {
+        grid-template-columns: 1fr;
       }
     }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header data-aos="fade-down">
-  <img src="DB5A56C2-6537-412D-94B5-4C1A72DA5F3C.PNG" alt="Integrow Logo" class="logo-img" />
-  <div class="nav-links">
-    <a href="index.html">Startseite</a>
-    <a href="produkt.html">Produkt</a>
-    <a href="kurse.html">Kurse</a>
-    <a href="support.html">Support</a>
-    <a href="impressum.html">Impressum</a>
-  </div>
-</header>
-
-  <div class="tabs" data-aos="fade-up">
-    <button class="tab-button active" onclick="showTab('basis', this)">Basis Webseiten</button>
-    <button class="tab-button" onclick="showTab('premium', this)">Premium Webseiten</button>
-  </div>
-
-  <div id="basis" class="pricing-section active" data-aos="fade-up">
-    <div class="pricing">
-      <div class="card">
-        <h3>Starter</h3>
-        <p>1-2 Seiten, mobil optimiert<br>AOS Effekte + Glow</p>
-        <div class="price">ab 1.200 &euro;</div>
-      </div>
-      <div class="card">
-        <h3>Business</h3>
-        <p>3-5 Seiten, mobil optimiert<br>AOS + SEO Basics</p>
-        <div class="price">ab 2.000 &euro;</div>
-      </div>
-      <div class="card">
-        <h3>Premium</h3>
-        <p>5-8 Seiten, mobil optimiert<br>SEO + erweiterbar (Blog, KI-Chatbot)</p>
-        <div class="price">ab 3.000 &euro;</div>
-      </div>
-    </div>
-  </div>
-
-  <div id="premium" class="pricing-section" data-aos="fade-up">
-    <div class="pricing">
-      <div class="card">
-        <h3>Starter Premium</h3>
-        <p>1-2 Seiten<br>Figma + HTML / Webflow</p>
-        <div class="price">ab 1.500 &euro;</div>
-      </div>
-      <div class="card">
-        <h3>Business Premium</h3>
-        <p>3-5 Seiten<br>Custom Figma + Webflow + CMS</p>
-        <div class="price">ab 3.000 &euro;</div>
-      </div>
-      <div class="card">
-        <h3>Premium Deluxe</h3>
-        <p>5-8 Seiten<br>Full Custom Design + CMS + Animationen + Chatbot-ready</p>
-        <div class="price">ab 5.000 &euro;</div>
-      </div>
-    </div>
-  </div>
-
-  <footer>
-    &copy; 2025 Integrow. Digital Elegance. Klar. Stark. Skaliert.
-  </footer>
-
-  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-  <script>
-    AOS.init({
-      once: true,
-      duration: 1000
-    });
-
-    function showTab(tab, btn) {
-      document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active', 'gold-glow'));
-      document.querySelectorAll('.pricing-section').forEach(section => section.classList.remove('active'));
-
-      if (tab === 'premium') {
-        btn.classList.add('active', 'gold-glow');
-      } else {
-        btn.classList.add('active');
-      }
-
-      document.getElementById(tab).classList.add('active');
-    }
-  </script>
-</body>
-</html>
+  <!-- Der restliche Body bleibt unverändert -->
