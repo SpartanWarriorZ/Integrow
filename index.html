@@ -159,10 +159,14 @@
     }
     .leistungen-list li {
       margin-bottom: 12px;
+      display: flex;
+      align-items: flex-start;
     }
     .leistungen-list li::before {
       content: "✔ ";
       color: silver;
+      flex-shrink: 0;
+      margin-right: 8px;
     }
     @media (max-width: 768px) {
       .nav-links {
