@@ -75,6 +75,7 @@
       flex-wrap: nowrap;
       max-width: 1200px;
       overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
     }
     .tab-button {
       background: #1c1c1c;
@@ -85,6 +86,8 @@
       font-size: 1.3rem;
       border-radius: 8px;
       white-space: nowrap;
+      min-width: 160px;
+      flex: 0 0 auto;
       transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
     }
     .tab-button.active {
