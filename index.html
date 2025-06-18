@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Integrow – Startseite</title>
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      background-color: #0a0a0a;
+      color: #e0e0e0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom right, #0a0a0a, #1c1c1c);
+    }
+    header {
+      padding: 80px 40px 60px;
+      background: linear-gradient(to right, #1c1c1c, #000);
+      text-align: center;
+      border-bottom: 1px solid #444;
+      box-shadow: 0 0 40px rgba(192,192,192,0.1);
+    }
+    .logo {
+      display: inline-block;
+      width: 160px;
+      height: 160px;
+      margin-bottom: 20px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #d8d8d8, #a8a8a8);
+      box-shadow: 0 0 35px rgba(255,255,255,0.4);
+      font-size: 48px;
+      font-weight: bold;
+      color: #0a0a0a;
+      line-height: 160px;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+    header h1 {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 4.5rem;
+      color: #c0c0c0;
+      margin-bottom: 10px;
+      letter-spacing: 2px;
+      text-shadow: 0 0 6px #ffffff, 0 0 12px #ffffff;
+      -webkit-text-stroke: 1px black;
+    }
+    .nav-links {
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+      gap: 50px;
+      z-index: 1000;
+      position: relative;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      color: silver;
+      text-decoration: none;
+      font-size: 1.4rem;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 600;
+      letter-spacing: 1px;
+      transition: color 0.3s ease, text-shadow 0.3s ease;
+      position: relative;
+    }
+    .nav-links a:hover {
+      color: #fff;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    }
+    .section {
+      padding: 80px 40px;
+      max-width: 1200px;
+      margin: auto;
+      border-bottom: 1px solid #2a2a2a;
+    }
+    .section h2 {
+      color: silver;
+      font-size: 2.4rem;
+      margin-bottom: 30px;
+      text-transform: uppercase;
+      text-align: center;
+    }
+    .feature {
+      display: flex;
+      align-items: center;
+      margin-bottom: 60px;
+      gap: 40px;
+      flex-wrap: wrap;
+      transition: box-shadow 0.4s ease;
+    }
+    .feature img {
+      width: 340px;
+      height: auto;
+      border-radius: 16px;
+      border: none;
+      box-shadow: 0 0 50px rgba(192, 192, 192, 0.4);
+      clip-path: inset(0 round 16px);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+    .feature img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 70px rgba(255, 255, 255, 0.6);
+    }
+    .feature:hover .feature-text {
+      text-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
+    }
+    .feature-text {
+      flex: 1;
+      min-width: 260px;
+      transition: text-shadow 0.4s ease;
+    }
+    .feature-text h3 {
+      color: silver;
+      font-size: 1.8rem;
+      margin-bottom: 12px;
+    }
+    .feature-text p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: #ccc;
+    }
+    .cta {
+      background: radial-gradient(circle, #1a1a1a 0%, #0d0d0d 100%);
+      text-align: center;
+      padding: 80px 20px;
+      box-shadow: inset 0 0 60px rgba(192,192,192,0.05);
+    }
+    .cta h2 {
+      font-size: 2.5rem;
+      color: silver;
+      margin-bottom: 10px;
+    }
+    .cta p {
+      color: #aaa;
+      font-size: 1.2rem;
+    }
+    .cta button {
+      margin-top: 30px;
+      background: linear-gradient(to right, #d8d8d8, #a8a8a8);
+      color: #000;
+      border: none;
+      padding: 16px 36px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: 0.3s ease;
+    }
+    .cta button:hover {
+      background: linear-gradient(to right, #ffffff, #bfbfbf);
+    }
+    footer {
+      background-color: #111;
+      text-align: center;
+      padding: 40px 20px;
+      color: #777;
+      font-size: 1rem;
+      border-top: 1px solid #2a2a2a;
+    }
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 3rem;
+      }
+      .nav-links {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        padding-bottom: 10px;
+      }
+      .nav-links a {
+        font-size: 1.1rem;
+        padding: 5px 10px;
+      }
+      .feature {
+        flex-direction: column;
+        text-align: center;
+      }
+      .feature img {
+        width: 90%;
+        display: block;
+        margin: 0 auto 20px;
+      }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header data-aos="fade-down">
+    <div class="logo">IG</div>
+    <h1>Integrow</h1>
+    <div class="nav-links">
+      <a href="index.html">Startseite</a>
+      <a href="produkt.html">Produkt</a>
+      <a href="kurse.html">Kurse</a>
+      <a href="support.html">Support</a>
+      <a href="impressum.html">Impressum</a>
+    </div>
+  </header>
+
+  <div class="section" data-aos="fade-up">
+    <h2>Unsere Mission</h2>
+    <div class="feature" data-aos="fade-up">
+      <img src="Photo 1.jpg" alt="Markenaufbau">
+      <div class="feature-text">
+        <h3>Markenaufbau & Wachstum</h3>
+        <p>Wir helfen dir dabei, eine neue Marke von Grund auf zu gestalten oder eine bestehende weiterzuentwickeln – visuell, funktional und strategisch.</p>
+      </div>
+    </div>
+    <div class="feature" data-aos="fade-up">
+      <img src="Photo 2.jpg" alt="Sichtbarkeit">
+      <div class="feature-text">
+        <h3>Mehr Sichtbarkeit</h3>
+        <p>Durch gezielte Optimierung deiner Website, automatisierte Kommunikation und intelligentes Design wirst du genau dort sichtbar, wo deine Zielgruppe ist.</p>
+      </div>
+    </div>
+    <div class="feature" data-aos="fade-up">
+      <img src="Photo 3.jpg" alt="Tools">
+      <div class="feature-text">
+        <h3>Skalierung mit digitalen Tools</h3>
+        <p>Ob Website, Chatbot oder Prozessautomatisierung – wir nutzen digitale Tools, um dein Business effizienter und skalierbarer zu machen.</p>
+      </div>
+    </div>
+    <div class="feature" data-aos="fade-up">
+      <img src="Photo 4.jpg" alt="Technik und Branding">
+      <div class="feature-text">
+        <h3>Technik trifft Branding</h3>
+        <p>Unsere Projekte sind technisch sauber – und gleichzeitig konsequent auf Markenwirkung und Ästhetik ausgerichtet.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" data-aos="fade-up">
+    <h2>Unsere Leistungen</h2>
+    <p style="font-size: 1.4rem; line-height: 1.8; color: #e0e0e0; max-width: 800px; margin: 0 auto; padding-top: 20px; border-top: 1px solid #444;">
+      ✔ Individuelles Webdesign je nach Kundenwunsch<br>
+      ✔ Integration leistungsstarker KI-Chatbots<br>
+      ✔ Automatisierte Vertriebs- & Kommunikationsprozesse<br>
+      ✔ Technische Beratung & dauerhafte Betreuung
+    </p>
+  </div>
+
+  <div class="cta" data-aos="zoom-in">
+    <h2>Bereit für den nächsten Schritt?</h2>
+    <p>Starte dein digitales Wachstum mit Integrow. Wir bringen deine Vision in Form.</p>
+    <button>Jetzt Termin sichern</button>
+  </div>
+
+  <footer>
+    &copy; 2025 Integrow. Digital Elegance. Klar. Stark. Skaliert.
+  </footer>
+
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      once: true,
+      duration: 1000
+    });
+  </script>
+</body>
+</html>
