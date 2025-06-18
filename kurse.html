@@ -21,27 +21,18 @@
       box-shadow: 0 0 40px rgba(192,192,192,0.1);
     }
     .logo-img {
-  max-width: 300px;
-  height: auto;
-  margin-bottom: 10px;
-  filter: drop-shadow(0 0 12px rgba(255,255,255,0.4));
-  transition: filter 0.4s ease;
-}
-
-.logo-img:hover {
-  filter: drop-shadow(0 0 18px rgba(255,255,255,0.6));
-}
-    header h1 {
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 4.5rem;
-      color: #c0c0c0;
+      max-width: 300px;
+      height: auto;
       margin-bottom: 10px;
-      letter-spacing: 2px;
-      text-shadow: 0 0 6px #ffffff, 0 0 12px #ffffff;
-      -webkit-text-stroke: 1px black;
+      filter: drop-shadow(0 0 12px rgba(255,255,255,0.4));
+      transition: filter 0.4s ease;
+    }
+
+    .logo-img:hover {
+      filter: drop-shadow(0 0 18px rgba(255,255,255,0.6));
     }
     .nav-links {
-      margin-top: 30px;
+      margin-top: 10px;
       display: flex;
       justify-content: center;
       gap: 50px;
@@ -84,11 +75,18 @@
       margin-bottom: 40px;
       border: 1px solid #333;
       transition: transform 0.4s ease, box-shadow 0.4s ease, text-shadow 0.4s ease;
+      cursor: pointer;
     }
     .course:hover {
-      transform: translateY(-10px);
+      transform: scale(1.03);
       box-shadow: 0 0 40px rgba(255, 255, 255, 0.15);
       text-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
+    }
+    .course.selected {
+      transform: scale(1.05);
+      box-shadow: 0 0 50px rgba(255, 215, 0, 0.3);
+      text-shadow: 0 0 16px rgba(255, 215, 0, 0.7);
+      border-color: #ffd700;
     }
     .course h3 {
       font-size: 1.8rem;
@@ -135,29 +133,29 @@
 </head>
 <body>
   <header data-aos="fade-down">
-  <img src="DB5A56C2-6537-412D-94B5-4C1A72DA5F3C.PNG" alt="Integrow Logo" class="logo-img" />
-  <div class="nav-links">
-    <a href="index.html">Startseite</a>
-    <a href="produkt.html">Produkt</a>
-    <a href="kurse.html">Kurse</a>
-    <a href="support.html">Support</a>
-    <a href="impressum.html">Impressum</a>
-  </div>
-</header>
+    <img src="DB5A56C2-6537-412D-94B5-4C1A72DA5F3C.PNG" alt="Integrow Logo" class="logo-img" />
+    <div class="nav-links">
+      <a href="index.html">Startseite</a>
+      <a href="produkt.html">Produkt</a>
+      <a href="kurse.html">Kurse</a>
+      <a href="support.html">Support</a>
+      <a href="impressum.html">Impressum</a>
+    </div>
+  </header>
 
   <div class="section" data-aos="fade-up">
     <h2>Unsere Kurse</h2>
-    <div class="course" data-aos="zoom-in">
+    <div class="course" data-aos="zoom-in" onclick="selectCourse(this)">
       <h3>Webflow Basics</h3>
       <p>Lerne die Grundlagen von Webflow und baue deine ersten modernen Webseiten ohne Programmierung.</p>
       <div class="price">299 &euro;</div>
     </div>
-    <div class="course" data-aos="zoom-in" data-aos-delay="100">
+    <div class="course" data-aos="zoom-in" data-aos-delay="100" onclick="selectCourse(this)">
       <h3>Professionelles Webdesign</h3>
       <p>Tipps und Tricks für fortgeschrittenes Design mit Fokus auf User Experience, Animationen und responsive Layouts.</p>
       <div class="price">499 &euro;</div>
     </div>
-    <div class="course" data-aos="zoom-in" data-aos-delay="200">
+    <div class="course" data-aos="zoom-in" data-aos-delay="200" onclick="selectCourse(this)">
       <h3>Masterclass: Webflow & Business</h3>
       <p>Meistere Webflow und lerne, wie du professionell Webseiten für Kunden umsetzt – inkl. Preisgestaltung, Projektmanagement und Marketing.</p>
       <div class="price">999 &euro;</div>
@@ -174,6 +172,13 @@
       once: true,
       duration: 1000
     });
+
+    function selectCourse(element) {
+      document.querySelectorAll('.course').forEach(course => {
+        course.classList.remove('selected');
+      });
+      element.classList.add('selected');
+    }
   </script>
 </body>
 </html>
