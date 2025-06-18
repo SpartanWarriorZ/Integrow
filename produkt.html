@@ -87,7 +87,7 @@
     .pricing-section {
       display: none;
       max-width: 1200px;
-      margin: 80px auto 60px;
+      margin: 80px auto 20px;
       padding: 0 20px;
       animation: fadeIn 0.6s ease;
     }
@@ -133,7 +133,7 @@
     }
     .explanation-box {
       max-width: 1000px;
-      margin: 20px auto;
+      margin: 40px auto;
       padding: 20px;
       text-align: center;
       color: #ccc;
@@ -155,6 +155,14 @@
     @media (max-width: 768px) {
       .pricing-section.active {
         grid-template-columns: 1fr;
+      }
+      .tabs {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+      }
+      .tab-button {
+        font-size: 1rem;
+        padding: 10px 20px;
       }
     }
   </style>
