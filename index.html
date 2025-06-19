@@ -6,6 +6,10 @@
   <title>Integrow – Startseite</title>
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
   <style>
+    html, body {
+      max-width: 100%;
+      overflow-x: hidden;
+    }
     body {
       margin: 0;
       background-color: #0a0a0a;
@@ -159,12 +163,14 @@
     }
     .leistungen-list li {
       margin-bottom: 12px;
-      padding-left: 1.4em;
-      text-indent: -1.4em;
+      padding-left: 28px;
+      text-indent: -22px;
     }
     .leistungen-list li::before {
       content: "✔ ";
       color: silver;
+      display: inline-block;
+      width: 22px;
     }
     @media (max-width: 768px) {
       .nav-links {
@@ -188,7 +194,8 @@
         margin: 0 auto 20px;
       }
       .leistungen-list {
-        font-size: 1.1rem;
+        font-size: 1.2rem;
+        line-height: 1.6;
       }
     }
   </style>
