@@ -27,7 +27,6 @@
       filter: drop-shadow(0 0 12px rgba(255,255,255,0.4));
       transition: filter 0.4s ease;
     }
-
     .logo-img:hover {
       filter: drop-shadow(0 0 18px rgba(255,255,255,0.6));
     }
@@ -74,8 +73,13 @@
       padding: 40px;
       margin-bottom: 40px;
       border: 1px solid #333;
-      transition: transform 0.4s ease, box-shadow 0.4s ease, text-shadow 0.4s ease;
-      cursor: pointer;
+      transition: transform 0.5s ease, opacity 0.5s ease, box-shadow 0.4s ease, text-shadow 0.4s ease;
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    .course.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
     .course:hover {
       transform: scale(1.03);
@@ -132,7 +136,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header data-aos="fade-down">
+  <header>
     <img src="DB5A56C2-6537-412D-94B5-4C1A72DA5F3C.PNG" alt="Integrow Logo" class="logo-img" />
     <div class="nav-links">
       <a href="index.html">Startseite</a>
@@ -143,19 +147,19 @@
     </div>
   </header>
 
-  <div class="section" data-aos="fade-up">
+  <div class="section">
     <h2>Unsere Kurse</h2>
-    <div class="course" data-aos="zoom-in" onclick="selectCourse(this)">
+    <div class="course" onclick="selectCourse(this)">
       <h3>Webflow Basics</h3>
       <p>Lerne die Grundlagen von Webflow und baue deine ersten modernen Webseiten ohne Programmierung.</p>
       <div class="price">299 &euro;</div>
     </div>
-    <div class="course" data-aos="zoom-in" data-aos-delay="100" onclick="selectCourse(this)">
+    <div class="course" onclick="selectCourse(this)">
       <h3>Professionelles Webdesign</h3>
       <p>Tipps und Tricks für fortgeschrittenes Design mit Fokus auf User Experience, Animationen und responsive Layouts.</p>
       <div class="price">499 &euro;</div>
     </div>
-    <div class="course" data-aos="zoom-in" data-aos-delay="200" onclick="selectCourse(this)">
+    <div class="course" onclick="selectCourse(this)">
       <h3>Masterclass: Webflow & Business</h3>
       <p>Meistere Webflow und lerne, wie du professionell Webseiten für Kunden umsetzt – inkl. Preisgestaltung, Projektmanagement und Marketing.</p>
       <div class="price">999 &euro;</div>
@@ -169,7 +173,7 @@
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
   <script>
     AOS.init({
-      once: true,
+      once: false,
       duration: 1000
     });
 
@@ -179,6 +183,22 @@
       });
       element.classList.add('selected');
     }
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        } else {
+          entry.target.classList.remove('visible');
+        }
+      });
+    }, {
+      threshold: 0.1
+    });
+
+    document.querySelectorAll('.course').forEach(course => {
+      observer.observe(course);
+    });
   </script>
 </body>
 </html>
