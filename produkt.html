@@ -227,7 +227,7 @@
       widget.classList.add('calendar-widget');
       widget.innerHTML = `
         <button class="close-widget" onclick="closeWidget(this)">&times;</button>
-        <iframe src="widgetIframe.src = `https://calendly.com/leonidas-pyka/30min?hide_event_type_details=1&hide_gdpr_banner=1&background_color=1a1a1a&text_color=e0e0e0&a4=${encodeURIComponent(packageName)}`;" allowtransparency="true"></iframe>
+        <iframe src="https://calendly.com/leonidas-pyka/30min?a4=${encodeURIComponent(packageName)}" allowtransparency="true"></iframe>
       `;
       card.appendChild(widget);
     }
