@@ -79,9 +79,12 @@
     .tabs {
       display: flex;
       justify-content: center;
-      margin: 40px auto;
+      margin: 80px auto 60px;
       gap: 20px;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
+      max-width: 1200px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
     }
     .tab-button {
       background: #1c1c1c;
@@ -107,14 +110,15 @@
     .pricing-section {
       display: none;
       max-width: 1200px;
-      margin: 40px auto;
+      margin: 80px auto 60px;
       padding: 0 20px;
       animation: fadeIn 0.6s ease;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
     }
     .pricing-section.active {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 40px;
     }
     .card {
       background: #1a1a1a;
@@ -125,6 +129,7 @@
       transition: transform 0.4s ease, box-shadow 0.4s ease, text-shadow 0.4s ease;
       border: 1px solid #333;
       cursor: pointer;
+      position: relative;
     }
     .card:hover {
       transform: translateY(-10px);
@@ -147,9 +152,15 @@
       margin-bottom: 20px;
     }
     .price {
-      font-size: 1.6rem;
+      font-size: 2rem;
       color: #fff;
       margin-bottom: 20px;
+    }
+    .calendly-inline {
+      margin-top: 20px;
+      border: none;
+      min-width: 320px;
+      height: 600px;
     }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
@@ -162,6 +173,25 @@
       color: #777;
       font-size: 1rem;
       border-top: 1px solid #2a2a2a;
+    }
+    @media (max-width: 768px) {
+      .nav-links {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        padding-bottom: 10px;
+      }
+      .nav-links a {
+        font-size: 1.1rem;
+        padding: 5px 10px;
+      }
+      .pricing-section {
+        grid-template-columns: 1fr;
+      }
+      .logo-img {
+        max-width: 400px;
+      }
     }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&display=swap" rel="stylesheet">
@@ -178,41 +208,41 @@
     </div>
   </header>
 
-  <div class="tabs">
+  <div class="tabs" data-aos="fade-up">
     <button class="tab-button active" onclick="showTab('basis', this)">Basis Webseiten</button>
     <button class="tab-button" onclick="showTab('premium', this)">Premium Webseiten</button>
   </div>
 
-  <div id="basis" class="pricing-section active">
-    <div class="card" onclick="openCalendly('Basis Starter')">
+  <div id="basis" class="pricing-section active" data-aos="fade-up">
+    <div class="card" onclick="showCalendly(this, 'Basis Starter')">
       <h3>Starter</h3>
       <p>1-2 Seiten, mobil optimiert<br>AOS Effekte + Glow</p>
       <div class="price">ab 1.200 &euro;</div>
     </div>
-    <div class="card" onclick="openCalendly('Basis Business')">
+    <div class="card" onclick="showCalendly(this, 'Basis Business')">
       <h3>Business</h3>
       <p>3-5 Seiten, mobil optimiert<br>AOS + SEO Basics</p>
       <div class="price">ab 2.000 &euro;</div>
     </div>
-    <div class="card" onclick="openCalendly('Basis Premium')">
+    <div class="card" onclick="showCalendly(this, 'Basis Premium')">
       <h3>Premium</h3>
       <p>5-8 Seiten, mobil optimiert<br>SEO + erweiterbar (Blog, KI-Chatbot)</p>
       <div class="price">ab 3.000 &euro;</div>
     </div>
   </div>
 
-  <div id="premium" class="pricing-section">
-    <div class="card" onclick="openCalendly('Premium Starter')">
+  <div id="premium" class="pricing-section" data-aos="fade-up">
+    <div class="card" onclick="showCalendly(this, 'Premium Starter')">
       <h3>Starter Premium</h3>
       <p>1-2 Seiten<br>Figma + HTML / Webflow</p>
       <div class="price">ab 1.500 &euro;</div>
     </div>
-    <div class="card" onclick="openCalendly('Premium Business')">
+    <div class="card" onclick="showCalendly(this, 'Premium Business')">
       <h3>Business Premium</h3>
       <p>3-5 Seiten<br>Custom Figma + Webflow + CMS</p>
       <div class="price">ab 3.000 &euro;</div>
     </div>
-    <div class="card" onclick="openCalendly('Premium Deluxe')">
+    <div class="card" onclick="showCalendly(this, 'Premium Deluxe')">
       <h3>Premium Deluxe</h3>
       <p>5-8 Seiten<br>Full Custom Design + CMS + Animationen + Chatbot-ready</p>
       <div class="price">ab 5.000 &euro;</div>
@@ -243,8 +273,19 @@
       document.getElementById(tab).classList.add('active');
     }
 
-    function openCalendly(packageName) {
-      window.open('https://calendly.com/leonidas-pyka/30min?package=' + encodeURIComponent(packageName), '_blank');
+    function showCalendly(cardElement, packageName) {
+      // Remove existing Calendly frames
+      document.querySelectorAll('.calendly-inline-widget').forEach(widget => widget.remove());
+
+      const iframe = document.createElement('iframe');
+      iframe.className = 'calendly-inline calendly-inline-widget';
+      iframe.src = `https://calendly.com/leonidas-pyka/30min?hide_gdpr_banner=1&custom_package=${encodeURIComponent(packageName)}`;
+      iframe.frameBorder = '0';
+      iframe.scrolling = 'no';
+      iframe.width = '100%';
+      iframe.height = '600px';
+
+      cardElement.appendChild(iframe);
     }
   </script>
 </body>
