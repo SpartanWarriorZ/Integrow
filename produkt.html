@@ -6,6 +6,10 @@
   <title>Integrow – Webdesign Pakete</title>
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
   <style>
+    html, body {
+      max-width: 100%;
+      overflow-x: hidden;
+    }
     body {
       margin: 0;
       background-color: #0a0a0a;
@@ -14,26 +18,26 @@
       background: linear-gradient(to bottom right, #0a0a0a, #1c1c1c);
     }
     header {
-      padding: 80px 40px 60px;
+      padding: 60px 40px 40px;
       background: linear-gradient(to right, #1c1c1c, #000);
       text-align: center;
       border-bottom: 1px solid #444;
       box-shadow: 0 0 40px rgba(192,192,192,0.1);
     }
     .logo-img {
-  max-width: 600px;
-  width: 100%;
-  height: auto;
-  margin-bottom: 10px;
-  filter: drop-shadow(0 0 12px rgba(255,255,255,0.4));
-  transition: filter 0.4s ease;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
+      max-width: 600px;
+      width: 100%;
+      height: auto;
+      margin-bottom: 10px;
+      filter: drop-shadow(0 0 12px rgba(255,255,255,0.4));
+      transition: filter 0.4s ease;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
     .logo-img:hover {
-  filter: drop-shadow(0 0 18px rgba(255,255,255,0.6));
-}
+      filter: drop-shadow(0 0 18px rgba(255,255,255,0.6));
+    }
     .nav-links {
       margin-top: 10px;
       display: flex;
@@ -44,77 +48,50 @@
       flex-wrap: wrap;
     }
     .nav-links a {
-  color: silver;
-  text-decoration: none;
-  font-size: 1.4rem;
-  font-family: 'Rajdhani', sans-serif;
-  font-weight: 600;
-  letter-spacing: 1px;
-  transition: color 0.3s ease, text-shadow 0.3s ease;
-  position: relative; /* WICHTIG für die Pseudo-Klasse */
-}
-
-.nav-links a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -5px;
-  width: 100%;
-  height: 2px;
-  background: silver;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.3s ease;
-}
-
-.nav-links a:hover::after {
-  transform: scaleX(1);
-}
+      color: silver;
+      text-decoration: none;
+      font-size: 1.4rem;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 600;
+      letter-spacing: 1px;
+      transition: color 0.3s ease, text-shadow 0.3s ease;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -5px;
+      width: 100%;
+      height: 2px;
+      background: silver;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+    .nav-links a:hover::after {
+      transform: scaleX(1);
+    }
     .nav-links a:hover {
       color: #fff;
       text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
     }
-    .tabs {
-      display: flex;
-      justify-content: center;
-      margin: 80px auto 60px;
-      gap: 20px;
-      flex-wrap: nowrap;
+    .section {
+      padding: 80px 40px;
       max-width: 1200px;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
+      margin: auto;
+      border-bottom: 1px solid #2a2a2a;
     }
-    .tab-button {
-      background: #1c1c1c;
+    .section h2 {
       color: silver;
-      border: 1px solid #444;
-      padding: 12px 28px;
-      cursor: pointer;
-      font-size: 1.3rem;
-      border-radius: 8px;
-      white-space: nowrap;
-      min-width: 160px;
-      flex: 0 0 auto;
-      transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+      font-size: 2.4rem;
+      margin-bottom: 30px;
+      text-transform: uppercase;
+      text-align: center;
     }
-    .tab-button.active {
-      background: #333;
-      color: #fff;
-      box-shadow: 0 0 12px rgba(255, 255, 255, 0.5);
-    }
-    .tab-button.active.gold-glow {
-      box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
-    }
-    .pricing-section {
-      display: none;
-      max-width: 1200px;
-      margin: 80px auto 20px;
-      padding: 0 20px;
-      animation: fadeIn 0.6s ease;
-    }
-    .pricing-section.active {
+    .pricing {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 40px;
     }
     .card {
@@ -123,18 +100,13 @@
       box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
       padding: 40px;
       text-align: center;
-      transition: transform 0.4s ease, box-shadow 0.4s ease, text-shadow 0.4s ease;
       border: 1px solid #333;
       cursor: pointer;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
     }
     .card:hover {
       transform: translateY(-10px);
       box-shadow: 0 0 40px rgba(255, 255, 255, 0.15);
-      text-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
-    }
-    .pricing-section#premium .card:hover {
-      box-shadow: 0 0 40px rgba(255, 215, 0, 0.6);
-      text-shadow: 0 0 12px rgba(255, 215, 0, 0.8);
     }
     .card h3 {
       font-size: 1.8rem;
@@ -152,18 +124,16 @@
       color: #fff;
       margin-bottom: 20px;
     }
-    .explanation-box {
-      max-width: 1000px;
-      margin: 40px auto;
-      padding: 20px;
-      text-align: center;
-      color: #ccc;
-      font-size: 1.2rem;
-      border-top: 1px solid #333;
+    .calendly-widget {
+      display: none;
+      margin-top: 20px;
     }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    .calendly-widget iframe {
+      width: 100%;
+      height: 650px;
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
     }
     footer {
       background-color: #111;
@@ -174,17 +144,6 @@
       border-top: 1px solid #2a2a2a;
     }
     @media (max-width: 768px) {
-      .pricing-section.active {
-        grid-template-columns: 1fr;
-      }
-      .tabs {
-        flex-wrap: nowrap;
-        overflow-x: auto;
-      }
-      .tab-button {
-        font-size: 1rem;
-        padding: 10px 20px;
-      }
       .nav-links {
         flex-direction: row;
         flex-wrap: wrap;
@@ -215,49 +174,36 @@
     </div>
   </header>
 
-  <div class="tabs" data-aos="fade-up">
-    <button class="tab-button active" onclick="showTab('basis', this)">Basis Webseiten</button>
-    <button class="tab-button" onclick="showTab('premium', this)">Premium Webseiten</button>
-  </div>
+  <div class="section" data-aos="fade-up">
+    <h2>Unsere Webdesign Pakete</h2>
+    <div class="pricing">
+      <div class="card" onclick="showCalendly(this, 'Starter')">
+        <h3>Starter</h3>
+        <p>1-2 Seiten, mobil optimiert<br>AOS Effekte + Glow</p>
+        <div class="price">ab 1.200 &euro;</div>
+        <div class="calendly-widget">
+          <iframe src=""></iframe>
+        </div>
+      </div>
 
-  <div id="basis" class="pricing-section active" data-aos="fade-up">
-    <div class="card" onclick="showExplanation('Starter-Paket: 1-2 Seiten, mobil optimiert, AOS Effekte + Glow.')">
-      <h3>Starter</h3>
-      <p>1-2 Seiten, mobil optimiert<br>AOS Effekte + Glow</p>
-      <div class="price">ab 1.200 &euro;</div>
-    </div>
-    <div class="card" onclick="showExplanation('Business-Paket: 3-5 Seiten, mobil optimiert, AOS + SEO Basics.')">
-      <h3>Business</h3>
-      <p>3-5 Seiten, mobil optimiert<br>AOS + SEO Basics</p>
-      <div class="price">ab 2.000 &euro;</div>
-    </div>
-    <div class="card" onclick="showExplanation('Premium-Paket: 5-8 Seiten, mobil optimiert, SEO + erweiterbar (Blog, KI-Chatbot).')">
-      <h3>Premium</h3>
-      <p>5-8 Seiten, mobil optimiert<br>SEO + erweiterbar (Blog, KI-Chatbot)</p>
-      <div class="price">ab 3.000 &euro;</div>
-    </div>
-  </div>
+      <div class="card" onclick="showCalendly(this, 'Business')">
+        <h3>Business</h3>
+        <p>3-5 Seiten, mobil optimiert<br>AOS + SEO Basics</p>
+        <div class="price">ab 2.000 &euro;</div>
+        <div class="calendly-widget">
+          <iframe src=""></iframe>
+        </div>
+      </div>
 
-  <div id="premium" class="pricing-section" data-aos="fade-up">
-    <div class="card" onclick="showExplanation('Starter Premium: 1-2 Seiten, Figma + HTML / Webflow.')">
-      <h3>Starter Premium</h3>
-      <p>1-2 Seiten<br>Figma + HTML / Webflow</p>
-      <div class="price">ab 1.500 &euro;</div>
+      <div class="card" onclick="showCalendly(this, 'Premium')">
+        <h3>Premium</h3>
+        <p>5-8 Seiten, mobil optimiert<br>SEO + erweiterbar (Blog, KI-Chatbot)</p>
+        <div class="price">ab 3.000 &euro;</div>
+        <div class="calendly-widget">
+          <iframe src=""></iframe>
+        </div>
+      </div>
     </div>
-    <div class="card" onclick="showExplanation('Business Premium: 3-5 Seiten, Custom Figma + Webflow + CMS.')">
-      <h3>Business Premium</h3>
-      <p>3-5 Seiten<br>Custom Figma + Webflow + CMS</p>
-      <div class="price">ab 3.000 &euro;</div>
-    </div>
-    <div class="card" onclick="showExplanation('Premium Deluxe: 5-8 Seiten, Full Custom Design + CMS + Animationen + Chatbot-ready.')">
-      <h3>Premium Deluxe</h3>
-      <p>5-8 Seiten<br>Full Custom Design + CMS + Animationen + Chatbot-ready</p>
-      <div class="price">ab 5.000 &euro;</div>
-    </div>
-  </div>
-
-  <div id="explanation-box" class="explanation-box" data-aos="fade-up">
-    <p>Wähle ein Paket, um weitere Details zu sehen.</p>
   </div>
 
   <footer>
@@ -271,22 +217,20 @@
       duration: 1000
     });
 
-    function showTab(tab, btn) {
-      document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active', 'gold-glow'));
-      document.querySelectorAll('.pricing-section').forEach(section => section.classList.remove('active'));
+    function showCalendly(cardElement, paketName) {
+      // Hide all other widgets
+      document.querySelectorAll('.calendly-widget').forEach(widget => {
+        widget.style.display = 'none';
+        widget.querySelector('iframe').src = '';
+      });
 
-      if (tab === 'premium') {
-        btn.classList.add('active', 'gold-glow');
-      } else {
-        btn.classList.add('active');
-      }
+      const widget = cardElement.querySelector('.calendly-widget');
+      const iframe = widget.querySelector('iframe');
+      const calendlyBase = 'https://calendly.com/leonidas-pyka/30min';
+      const url = calendlyBase + '?custom_question1=' + encodeURIComponent(paketName);
 
-      document.getElementById(tab).classList.add('active');
-      document.getElementById('explanation-box').innerHTML = '<p>Wähle ein Paket, um weitere Details zu sehen.</p>';
-    }
-
-    function showExplanation(text) {
-      document.getElementById('explanation-box').innerHTML = '<p>' + text + '</p>';
+      iframe.src = url;
+      widget.style.display = 'block';
     }
   </script>
 </body>
