@@ -222,15 +222,15 @@
     }
 
     function showCalendar(card, packageName) {
-      closeAllWidgets();
-      const widget = document.createElement('div');
-      widget.classList.add('calendar-widget');
-      widget.innerHTML = `
-        <button class="close-widget" onclick="closeWidget(this)">&times;</button>
-        <iframe src="https://calendly.com/leonidas-pyka/30min?color_scheme=dark&a4=${encodeURIComponent(packageName)}" allowtransparency="true"></iframe>
-      `;
-      card.appendChild(widget);
-    }
+  closeAllWidgets();
+  const widget = document.createElement('div');
+  widget.classList.add('calendar-widget');
+  widget.innerHTML = `
+    <button class="close-widget" onclick="closeWidget(this)">&times;</button>
+    <iframe src="https://calendly.com/leonidas-pyka/30min?color_scheme=dark&a4=${encodeURIComponent(packageName)}" allowtransparency="true"></iframe>
+  `;
+  card.appendChild(widget);
+}
 
     function closeWidget(button) {
       button.parentElement.remove();
