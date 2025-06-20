@@ -170,5 +170,21 @@
       duration: 1000
     });
   </script>
+  <!-- Lenis Library einbinden (vor </body>) -->
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.18/bundled/lenis.min.js"></script>
+
+<script>
+  const lenis = new Lenis({
+    duration: 1.2, // Geschwindigkeit (kannst du anpassen, z.B. 1.0 oder 1.5)
+    smooth: true
+  })
+
+  function raf(time) {
+    lenis.raf(time)
+    requestAnimationFrame(raf)
+  }
+
+  requestAnimationFrame(raf)
+</script>
 </body>
 </html>
