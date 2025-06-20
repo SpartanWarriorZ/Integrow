@@ -21,13 +21,16 @@
       box-shadow: 0 0 40px rgba(192,192,192,0.1);
     }
     .logo-img {
-      max-width: 300px;
+      max-width: 450px;
+      width: 100%;
       height: auto;
       margin-bottom: 10px;
       filter: drop-shadow(0 0 12px rgba(255,255,255,0.4));
       transition: filter 0.4s ease;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
     }
-
     .logo-img:hover {
       filter: drop-shadow(0 0 18px rgba(255,255,255,0.6));
     }
@@ -74,12 +77,8 @@
       padding: 40px;
       margin-bottom: 40px;
       border: 1px solid #333;
-      transition: transform 0.4s ease, box-shadow 0.4s ease, text-shadow 0.4s ease, opacity 0.6s ease;
+      transition: transform 0.4s ease, box-shadow 0.4s ease, text-shadow 0.4s ease;
       cursor: pointer;
-      opacity: 0;
-    }
-    .course.visible {
-      opacity: 1;
     }
     .course:hover {
       transform: scale(1.03);
@@ -117,11 +116,6 @@
       border-top: 1px solid #2a2a2a;
     }
     @media (max-width: 768px) {
-      .logo-img {
-        max-width: 300px;
-        margin: 0 auto 10px;
-        display: block;
-      }
       .nav-links {
         flex-direction: row;
         flex-wrap: wrap;
@@ -132,6 +126,9 @@
       .nav-links a {
         font-size: 1.1rem;
         padding: 5px 10px;
+      }
+      .logo-img {
+        max-width: 300px;
       }
     }
   </style>
@@ -175,7 +172,7 @@
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
   <script>
     AOS.init({
-      once: false,
+      once: true,
       duration: 1000
     });
 
@@ -185,21 +182,6 @@
       });
       element.classList.add('selected');
     }
-
-    // IntersectionObserver für sichtbar/unsichtbar machen
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        } else {
-          entry.target.classList.remove('visible');
-        }
-      });
-    }, { threshold: 0.2 });
-
-    document.querySelectorAll('.course').forEach(course => {
-      observer.observe(course);
-    });
   </script>
 </body>
 </html>
