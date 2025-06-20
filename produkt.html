@@ -79,9 +79,8 @@
     .tabs {
       display: flex;
       justify-content: center;
-      margin: 80px auto 40px;
+      margin: 40px auto;
       gap: 20px;
-      max-width: 1200px;
       flex-wrap: wrap;
     }
     .tab-button {
@@ -93,6 +92,8 @@
       font-size: 1.3rem;
       border-radius: 8px;
       white-space: nowrap;
+      min-width: 160px;
+      flex: 0 0 auto;
       transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
     }
     .tab-button.active {
@@ -108,12 +109,12 @@
       max-width: 1200px;
       margin: 40px auto;
       padding: 0 20px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 40px;
+      animation: fadeIn 0.6s ease;
     }
     .pricing-section.active {
       display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 40px;
     }
     .card {
       background: #1a1a1a;
@@ -121,16 +122,18 @@
       box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
       padding: 40px;
       text-align: center;
+      transition: transform 0.4s ease, box-shadow 0.4s ease, text-shadow 0.4s ease;
       border: 1px solid #333;
       cursor: pointer;
-      transition: transform 0.4s ease, box-shadow 0.4s ease;
     }
     .card:hover {
-      transform: scale(1.05);
+      transform: translateY(-10px);
       box-shadow: 0 0 40px rgba(255, 255, 255, 0.15);
+      text-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
     }
     .pricing-section#premium .card:hover {
       box-shadow: 0 0 40px rgba(255, 215, 0, 0.6);
+      text-shadow: 0 0 12px rgba(255, 215, 0, 0.8);
     }
     .card h3 {
       font-size: 1.8rem;
@@ -139,25 +142,26 @@
     }
     .card p {
       font-size: 1rem;
+      line-height: 1.6;
       color: #ccc;
       margin-bottom: 20px;
     }
     .price {
-      font-size: 2rem;
+      font-size: 1.6rem;
       color: #fff;
       margin-bottom: 20px;
     }
-    @media (max-width: 768px) {
-      .nav-links {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 10px;
-      }
-      .nav-links a {
-        font-size: 1.1rem;
-        padding: 5px 10px;
-      }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    footer {
+      background-color: #111;
+      text-align: center;
+      padding: 40px 20px;
+      color: #777;
+      font-size: 1rem;
+      border-top: 1px solid #2a2a2a;
     }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&display=swap" rel="stylesheet">
@@ -174,41 +178,41 @@
     </div>
   </header>
 
-  <div class="tabs" data-aos="fade-up">
+  <div class="tabs">
     <button class="tab-button active" onclick="showTab('basis', this)">Basis Webseiten</button>
     <button class="tab-button" onclick="showTab('premium', this)">Premium Webseiten</button>
   </div>
 
-  <div id="basis" class="pricing-section active" data-aos="fade-up">
-    <div class="card">
+  <div id="basis" class="pricing-section active">
+    <div class="card" onclick="openCalendly('Basis Starter')">
       <h3>Starter</h3>
       <p>1-2 Seiten, mobil optimiert<br>AOS Effekte + Glow</p>
       <div class="price">ab 1.200 &euro;</div>
     </div>
-    <div class="card">
+    <div class="card" onclick="openCalendly('Basis Business')">
       <h3>Business</h3>
       <p>3-5 Seiten, mobil optimiert<br>AOS + SEO Basics</p>
       <div class="price">ab 2.000 &euro;</div>
     </div>
-    <div class="card">
+    <div class="card" onclick="openCalendly('Basis Premium')">
       <h3>Premium</h3>
       <p>5-8 Seiten, mobil optimiert<br>SEO + erweiterbar (Blog, KI-Chatbot)</p>
       <div class="price">ab 3.000 &euro;</div>
     </div>
   </div>
 
-  <div id="premium" class="pricing-section" data-aos="fade-up">
-    <div class="card">
+  <div id="premium" class="pricing-section">
+    <div class="card" onclick="openCalendly('Premium Starter')">
       <h3>Starter Premium</h3>
       <p>1-2 Seiten<br>Figma + HTML / Webflow</p>
       <div class="price">ab 1.500 &euro;</div>
     </div>
-    <div class="card">
+    <div class="card" onclick="openCalendly('Premium Business')">
       <h3>Business Premium</h3>
       <p>3-5 Seiten<br>Custom Figma + Webflow + CMS</p>
       <div class="price">ab 3.000 &euro;</div>
     </div>
-    <div class="card">
+    <div class="card" onclick="openCalendly('Premium Deluxe')">
       <h3>Premium Deluxe</h3>
       <p>5-8 Seiten<br>Full Custom Design + CMS + Animationen + Chatbot-ready</p>
       <div class="price">ab 5.000 &euro;</div>
@@ -237,6 +241,10 @@
       }
 
       document.getElementById(tab).classList.add('active');
+    }
+
+    function openCalendly(packageName) {
+      window.open('https://calendly.com/leonidas-pyka/30min?package=' + encodeURIComponent(packageName), '_blank');
     }
   </script>
 </body>
