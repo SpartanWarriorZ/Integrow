@@ -169,6 +169,31 @@
       font-size: 1rem;
       border-top: 1px solid #2a2a2a;
     }
+    #back-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 999;
+  display: inline-block;
+  background: #444;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s, visibility 0.4s, transform 0.3s;
+  user-select: none;   /* verhindert Text-Markierung */
+  outline: none;       /* verhindert blauen Rahmen bei Klick */
+}
+
+#back-to-top:hover {
+  background: #666;
+  transform: scale(1.1);
+}
     .leistungen-list {
       font-size: 1.4rem;
       line-height: 1.8;
@@ -315,6 +340,25 @@
   }
 
   requestAnimationFrame(raf)
+</script>
+<script>
+  window.addEventListener('scroll', function() {
+    const btn = document.getElementById('back-to-top');
+    if (window.scrollY > 150) {
+      btn.style.opacity = '1';
+      btn.style.visibility = 'visible';
+    } else {
+      btn.style.opacity = '0';
+      btn.style.visibility = 'hidden';
+    }
+  });
+
+  function scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }
 </script>
 <div id="back-to-top" onclick="scrollToTop()">↑</div>
 <button id="back-to-top" onclick="scrollToTop()" title="Nach oben">↑</button>
