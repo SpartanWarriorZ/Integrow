@@ -231,5 +231,19 @@
       duration: 1000
     });
   </script>
+<script>
+  const lenis = new Lenis({
+    duration: 1.6, // Geschwindigkeit (kannst du anpassen, z.B. 1.0 oder 1.5)
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    smooth: true
+  })
+
+  function raf(time) {
+    lenis.raf(time)
+    requestAnimationFrame(raf)
+  }
+
+  requestAnimationFrame(raf)
+</script>
 </body>
 </html>
