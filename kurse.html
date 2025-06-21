@@ -148,14 +148,14 @@
       }
       #back-to-top {
   position: fixed;
-  bottom: 30px;
-  right: 30px;
+  bottom: 20px;
+  right: 20px;
   width: 50px;
   height: 50px;
-  background: #444;
+  background: #333;
   color: white;
   border-radius: 50%;
-  font-size: 2rem;
+  font-size: 24px;
   text-align: center;
   line-height: 50px;
   cursor: pointer;
@@ -166,10 +166,10 @@
   z-index: 999;
 }
 
-      #back-to-top:hover {
+#back-to-top:hover {
   background: silver;
   color: #000;
-  transform: scale(1.1);
+  transform: scale(1.15);
 }
     }
   </style>
@@ -242,7 +242,6 @@
   requestAnimationFrame(raf)
 </script>
 <script>
-  // Zeige Button ab Scroll-Höhe 300px
   window.addEventListener('scroll', function() {
     const btn = document.getElementById('back-to-top');
     if (window.scrollY > 300) {
@@ -254,7 +253,6 @@
     }
   });
 
-  // Scroll nach oben Funktion
   function scrollToTop() {
     window.scrollTo({
       top: 0,
