@@ -9,6 +9,7 @@
     html, body {
       max-width: 100%;
       overflow-x: hidden;
+      scroll-behavior: smooth;
     }
     body {
       margin: 0;
@@ -35,11 +36,16 @@
       margin-left: auto;
       margin-right: auto;
     }
+    .logo-img:hover {
+      filter: drop-shadow(0 0 18px rgba(255,255,255,0.6));
+    }
     .nav-links {
       margin-top: 10px;
       display: flex;
       justify-content: center;
       gap: 50px;
+      z-index: 1000;
+      position: relative;
       flex-wrap: wrap;
     }
     .nav-links a {
@@ -48,45 +54,64 @@
       font-size: 1.4rem;
       font-family: 'Rajdhani', sans-serif;
       font-weight: 600;
+      letter-spacing: 1px;
+      transition: color 0.3s ease, text-shadow 0.3s ease;
+      position: relative;
     }
-    .section {
-      max-width: 1200px;
-      margin: 80px auto;
-      padding: 0 20px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -5px;
+      width: 100%;
+      height: 2px;
+      background: silver;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+    .nav-links a:hover::after {
+      transform: scaleX(1);
+    }
+    .nav-links a:hover {
+      color: #fff;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    }
+    .courses-section {
+      display: flex;
+      flex-direction: column;
       gap: 40px;
+      max-width: 1200px;
+      margin: 80px auto 60px;
+      padding: 0 20px;
     }
-    .course {
+    .course-card {
       background: #1a1a1a;
       border-radius: 12px;
-      padding: 40px;
-      border: 1px solid #333;
       box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+      padding: 40px;
       text-align: center;
+      transition: transform 0.4s ease, box-shadow 0.4s ease, text-shadow 0.4s ease;
+      border: 1px solid #333;
       cursor: pointer;
-      transition: transform 0.4s ease, box-shadow 0.4s ease, max-height 0.6s ease;
-      overflow: visible;
     }
-    .course:hover {
+    .course-card:hover {
       transform: translateY(-10px);
       box-shadow: 0 0 40px rgba(255, 255, 255, 0.15);
+      text-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
     }
-    .course.expanded {
-      grid-column: 1 / -1;
-      max-height: 1200px;
-    }
-    .course h3 {
+    .course-card h3 {
       font-size: 1.8rem;
       color: silver;
       margin-bottom: 20px;
     }
-    .course p {
+    .course-card p {
       font-size: 1rem;
+      line-height: 1.6;
       color: #ccc;
       margin-bottom: 20px;
     }
-    .price {
+    .course-card .price {
       font-size: 2rem;
       color: #fff;
       margin-bottom: 20px;
@@ -97,12 +122,10 @@
       border-radius: 12px;
       padding: 20px;
       position: relative;
-      width: 100%;
-      box-sizing: border-box;
     }
     .calendar-widget iframe {
       width: 100%;
-      height: 600px;
+      height: 500px;
       border: none;
       border-radius: 12px;
     }
@@ -120,11 +143,34 @@
       font-weight: bold;
       line-height: 28px;
     }
+    footer {
+      background-color: #111;
+      text-align: center;
+      padding: 40px 20px;
+      color: #777;
+      font-size: 1rem;
+      border-top: 1px solid #2a2a2a;
+    }
+    @media (max-width: 768px) {
+      .nav-links {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        padding-bottom: 10px;
+      }
+      .nav-links a {
+        font-size: 1.1rem;
+        padding: 5px 10px;
+      }
+      .logo-img {
+        max-width: 400px;
+      }
+    }
   </style>
   <script>
     function showCalendar(card, packageName) {
       closeAllWidgets();
-      card.classList.add('expanded');
       const widget = document.createElement('div');
       widget.classList.add('calendar-widget');
       widget.innerHTML = `
@@ -135,22 +181,17 @@
     }
 
     function closeWidget(button) {
-      const card = button.closest('.course');
-      card.classList.remove('expanded');
       button.parentElement.remove();
     }
 
     function closeAllWidgets() {
-      document.querySelectorAll('.calendar-widget').forEach(widget => {
-        const card = widget.closest('.course');
-        card.classList.remove('expanded');
-        widget.remove();
-      });
+      document.querySelectorAll('.calendar-widget').forEach(widget => widget.remove());
     }
   </script>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header>
+  <header data-aos="fade-down">
     <img src="DB5A56C2-6537-412D-94B5-4C1A72DA5F3C.PNG" alt="Integrow Logo" class="logo-img" />
     <div class="nav-links">
       <a href="index.html">Startseite</a>
@@ -161,22 +202,20 @@
     </div>
   </header>
 
-  <div class="section">
-    <div class="course" onclick="showCalendar(this, 'Webflow Basics')">
+  <div class="courses-section">
+    <div class="course-card" onclick="showCalendar(this, 'Webflow Basics')">
       <h3>Webflow Basics</h3>
       <p>Lerne die Grundlagen von Webflow und baue deine ersten modernen Webseiten ohne Programmierung.</p>
       <div class="price">299 &euro;</div>
     </div>
-
-    <div class="course" onclick="showCalendar(this, 'Professionelles Webdesign')">
+    <div class="course-card" onclick="showCalendar(this, 'Professionelles Webdesign')">
       <h3>Professionelles Webdesign</h3>
-      <p>Tipps und Tricks für fortgeschrittenes Design mit Fokus auf UX, Animationen und Responsive Layouts.</p>
+      <p>Tipps und Tricks für fortgeschrittenes Design mit Fokus auf User Experience, Animationen und responsive Layouts.</p>
       <div class="price">499 &euro;</div>
     </div>
-
-    <div class="course" onclick="showCalendar(this, 'Masterclass Webflow & Business')">
+    <div class="course-card" onclick="showCalendar(this, 'Masterclass Webflow & Business')">
       <h3>Masterclass: Webflow & Business</h3>
-      <p>Meistere Webflow und lerne, wie du professionell Webseiten für Kunden umsetzt inkl. Preisgestaltung, Projektmanagement und Marketing.</p>
+      <p>Meistere Webflow und lerne, wie du professionell Webseiten für Kunden umsetzt – inkl. Preisgestaltung, Projektmanagement und Marketing.</p>
       <div class="price">999 &euro;</div>
     </div>
   </div>
@@ -185,5 +224,12 @@
     &copy; 2025 Integrow. Digital Elegance. Klar. Stark. Skaliert.
   </footer>
 
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      once: true,
+      duration: 1000
+    });
+  </script>
 </body>
 </html>
