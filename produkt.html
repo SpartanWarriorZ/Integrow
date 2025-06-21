@@ -110,17 +110,17 @@
     }
     .pricing-section {
       display: none;
-      max-width: 1200px;
+      max-width: 1400px;
       margin: 80px auto 60px;
       padding: 0 20px;
       opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
     }
     .pricing-section.active {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 40px;
+      gap: 50px;
       opacity: 1;
       transform: translateY(0);
     }
@@ -165,7 +165,6 @@
       border-radius: 12px;
       padding: 20px;
       position: relative;
-      animation: fadeIn 0.5s ease;
     }
     .calendar-widget iframe {
       width: 100%;
@@ -195,10 +194,6 @@
       font-size: 1rem;
       border-top: 1px solid #2a2a2a;
     }
-    @keyframes fadeIn {
-      0% { opacity: 0; transform: translateY(20px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
     @media (max-width: 768px) {
       .pricing-section.active {
         grid-template-columns: 1fr;
@@ -222,13 +217,16 @@
   <script>
     function showTab(tab, btn) {
       document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active', 'gold-glow'));
-      document.querySelectorAll('.pricing-section').forEach(section => section.classList.remove('active'));
+      document.querySelectorAll('.pricing-section').forEach(section => {
+        section.classList.remove('active');
+      });
       if (tab === 'premium') {
         btn.classList.add('active', 'gold-glow');
       } else {
         btn.classList.add('active');
       }
-      document.getElementById(tab).classList.add('active');
+      const activeSection = document.getElementById(tab);
+      activeSection.classList.add('active');
       closeAllWidgets();
     }
 
