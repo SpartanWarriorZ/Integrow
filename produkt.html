@@ -9,7 +9,6 @@
     html, body {
       max-width: 100%;
       overflow-x: hidden;
-      scroll-behavior: smooth;
     }
     body {
       margin: 0;
@@ -17,16 +16,14 @@
       color: #e0e0e0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: linear-gradient(to bottom right, #0a0a0a, #1c1c1c);
+      scroll-behavior: smooth;
     }
     header {
-      padding: 20px 40px;
+      padding: 60px 40px 40px;
       background: linear-gradient(to right, #1c1c1c, #000);
       text-align: center;
       border-bottom: 1px solid #444;
       box-shadow: 0 0 40px rgba(192,192,192,0.1);
-      position: sticky;
-      top: 0;
-      z-index: 999;
     }
     .logo-img {
       max-width: 600px;
@@ -43,9 +40,12 @@
       filter: drop-shadow(0 0 18px rgba(255,255,255,0.6));
     }
     .nav-links {
+      margin-top: 10px;
       display: flex;
       justify-content: center;
       gap: 50px;
+      z-index: 1000;
+      position: relative;
       flex-wrap: wrap;
     }
     .nav-links a {
@@ -109,26 +109,20 @@
       box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
     }
     .pricing-section {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-  max-width: 1200px;
-  margin: 80px auto 60px;
-  padding: 0 20px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
-  pointer-events: none;
-  visibility: hidden;
-}
-
-.pricing-section.active {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-  visibility: visible;
-}
-
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+      max-width: 1200px;
+      margin: 80px auto 60px;
+      padding: 0 20px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .pricing-section.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
     .card {
       background: #1a1a1a;
       border-radius: 12px;
@@ -143,10 +137,6 @@
       transform: translateY(-10px);
       box-shadow: 0 0 40px rgba(255, 255, 255, 0.15);
       text-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
-    }
-    .pricing-section#premium .card:hover {
-      box-shadow: 0 0 40px rgba(255, 215, 0, 0.6);
-      text-shadow: 0 0 12px rgba(255, 215, 0, 0.8);
     }
     .card h3 {
       font-size: 1.8rem;
@@ -200,7 +190,7 @@
       border-top: 1px solid #2a2a2a;
     }
     @media (max-width: 768px) {
-      .pricing-section.active {
+      .pricing-section {
         grid-template-columns: 1fr;
       }
       .nav-links {
@@ -222,15 +212,59 @@
   <script>
     function showTab(tab, btn) {
       document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active', 'gold-glow'));
-      document.querySelectorAll('.pricing-section').forEach(section => section.classList.remove('active'));
       if (tab === 'premium') {
         btn.classList.add('active', 'gold-glow');
       } else {
         btn.classList.add('active');
       }
-      document.getElementById(tab).classList.add('active');
+      const container = document.getElementById('pricing-container');
+      container.classList.remove('active');
+
+      setTimeout(() => {
+        container.innerHTML = (tab === 'premium') ? getPremiumHTML() : getBasicHTML();
+        container.classList.add('active');
+      }, 200);
       closeAllWidgets();
-      AOS.refresh();
+    }
+
+    function getBasicHTML() {
+      return `
+        <div class="card" onclick="showCalendar(this, 'Starter')">
+          <h3>Starter</h3>
+          <p>1-2 Seiten, mobil optimiert<br>AOS Effekte + Glow</p>
+          <div class="price">ab 1.200 &euro;</div>
+        </div>
+        <div class="card" onclick="showCalendar(this, 'Business')">
+          <h3>Business</h3>
+          <p>3-5 Seiten, mobil optimiert<br>AOS + SEO Basics</p>
+          <div class="price">ab 2.000 &euro;</div>
+        </div>
+        <div class="card" onclick="showCalendar(this, 'Premium')">
+          <h3>Premium</h3>
+          <p>5-8 Seiten, mobil optimiert<br>SEO + erweiterbar (Blog, KI-Chatbot)</p>
+          <div class="price">ab 3.000 &euro;</div>
+        </div>
+      `;
+    }
+
+    function getPremiumHTML() {
+      return `
+        <div class="card" onclick="showCalendar(this, 'Starter Premium')">
+          <h3>Starter Premium</h3>
+          <p>1-2 Seiten<br>Figma + HTML / Webflow</p>
+          <div class="price">ab 1.500 &euro;</div>
+        </div>
+        <div class="card" onclick="showCalendar(this, 'Business Premium')">
+          <h3>Business Premium</h3>
+          <p>3-5 Seiten<br>Custom Figma + Webflow + CMS</p>
+          <div class="price">ab 3.000 &euro;</div>
+        </div>
+        <div class="card" onclick="showCalendar(this, 'Premium Deluxe')">
+          <h3>Premium Deluxe</h3>
+          <p>5-8 Seiten<br>Full Custom Design + CMS + Animationen + Chatbot-ready</p>
+          <div class="price">ab 5.000 &euro;</div>
+        </div>
+      `;
     }
 
     function showCalendar(card, packageName) {
@@ -271,39 +305,22 @@
     <button class="tab-button" onclick="showTab('premium', this)">Premium Webseiten</button>
   </div>
 
-  <div id="basis" class="pricing-section active">
-    <div class="card" data-aos="fade-up" data-aos-duration="1000" onclick="showCalendar(this, 'Starter')">
+  <div id="pricing-container" class="pricing-section active">
+    <!-- Basis Pakete initial -->
+    <div class="card" onclick="showCalendar(this, 'Starter')">
       <h3>Starter</h3>
       <p>1-2 Seiten, mobil optimiert<br>AOS Effekte + Glow</p>
       <div class="price">ab 1.200 &euro;</div>
     </div>
-    <div class="card" data-aos="fade-up" data-aos-duration="1000" onclick="showCalendar(this, 'Business')">
+    <div class="card" onclick="showCalendar(this, 'Business')">
       <h3>Business</h3>
       <p>3-5 Seiten, mobil optimiert<br>AOS + SEO Basics</p>
       <div class="price">ab 2.000 &euro;</div>
     </div>
-    <div class="card" data-aos="fade-up" data-aos-duration="1000" onclick="showCalendar(this, 'Premium')">
+    <div class="card" onclick="showCalendar(this, 'Premium')">
       <h3>Premium</h3>
       <p>5-8 Seiten, mobil optimiert<br>SEO + erweiterbar (Blog, KI-Chatbot)</p>
       <div class="price">ab 3.000 &euro;</div>
-    </div>
-  </div>
-
-  <div id="premium" class="pricing-section">
-    <div class="card" data-aos="fade-up" data-aos-duration="1000" onclick="showCalendar(this, 'Starter Premium')">
-      <h3>Starter Premium</h3>
-      <p>1-2 Seiten<br>Figma + HTML / Webflow</p>
-      <div class="price">ab 1.500 &euro;</div>
-    </div>
-    <div class="card" data-aos="fade-up" data-aos-duration="1000" onclick="showCalendar(this, 'Business Premium')">
-      <h3>Business Premium</h3>
-      <p>3-5 Seiten<br>Custom Figma + Webflow + CMS</p>
-      <div class="price">ab 3.000 &euro;</div>
-    </div>
-    <div class="card" data-aos="fade-up" data-aos-duration="1000" onclick="showCalendar(this, 'Premium Deluxe')">
-      <h3>Premium Deluxe</h3>
-      <p>5-8 Seiten<br>Full Custom Design + CMS + Animationen + Chatbot-ready</p>
-      <div class="price">ab 5.000 &euro;</div>
     </div>
   </div>
 
@@ -317,24 +334,6 @@
       once: true,
       duration: 1000
     });
-    
-</script>
-  <!-- Lenis Library einbinden (vor </body>) -->
-<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.18/bundled/lenis.min.js"></script>
-
-<script>
-  const lenis = new Lenis({
-    duration: 1.6, // Geschwindigkeit (kannst du anpassen, z.B. 1.0 oder 1.5)
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    smooth: true
-  })
-
-  function raf(time) {
-    lenis.raf(time)
-    requestAnimationFrame(raf)
-  }
-
-  requestAnimationFrame(raf)
-</script>
+  </script>
 </body>
 </html>
