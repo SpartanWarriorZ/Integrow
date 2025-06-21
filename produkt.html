@@ -109,19 +109,26 @@
       box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
     }
     .pricing-section {
-      display: none;
-      max-width: 1200px;
-      margin: 80px auto 60px;
-      padding: 0 20px;
-    }
-    .pricing-section.active {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(300px, 1fr));
-  gap: 40px;
-  max-width: 1400px; /* größer machen */
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  max-width: 1200px;
   margin: 80px auto 60px;
-  padding: 0 40px; /* mehr Padding innen */
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  pointer-events: none;
+  visibility: hidden;
 }
+
+.pricing-section.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  visibility: visible;
+}
+
     .card {
       background: #1a1a1a;
       border-radius: 12px;
