@@ -9,7 +9,6 @@
     html, body {
       max-width: 100%;
       overflow-x: hidden;
-      scroll-behavior: smooth;
     }
     body {
       margin: 0;
@@ -109,26 +108,21 @@
       box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
     }
     .pricing-section {
-      max-width: 1400px;
-      margin: 80px auto 60px;
-      padding: 0 20px;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 50px;
+      gap: 40px;
+      max-width: 1200px;
+      margin: 80px auto 60px;
+      padding: 0 20px;
       opacity: 0;
-      transform: translateY(30px);
-      pointer-events: none;
+      transform: translateY(20px);
       transition: opacity 0.6s ease, transform 0.6s ease;
+      pointer-events: none;
     }
     .pricing-section.active {
       opacity: 1;
       transform: translateY(0);
       pointer-events: auto;
-    }
-    .pricing-section.inactive {
-      opacity: 0;
-      transform: translateY(30px);
-      pointer-events: none;
     }
     .card {
       background: #1a1a1a;
@@ -165,31 +159,36 @@
       color: #fff;
       margin-bottom: 20px;
     }
-    footer {
-      background-color: #111;
-      text-align: center;
-      padding: 40px 20px;
-      color: #777;
-      font-size: 1rem;
-      border-top: 1px solid #2a2a2a;
+    .calendar-widget {
+      margin-top: 20px;
+      background: #222;
+      border-radius: 12px;
+      padding: 20px;
+      position: relative;
+    }
+    .calendar-widget iframe {
+      width: 100%;
+      height: 500px;
+      border: none;
+      border-radius: 12px;
+    }
+    .close-widget {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      background: #444;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 28px;
+      height: 28px;
+      cursor: pointer;
+      font-weight: bold;
+      line-height: 28px;
     }
     @media (max-width: 768px) {
       .pricing-section {
         grid-template-columns: 1fr;
-      }
-      .nav-links {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 10px;
-        padding-bottom: 10px;
-      }
-      .nav-links a {
-        font-size: 1.1rem;
-        padding: 5px 10px;
-      }
-      .logo-img {
-        max-width: 400px;
       }
     }
   </style>
@@ -203,20 +202,39 @@
       }
 
       document.querySelectorAll('.pricing-section').forEach(section => {
-        if (section.id === tab) {
-          section.classList.remove('inactive');
-          section.classList.add('active');
-        } else {
-          section.classList.remove('active');
-          section.classList.add('inactive');
-        }
+        section.classList.remove('active');
       });
+
+      setTimeout(() => {
+        document.getElementById(tab).classList.add('active');
+      }, 100);
+
+      closeAllWidgets();
+    }
+
+    function showCalendar(card, packageName) {
+      closeAllWidgets();
+      const widget = document.createElement('div');
+      widget.classList.add('calendar-widget');
+      widget.innerHTML = `
+        <button class="close-widget" onclick="closeWidget(this)">&times;</button>
+        <iframe src="https://calendly.com/leonidas-pyka/30min?hide_gdpr_banner=1&background_color=000000&text_color=FFFFFF&primary_color=FFD700&a1=${encodeURIComponent(packageName)}" allowtransparency="true"></iframe>
+      `;
+      card.appendChild(widget);
+    }
+
+    function closeWidget(button) {
+      button.parentElement.remove();
+    }
+
+    function closeAllWidgets() {
+      document.querySelectorAll('.calendar-widget').forEach(widget => widget.remove());
     }
   </script>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header>
+  <header data-aos="fade-down">
     <img src="DB5A56C2-6537-412D-94B5-4C1A72DA5F3C.PNG" alt="Integrow Logo" class="logo-img" />
     <div class="nav-links">
       <a href="index.html">Startseite</a>
@@ -233,43 +251,51 @@
   </div>
 
   <div id="basis" class="pricing-section active">
-    <div class="card">
+    <div class="card" onclick="showCalendar(this, 'Starter')">
       <h3>Starter</h3>
       <p>1-2 Seiten, mobil optimiert<br>AOS Effekte + Glow</p>
-      <div class="price">ab 1.200 €</div>
+      <div class="price">ab 1.200 &euro;</div>
     </div>
-    <div class="card">
+    <div class="card" onclick="showCalendar(this, 'Business')">
       <h3>Business</h3>
       <p>3-5 Seiten, mobil optimiert<br>AOS + SEO Basics</p>
-      <div class="price">ab 2.000 €</div>
+      <div class="price">ab 2.000 &euro;</div>
     </div>
-    <div class="card">
+    <div class="card" onclick="showCalendar(this, 'Premium')">
       <h3>Premium</h3>
       <p>5-8 Seiten, mobil optimiert<br>SEO + erweiterbar (Blog, KI-Chatbot)</p>
-      <div class="price">ab 3.000 €</div>
+      <div class="price">ab 3.000 &euro;</div>
     </div>
   </div>
 
-  <div id="premium" class="pricing-section inactive">
-    <div class="card">
+  <div id="premium" class="pricing-section">
+    <div class="card" onclick="showCalendar(this, 'Starter Premium')">
       <h3>Starter Premium</h3>
       <p>1-2 Seiten<br>Figma + HTML / Webflow</p>
-      <div class="price">ab 1.500 €</div>
+      <div class="price">ab 1.500 &euro;</div>
     </div>
-    <div class="card">
+    <div class="card" onclick="showCalendar(this, 'Business Premium')">
       <h3>Business Premium</h3>
       <p>3-5 Seiten<br>Custom Figma + Webflow + CMS</p>
-      <div class="price">ab 3.000 €</div>
+      <div class="price">ab 3.000 &euro;</div>
     </div>
-    <div class="card">
+    <div class="card" onclick="showCalendar(this, 'Premium Deluxe')">
       <h3>Premium Deluxe</h3>
       <p>5-8 Seiten<br>Full Custom Design + CMS + Animationen + Chatbot-ready</p>
-      <div class="price">ab 5.000 €</div>
+      <div class="price">ab 5.000 &euro;</div>
     </div>
   </div>
 
   <footer>
     &copy; 2025 Integrow. Digital Elegance. Klar. Stark. Skaliert.
   </footer>
+
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      once: true,
+      duration: 1000
+    });
+  </script>
 </body>
 </html>
