@@ -143,6 +143,35 @@
         font-size: 1.1rem;
         padding: 5px 10px;
       }
+      .calendar-widget {
+  margin-top: 20px;
+  background: #222;
+  border-radius: 12px;
+  padding: 20px;
+  position: relative;
+}
+.calendar-widget iframe {
+  width: 100%;
+  height: 500px;
+  border: none;
+  border-radius: 12px;
+}
+.close-widget {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: #444;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  font-weight: bold;
+  line-height: 28px;
+  user-select: none;
+  outline: none;
+}
       .logo-img {
         max-width: 400px;
       }
@@ -189,17 +218,17 @@
 
   <div class="section" data-aos="fade-up">
     <h2>Unsere Kurse</h2>
-    <div class="course" data-aos="zoom-in" onclick="selectCourse(this)">
+    <div class="course" data-aos="zoom-in" onclick="selectCourse(this)" onclick="showCalendar(this, 'Webflow Basics')">
       <h3>Webflow Basics</h3>
       <p>Lerne die Grundlagen von Webflow und baue deine ersten modernen Webseiten ohne Programmierung.</p>
       <div class="price">299 &euro;</div>
     </div>
-    <div class="course" data-aos="zoom-in" data-aos-delay="100" onclick="selectCourse(this)">
+    <div class="course" data-aos="zoom-in" data-aos-delay="100" onclick="selectCourse(this)" onclick="showCalendar(this, 'Professionelles Webdesign')">
       <h3>Professionelles Webdesign</h3>
       <p>Tipps und Tricks für fortgeschrittenes Design mit Fokus auf User Experience, Animationen und responsive Layouts.</p>
       <div class="price">499 &euro;</div>
     </div>
-    <div class="course" data-aos="zoom-in" data-aos-delay="200" onclick="selectCourse(this)">
+    <div class="course" data-aos="zoom-in" data-aos-delay="200" onclick="selectCourse(this)" onclick="showCalendar(this, 'Masterclass: Webflow & Business')">
       <h3>Masterclass: Webflow & Business</h3>
       <p>Meistere Webflow und lerne, wie du professionell Webseiten für Kunden umsetzt – inkl. Preisgestaltung, Projektmanagement und Marketing.</p>
       <div class="price">999 &euro;</div>
@@ -258,6 +287,26 @@
       top: 0,
       behavior: 'smooth'
     });
+  }
+</script>
+<script>
+  function showCalendar(card, packageName) {
+    closeAllWidgets();
+    const widget = document.createElement('div');
+    widget.classList.add('calendar-widget');
+    widget.innerHTML = `
+      <button class="close-widget" onclick="closeWidget(this)">&times;</button>
+      <iframe src="https://calendly.com/leonidas-pyka/30min?hide_gdpr_banner=1&background_color=000000&text_color=FFFFFF&primary_color=FFD700&a1=${encodeURIComponent(packageName)}" allowtransparency="true"></iframe>
+    `;
+    card.appendChild(widget);
+  }
+
+  function closeWidget(button) {
+    button.parentElement.remove();
+  }
+
+  function closeAllWidgets() {
+    document.querySelectorAll('.calendar-widget').forEach(widget => widget.remove());
   }
 </script>
 <div id="back-to-top" onclick="scrollToTop()">↑</div>
