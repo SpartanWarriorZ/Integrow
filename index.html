@@ -161,7 +161,11 @@
 .cta-button:hover {
   background: linear-gradient(to right, #ffffff, #bfbfbf);
 }
-    #back-to-top {
+    html {
+  scroll-behavior: smooth;
+}
+
+#back-to-top {
   position: fixed;
   bottom: 20px;
   right: 20px;
@@ -344,7 +348,7 @@
 <script>
   window.addEventListener('scroll', function() {
     const btn = document.getElementById('back-to-top');
-    if (window.scrollY > 300) {
+    if (window.scrollY > 150) {  // Hier auf 150 px geändert (statt 300)
       btn.style.opacity = '1';
       btn.style.visibility = 'visible';
     } else {
@@ -356,7 +360,7 @@
   function scrollToTop() {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: 'smooth'  // bleibt smooth
     });
   }
 </script>
