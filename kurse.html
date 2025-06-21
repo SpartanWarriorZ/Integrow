@@ -6,6 +6,10 @@
   <title>Integrow – Kurse</title>
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
   <style>
+    html, body {
+      max-width: 100%;
+      overflow-x: hidden;
+    }
     body {
       margin: 0;
       background-color: #0a0a0a;
@@ -14,7 +18,7 @@
       background: linear-gradient(to bottom right, #0a0a0a, #1c1c1c);
     }
     header {
-      padding: 80px 40px 60px;
+      padding: 60px 40px 40px;
       background: linear-gradient(to right, #1c1c1c, #000);
       text-align: center;
       border-bottom: 1px solid #444;
@@ -31,81 +35,46 @@
       margin-left: auto;
       margin-right: auto;
     }
-    .logo-img:hover {
-      filter: drop-shadow(0 0 18px rgba(255,255,255,0.6));
-    }
     .nav-links {
       margin-top: 10px;
       display: flex;
       justify-content: center;
       gap: 50px;
-      z-index: 1000;
-      position: relative;
       flex-wrap: wrap;
     }
     .nav-links a {
-  color: silver;
-  text-decoration: none;
-  font-size: 1.4rem;
-  font-family: 'Rajdhani', sans-serif;
-  font-weight: 600;
-  letter-spacing: 1px;
-  transition: color 0.3s ease, text-shadow 0.3s ease;
-  position: relative; /* WICHTIG für die Pseudo-Klasse */
-}
-    .nav-links a:hover {
-      color: #fff;
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-    }
-    .nav-links a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -5px;
-  width: 100%;
-  height: 2px;
-  background: silver;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.3s ease;
-}
-
-.nav-links a:hover::after {
-  transform: scaleX(1);
-}
-    .section {
-      padding: 80px 40px;
-      max-width: 1200px;
-      margin: auto;
-      border-bottom: 1px solid #2a2a2a;
-    }
-    .section h2 {
       color: silver;
-      font-size: 2.4rem;
-      margin-bottom: 30px;
-      text-transform: uppercase;
-      text-align: center;
+      text-decoration: none;
+      font-size: 1.4rem;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 600;
+    }
+    .section {
+      max-width: 1200px;
+      margin: 80px auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 40px;
     }
     .course {
       background: #1a1a1a;
       border-radius: 12px;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
       padding: 40px;
-      margin-bottom: 40px;
       border: 1px solid #333;
-      transition: transform 0.4s ease, box-shadow 0.4s ease, text-shadow 0.4s ease;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+      text-align: center;
       cursor: pointer;
+      transition: transform 0.4s ease, box-shadow 0.4s ease, max-height 0.6s ease;
+      overflow: visible;
     }
     .course:hover {
-      transform: scale(1.03);
+      transform: translateY(-10px);
       box-shadow: 0 0 40px rgba(255, 255, 255, 0.15);
-      text-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
     }
-    .course.selected {
-      transform: scale(1.05);
-      box-shadow: 0 0 50px rgba(255, 215, 0, 0.3);
-      text-shadow: 0 0 16px rgba(255, 215, 0, 0.7);
-      border-color: #ffd700;
+    .course.expanded {
+      grid-column: 1 / -1;
+      max-height: 1200px;
     }
     .course h3 {
       font-size: 1.8rem;
@@ -114,132 +83,74 @@
     }
     .course p {
       font-size: 1rem;
-      line-height: 1.6;
       color: #ccc;
       margin-bottom: 20px;
     }
     .price {
-      font-size: 1.6rem;
+      font-size: 2rem;
       color: #fff;
       margin-bottom: 20px;
     }
-    footer {
-      background-color: #111;
-      text-align: center;
-      padding: 40px 20px;
-      color: #777;
-      font-size: 1rem;
-      border-top: 1px solid #2a2a2a;
+    .calendar-widget {
+      margin-top: 20px;
+      background: #222;
+      border-radius: 12px;
+      padding: 20px;
+      position: relative;
+      width: 100%;
+      box-sizing: border-box;
     }
-    @media (max-width: 768px) {
-      .nav-links {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 10px;
-        padding-bottom: 10px;
-      }
-      .nav-links a {
-        font-size: 1.1rem;
-        padding: 5px 10px;
-      }
-      .calendar-widget {
-  margin-top: 20px;
-  background: #222;
-  border-radius: 12px;
-  padding: 20px;
-  position: relative;
-}
-.calendar-widget iframe {
-  width: 100%;
-  height: 500px;
-  border: none;
-  border-radius: 12px;
-}
-.close-widget {
-  position: absolute;
-  top: 10px;
-  right: 12px;
-  background: #444;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 28px;
-  height: 28px;
-  cursor: pointer;
-  font-weight: bold;
-  line-height: 28px;
-  user-select: none;
-  outline: none;
-}
-      .course.expanded {
-  grid-column: 1 / -1;
-}
-.course .calendar-widget {
-  margin-top: 20px;
-  background: #222;
-  border-radius: 12px;
-  padding: 20px;
-  position: relative;
-  width: 100%;
-  box-sizing: border-box;
-}
-.course .calendar-widget iframe {
-  width: 100%;
-  height: 500px;
-  border: none;
-  border-radius: 12px;
-}
-.course .close-widget {
-  position: absolute;
-  top: 10px;
-  right: 12px;
-  background: #444;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 28px;
-  height: 28px;
-  cursor: pointer;
-  font-weight: bold;
-  line-height: 28px;
-  user-select: none;
-  outline: none;
-}
-      .logo-img {
-        max-width: 400px;
-      }
-      #back-to-top {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 50px;
-  height: 50px;
-  background: #333;
-  color: white;
-  border-radius: 50%;
-  font-size: 24px;
-  text-align: center;
-  line-height: 50px;
-  cursor: pointer;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
-  z-index: 999;
-}
-
-#back-to-top:hover {
-  background: silver;
-  color: #000;
-  transform: scale(1.15);
-}
+    .calendar-widget iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+      border-radius: 12px;
+    }
+    .close-widget {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      background: #444;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 28px;
+      height: 28px;
+      cursor: pointer;
+      font-weight: bold;
+      line-height: 28px;
     }
   </style>
-  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&display=swap" rel="stylesheet">
+  <script>
+    function showCalendar(card, packageName) {
+      closeAllWidgets();
+      card.classList.add('expanded');
+      const widget = document.createElement('div');
+      widget.classList.add('calendar-widget');
+      widget.innerHTML = `
+        <button class="close-widget" onclick="closeWidget(this)">&times;</button>
+        <iframe src="https://calendly.com/leonidas-pyka/30min?hide_gdpr_banner=1&background_color=000000&text_color=FFFFFF&primary_color=FFD700&a1=${encodeURIComponent(packageName)}" allowtransparency="true"></iframe>
+      `;
+      card.appendChild(widget);
+    }
+
+    function closeWidget(button) {
+      const card = button.closest('.course');
+      card.classList.remove('expanded');
+      button.parentElement.remove();
+    }
+
+    function closeAllWidgets() {
+      document.querySelectorAll('.calendar-widget').forEach(widget => {
+        const card = widget.closest('.course');
+        card.classList.remove('expanded');
+        widget.remove();
+      });
+    }
+  </script>
 </head>
 <body>
-  <header data-aos="fade-down">
+  <header>
     <img src="DB5A56C2-6537-412D-94B5-4C1A72DA5F3C.PNG" alt="Integrow Logo" class="logo-img" />
     <div class="nav-links">
       <a href="index.html">Startseite</a>
@@ -250,21 +161,22 @@
     </div>
   </header>
 
-  <div class="section" data-aos="fade-up">
-    <h2>Unsere Kurse</h2>
-    <div class="course" data-aos="zoom-in" onclick="showCalendar(this, 'Webflow Basics')">
+  <div class="section">
+    <div class="course" onclick="showCalendar(this, 'Webflow Basics')">
       <h3>Webflow Basics</h3>
       <p>Lerne die Grundlagen von Webflow und baue deine ersten modernen Webseiten ohne Programmierung.</p>
       <div class="price">299 &euro;</div>
     </div>
-    <div class="course" data-aos="zoom-in" data-aos-delay="100" onclick="showCalendar(this, 'Professionelles Webdesign')">
+
+    <div class="course" onclick="showCalendar(this, 'Professionelles Webdesign')">
       <h3>Professionelles Webdesign</h3>
-      <p>Tipps und Tricks für fortgeschrittenes Design mit Fokus auf User Experience, Animationen und responsive Layouts.</p>
+      <p>Tipps und Tricks für fortgeschrittenes Design mit Fokus auf UX, Animationen und Responsive Layouts.</p>
       <div class="price">499 &euro;</div>
     </div>
-    <div class="course" data-aos="zoom-in" data-aos-delay="200" onclick="showCalendar(this, 'Masterclass: Webflow & Business')">
+
+    <div class="course" onclick="showCalendar(this, 'Masterclass Webflow & Business')">
       <h3>Masterclass: Webflow & Business</h3>
-      <p>Meistere Webflow und lerne, wie du professionell Webseiten für Kunden umsetzt – inkl. Preisgestaltung, Projektmanagement und Marketing.</p>
+      <p>Meistere Webflow und lerne, wie du professionell Webseiten für Kunden umsetzt inkl. Preisgestaltung, Projektmanagement und Marketing.</p>
       <div class="price">999 &euro;</div>
     </div>
   </div>
@@ -273,83 +185,5 @@
     &copy; 2025 Integrow. Digital Elegance. Klar. Stark. Skaliert.
   </footer>
 
-  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-  <script>
-    AOS.init({
-      once: true,
-      duration: 1000
-    });
-
-    function selectCourse(element) {
-      document.querySelectorAll('.course').forEach(course => {
-        course.classList.remove('selected');
-      });
-      element.classList.add('selected');
-    }
-  </script>
-  <!-- Lenis Library einbinden (vor </body>) -->
-<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.18/bundled/lenis.min.js"></script>
-
-<script>
-  const lenis = new Lenis({
-    duration: 1.6, // Geschwindigkeit (kannst du anpassen, z.B. 1.0 oder 1.5)
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    smooth: true
-  })
-
-  function raf(time) {
-    lenis.raf(time)
-    requestAnimationFrame(raf)
-  }
-
-  requestAnimationFrame(raf)
-</script>
-<script>
-  window.addEventListener('scroll', function() {
-    const btn = document.getElementById('back-to-top');
-    if (window.scrollY > 300) {
-      btn.style.opacity = '1';
-      btn.style.visibility = 'visible';
-    } else {
-      btn.style.opacity = '0';
-      btn.style.visibility = 'hidden';
-    }
-  });
-
-  function scrollToTop() {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  }
-</script>
-<script>
-  function showCalendar(card, packageName) {
-    closeAllWidgets();
-    card.classList.add('expanded');
-    const widget = document.createElement('div');
-    widget.classList.add('calendar-widget');
-    widget.innerHTML = `
-      <button class="close-widget" onclick="closeWidget(this)">&times;</button>
-      <iframe src="https://calendly.com/leonidas-pyka/30min?hide_gdpr_banner=1&background_color=000000&text_color=FFFFFF&primary_color=FFD700&a1=${encodeURIComponent(packageName)}" allowtransparency="true"></iframe>
-    `;
-    card.appendChild(widget);
-  }
-
-  function closeWidget(button) {
-    const card = button.closest('.course');
-    card.classList.remove('expanded');
-    button.parentElement.remove();
-  }
-
-  function closeAllWidgets() {
-    document.querySelectorAll('.calendar-widget').forEach(widget => {
-      const card = widget.closest('.course');
-      card.classList.remove('expanded');
-      widget.remove();
-    });
-  }
-</script>
-<div id="back-to-top" onclick="scrollToTop()">↑</div>
 </body>
 </html>
