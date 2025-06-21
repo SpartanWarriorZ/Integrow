@@ -348,7 +348,7 @@
 <script>
   window.addEventListener('scroll', function() {
     const btn = document.getElementById('back-to-top');
-    if (window.scrollY > 150) {  // Hier auf 150 px geändert (statt 300)
+    if (window.scrollY > 150) {
       btn.style.opacity = '1';
       btn.style.visibility = 'visible';
     } else {
@@ -358,10 +358,11 @@
   });
 
   function scrollToTop() {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'  // bleibt smooth
-    });
+    const c = document.documentElement.scrollTop || document.body.scrollTop;
+    if (c > 0) {
+      window.requestAnimationFrame(scrollToTop);
+      window.scrollTo(0, c - c / 8);
+    }
   }
 </script>
 <div id="back-to-top" onclick="scrollToTop()">↑</div>
