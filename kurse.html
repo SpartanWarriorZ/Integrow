@@ -146,6 +146,31 @@
       .logo-img {
         max-width: 400px;
       }
+      #back-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  background: #444;
+  color: white;
+  border-radius: 50%;
+  font-size: 2rem;
+  text-align: center;
+  line-height: 50px;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+  z-index: 999;
+}
+
+      #back-to-top:hover {
+  background: silver;
+  color: #000;
+  transform: scale(1.1);
+}
     }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&display=swap" rel="stylesheet">
@@ -216,5 +241,27 @@
 
   requestAnimationFrame(raf)
 </script>
+<script>
+  // Zeige Button ab Scroll-Höhe 300px
+  window.addEventListener('scroll', function() {
+    const btn = document.getElementById('back-to-top');
+    if (window.scrollY > 300) {
+      btn.style.opacity = '1';
+      btn.style.visibility = 'visible';
+    } else {
+      btn.style.opacity = '0';
+      btn.style.visibility = 'hidden';
+    }
+  });
+
+  // Scroll nach oben Funktion
+  function scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }
+</script>
+<div id="back-to-top" onclick="scrollToTop()">↑</div>
 </body>
 </html>
