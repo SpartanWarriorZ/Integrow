@@ -19,14 +19,11 @@
       background: linear-gradient(to bottom right, #0a0a0a, #1c1c1c);
     }
     header {
-      padding: 20px 40px;
+      padding: 60px 40px 40px;
       background: linear-gradient(to right, #1c1c1c, #000);
       text-align: center;
       border-bottom: 1px solid #444;
       box-shadow: 0 0 40px rgba(192,192,192,0.1);
-      position: sticky;
-      top: 0;
-      z-index: 999;
     }
     .logo-img {
       max-width: 600px;
@@ -43,9 +40,12 @@
       filter: drop-shadow(0 0 18px rgba(255,255,255,0.6));
     }
     .nav-links {
+      margin-top: 10px;
       display: flex;
       justify-content: center;
       gap: 50px;
+      z-index: 1000;
+      position: relative;
       flex-wrap: wrap;
     }
     .nav-links a {
@@ -113,15 +113,17 @@
       max-width: 1200px;
       margin: 80px auto 60px;
       padding: 0 20px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
     }
     .pricing-section.active {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(300px, 1fr));
-  gap: 40px;
-  max-width: 1400px; /* größer machen */
-  margin: 80px auto 60px;
-  padding: 0 40px; /* mehr Padding innen */
-}
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+      opacity: 1;
+      transform: translateY(0);
+    }
     .card {
       background: #1a1a1a;
       border-radius: 12px;
@@ -163,6 +165,7 @@
       border-radius: 12px;
       padding: 20px;
       position: relative;
+      animation: fadeIn 0.5s ease;
     }
     .calendar-widget iframe {
       width: 100%;
@@ -191,6 +194,10 @@
       color: #777;
       font-size: 1rem;
       border-top: 1px solid #2a2a2a;
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
     }
     @media (max-width: 768px) {
       .pricing-section.active {
@@ -309,24 +316,6 @@
       once: true,
       duration: 1000
     });
-    
-</script>
-  <!-- Lenis Library einbinden (vor </body>) -->
-<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.18/bundled/lenis.min.js"></script>
-
-<script>
-  const lenis = new Lenis({
-    duration: 1.6, // Geschwindigkeit (kannst du anpassen, z.B. 1.0 oder 1.5)
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    smooth: true
-  })
-
-  function raf(time) {
-    lenis.raf(time)
-    requestAnimationFrame(raf)
-  }
-
-  requestAnimationFrame(raf)
-</script>
+  </script>
 </body>
 </html>
