@@ -358,13 +358,13 @@
   });
 
   function scrollToTop() {
-    const c = document.documentElement.scrollTop || document.body.scrollTop;
-    if (c > 0) {
-      window.requestAnimationFrame(scrollToTop);
-      window.scrollTo(0, c - c / 8);
-    }
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
   }
 </script>
 <div id="back-to-top" onclick="scrollToTop()">↑</div>
+<button id="back-to-top" onclick="scrollToTop()" title="Nach oben">↑</button>
 </body>
 </html>
