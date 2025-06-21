@@ -115,10 +115,13 @@
       padding: 0 20px;
     }
     .pricing-section.active {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 40px;
-    }
+  display: grid;
+  grid-template-columns: repeat(3, minmax(300px, 1fr));
+  gap: 40px;
+  max-width: 1400px; /* größer machen */
+  margin: 80px auto 60px;
+  padding: 0 40px; /* mehr Padding innen */
+}
     .card {
       background: #1a1a1a;
       border-radius: 12px;
