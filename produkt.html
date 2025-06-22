@@ -133,10 +133,11 @@
       border: 1px solid #333;
       cursor: pointer;
     }
-    .card.premium-selected {
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.6), 0 0 40px rgba(255, 215, 0, 0.4);
-  text-shadow: 0 0 12px rgba(255, 215, 0, 0.6);
+    .card.premium:hover,
+.card.premium.premium-selected {
   transform: translateY(-10px);
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.6), 0 0 50px rgba(255, 215, 0, 0.4);
+  text-shadow: 0 0 12px rgba(255, 215, 0, 0.6);
 }
     .card:hover {
       transform: translateY(-10px);
@@ -252,33 +253,31 @@
       `;
     }
 
-    function getPremiumHTML() {
-      return `
-        <div class="card" onclick="showCalendar(this, 'Starter Premium')">
-          <h3>Starter Premium</h3>
-          <p>1-2 Seiten<br>Figma + HTML / Webflow</p>
-          <div class="price">ab 1.500 &euro;</div>
-        </div>
-        <div class="card" onclick="showCalendar(this, 'Business Premium')">
-          <h3>Business Premium</h3>
-          <p>3-5 Seiten<br>Custom Figma + Webflow + CMS</p>
-          <div class="price">ab 3.000 &euro;</div>
-        </div>
-        <div class="card" onclick="showCalendar(this, 'Premium Deluxe')">
-          <h3>Premium Deluxe</h3>
-          <p>5-8 Seiten<br>Full Custom Design + CMS + Animationen + Chatbot-ready</p>
-          <div class="price">ab 5.000 &euro;</div>
-        </div>
-      `;
-    }
+  function getPremiumHTML() {
+  return `
+    <div class="card premium" onclick="showCalendar(this, 'Starter Premium')">
+      <h3>Starter Premium</h3>
+      <p>1-2 Seiten<br>Figma + HTML / Webflow</p>
+      <div class="price">ab 1.500 &euro;</div>
+    </div>
+    <div class="card premium" onclick="showCalendar(this, 'Business Premium')">
+      <h3>Business Premium</h3>
+      <p>3-5 Seiten<br>Custom Figma + Webflow + CMS</p>
+      <div class="price">ab 3.000 &euro;</div>
+    </div>
+    <div class="card premium" onclick="showCalendar(this, 'Premium Deluxe')">
+      <h3>Premium Deluxe</h3>
+      <p>5-8 Seiten<br>Full Custom Design + CMS + Animationen + Chatbot-ready</p>
+      <div class="price">ab 5.000 &euro;</div>
+    </div>
+  `;
+}
 
     function showCalendar(card, packageName) {
   closeAllWidgets();
   document.querySelectorAll('.card').forEach(c => c.classList.remove('premium-selected'));
 
-  const isPremium = packageName === 'Starter Premium' || packageName === 'Business Premium' || packageName === 'Premium Deluxe';
-
-  if (isPremium) {
+  if (card.classList.contains('premium')) {
     card.classList.add('premium-selected');
   }
 
