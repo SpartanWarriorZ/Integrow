@@ -25,19 +25,19 @@
       box-shadow: 0 0 40px rgba(192,192,192,0.1);
     }
     .logo-img {
-  max-width: 600px;
-  width: 100%;
-  height: auto;
-  margin-bottom: 10px;
-  filter: drop-shadow(0 0 12px rgba(255,255,255,0.4));
-  transition: filter 0.4s ease;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
+      max-width: 600px;
+      width: 100%;
+      height: auto;
+      margin-bottom: 10px;
+      filter: drop-shadow(0 0 12px rgba(255,255,255,0.4));
+      transition: filter 0.4s ease;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
     .logo-img:hover {
-  filter: drop-shadow(0 0 18px rgba(255,255,255,0.6));
-}
+      filter: drop-shadow(0 0 18px rgba(255,255,255,0.6));
+    }
     .nav-links {
       margin-top: 10px;
       display: flex;
@@ -48,31 +48,30 @@
       flex-wrap: wrap;
     }
     .nav-links a {
-  color: silver;
-  text-decoration: none;
-  font-size: 1.4rem;
-  font-family: 'Rajdhani', sans-serif;
-  font-weight: 600;
-  letter-spacing: 1px;
-  transition: color 0.3s ease, text-shadow 0.3s ease;
-  position: relative; /* WICHTIG für die Pseudo-Klasse */
-}
-    
-.nav-links a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -5px;
-  width: 100%;
-  height: 2px;
-  background: silver;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.3s ease;
-}
-.nav-links a:hover::after {
-  transform: scaleX(1);
-}
+      color: silver;
+      text-decoration: none;
+      font-size: 1.4rem;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 600;
+      letter-spacing: 1px;
+      transition: color 0.3s ease, text-shadow 0.3s ease;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -5px;
+      width: 100%;
+      height: 2px;
+      background: silver;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+    .nav-links a:hover::after {
+      transform: scaleX(1);
+    }
     .nav-links a:hover {
       color: #fff;
       text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
@@ -97,6 +96,7 @@
       gap: 40px;
       flex-wrap: wrap;
       transition: box-shadow 0.4s ease;
+      cursor: pointer;
     }
     .feature img {
       width: 340px;
@@ -119,33 +119,50 @@
       min-width: 260px;
       transition: text-shadow 0.4s ease;
     }
-    .feature-text h3 {
-      color: silver;
-      font-size: 1.8rem;
-      margin-bottom: 12px;
-      transition: transform 0.4s cubic-bezier(.4,1.6,.6,1); /* <--- hinzugefügt */
-      will-change: transform; /* <--- hinzugefügt */
-    }
+    .feature-text h3,
     .feature-text p {
-      font-size: 1.1rem;
-      line-height: 1.6;
-      color: #ccc;
-      margin-bottom: 0;
       transition: transform 0.4s cubic-bezier(.4,1.6,.6,1);
       will-change: transform;
     }
-
-.feature:hover .feature-text h3,
-.feature:focus-within .feature-text h3,
-.feature img:hover + .feature-text h3 {
-  transform: translateY(-28px);
-}
-
-.feature:hover .feature-text p,
-.feature:focus-within .feature-text p,
-.feature img:hover + .feature-text p {
-  transform: translateY(-28px);
-}
+    .feature:hover .feature-text h3,
+    .feature:focus-within .feature-text h3,
+    .feature img:hover + .feature-text h3,
+    .feature:hover .feature-text p,
+    .feature:focus-within .feature-text p,
+    .feature img:hover + .feature-text p {
+      transform: translateY(-28px);
+    }
+    .mission-bullets {
+      display: none;
+      margin-top: 28px;
+      margin-bottom: 0;
+      padding-left: 22px;
+      color: #b0b0b0;
+      font-size: 1rem;
+      text-align: left;
+      list-style: disc;
+      opacity: 0;
+      transform: translateX(-40px);
+      transition: opacity 0.5s cubic-bezier(.4,1.6,.6,1), transform 0.5s cubic-bezier(.4,1.6,.6,1);
+    }
+    .feature:hover .mission-bullets,
+    .feature:focus-within .mission-bullets,
+    .feature img:hover + .feature-text .mission-bullets {
+      display: block;
+      opacity: 1;
+      transform: translateX(0);
+      animation: fadeInMissionLeft 0.5s cubic-bezier(.4,1.6,.6,1);
+    }
+    @keyframes fadeInMissionLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
     .cta {
       background: radial-gradient(circle, #1a1a1a 0%, #0d0d0d 100%);
       text-align: center;
@@ -162,23 +179,23 @@
       font-size: 1.2rem;
     }
     .cta-button {
-  margin-top: 30px;
-  background: linear-gradient(to right, #d8d8d8, #a8a8a8);
-  color: #000;
-  border: none;
-  padding: 16px 36px;
-  font-size: 1.1rem;
-  cursor: pointer;
-  border-radius: 8px;
-  font-weight: bold;
-  transition: 0.3s ease;
-  text-decoration: none;
-  display: inline-block;
-}
-.cta-button:hover {
-  background: linear-gradient(to bottom, #ffffff, #575757);
-  box-shadow: 0 0 40px rgb(200, 200, 200);
-}
+      margin-top: 30px;
+      background: linear-gradient(to right, #d8d8d8, #a8a8a8);
+      color: #000;
+      border: none;
+      padding: 16px 36px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .cta-button:hover {
+      background: linear-gradient(to bottom, #ffffff, #575757);
+      box-shadow: 0 0 40px rgb(200, 200, 200);
+    }
     footer {
       background-color: #111;
       text-align: center;
@@ -188,30 +205,29 @@
       border-top: 1px solid #2a2a2a;
     }
     #back-to-top {
-  position: fixed;
-  bottom: 20px;
-  right: 10px;
-  z-index: 999;
-  display: inline-block;
-  background: #444;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  font-size: 24px;
-  cursor: pointer;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.4s, visibility 0.4s, transform 0.3s;
-  user-select: none;   /* verhindert Text-Markierung */
-  outline: none;       /* verhindert blauen Rahmen bei Klick */
-}
-
-#back-to-top:hover {
-  background: #666;
-  transform: scale(1.1);
-}
+      position: fixed;
+      bottom: 20px;
+      right: 10px;
+      z-index: 999;
+      display: inline-block;
+      background: #444;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s, visibility 0.4s, transform 0.3s;
+      user-select: none;
+      outline: none;
+    }
+    #back-to-top:hover {
+      background: #666;
+      transform: scale(1.1);
+    }
     .leistungen-list {
       font-size: 1.4rem;
       line-height: 1.8;
@@ -266,30 +282,6 @@
         max-width: 400px;
       }
     }
-    .mission-bullets {
-  display: none;
-  margin-top: 28px; /* Mehr Abstand zum Haupttext */
-  margin-bottom: 0;
-  padding-left: 22px;
-  color: #b0b0b0;
-  font-size: 1rem;
-  text-align: left;
-  list-style: disc;
-  opacity: 0;
-  transform: translateX(-40px);
-  transition: opacity 0.5s cubic-bezier(.4,1.6,.6,1), transform 0.5s cubic-bezier(.4,1.6,.6,1);
-}
-
-@keyframes fadeInMissionLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&display=swap" rel="stylesheet">
 </head>
@@ -359,20 +351,20 @@
 
   <div class="section" data-aos="fade-up">
     <h2>Unsere Leistungen</h2>
-<div class="leistungen-list">
-  <ul>
-    <li>Individuell gestaltete Websites — exakt auf deine Zielgruppe zugeschnitten</li>
-    <li>Integration fortschrittlicher KI-Chatbots für bessere Nutzererlebnisse</li>
-    <li>Automatisierte Vertriebs- & Marketingprozesse für mehr Effizienz</li>
-    <li>Umfassende technische Beratung & kontinuierliche Betreuung</li>
-  </ul>
-</div>
+    <div class="leistungen-list">
+      <ul>
+        <li>Individuell gestaltete Websites — exakt auf deine Zielgruppe zugeschnitten</li>
+        <li>Integration fortschrittlicher KI-Chatbots für bessere Nutzererlebnisse</li>
+        <li>Automatisierte Vertriebs- & Marketingprozesse für mehr Effizienz</li>
+        <li>Umfassende technische Beratung & kontinuierliche Betreuung</li>
+      </ul>
+    </div>
   </div>
 
   <div class="cta" data-aos="zoom-in">
     <h2>Bereit für den nächsten Wachstumsschritt?</h2>
-<p>Starte jetzt mit Integrow — wir bringen deine Ideen zum Leben und dein Business online sichtbar nach vorn.</p>
-<a href="termin.html" class="cta-button">Jetzt Termin sichern</a>
+    <p>Starte jetzt mit Integrow — wir bringen deine Ideen zum Leben und dein Business online sichtbar nach vorn.</p>
+    <a href="termin.html" class="cta-button">Jetzt Termin sichern</a>
   </div>
 
   <footer>
@@ -387,81 +379,37 @@
     });
   </script>
   <!-- Lenis Library einbinden (vor </body>) -->
-<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.18/bundled/lenis.min.js"></script>
-
-<script>
-  const lenis = new Lenis({
-    duration: 1.6, // Geschwindigkeit (kannst du anpassen, z.B. 1.0 oder 1.5)
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    smooth: true
-  })
-
-  function raf(time) {
-    lenis.raf(time)
-    requestAnimationFrame(raf)
-  }
-
-  requestAnimationFrame(raf)
-</script>
-<script>
-  window.addEventListener('scroll', function() {
-    const btn = document.getElementById('back-to-top');
-    if (window.scrollY > 150) {
-      btn.style.opacity = '1';
-      btn.style.visibility = 'visible';
-    } else {
-      btn.style.opacity = '0';
-      btn.style.visibility = 'hidden';
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.18/bundled/lenis.min.js"></script>
+  <script>
+    const lenis = new Lenis({
+      duration: 1.6,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smooth: true
+    })
+    function raf(time) {
+      lenis.raf(time)
+      requestAnimationFrame(raf)
     }
-  });
-
-  function scrollToTop() {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  }
-</script>
-<button id="back-to-top" onclick="scrollToTop()" title="Nach oben">↑</button>
-<script>
-  function isMobile() {
-    return window.innerWidth <= 768;
-  }
-
-  function isInViewport(element) {
-    const rect = element.getBoundingClientRect();
-    return (
-      rect.top < window.innerHeight &&
-      rect.bottom > 0
-    );
-  }
-
-  function showMissionBulletsOnMobile() {
-    if (!isMobile()) return;
-
-    document.querySelectorAll('.feature').forEach(feature => {
-      const bullets = feature.querySelector('.mission-bullets');
-      if (!bullets) return;
-
-      if (isInViewport(feature)) {
-        bullets.style.display = 'block';
-        bullets.style.opacity = '1';
-        bullets.style.transform = 'translateX(0)';
-        bullets.style.animation = 'fadeInMissionLeft 0.5s cubic-bezier(.4,1.6,.6,1)';
-        bullets.style.pointerEvents = 'auto';
+    requestAnimationFrame(raf)
+  </script>
+  <script>
+    window.addEventListener('scroll', function() {
+      const btn = document.getElementById('back-to-top');
+      if (window.scrollY > 150) {
+        btn.style.opacity = '1';
+        btn.style.visibility = 'visible';
       } else {
-        bullets.style.display = '';
-        bullets.style.opacity = '';
-        bullets.style.transform = '';
-        bullets.style.animation = '';
-        bullets.style.pointerEvents = '';
+        btn.style.opacity = '0';
+        btn.style.visibility = 'hidden';
       }
     });
-  }
-
-  window.addEventListener('scroll', showMissionBulletsOnMobile);
-  window.addEventListener('resize', showMissionBulletsOnMobile);
-  window.addEventListener('DOMContentLoaded', showMissionBulletsOnMobile);
-</script>
+    function scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+  </script>
+  <button id="back-to-top" onclick="scrollToTop()" title="Nach oben">↑</button>
 </body>
 </html>
