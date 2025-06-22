@@ -23,10 +23,20 @@
       text-align: center;
       border-bottom: 1px solid #444;
       box-shadow: 0 0 40px rgba(192,192,192,0.1);
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      user-select: none;
+      -webkit-user-select: none;
     }
     .logo-img {
       max-width: 600px;
-      width: 100%;
+      width: auto; /* Only use the image's natural width */
       height: auto;
       margin-bottom: 10px;
       filter: drop-shadow(0 0 12px rgba(255,255,255,0.4));
@@ -34,6 +44,9 @@
       display: block;
       margin-left: auto;
       margin-right: auto;
+      user-select: none;
+      -webkit-user-select: none;
+      pointer-events: auto; /* Allow pointer events only on the image */
     }
     .logo-img:hover {
       filter: drop-shadow(0 0 18px rgba(255,255,255,0.6));
@@ -336,7 +349,9 @@
 </head>
 <body>
   <header data-aos="fade-down">
-    <img src="DB5A56C2-6537-412D-94B5-4C1A72DA5F3C.PNG" alt="Integrow Logo" class="logo-img" />
+    <div class="logo-container">
+      <img src="DB5A56C2-6537-412D-94B5-4C1A72DA5F3C.PNG" alt="Integrow Logo" class="logo-img" />
+    </div>
     <div class="nav-links">
       <a href="index.html">Startseite</a>
       <a href="produkt.html">Produkt</a>
