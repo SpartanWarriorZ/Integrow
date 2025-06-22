@@ -119,18 +119,20 @@
       min-width: 260px;
       transition: text-shadow 0.4s ease;
     }
-    .feature-text h3,
-    .feature-text p {
+    .feature-text h3 {
+      color: silver;
+      font-size: 1.8rem;
+      margin-bottom: 12px;
       transition: transform 0.4s cubic-bezier(.4,1.6,.6,1);
       will-change: transform;
     }
-    .feature:hover .feature-text h3,
-    .feature:focus-within .feature-text h3,
-    .feature img:hover + .feature-text h3,
-    .feature:hover .feature-text p,
-    .feature:focus-within .feature-text p,
-    .feature img:hover + .feature-text p {
-      transform: translateY(-28px);
+    .feature-text p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: #ccc;
+      margin-bottom: 0;
+      transition: transform 0.4s cubic-bezier(.4,1.6,.6,1);
+      will-change: transform;
     }
     .mission-bullets {
       display: none;
@@ -138,7 +140,7 @@
       margin-bottom: 0;
       padding-left: 22px;
       color: #b0b0b0;
-      font-size: 1rem;
+      font-size: 1.25rem;
       text-align: left;
       list-style: disc;
       opacity: 0;
@@ -153,6 +155,32 @@
       transform: translateX(0);
       animation: fadeInMissionLeft 0.5s cubic-bezier(.4,1.6,.6,1);
     }
+    .mission-bullets li {
+      opacity: 0;
+      transform: translateX(-40px);
+      animation: none;
+    }
+    .feature:hover .mission-bullets li,
+    .feature:focus-within .mission-bullets li,
+    .feature img:hover + .feature-text .mission-bullets li {
+      animation: fadeInMissionLeft 0.5s cubic-bezier(.4,1.6,.6,1) forwards;
+    }
+    .feature:hover .mission-bullets li:nth-child(1),
+    .feature:focus-within .mission-bullets li:nth-child(1),
+    .feature img:hover + .feature-text .mission-bullets li:nth-child(1) {
+      animation-delay: 0.08s;
+    }
+    .feature:hover .mission-bullets li:nth-child(2),
+    .feature:focus-within .mission-bullets li:nth-child(2),
+    .feature img:hover + .feature-text .mission-bullets li:nth-child(2) {
+      animation-delay: 0.22s;
+    }
+    .feature:hover .mission-bullets li:nth-child(3),
+    .feature:focus-within .mission-bullets li:nth-child(3),
+    .feature img:hover + .feature-text .mission-bullets li:nth-child(3) {
+      animation-delay: 0.36s;
+    }
+
     @keyframes fadeInMissionLeft {
       from {
         opacity: 0;
@@ -281,6 +309,18 @@
       .logo-img {
         max-width: 400px;
       }
+    }
+    .feature-text h3,
+    .feature-text p {
+      transition: transform 0.4s cubic-bezier(.4,1.6,.6,1);
+      will-change: transform;
+    }
+
+    .feature:hover .feature-text h3,
+    .feature:focus-within .feature-text h3,
+    .feature:hover .feature-text p,
+    .feature:focus-within .feature-text p {
+      transform: translateY(-28px);
     }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&display=swap" rel="stylesheet">
