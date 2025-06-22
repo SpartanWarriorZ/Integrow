@@ -133,6 +133,11 @@
       border: 1px solid #333;
       cursor: pointer;
     }
+    .card.selected {
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.6), 0 0 60px rgba(255, 215, 0, 0.4);
+  border-color: gold;
+  transform: translateY(-12px);
+}
     .card:hover {
       transform: translateY(-10px);
       box-shadow: 0 0 40px rgba(255, 255, 255, 0.15);
@@ -268,15 +273,22 @@
     }
 
     function showCalendar(card, packageName) {
-      closeAllWidgets();
-      const widget = document.createElement('div');
-      widget.classList.add('calendar-widget');
-      widget.innerHTML = `
-        <button class="close-widget" onclick="closeWidget(this)">&times;</button>
-        <iframe src="https://calendly.com/leonidas-pyka/30min?hide_gdpr_banner=1&background_color=000000&text_color=FFFFFF&primary_color=FFD700&a1=${encodeURIComponent(packageName)}" allowtransparency="true"></iframe>
-      `;
-      card.appendChild(widget);
-    }
+  closeAllWidgets();
+
+  // Remove selected from all cards
+  document.querySelectorAll('.card').forEach(c => c.classList.remove('selected'));
+
+  // Add selected to clicked card
+  card.classList.add('selected');
+
+  const widget = document.createElement('div');
+  widget.classList.add('calendar-widget');
+  widget.innerHTML = `
+    <button class="close-widget" onclick="closeWidget(this)">&times;</button>
+    <iframe src="https://calendly.com/leonidas-pyka/30min?hide_gdpr_banner=1&background_color=000000&text_color=FFFFFF&primary_color=FFD700&a1=${encodeURIComponent(packageName)}" allowtransparency="true"></iframe>
+  `;
+  card.appendChild(widget);
+}
 
     function closeWidget(button) {
       button.parentElement.remove();
