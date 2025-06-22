@@ -133,10 +133,10 @@
       border: 1px solid #333;
       cursor: pointer;
     }
-    .card.selected {
-  box-shadow: 0 0 25px rgba(255, 215, 0, 0.6), 0 0 60px rgba(255, 215, 0, 0.4);
-  border-color: gold;
-  transform: translateY(-12px);
+    .card.premium-selected {
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.6), 0 0 40px rgba(255, 215, 0, 0.4);
+  text-shadow: 0 0 12px rgba(255, 215, 0, 0.6);
+  transform: translateY(-10px);
 }
     .card:hover {
       transform: translateY(-10px);
@@ -274,12 +274,13 @@
 
     function showCalendar(card, packageName) {
   closeAllWidgets();
+  document.querySelectorAll('.card').forEach(c => c.classList.remove('premium-selected'));
 
-  // Remove selected from all cards
-  document.querySelectorAll('.card').forEach(c => c.classList.remove('selected'));
+  const isPremium = packageName === 'Starter Premium' || packageName === 'Business Premium' || packageName === 'Premium Deluxe';
 
-  // Add selected to clicked card
-  card.classList.add('selected');
+  if (isPremium) {
+    card.classList.add('premium-selected');
+  }
 
   const widget = document.createElement('div');
   widget.classList.add('calendar-widget');
