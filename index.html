@@ -438,21 +438,28 @@
   }
 
   function showMissionBulletsOnMobile() {
-    if (!isMobile()) return;
-
     document.querySelectorAll('.feature').forEach(feature => {
       const bullets = feature.querySelector('.mission-bullets');
       if (!bullets) return;
-      if (isInViewport(feature)) {
-        bullets.style.display = 'block';
-        bullets.style.opacity = '1';
-        bullets.style.transform = 'translateX(0)';
-        bullets.style.animation = 'fadeInMissionLeft 0.5s cubic-bezier(.4,1.6,.6,1)';
+
+      if (isMobile()) {
+        if (isInViewport(feature)) {
+          bullets.style.opacity = '1';
+          bullets.style.transform = 'translateX(0)';
+          bullets.style.animation = 'fadeInMissionLeft 0.5s cubic-bezier(.4,1.6,.6,1)';
+          bullets.style.pointerEvents = 'auto';
+        } else {
+          bullets.style.opacity = '0';
+          bullets.style.transform = 'translateX(-40px)';
+          bullets.style.animation = '';
+          bullets.style.pointerEvents = 'none';
+        }
       } else {
-        bullets.style.display = '';
+        // Auf Desktop: Alles zurücksetzen, damit Hover funktioniert
         bullets.style.opacity = '';
         bullets.style.transform = '';
         bullets.style.animation = '';
+        bullets.style.pointerEvents = '';
       }
     });
   }
