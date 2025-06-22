@@ -88,12 +88,117 @@
       background: #1a1a1a;
       border-radius: 12px;
       box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
-      padding: 40px;
+      padding: 24px 32px; /* vorher: 40px */
       text-align: center;
-      transition: transform 0.4s ease, box-shadow 0.4s ease, text-shadow 0.4s ease;
+      transition:
+        transform 0.4s cubic-bezier(.4,1.6,.6,1),
+        box-shadow 0.4s cubic-bezier(.4,1.6,.6,1),
+        text-shadow 0.4s cubic-bezier(.4,1.6,.6,1),
+        padding 0.5s cubic-bezier(.4,1.6,.6,1),
+        min-height 0.5s cubic-bezier(.4,1.6,.6,1);
       border: 1px solid #333;
       cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      min-height: 180px; /* vorher: 260px */
     }
+    /* Günstigster Kurs: dezenter Glow */
+.course-card:nth-child(1):hover:not(:has(.calendar-widget)) {
+  box-shadow: 0 0 30px #FFD70044, 0 0 10px #fff2;
+  border-color: #FFD700;
+  background: linear-gradient(120deg, #222 80%, #FFD70022 100%);
+}
+
+/* Mittlerer Kurs: stärkerer Glow + Shine */
+.course-card:nth-child(2):hover:not(:has(.calendar-widget)) {
+  box-shadow: 0 0 60px #FFD70088, 0 0 20px #fff4;
+  border-color: #FFD700;
+  background: linear-gradient(120deg, #222 60%, #FFD70044 100%);
+}
+.course-card:nth-child(2):hover:not(:has(.calendar-widget))::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 70% 30%, #FFD70033 0%, transparent 70%);
+  opacity: 0.7;
+  animation: shine 1.2s linear;
+}
+
+/* Teuerster Kurs: exklusiver animierter Rand + Partikel */
+.course-card:nth-child(3):hover:not(:has(.calendar-widget)) {
+  border-color: #FFD700;
+  background: linear-gradient(120deg, #222 40%, #FFD70022 100%);
+  box-shadow: 0 0 60px 10px #FFD70077, 0 0 0 4px #FFD70055, 0 0 80px 0 #fff70022;
+  position: relative;
+  z-index: 1;
+  overflow: visible;
+}
+.course-card:nth-child(3):hover:not(:has(.calendar-widget))::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border-radius: 12px;
+  pointer-events: none;
+  z-index: 2;
+  border: 2.5px solid #FFD700;
+  box-shadow: 0 0 24px 8px #FFD70088, 0 0 40px 4px #fff70033;
+  animation: border-glow 1.5s linear infinite;
+}
+.course-card:nth-child(3):hover:not(:has(.calendar-widget))::after {
+  content: "";
+  position: absolute;
+  top: -2px; left: -2px; right: -2px; bottom: -2px;
+  border-radius: 14px;
+  pointer-events: none;
+  z-index: 3;
+  background: linear-gradient(120deg, rgba(255,215,0,0.18) 0%, rgba(255,255,255,0.06) 100%);
+  opacity: 0.8;
+  animation: shine 1.2s linear;
+}
+
+/* Goldene Partikel am Rand */
+.course-card:nth-child(3):hover:not(:has(.calendar-widget)) .gold-particle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #FFD700 60%, #fff70044 100%);
+  opacity: 0.85;
+  z-index: 4;
+  pointer-events: none;
+  animation: particle-up 1.8s linear infinite;
+}
+
+.course-card:nth-child(3):hover:not(:has(.calendar-widget)) .gold-particle.p1 { left: 18px; bottom: 12px; animation-delay: 0s;}
+.course-card:nth-child(3):hover:not(:has(.calendar-widget)) .gold-particle.p2 { right: 22px; bottom: 18px; animation-delay: 0.3s;}
+.course-card:nth-child(3):hover:not(:has(.calendar-widget)) .gold-particle.p3 { left: 50%; bottom: 8px; animation-delay: 0.6s;}
+.course-card:nth-child(3):hover:not(:has(.calendar-widget)) .gold-particle.p4 { left: 30px; top: 10px; animation-delay: 1.1s;}
+.course-card:nth-child(3):hover:not(:has(.calendar-widget)) .gold-particle.p5 { right: 30px; top: 16px; animation-delay: 0.8s;}
+.course-card:nth-child(3):hover:not(:has(.calendar-widget)) .gold-particle.p6 { left: 10%; bottom: 0; animation-delay: 0.5s;}
+.course-card:nth-child(3):hover:not(:has(.calendar-widget)) .gold-particle.p7 { right: 10%; bottom: 0; animation-delay: 1.2s;}
+.course-card:nth-child(3):hover:not(:has(.calendar-widget)) .gold-particle.p8 { left: 20%; top: 0; animation-delay: 0.9s;}
+.course-card:nth-child(3):hover:not(:has(.calendar-widget)) .gold-particle.p9 { right: 20%; top: 0; animation-delay: 1.5s;}
+.course-card:nth-child(3):hover:not(:has(.calendar-widget)) .gold-particle.p10 { left: 40px; bottom: 30px; animation-delay: 1.7s;}
+.course-card:nth-child(3):hover:not(:has(.calendar-widget)) .gold-particle.p11 { right: 40px; bottom: 30px; animation-delay: 1.4s;}
+.course-card:nth-child(3):hover:not(:has(.calendar-widget)) .gold-particle.p12 { left: 60px; top: 30px; animation-delay: 1.8s;}
+.course-card:nth-child(3):hover:not(:has(.calendar-widget)) .gold-particle.p13 { right: 60px; top: 30px; animation-delay: 1.1s;}
+
+@keyframes border-glow {
+  0% { box-shadow: 0 0 12px 2px #FFD70044, 0 0 24px 4px #fff70022; }
+  50% { box-shadow: 0 0 32px 8px #FFD700cc, 0 0 48px 8px #fff70055; }
+  100% { box-shadow: 0 0 12px 2px #FFD70044, 0 0 24px 4px #fff70022; }
+}
+@keyframes shine {
+  0% { opacity: 0.2; }
+  50% { opacity: 1; }
+  100% { opacity: 0.2; }
+}
+@keyframes particle-up {
+  0% { transform: translateY(0) scale(1); opacity: 0.8;}
+  70% { opacity: 1;}
+  100% { transform: translateY(-40px) scale(0.7); opacity: 0;}
+}
     .course-card:hover {
       transform: translateY(-10px);
       box-shadow: 0 0 40px rgba(255, 255, 255, 0.15);
@@ -176,28 +281,35 @@
     }
   </style>
   <script>
-    function showCalendar(card, packageName) {
-      closeAllWidgets();
-      const widget = document.createElement('div');
-      widget.classList.add('calendar-widget');
-      widget.innerHTML = `
-        <button class="close-widget" onclick="closeWidget(this)">&times;</button>
-        <iframe src="https://calendly.com/leonidas-pyka/30min?hide_gdpr_banner=1&background_color=000000&text_color=FFFFFF&primary_color=FFD700&a1=${encodeURIComponent(packageName)}" allowtransparency="true"></iframe>
-      `;
-      card.appendChild(widget);
-      
-requestAnimationFrame(() => {
-  widget.classList.add('show');
-});
-    }
+  function showCalendar(card, packageName) {
+    closeAllWidgets();
+    card.classList.add('expanded');
+    const widget = document.createElement('div');
+    widget.classList.add('calendar-widget');
+    widget.innerHTML = `
+      <button class="close-widget" onclick="closeWidget(this)">&times;</button>
+      <iframe src="https://calendly.com/leonidas-pyka/30min?hide_gdpr_banner=1&background_color=000000&text_color=FFFFFF&primary_color=FFD700&a1=${encodeURIComponent(packageName)}" allowtransparency="true"></iframe>
+    `;
+    card.appendChild(widget);
 
-    function closeWidget(button) {
-      button.parentElement.remove();
-    }
+    requestAnimationFrame(() => {
+      widget.classList.add('show');
+    });
+  }
 
-    function closeAllWidgets() {
-      document.querySelectorAll('.calendar-widget').forEach(widget => widget.remove());
-    }
+  function closeWidget(button) {
+    const card = button.closest('.course-card');
+    button.parentElement.remove();
+    card.classList.remove('expanded');
+  }
+
+  function closeAllWidgets() {
+    document.querySelectorAll('.calendar-widget').forEach(widget => {
+      const card = widget.closest('.course-card');
+      widget.remove();
+      if (card) card.classList.remove('expanded');
+    });
+  }
   </script>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&display=swap" rel="stylesheet">
 </head>
@@ -228,6 +340,19 @@ requestAnimationFrame(() => {
       <h3>Masterclass: Webflow & Business</h3>
       <p>Meistere Webflow und lerne, wie du professionell Webseiten für Kunden umsetzt – inkl. Preisgestaltung, Projektmanagement und Marketing.</p>
       <div class="price">999 &euro;</div>
+      <span class="gold-particle p1"></span>
+      <span class="gold-particle p2"></span>
+      <span class="gold-particle p3"></span>
+      <span class="gold-particle p4"></span>
+      <span class="gold-particle p5"></span>
+      <span class="gold-particle p6"></span>
+      <span class="gold-particle p7"></span>
+      <span class="gold-particle p8"></span>
+      <span class="gold-particle p9"></span>
+      <span class="gold-particle p10"></span>
+      <span class="gold-particle p11"></span>
+      <span class="gold-particle p12"></span>
+      <span class="gold-particle p13"></span>
     </div>
   </div>
 
