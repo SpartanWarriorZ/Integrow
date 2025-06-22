@@ -424,7 +424,6 @@
 </script>
 <button id="back-to-top" onclick="scrollToTop()" title="Nach oben">↑</button>
 <script>
-  // Automatisches Anzeigen der Stichpunkte auf Mobilgeräten, wenn Feature im Viewport ist
   function isMobile() {
     return window.innerWidth <= 768;
   }
@@ -438,24 +437,20 @@
   }
 
   function showMissionBulletsOnMobile() {
+    if (!isMobile()) return;
+
     document.querySelectorAll('.feature').forEach(feature => {
       const bullets = feature.querySelector('.mission-bullets');
       if (!bullets) return;
 
-      if (isMobile()) {
-        if (isInViewport(feature)) {
-          bullets.style.opacity = '1';
-          bullets.style.transform = 'translateX(0)';
-          bullets.style.animation = 'fadeInMissionLeft 0.5s cubic-bezier(.4,1.6,.6,1)';
-          bullets.style.pointerEvents = 'auto';
-        } else {
-          bullets.style.opacity = '0';
-          bullets.style.transform = 'translateX(-40px)';
-          bullets.style.animation = '';
-          bullets.style.pointerEvents = 'none';
-        }
+      if (isInViewport(feature)) {
+        bullets.style.display = 'block';
+        bullets.style.opacity = '1';
+        bullets.style.transform = 'translateX(0)';
+        bullets.style.animation = 'fadeInMissionLeft 0.5s cubic-bezier(.4,1.6,.6,1)';
+        bullets.style.pointerEvents = 'auto';
       } else {
-        // Auf Desktop: Alles zurücksetzen, damit Hover funktioniert
+        bullets.style.display = '';
         bullets.style.opacity = '';
         bullets.style.transform = '';
         bullets.style.animation = '';
