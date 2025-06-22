@@ -268,7 +268,7 @@
     }
     .mission-bullets {
   display: none;
-  margin-top: 0;
+  margin-top: 28px; /* Mehr Abstand zum Haupttext */
   margin-bottom: 0;
   padding-left: 22px;
   color: #b0b0b0;
@@ -276,19 +276,19 @@
   text-align: left;
   list-style: disc;
   opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.4s, transform 0.4s;
+  transform: translateX(-40px);
+  transition: opacity 0.5s cubic-bezier(.4,1.6,.6,1), transform 0.5s cubic-bezier(.4,1.6,.6,1);
 }
-.feature:hover .mission-bullets,
-.feature:focus-within .mission-bullets,
-.feature img:hover + .feature-text .mission-bullets {
-  display: block;
-  opacity: 1;
-  transform: translateY(0);
-  animation: fadeInMission 0.4s;
-}
-.feature {
-  cursor: pointer;
+
+@keyframes fadeInMissionLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&display=swap" rel="stylesheet">
