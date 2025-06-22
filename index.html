@@ -423,5 +423,43 @@
   }
 </script>
 <button id="back-to-top" onclick="scrollToTop()" title="Nach oben">↑</button>
+<script>
+  // Automatisches Anzeigen der Stichpunkte auf Mobilgeräten, wenn Feature im Viewport ist
+  function isMobile() {
+    return window.innerWidth <= 768;
+  }
+
+  function isInViewport(element) {
+    const rect = element.getBoundingClientRect();
+    return (
+      rect.top < window.innerHeight &&
+      rect.bottom > 0
+    );
+  }
+
+  function showMissionBulletsOnMobile() {
+    if (!isMobile()) return;
+
+    document.querySelectorAll('.feature').forEach(feature => {
+      const bullets = feature.querySelector('.mission-bullets');
+      if (!bullets) return;
+      if (isInViewport(feature)) {
+        bullets.style.display = 'block';
+        bullets.style.opacity = '1';
+        bullets.style.transform = 'translateX(0)';
+        bullets.style.animation = 'fadeInMissionLeft 0.5s cubic-bezier(.4,1.6,.6,1)';
+      } else {
+        bullets.style.display = '';
+        bullets.style.opacity = '';
+        bullets.style.transform = '';
+        bullets.style.animation = '';
+      }
+    });
+  }
+
+  window.addEventListener('scroll', showMissionBulletsOnMobile);
+  window.addEventListener('resize', showMissionBulletsOnMobile);
+  window.addEventListener('DOMContentLoaded', showMissionBulletsOnMobile);
+</script>
 </body>
 </html>
