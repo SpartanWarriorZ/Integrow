@@ -1,542 +1,609 @@
 <!DOCTYPE html>
 <html lang="de">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Integrow – Webdesign Pakete</title>
-  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
-  <style>
-    html, body {
-      max-width: 100%;
-      overflow-x: hidden;
-    }
-    body {
-      margin: 0;
-      background-color: #0a0a0a;
-      color: #e0e0e0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to bottom right, #0a0a0a, #1c1c1c);
-      scroll-behavior: smooth;
-    }
-    header {
-      padding: 60px 40px 40px;
-      background: linear-gradient(to right, #1c1c1c, #000);
-      text-align: center;
-      border-bottom: 1px solid #444;
-      box-shadow: 0 0 40px rgba(192,192,192,0.1);
-    }
-    .logo-img {
-      max-width: 600px;
-      width: 100%;
-      height: auto;
-      margin-bottom: 10px;
-      filter: drop-shadow(0 0 12px rgba(255,255,255,0.4));
-      transition: filter 0.4s ease;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .logo-img:hover {
-      filter: drop-shadow(0 0 18px rgba(255,255,255,0.6));
-    }
-    .nav-links {
-      margin-top: 10px;
-      display: flex;
-      justify-content: center;
-      gap: 50px;
-      z-index: 1000;
-      position: relative;
-      flex-wrap: wrap;
-    }
-    .nav-links a {
-      color: silver;
-      text-decoration: none;
-      font-size: 1.4rem;
-      font-family: 'Rajdhani', sans-serif;
-      font-weight: 600;
-      letter-spacing: 1px;
-      transition: color 0.3s ease, text-shadow 0.3s ease;
-      position: relative;
-    }
-    .nav-links a::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: -5px;
-      width: 100%;
-      height: 2px;
-      background: silver;
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.3s ease;
-    }
-    .nav-links a:hover::after {
-      transform: scaleX(1);
-    }
-    .nav-links a:hover {
-      color: #fff;
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-    }
-    #back-to-top {
-  position: fixed;
-  bottom: 20px;
-  right: 10px;
-  z-index: 999;
-  display: inline-block;
-  background: #444;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  font-size: 24px;
-  cursor: pointer;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.4s, visibility 0.4s, transform 0.3s;
-  user-select: none;
-  outline: none;
-}
-#back-to-top:hover {
-  background: #666;
-  transform: scale(1.1);
-}
-    .tabs {
-      display: flex;
-      justify-content: center;
-      margin: 80px auto 60px;
-      gap: 20px;
-      flex-wrap: nowrap;
-      max-width: 1200px;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-    .tab-button {
-      background: #1c1c1c;
-      color: silver;
-      border: 1px solid #444;
-      padding: 12px 28px;
-      cursor: pointer;
-      font-size: 1.3rem;
-      border-radius: 8px;
-      white-space: nowrap;
-      min-width: 160px;
-      flex: 0 0 auto;
-      transition: 
-        box-shadow 0.3s,
-        color 0.3s,
-        background 0.3s,
-        border 0.3s;
-    }
-    .tab-button.active {
-      background: #333;
-      color: #fff;
-      box-shadow: 0 0 12px rgba(255, 255, 255, 0.5);
-    }
-    .tab-button.active.gold-glow {
-      box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
-    }
-    .tab-button:first-child:hover:not(.active) {
-      box-shadow: 0 0 12px 2px #fff8;
-      color: #fff;
-      border: 1.5px solid #fff;
-      background: #232323;
-    }
-    .tab-button:first-child.active {
-      box-shadow: 0 0 18px 4px #fff, 0 0 0 2px #fff;
-      color: #fff;
-      border: 2px solid #fff;
-      background: #232323;
-    }
-    .tab-button:last-child:hover:not(.active) {
-      box-shadow: 0 0 12px 2px #FFD70088;
-      color: #FFD700;
-      border: 1.5px solid #FFD700;
-      background: #232323;
-    }
-    .tab-button:last-child.active {
-      box-shadow: 0 0 18px 4px #FFD700, 0 0 0 2px #FFD700;
-      color: #FFD700;
-      border: 2px solid #FFD700;
-      background: #232323;
-    }
-    .pricing-section {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 40px;
-      max-width: 1200px;
-      margin: 80px auto 60px;
-      padding: 0 20px;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.5s ease, transform 0.5s ease;
-    }
-    .pricing-section.active {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .card {
-      background: #1a1a1a;
-      border-radius: 12px;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
-      padding: 40px;
-      text-align: center;
-      transition: transform 0.4s ease, box-shadow 0.4s ease, text-shadow 0.4s ease;
-      border: 1px solid #333;
-      cursor: pointer;
-      position: relative; /* Für Ripple-Positionierung */
-      overflow: hidden;
-    }
-    .card .ripple {
-  position: absolute;
-  border-radius: 50%;
-  transform: scale(0);
-  animation: ripple-animate 0.6s linear;
-  background: rgba(255, 215, 0, 0.25);
-  pointer-events: none;
-  z-index: 2;
-}
-@keyframes ripple-animate {
-  to {
-    transform: scale(3.5);
-    opacity: 0;
-  }
-}
-    .card.premium:hover,
-.card.premium.premium-selected {
-  transform: translateY(-10px);
-  box-shadow: 0 0 25px rgba(255, 215, 0, 0.6), 0 0 50px rgba(255, 215, 0, 0.4);
-  text-shadow: 0 0 12px rgba(255, 215, 0, 0.6);
-}
-    .card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 0 40px rgba(255, 255, 255, 0.15);
-      text-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
-      animation: card-wobble 0.6s cubic-bezier(.22,1,.36,1) 1;
-    }
-    @keyframes card-wobble {
-  0%   { transform: translateY(-10px) scale(1.02) rotateZ(0deg);}
-  25%  { transform: translateY(-16px) scale(1.045) rotateZ(-1.5deg);}
-  55%  { transform: translateY(-8px) scale(1.01) rotateZ(1deg);}
-  75%  { transform: translateY(-12px) scale(1.025) rotateZ(-0.5deg);}
-  100% { transform: translateY(-10px) scale(1.02) rotateZ(0deg);}
-}
-    .card h3 {
-      font-size: 1.8rem;
-      color: silver;
-      margin-bottom: 20px;
-    }
-    .card p {
-      font-size: 1rem;
-      line-height: 1.6;
-      color: #ccc;
-      margin-bottom: 20px;
-    }
-    .price {
-      font-size: 2rem;
-      color: #fff;
-      margin-bottom: 20px;
-    }
-    .calendar-widget {
-      margin-top: 20px;
-      background: #222;
-      border-radius: 12px;
-      padding: 20px;
-      position: relative;
-    }
-    .calendar-widget iframe {
-      width: 100%;
-      height: 500px;
-      border: none;
-      border-radius: 12px;
-    }
-    .close-widget {
-      position: absolute;
-      top: 10px;
-      right: 12px;
-      background: #444;
-      color: white;
-      border: none;
-      border-radius: 50%;
-      width: 28px;
-      height: 28px;
-      cursor: pointer;
-      font-weight: bold;
-      line-height: 28px;
-    }
-    footer {
-      background-color: #111;
-      text-align: center;
-      padding: 40px 20px;
-      color: #777;
-      font-size: 1rem;
-      border-top: 1px solid #2a2a2a;
-    }
-    @media (max-width: 768px) {
-      .pricing-section {
-        grid-template-columns: 1fr;
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Integrow – Webdesign Pakete</title>
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+    <style>
+      html,
+      body {
+        max-width: 100%;
+        overflow-x: hidden;
       }
-      .nav-links {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 10px;
-        padding-bottom: 10px;
+      body {
+        margin: 0;
+        background-color: #0a0a0a;
+        color: #e0e0e0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(to bottom right, #0a0a0a, #1c1c1c);
+        scroll-behavior: smooth;
       }
-      .nav-links a {
-        font-size: 1.1rem;
-        padding: 5px 10px;
+      header {
+        padding: 60px 40px 40px;
+        background: linear-gradient(to right, #1c1c1c, #000);
+        text-align: center;
+        border-bottom: 1px solid #444;
+        box-shadow: 0 0 40px rgba(192, 192, 192, 0.1);
       }
       .logo-img {
-        max-width: 400px;
+        max-width: 600px;
+        width: 100%;
+        height: auto;
+        margin-bottom: 10px;
+        filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.4));
+        transition: filter 0.4s ease;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
       }
-    }
-
-    /* BASIC Webseiten: Weißer Glow/Rahmen, je teurer desto stärker */
-.pricing-section .card:nth-child(1):hover {
-  transform: translateY(-10px) scale(1.03);
-  box-shadow: 0 0 18px 2px #fff8, 0 0 0 2px #fff4;
-  border-color: #fff;
-}
-.pricing-section .card:nth-child(2):hover {
-  transform: translateY(-16px) scale(1.04);
-  box-shadow: 0 0 32px 4px #fff, 0 0 0 2.5px #fff8;
-  border-color: #fff;
-}
-.pricing-section .card:nth-child(3):hover {
-  transform: translateY(-22px) scale(1.05);
-  box-shadow: 0 0 60px 8px #fff, 0 0 0 3px #fff;
-  border-color: #fff;
-}
-
-/* PREMIUM Webseiten: Goldener Glow/Rahmen, je teurer desto stärker */
-.pricing-section .card.premium:nth-child(1):hover {
-  transform: translateY(-12px) scale(1.03);
-  box-shadow: 0 0 18px 2px #FFD70088, 0 0 0 2px #FFD70055;
-  border-color: #FFD700;
-}
-.pricing-section .card.premium:nth-child(2):hover {
-  transform: translateY(-18px) scale(1.045);
-  box-shadow: 0 0 36px 6px #FFD700cc, 0 0 0 2.5px #FFD70088;
-  border-color: #FFD700;
-}
-.pricing-section .card.premium:nth-child(3):hover {
-  transform: translateY(-26px) scale(1.06);
-  box-shadow: 0 0 80px 12px #FFD700, 0 0 0 3px #FFD700;
-  border-color: #FFD700;
-}
-.package-info {
-  margin: 32px auto 0;
-  max-width: 520px;
-  min-height: 56px;
-  text-align: center;
-  font-size: 1.13rem;
-  font-weight: 600;
-  color: #fff;
-  background: none;
-  border-radius: 0;
-  box-shadow: none;
-  border: none;
-  border-top: 1.5px solid #333;
-  padding: 18px 0 0 0;
-  opacity: 1;
-  pointer-events: none;
-  position: relative;
-  overflow: visible;
-  transition:
-    color 0.3s,
-    border-color 0.3s,
-    text-shadow 0.4s,
-    background 0.4s;
-}
-
-.package-info span {
-  display: inline-block;
-  opacity: 0;
-  transform: translateY(18px);
-  animation: info-fade-slide 0.7s cubic-bezier(.4,1.6,.6,1) forwards;
-}
-.package-info.active span {
-  animation-delay: 0.05s;
-}
-
-@keyframes info-fade-slide {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Basic: Weißer Glow */
-.package-info.basic {
-  color: #fff;
-  border-top: 1.5px solid #aaa;
-  text-shadow: 0 0 8px #fff8, 0 0 2px #fff;
-  background: none;
-}
-.package-info.basic span {
-  animation-delay: 0.05s;
-}
-
-/* Premium: Animierter Shine im Text */
-.package-info.premium {
-  border-top: 1.5px solid #FFD700;
-  background: none;
-}
-.package-info.premium span {
-  background: linear-gradient(
-    100deg,
-    #FFD700 10%,
-    #fffbe6 30%,
-    #FFD700 50%,
-    #fff 60%,
-    #FFD700 80%
-  );
-  background-size: 200% auto;
-  background-position: -100% 0;
-  color: #FFD700;
-  text-shadow:
-    0 0 12px #FFD700cc,
-    0 0 2px #FFD700,
-    0 0 24px #fff70055;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation:
-    info-fade-slide 0.7s cubic-bezier(.4,1.6,.6,1) forwards,
-    shine-move-text 2.2s 0.2s cubic-bezier(.4,1.6,.6,1);
-}
-
-@keyframes shine-move-text {
-  from {
-    background-position: -100% 0;
-  }
-  to {
-    background-position: 200% 0;
-  }
-}
-.package-info-spacer {
-  min-height: 120px; /* Passe die Höhe nach Bedarf an */
-  width: 100%;
-  pointer-events: none;
-  user-select: none;
-}
-
-/* Responsive Feinschliff */
-@media (max-width: 600px) {
-  .pricing-section { gap: 18px; margin: 32px auto 20px; }
-  .card { padding: 18px 8px; font-size: 0.97rem; }
-  .package-info { font-size: 1rem; padding-top: 12px; }
-  .package-info-spacer { min-height: 60px; }
-  .tabs { gap: 8px; margin: 40px auto 24px; }
-  .tab-button { font-size: 1.05rem; padding: 8px 10px; min-width: 110px; }
-}
-
-/* Accessibility & Usability */
-.card, .tab-button {
-  outline: none;
-}
-.card:focus, .tab-button:focus {
-  box-shadow: 0 0 0 3px #FFD70088;
-  z-index: 2;
-}
-
-/* Animationen noch flüssiger */
-.package-info {
-  transition: opacity 0.4s, transform 0.4s, color 0.3s, border-color 0.3s, text-shadow 0.4s, background 0.4s;
-}
-
-/* Hover-Feedback für Info-Text */
-.card:hover ~ #package-info,
-.card:focus ~ #package-info {
-  filter: brightness(1.08) drop-shadow(0 0 8px #FFD70044);
-}
-
-/* Micro-Interaction: Wellen-Effekt beim Klick */
-.card:active {
-  transform: scale(0.98) translateY(-4px);
-  box-shadow: 0 0 24px #FFD70055;
-}
-
-/* Farbverlauf für teuerste Pakete */
-.card.premium:nth-child(3) {
-  background: linear-gradient(120deg, #1a1a1a 70%, #FFD70011 100%);
-}
-
-/* Ladeanimation für das Widget */
-.calendar-widget::before {
-  content: "";
-  display: block;
-  position: absolute;
-  left: 50%; top: 50%;
-  width: 38px; height: 38px;
-  margin: -19px 0 0 -19px;
-  border-radius: 50%;
-  border: 3px solid #FFD70044;
-  border-top: 3px solid #FFD700;
-  animation: spin 1s linear infinite;
-  z-index: 10;
-  background: none;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-.calendar-widget.loading::before {
-  opacity: 1;
-}
-@keyframes spin {
-  100% { transform: rotate(360deg);}
-}
-/* Darkmode-Optimierung */
-body, html {
-  background: linear-gradient(to bottom right, #0a0a0a, #1c1c1c);
-  color: #e0e0e0;
-}
-
-/* SEO & Performance: Bilder lazy load */
-.logo-img {
-  loading: lazy;
-}
-.footer-social {
-  margin-top: 18px;
-  display: flex;
-  justify-content: center;
-  gap: 22px;
-}
-.footer-social img {
-  width: 28px;
-  height: 28px;
-  filter: grayscale(0.2) brightness(0.95);
-  transition: filter 0.2s, transform 0.2s;
-  vertical-align: middle;
-}
-.footer-social a:hover img {
-  filter: grayscale(0) brightness(1.2) drop-shadow(0 0 6px #FFD70088);
-  transform: scale(1.13) rotate(-8deg);
-}
-
-
-  </style>
-  <script>
-    function showTab(tab, btn) {
-      document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active', 'gold-glow'));
-      if (tab === 'premium') {
-        btn.classList.add('active', 'gold-glow');
-      } else {
-        btn.classList.add('active');
+      .logo-img:hover {
+        filter: drop-shadow(0 0 18px rgba(255, 255, 255, 0.6));
       }
-      const container = document.getElementById('pricing-container');
-      container.classList.remove('active');
+      .nav-links {
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        gap: 50px;
+        z-index: 1000;
+        position: relative;
+        flex-wrap: wrap;
+      }
+      .nav-links a {
+        color: silver;
+        text-decoration: none;
+        font-size: 1.4rem;
+        font-family: "Rajdhani", sans-serif;
+        font-weight: 600;
+        letter-spacing: 1px;
+        transition: color 0.3s ease, text-shadow 0.3s ease;
+        position: relative;
+      }
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -5px;
+        width: 100%;
+        height: 2px;
+        background: silver;
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.3s ease;
+      }
+      .nav-links a:hover::after {
+        transform: scaleX(1);
+      }
+      .nav-links a:hover {
+        color: #fff;
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+      }
+      #back-to-top {
+        position: fixed;
+        bottom: 20px;
+        right: 10px;
+        z-index: 999;
+        display: inline-block;
+        background: #444;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+        cursor: pointer;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.4s, visibility 0.4s, transform 0.3s;
+        user-select: none;
+        outline: none;
+      }
+      #back-to-top:hover {
+        background: #666;
+        transform: scale(1.1);
+      }
+      .tabs {
+        display: flex;
+        justify-content: center;
+        margin: 80px auto 60px;
+        gap: 20px;
+        flex-wrap: nowrap;
+        max-width: 1200px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      .tab-button {
+        background: #1c1c1c;
+        color: silver;
+        border: 1px solid #444;
+        padding: 12px 28px;
+        cursor: pointer;
+        font-size: 1.3rem;
+        border-radius: 8px;
+        white-space: nowrap;
+        min-width: 160px;
+        flex: 0 0 auto;
+        transition: box-shadow 0.3s, color 0.3s, background 0.3s, border 0.3s;
+      }
+      .tab-button.active {
+        background: #333;
+        color: #fff;
+        box-shadow: 0 0 12px rgba(255, 255, 255, 0.5);
+      }
+      .tab-button.active.gold-glow {
+        box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+      }
+      .tab-button:first-child:hover:not(.active) {
+        box-shadow: 0 0 12px 2px #fff8;
+        color: #fff;
+        border: 1.5px solid #fff;
+        background: #232323;
+      }
+      .tab-button:first-child.active {
+        box-shadow: 0 0 18px 4px #fff, 0 0 0 2px #fff;
+        color: #fff;
+        border: 2px solid #fff;
+        background: #232323;
+      }
+      .tab-button:last-child:hover:not(.active) {
+        box-shadow: 0 0 12px 2px #ffd70088;
+        color: #ffd700;
+        border: 1.5px solid #ffd700;
+        background: #232323;
+      }
+      .tab-button:last-child.active {
+        box-shadow: 0 0 18px 4px #ffd700, 0 0 0 2px #ffd700;
+        color: #ffd700;
+        border: 2px solid #ffd700;
+        background: #232323;
+      }
+      .pricing-section {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 40px;
+        max-width: 1200px;
+        margin: 80px auto 60px;
+        padding: 0 20px;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+      }
+      .pricing-section.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .card {
+        background: #1a1a1a;
+        border-radius: 12px;
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+        padding: 40px;
+        text-align: center;
+        transition: transform 0.4s ease, box-shadow 0.4s ease,
+          text-shadow 0.4s ease;
+        border: 1px solid #333;
+        cursor: pointer;
+        position: relative; /* Für Ripple-Positionierung */
+        overflow: hidden;
+      }
+      .card .ripple {
+        position: absolute;
+        border-radius: 50%;
+        transform: scale(0);
+        animation: ripple-animate 0.6s linear;
+        background: rgba(255, 215, 0, 0.25);
+        pointer-events: none;
+        z-index: 2;
+      }
+      @keyframes ripple-animate {
+        to {
+          transform: scale(3.5);
+          opacity: 0;
+        }
+      }
+      .card.premium:hover,
+      .card.premium.premium-selected {
+        transform: translateY(-10px);
+        box-shadow: 0 0 25px rgba(255, 215, 0, 0.6),
+          0 0 50px rgba(255, 215, 0, 0.4);
+        text-shadow: 0 0 12px rgba(255, 215, 0, 0.6);
+      }
+      .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 0 40px rgba(255, 255, 255, 0.15);
+        text-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
+        animation: card-wobble 0.6s cubic-bezier(0.22, 1, 0.36, 1) 1;
+      }
+      @keyframes card-wobble {
+        0% {
+          transform: translateY(-10px) scale(1.02) rotateZ(0deg);
+        }
+        25% {
+          transform: translateY(-16px) scale(1.045) rotateZ(-1.5deg);
+        }
+        55% {
+          transform: translateY(-8px) scale(1.01) rotateZ(1deg);
+        }
+        75% {
+          transform: translateY(-12px) scale(1.025) rotateZ(-0.5deg);
+        }
+        100% {
+          transform: translateY(-10px) scale(1.02) rotateZ(0deg);
+        }
+      }
+      .card h3 {
+        font-size: 1.8rem;
+        color: silver;
+        margin-bottom: 20px;
+      }
+      .card p {
+        font-size: 1rem;
+        line-height: 1.6;
+        color: #ccc;
+        margin-bottom: 20px;
+      }
+      .price {
+        font-size: 2rem;
+        color: #fff;
+        margin-bottom: 20px;
+      }
+      .calendar-widget {
+        margin-top: 20px;
+        background: #222;
+        border-radius: 12px;
+        padding: 20px;
+        position: relative;
+      }
+      .calendar-widget iframe {
+        width: 100%;
+        height: 500px;
+        border: none;
+        border-radius: 12px;
+      }
+      .close-widget {
+        position: absolute;
+        top: 10px;
+        right: 12px;
+        background: #444;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 28px;
+        height: 28px;
+        cursor: pointer;
+        font-weight: bold;
+        line-height: 28px;
+      }
+      footer {
+        background-color: #111;
+        text-align: center;
+        padding: 40px 20px;
+        color: #777;
+        font-size: 1rem;
+        border-top: 1px solid #2a2a2a;
+      }
+      @media (max-width: 768px) {
+        .pricing-section {
+          grid-template-columns: 1fr;
+          gap: 22px;
+          margin: 32px auto 20px;
+          padding: 0 10px;
+        }
+        .nav-links {
+          flex-direction: row;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 10px;
+          padding-bottom: 10px;
+        }
+        .nav-links a {
+          font-size: 1.1rem;
+          padding: 5px 10px;
+        }
+        .logo-img {
+          max-width: 400px;
+        }
+        .card {
+          padding: 18px 12px;
+          font-size: 0.97rem;
+          margin: 0 auto;
+          max-width: 340px;
+          min-width: 0;
+          box-sizing: border-box;
+          border-radius: 16px;
+          box-shadow: 0 2px 18px 0 #0004;
+        }
+        .card:not(:last-child) {
+          margin-bottom: 10px;
+        }
+      }
 
-      setTimeout(() => {
-        container.innerHTML = (tab === 'premium') ? getPremiumHTML() : getBasicHTML();
-        container.classList.add('active');
-      }, 200);
-      closeAllWidgets();
-    }
+      /* BASIC Webseiten: Weißer Glow/Rahmen, je teurer desto stärker */
+      .pricing-section .card:nth-child(1):hover {
+        transform: translateY(-10px) scale(1.03);
+        box-shadow: 0 0 18px 2px #fff8, 0 0 0 2px #fff4;
+        border-color: #fff;
+      }
+      .pricing-section .card:nth-child(2):hover {
+        transform: translateY(-16px) scale(1.04);
+        box-shadow: 0 0 32px 4px #fff, 0 0 0 2.5px #fff8;
+        border-color: #fff;
+      }
+      .pricing-section .card:nth-child(3):hover {
+        transform: translateY(-22px) scale(1.05);
+        box-shadow: 0 0 60px 8px #fff, 0 0 0 3px #fff;
+        border-color: #fff;
+      }
 
-    function getBasicHTML() {
-      return `
+      /* PREMIUM Webseiten: Goldener Glow/Rahmen, je teurer desto stärker */
+      .pricing-section .card.premium:nth-child(1):hover {
+        transform: translateY(-12px) scale(1.03);
+        box-shadow: 0 0 18px 2px #ffd70088, 0 0 0 2px #ffd70055;
+        border-color: #ffd700;
+      }
+      .pricing-section .card.premium:nth-child(2):hover {
+        transform: translateY(-18px) scale(1.045);
+        box-shadow: 0 0 36px 6px #ffd700cc, 0 0 0 2.5px #ffd70088;
+        border-color: #ffd700;
+      }
+      .pricing-section .card.premium:nth-child(3):hover {
+        transform: translateY(-26px) scale(1.06);
+        box-shadow: 0 0 80px 12px #ffd700, 0 0 0 3px #ffd700;
+        border-color: #ffd700;
+      }
+      .package-info {
+        margin: 32px auto 0;
+        max-width: 520px;
+        min-height: 56px;
+        text-align: center;
+        font-size: 1.13rem;
+        font-weight: 600;
+        color: #fff;
+        background: none;
+        border-radius: 0;
+        box-shadow: none;
+        border: none;
+        border-top: 1.5px solid #333;
+        padding: 18px 0 0 0;
+        opacity: 1;
+        pointer-events: none;
+        position: relative;
+        overflow: visible;
+        transition: color 0.3s, border-color 0.3s, text-shadow 0.4s,
+          background 0.4s;
+      }
+
+      .package-info span {
+        display: inline-block;
+        opacity: 0;
+        transform: translateY(18px);
+        animation: info-fade-slide 0.7s cubic-bezier(0.4, 1.6, 0.6, 1) forwards;
+      }
+      .package-info.active span {
+        animation-delay: 0.05s;
+      }
+
+      @keyframes info-fade-slide {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Basic: Weißer Glow */
+      .package-info.basic {
+        color: #fff;
+        border-top: 1.5px solid #aaa;
+        text-shadow: 0 0 8px #fff8, 0 0 2px #fff;
+        background: none;
+      }
+      .package-info.basic span {
+        animation-delay: 0.05s;
+      }
+
+      /* Premium: Animierter Shine im Text */
+      .package-info.premium {
+        border-top: 1.5px solid #ffd700;
+        background: none;
+      }
+      .package-info.premium span {
+        background: linear-gradient(
+          100deg,
+          #ffd700 10%,
+          #fffbe6 30%,
+          #ffd700 50%,
+          #fff 60%,
+          #ffd700 80%
+        );
+        background-size: 200% auto;
+        background-position: -100% 0;
+        color: #ffd700;
+        text-shadow: 0 0 12px #ffd700cc, 0 0 2px #ffd700, 0 0 24px #fff70055;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: info-fade-slide 0.7s cubic-bezier(0.4, 1.6, 0.6, 1) forwards,
+          shine-move-text 2.2s 0.2s cubic-bezier(0.4, 1.6, 0.6, 1);
+      }
+
+      @keyframes shine-move-text {
+        from {
+          background-position: -100% 0;
+        }
+        to {
+          background-position: 200% 0;
+        }
+      }
+      .package-info-spacer {
+        min-height: 120px; /* Passe die Höhe nach Bedarf an */
+        width: 100%;
+        pointer-events: none;
+        user-select: none;
+      }
+
+      /* Responsive Feinschliff */
+      @media (max-width: 600px) {
+        .pricing-section {
+          gap: 18px;
+          margin: 32px auto 20px;
+        }
+        .card {
+          padding: 18px 8px;
+          font-size: 0.97rem;
+        }
+        .package-info {
+          font-size: 1rem;
+          padding-top: 12px;
+        }
+        .package-info-spacer {
+          min-height: 60px;
+        }
+        .tabs {
+          gap: 8px;
+          margin: 40px auto 24px;
+        }
+        .tab-button {
+          font-size: 1.05rem;
+          padding: 8px 10px;
+          min-width: 110px;
+        }
+      }
+
+      /* Accessibility & Usability */
+      .card,
+      .tab-button {
+        outline: none;
+      }
+      .card:focus,
+      .tab-button:focus {
+        box-shadow: 0 0 0 3px #ffd70088;
+        z-index: 2;
+      }
+
+      /* Animationen noch flüssiger */
+      .package-info {
+        transition: opacity 0.4s, transform 0.4s, color 0.3s, border-color 0.3s,
+          text-shadow 0.4s, background 0.4s;
+      }
+
+      /* Hover-Feedback für Info-Text */
+      .card:hover ~ #package-info,
+      .card:focus ~ #package-info {
+        filter: brightness(1.08) drop-shadow(0 0 8px #ffd70044);
+      }
+      /* Widget bleibt scharf, auch wenn die Karte skaliert wird */
+      .card:hover .calendar-widget,
+      .card.premium.premium-selected .calendar-widget,
+      .card:active .calendar-widget {
+        transform: none !important;
+        filter: none !important;
+      }
+      /* Micro-Interaction: Wellen-Effekt beim Klick */
+      .card:active {
+        transform: scale(0.98) translateY(-4px);
+        box-shadow: 0 0 24px #ffd70055;
+      }
+
+      /* Farbverlauf für teuerste Pakete */
+      .card.premium:nth-child(3) {
+        background: linear-gradient(120deg, #1a1a1a 70%, #ffd70011 100%);
+      }
+      .card.no-scale,
+      .card.no-scale:hover,
+      .card.no-scale:active,
+      .card.no-scale.premium-selected {
+        transform: none !important;
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+        z-index: 10;
+      }
+      .calendar-widget {
+        filter: none;
+        transition: filter 0.3s;
+        will-change: auto;
+      }
+      .calendar-widget.loading {
+        filter: blur(6px) brightness(0.8);
+        pointer-events: none;
+      }
+      /* Ladeanimation für das Widget */
+      .calendar-widget::before {
+        content: "";
+        display: block;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 38px;
+        height: 38px;
+        margin: -19px 0 0 -19px;
+        border-radius: 50%;
+        border: 3px solid #ffd70044;
+        border-top: 3px solid #ffd700;
+        animation: spin 1s linear infinite;
+        z-index: 10;
+        background: none;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      .calendar-widget.loading::before {
+        opacity: 1;
+      }
+      @keyframes spin {
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      /* Darkmode-Optimierung */
+      body,
+      html {
+        background: linear-gradient(to bottom right, #0a0a0a, #1c1c1c);
+        color: #e0e0e0;
+      }
+
+      /* SEO & Performance: Bilder lazy load */
+      .logo-img {
+        loading: lazy;
+      }
+      .footer-social {
+        margin-top: 18px;
+        display: flex;
+        justify-content: center;
+        gap: 22px;
+      }
+      .footer-social img {
+        width: 28px;
+        height: 28px;
+        filter: grayscale(0.2) brightness(0.95);
+        transition: filter 0.2s, transform 0.2s;
+        vertical-align: middle;
+      }
+      .footer-social a:hover img {
+        filter: grayscale(0) brightness(1.2) drop-shadow(0 0 6px #ffd70088);
+        transform: scale(1.13) rotate(-8deg);
+      }
+    </style>
+    <script>
+      function showTab(tab, btn) {
+        document
+          .querySelectorAll(".tab-button")
+          .forEach((b) => b.classList.remove("active", "gold-glow"));
+        if (tab === "premium") {
+          btn.classList.add("active", "gold-glow");
+        } else {
+          btn.classList.add("active");
+        }
+        const container = document.getElementById("pricing-container");
+        container.classList.remove("active");
+
+        setTimeout(() => {
+          container.innerHTML =
+            tab === "premium" ? getPremiumHTML() : getBasicHTML();
+          container.classList.add("active");
+        }, 200);
+        closeAllWidgets();
+      }
+
+      function getBasicHTML() {
+        return `
         <div class="card" onclick="showCalendar(this, 'Starter')" tabindex="0">
           <h3>Starter</h3>
           <p>1-2 Seiten, mobil optimiert<br>AOS Effekte + Glow</p>
@@ -553,10 +620,10 @@ body, html {
           <div class="price">ab 3.000 &euro;</div>
         </div>
       `;
-    }
+      }
 
-  function getPremiumHTML() {
-  return `
+      function getPremiumHTML() {
+        return `
     <div class="card premium" onclick="showCalendar(this, 'Starter Premium')">
       <h3>Starter Premium</h3>
       <p>1-2 Seiten<br>Figma + HTML / Webflow</p>
@@ -573,197 +640,255 @@ body, html {
       <div class="price">ab 5.000 &euro;</div>
     </div>
   `;
-}
+      }
 
-    // Info-Box aktualisieren
-  function updatePackageInfo(type, name, price, desc) {
-    const info = document.getElementById('package-info');
-    if (!name) {
-      info.className = 'package-info';
-      info.innerHTML = ''; // Inhalt leeren, aber Box bleibt sichtbar
-      return;
-    }
-    info.className = 'package-info ' + type;
-    info.innerHTML = `<span>${name}</span><br><span style="font-weight:400;font-size:1rem;">${desc}</span>`;
-  }
-
-  // Hover-Events für Karten
-  function addCardHoverEvents() {
-    document.querySelectorAll('.card').forEach(card => {
-      card.onmouseenter = function() {
-        const isPremium = card.classList.contains('premium');
-        const type = isPremium ? 'premium' : 'basic';
-        const name = card.querySelector('h3')?.textContent || '';
-        const price = card.querySelector('.price')?.textContent || '';
-        const desc = card.querySelector('p')?.textContent || '';
-        updatePackageInfo(type, name, price, desc);
-      };
-      card.onmouseleave = function() {
-        // Nur zurücksetzen, wenn kein Widget offen ist
-        if (!card.querySelector('.calendar-widget')) {
-          updatePackageInfo();
+      // Info-Box aktualisieren
+      function updatePackageInfo(type, name, price, desc) {
+        const info = document.getElementById("package-info");
+        if (!name) {
+          info.className = "package-info";
+          info.innerHTML = ""; // Inhalt leeren, aber Box bleibt sichtbar
+          return;
         }
-      };
-    });
-  }
+        info.className = "package-info " + type;
+        info.innerHTML = `<span>${name}</span><br><span style="font-weight:400;font-size:1rem;">${desc}</span>`;
+      }
 
-  // Widget-Logik anpassen
-  function showCalendar(card, packageName) {
-    closeAllWidgets();
-    document.querySelectorAll('.card').forEach(c => c.classList.remove('premium-selected'));
+      // Hover-Events für Karten
+      function addCardHoverEvents() {
+        document.querySelectorAll(".card").forEach((card) => {
+          card.onmouseenter = function () {
+            const isPremium = card.classList.contains("premium");
+            const type = isPremium ? "premium" : "basic";
+            const name = card.querySelector("h3")?.textContent || "";
+            const price = card.querySelector(".price")?.textContent || "";
+            const desc = card.querySelector("p")?.textContent || "";
+            updatePackageInfo(type, name, price, desc);
+          };
+          card.onmouseleave = function () {
+            // Nur zurücksetzen, wenn kein Widget offen ist
+            if (!card.querySelector(".calendar-widget")) {
+              updatePackageInfo();
+            }
+          };
+        });
+      }
 
-    if (card.classList.contains('premium')) {
-      card.classList.add('premium-selected');
-    }
+      // Widget-Logik anpassen
+      function showCalendar(card, packageName) {
+        closeAllWidgets();
+        document.querySelectorAll(".card").forEach((c) => {
+          c.classList.remove("premium-selected", "no-scale");
+        });
 
-    const widget = document.createElement('div');
-    widget.classList.add('calendar-widget', 'loading');
-    widget.innerHTML = `
+        if (card.classList.contains("premium")) {
+          card.classList.add("premium-selected");
+        }
+        card.classList.add("no-scale"); // <-- HIER
+
+        const widget = document.createElement("div");
+        widget.classList.add("calendar-widget", "loading");
+        widget.innerHTML = `
       <button class="close-widget" onclick="closeWidget(this)">&times;</button>
-      <iframe src="https://calendly.com/leonidas-pyka/30min?hide_gdpr_banner=1&background_color=000000&text_color=FFFFFF&primary_color=FFD700&a1=${encodeURIComponent(packageName)}" allowtransparency="true"></iframe>
+      <iframe src="https://calendly.com/leonidas-pyka/30min?hide_gdpr_banner=1&background_color=000000&text_color=FFFFFF&primary_color=FFD700&a1=${encodeURIComponent(
+        packageName
+      )}" allowtransparency="true"></iframe>
     `;
-    card.appendChild(widget);
+        card.appendChild(widget);
 
-    // Ladeanimation entfernen, wenn iFrame geladen
-    widget.querySelector('iframe').addEventListener('load', () => {
-      widget.classList.remove('loading');
-    });
+        // Ladeanimation entfernen, wenn iFrame geladen
+        widget.querySelector("iframe").addEventListener("load", () => {
+          widget.classList.remove("loading");
+        });
 
-    // Info-Box für ausgewähltes Paket anzeigen
-    const isPremium = card.classList.contains('premium');
-    const type = isPremium ? 'premium' : 'basic';
-    const name = card.querySelector('h3')?.textContent || '';
-    const price = card.querySelector('.price')?.textContent || '';
-    const desc = card.querySelector('p')?.textContent || '';
-    updatePackageInfo(type, name, price, desc);
-  }
+        // Info-Box für ausgewähltes Paket anzeigen
+        const isPremium = card.classList.contains("premium");
+        const type = isPremium ? "premium" : "basic";
+        const name = card.querySelector("h3")?.textContent || "";
+        const price = card.querySelector(".price")?.textContent || "";
+        const desc = card.querySelector("p")?.textContent || "";
+        updatePackageInfo(type, name, price, desc);
+      }
 
-    function closeWidget(button) {
-      button.parentElement.remove();
-      updatePackageInfo();
-    }
+      function closeWidget(button) {
+        const card = button.closest(".card");
+        if (card) card.classList.remove("no-scale"); // <-- HIER
+        button.parentElement.remove();
+        updatePackageInfo();
+      }
 
-    function closeAllWidgets() {
-      document.querySelectorAll('.calendar-widget').forEach(widget => widget.remove());
-      updatePackageInfo();
-    }
+      function closeAllWidgets() {
+        document.querySelectorAll(".calendar-widget").forEach((widget) => {
+          const card = widget.closest(".card");
+          if (card) card.classList.remove("no-scale"); // <-- HIER
+          widget.remove();
+        });
+        updatePackageInfo();
+      }
 
-    // Nach jedem Tab-Wechsel Events neu setzen
-    const origShowTab = showTab;
-    showTab = function(tab, btn) {
-      origShowTab(tab, btn);
-      setTimeout(() => {
+      // Nach jedem Tab-Wechsel Events neu setzen
+      const origShowTab = showTab;
+      showTab = function (tab, btn) {
+        origShowTab(tab, btn);
+        setTimeout(() => {
+          addCardHoverEvents();
+          updatePackageInfo(); // Info-Box erst nach dem Neuladen zurücksetzen
+        }, 250);
+      };
+
+      // Initial Events setzen
+      document.addEventListener("DOMContentLoaded", () => {
         addCardHoverEvents();
-        updatePackageInfo(); // Info-Box erst nach dem Neuladen zurücksetzen
-      }, 250);
-    };
+      });
+    </script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header data-aos="fade-down">
+      <img
+        src="DB5A56C2-6537-412D-94B5-4C1A72DA5F3C.PNG"
+        alt="Integrow Logo"
+        class="logo-img"
+      />
+      <div class="nav-links">
+        <a href="index.html">Startseite</a>
+        <a href="produkt.html">Produkt</a>
+        <a href="kurse.html">Kurse</a>
+        <a href="support.html">Support</a>
+        <a href="impressum.html">Impressum</a>
+      </div>
+    </header>
 
-    // Initial Events setzen
-    document.addEventListener('DOMContentLoaded', () => {
-      addCardHoverEvents();
-
-      
-    });
-
-    
-  </script>
-  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&display=swap" rel="stylesheet">
-</head>
-<body>
-  <header data-aos="fade-down">
-    <img src="DB5A56C2-6537-412D-94B5-4C1A72DA5F3C.PNG" alt="Integrow Logo" class="logo-img" />
-    <div class="nav-links">
-      <a href="index.html">Startseite</a>
-      <a href="produkt.html">Produkt</a>
-      <a href="kurse.html">Kurse</a>
-      <a href="support.html">Support</a>
-      <a href="impressum.html">Impressum</a>
+    <div class="tabs">
+      <button
+        class="tab-button active"
+        onclick="showTab('basis', this)"
+        tabindex="0"
+        aria-selected="true"
+      >
+        Basis Webseiten
+      </button>
+      <button
+        class="tab-button"
+        onclick="showTab('premium', this)"
+        tabindex="0"
+        aria-selected="false"
+      >
+        Premium Webseiten
+      </button>
     </div>
-  </header>
 
-  <div class="tabs">
-    <button class="tab-button active" onclick="showTab('basis', this)" tabindex="0" aria-selected="true">Basis Webseiten</button>
-    <button class="tab-button" onclick="showTab('premium', this)" tabindex="0" aria-selected="false">Premium Webseiten</button>
-  </div>
-
-  <div id="pricing-container" class="pricing-section active">
-    <!-- Basis Pakete initial -->
-    <div class="card" onclick="showCalendar(this, 'Starter')" data-aos="fade-up" data-aos-delay="10" >
-      <h3>Starter</h3>
-      <p>1-2 Seiten, mobil optimiert<br>AOS Effekte + Glow</p>
-      <div class="price">ab 1.200 &euro;</div>
+    <div id="pricing-container" class="pricing-section active">
+      <!-- Basis Pakete initial -->
+      <div
+        class="card"
+        onclick="showCalendar(this, 'Starter')"
+        data-aos="fade-up"
+        data-aos-delay="10"
+      >
+        <h3>Starter</h3>
+        <p>1-2 Seiten, mobil optimiert<br />AOS Effekte + Glow</p>
+        <div class="price">ab 1.200 &euro;</div>
+      </div>
+      <div
+        class="card"
+        onclick="showCalendar(this, 'Business')"
+        data-aos="fade-up"
+        data-aos-delay="10"
+      >
+        <h3>Business</h3>
+        <p>3-5 Seiten, mobil optimiert<br />AOS + SEO Basics</p>
+        <div class="price">ab 2.000 &euro;</div>
+      </div>
+      <div
+        class="card"
+        onclick="showCalendar(this, 'Premium')"
+        data-aos="fade-up"
+        data-aos-delay="10"
+      >
+        <h3>Premium</h3>
+        <p>
+          5-8 Seiten, mobil optimiert<br />SEO + erweiterbar (Blog, KI-Chatbot)
+        </p>
+        <div class="price">ab 3.000 &euro;</div>
+      </div>
     </div>
-    <div class="card" onclick="showCalendar(this, 'Business')" data-aos="fade-up" data-aos-delay="10" >
-      <h3>Business</h3>
-      <p>3-5 Seiten, mobil optimiert<br>AOS + SEO Basics</p>
-      <div class="price">ab 2.000 &euro;</div>
-    </div>
-    <div class="card" onclick="showCalendar(this, 'Premium')" data-aos="fade-up" data-aos-delay="10" >
-      <h3>Premium</h3>
-      <p>5-8 Seiten, mobil optimiert<br>SEO + erweiterbar (Blog, KI-Chatbot)</p>
-      <div class="price">ab 3.000 &euro;</div>
-    </div>
-  </div>
-  <div id="package-info" class="package-info"></div>
-<div class="package-info-spacer"></div>
-<!-- Direkt unter dem Info-Text -->
+    <div id="package-info" class="package-info"></div>
+    <div class="package-info-spacer"></div>
+    <!-- Direkt unter dem Info-Text -->
 
-  <footer>
-    &copy; 2025 Integrow. Digital Elegance. Klar. Stark. Skaliert.
-    <div class="footer-social">
-      <a href="https://www.instagram.com/integrow.de/" target="_blank" rel="noopener" aria-label="Instagram">
-        <img src="instagram.svg" alt="Instagram" />
-      </a>
-      <a href="mailto:info@integrow.de" aria-label="E-Mail">
-        <img src="mail.svg" alt="E-Mail" />
-      </a>
-      <a href="https://www.linkedin.com/company/integrow/" target="_blank" rel="noopener" aria-label="LinkedIn">
-        <img src="linkedin.svg" alt="LinkedIn" />
-      </a>
-    </div>
-    
-  </footer>
+    <footer>
+      &copy; 2025 Integrow. Digital Elegance. Klar. Stark. Skaliert.
+      <div class="footer-social">
+        <a
+          href="https://www.instagram.com/integrow.de/"
+          target="_blank"
+          rel="noopener"
+          aria-label="Instagram"
+        >
+          <img src="instagram.svg" alt="Instagram" />
+        </a>
+        <a href="mailto:info@integrow.de" aria-label="E-Mail">
+          <img src="mail.svg" alt="E-Mail" />
+        </a>
+        <a
+          href="https://www.linkedin.com/company/integrow/"
+          target="_blank"
+          rel="noopener"
+          aria-label="LinkedIn"
+        >
+          <img src="linkedin.svg" alt="LinkedIn" />
+        </a>
+      </div>
+    </footer>
 
-  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-  <script>
-    AOS.init({
-      once: true,
-      duration: 1000
-    });
-  </script>
-<!-- Lenis Library einbinden (vor </body>) -->
-<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.18/bundled/lenis.min.js"></script>
-<script>window.addEventListener('scroll', function() {
-  const btn = document.getElementById('back-to-top');
-  if (window.scrollY > 150) {
-    btn.style.opacity = '1';
-    btn.style.visibility = 'visible';
-  } else {
-    btn.style.opacity = '0';
-    btn.style.visibility = 'hidden';
-  }
-});
-function scrollToTop() {
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth'
-  });
-}</script>
-<script>
-  const lenis = new Lenis({
-    duration: 1.6, // Geschwindigkeit (kannst du anpassen, z.B. 1.0 oder 1.5)
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    smooth: true
-  })
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <script>
+      AOS.init({
+        once: true,
+        duration: 1000,
+      });
+    </script>
+    <!-- Lenis Library einbinden (vor </body>) -->
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.18/bundled/lenis.min.js"></script>
+    <script>
+      window.addEventListener("scroll", function () {
+        const btn = document.getElementById("back-to-top");
+        if (window.scrollY > 150) {
+          btn.style.opacity = "1";
+          btn.style.visibility = "visible";
+        } else {
+          btn.style.opacity = "0";
+          btn.style.visibility = "hidden";
+        }
+      });
+      function scrollToTop() {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      }
+    </script>
+    <script>
+      const lenis = new Lenis({
+        duration: 1.6, // Geschwindigkeit (kannst du anpassen, z.B. 1.0 oder 1.5)
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smooth: true,
+      });
 
-  function raf(time) {
-    lenis.raf(time)
-    requestAnimationFrame(raf)
-  }
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
 
-  requestAnimationFrame(raf)
-</script>
+      requestAnimationFrame(raf);
+    </script>
 
-<button id="back-to-top" onclick="scrollToTop()" title="Nach oben">↑</button>
-</body>
+    <button id="back-to-top" onclick="scrollToTop()" title="Nach oben">
+      ↑
+    </button>
+  </body>
 </html>

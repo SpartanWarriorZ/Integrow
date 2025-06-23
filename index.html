@@ -1,479 +1,525 @@
 <!DOCTYPE html>
 <html lang="de">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Integrow – Startseite</title>
-  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
-  <style>
-    html, body {
-      max-width: 100%;
-      overflow-x: hidden;
-    }
-    body {
-      margin: 0;
-      background-color: #0a0a0a;
-      color: #e0e0e0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to bottom right, #0a0a0a, #1c1c1c);
-    }
-    header {
-      padding: 60px 40px 40px;
-      background: linear-gradient(to right, #1c1c1c, #000);
-      text-align: center;
-      border-bottom: 1px solid #444;
-      box-shadow: 0 0 40px rgba(192,192,192,0.1);
-      user-select: none;
-      -webkit-user-select: none;
-    }
-    .logo-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      user-select: none;
-      -webkit-user-select: none;
-    }
-    .logo-img {
-      max-width: 600px;
-      width: auto; /* Only use the image's natural width */
-      height: auto;
-      margin-bottom: 10px;
-      filter: drop-shadow(0 0 12px rgba(255,255,255,0.4));
-      transition: filter 0.4s ease;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      user-select: none;
-      -webkit-user-select: none;
-      pointer-events: auto; /* Allow pointer events only on the image */
-    }
-    .logo-img:hover {
-      filter: drop-shadow(0 0 18px rgba(255,255,255,0.6));
-    }
-    .nav-links {
-      margin-top: 10px;
-      display: flex;
-      justify-content: center;
-      gap: 50px;
-      z-index: 1000;
-      position: relative;
-      flex-wrap: wrap;
-    }
-    .nav-links a {
-      color: silver;
-      text-decoration: none;
-      font-size: 1.4rem;
-      font-family: 'Rajdhani', sans-serif;
-      font-weight: 600;
-      letter-spacing: 1px;
-      transition: color 0.3s ease, text-shadow 0.3s ease;
-      position: relative;
-    }
-    .nav-links a::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: -5px;
-      width: 100%;
-      height: 2px;
-      background: silver;
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.3s ease;
-    }
-    .nav-links a:hover::after {
-      transform: scaleX(1);
-    }
-    .nav-links a:hover {
-      color: #fff;
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-    }
-    .section {
-      padding: 80px 40px;
-      max-width: 1200px;
-      margin: auto;
-      border-bottom: 1px solid #2a2a2a;
-    }
-    .section h2 {
-      color: silver;
-      font-size: 2.4rem;
-      margin-bottom: 30px;
-      text-transform: uppercase;
-      text-align: center;
-    }
-    .feature {
-      display: flex;
-      align-items: center;
-      margin-bottom: 60px;
-      gap: 40px;
-      flex-wrap: wrap;
-      transition: box-shadow 0.4s ease;
-      cursor: pointer;
-    }
-    .feature img {
-      width: 340px;
-      height: auto;
-      border-radius: 16px;
-      border: none;
-      box-shadow: 0 0 50px rgba(192, 192, 192, 0.4);
-      clip-path: inset(0 round 16px);
-      transition: transform 0.4s ease, box-shadow 0.4s ease;
-    }
-    .feature img:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 70px rgba(255, 255, 255, 0.6);
-    }
-    .feature:hover .feature-text {
-      text-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
-    }
-    .feature-text {
-      flex: 1;
-      min-width: 260px;
-      transition: text-shadow 0.4s ease;
-    }
-    .feature-text h3 {
-      color: silver;
-      font-size: 1.8rem;
-      margin-bottom: 12px;
-      transition: transform 0.4s cubic-bezier(.4,1.6,.6,1);
-      will-change: transform;
-    }
-    .feature-text p {
-      font-size: 1.1rem;
-      line-height: 1.6;
-      color: #ccc;
-      margin-bottom: 0;
-      transition: transform 0.4s cubic-bezier(.4,1.6,.6,1);
-      will-change: transform;
-    }
-    .mission-bullets {
-      display: none;
-      margin-top: 28px;
-      margin-bottom: 0;
-      padding-left: 22px;
-      color: #b0b0b0;
-      font-size: 1.25rem;
-      text-align: left;
-      list-style: disc;
-      opacity: 0;
-      transform: translateX(-40px);
-      transition: opacity 0.5s cubic-bezier(.4,1.6,.6,1), transform 0.5s cubic-bezier(.4,1.6,.6,1);
-    }
-    .feature:hover .mission-bullets,
-    .feature:focus-within .mission-bullets,
-    .feature img:hover + .feature-text .mission-bullets {
-      display: block;
-      opacity: 1;
-      transform: translateX(0);
-      animation: fadeInMissionLeft 0.5s cubic-bezier(.4,1.6,.6,1);
-    }
-    .mission-bullets li {
-      opacity: 0;
-      transform: translateX(-40px);
-      animation: none;
-    }
-    .feature:hover .mission-bullets li,
-    .feature:focus-within .mission-bullets li,
-    .feature img:hover + .feature-text .mission-bullets li {
-      animation: fadeInMissionLeft 0.5s cubic-bezier(.4,1.6,.6,1) forwards;
-    }
-    .feature:hover .mission-bullets li:nth-child(1),
-    .feature:focus-within .mission-bullets li:nth-child(1),
-    .feature img:hover + .feature-text .mission-bullets li:nth-child(1) {
-      animation-delay: 0.08s;
-    }
-    .feature:hover .mission-bullets li:nth-child(2),
-    .feature:focus-within .mission-bullets li:nth-child(2),
-    .feature img:hover + .feature-text .mission-bullets li:nth-child(2) {
-      animation-delay: 0.22s;
-    }
-    .feature:hover .mission-bullets li:nth-child(3),
-    .feature:focus-within .mission-bullets li:nth-child(3),
-    .feature img:hover + .feature-text .mission-bullets li:nth-child(3) {
-      animation-delay: 0.36s;
-    }
-
-    @keyframes fadeInMissionLeft {
-      from {
-        opacity: 0;
-        transform: translateX(-40px);
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Integrow – Startseite</title>
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+    <style>
+      html,
+      body {
+        max-width: 100%;
+        overflow-x: hidden;
       }
-      to {
-        opacity: 1;
-        transform: translateX(0);
+      body {
+        margin: 0;
+        background-color: #0a0a0a;
+        color: #e0e0e0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(to bottom right, #0a0a0a, #1c1c1c);
       }
-    }
-    .cta {
-      background: radial-gradient(circle, #1a1a1a 0%, #0d0d0d 100%);
-      text-align: center;
-      padding: 80px 20px;
-      box-shadow: inset 0 0 60px rgba(192,192,192,0.05);
-    }
-    .cta h2 {
-      font-size: 2.5rem;
-      color: silver;
-      margin-bottom: 10px;
-    }
-    .cta p {
-      color: #aaa;
-      font-size: 1.2rem;
-    }
-    .cta-button {
-      margin-top: 30px;
-      background: linear-gradient(to right, #d8d8d8, #a8a8a8);
-      color: #000;
-      border: none;
-      padding: 16px 36px;
-      font-size: 1.1rem;
-      cursor: pointer;
-      border-radius: 8px;
-      font-weight: bold;
-      transition: 0.3s ease;
-      text-decoration: none;
-      display: inline-block;
-    }
-    .cta-button:hover {
-      background: linear-gradient(to bottom, #ffffff, #575757);
-      box-shadow: 0 0 40px rgb(200, 200, 200);
-    }
-    footer {
-      background-color: #111;
-      text-align: center;
-      padding: 40px 20px;
-      color: #777;
-      font-size: 1rem;
-      border-top: 1px solid #2a2a2a;
-    }
-    #back-to-top {
-      position: fixed;
-      bottom: 20px;
-      right: 10px;
-      z-index: 999;
-      display: inline-block;
-      background: #444;
-      color: white;
-      border: none;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      font-size: 24px;
-      cursor: pointer;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.4s, visibility 0.4s, transform 0.3s;
-      user-select: none;
-      outline: none;
-    }
-    #back-to-top:hover {
-      background: #666;
-      transform: scale(1.1);
-    }
-    .leistungen-list {
-      font-size: 1.4rem;
-      line-height: 1.8;
-      color: #e0e0e0;
-      max-width: 800px;
-      margin: 0 auto;
-      padding-top: 20px;
-      border-top: 1px solid #444;
-    }
-    .leistungen-list ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    .leistungen-list li {
-      margin-bottom: 12px;
-      padding-left: 28px;
-      text-indent: -22px;
-    }
-    .leistungen-list li::before {
-      content: "✔ ";
-      color: silver;
-      display: inline-block;
-      width: 22px;
-    }
-    @media (max-width: 768px) {
-      .nav-links {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 10px;
-        padding-bottom: 10px;
-      }
-      .nav-links a {
-        font-size: 1.1rem;
-        padding: 5px 10px;
-      }
-      .feature {
-        flex-direction: column;
+      header {
+        padding: 60px 40px 40px;
+        background: linear-gradient(to right, #1c1c1c, #000);
         text-align: center;
+        border-bottom: 1px solid #444;
+        box-shadow: 0 0 40px rgba(192, 192, 192, 0.1);
+        user-select: none;
+        -webkit-user-select: none;
       }
-      .feature img {
-        width: 90%;
-        display: block;
-        margin: 0 auto 20px;
-      }
-      .leistungen-list {
-        font-size: 1.2rem;
-        line-height: 1.6;
+      .logo-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        user-select: none;
+        -webkit-user-select: none;
       }
       .logo-img {
-        max-width: 400px;
+        max-width: 600px;
+        width: auto;
+        height: auto;
+        margin-bottom: 10px;
+        filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.4));
+        transition: filter 0.4s ease;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        user-select: none;
+        -webkit-user-select: none;
+        pointer-events: auto;
+      }
+      .logo-img:hover {
+        filter: drop-shadow(0 0 18px rgba(255, 255, 255, 0.6));
+      }
+      .nav-links {
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        gap: 50px;
+        z-index: 1000;
+        position: relative;
+        flex-wrap: wrap;
+      }
+      .nav-links a {
+        color: silver;
+        text-decoration: none;
+        font-size: 1.4rem;
+        font-family: "Rajdhani", sans-serif;
+        font-weight: 600;
+        letter-spacing: 1px;
+        transition: color 0.3s ease, text-shadow 0.3s ease;
+        position: relative;
+      }
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -5px;
+        width: 100%;
+        height: 2px;
+        background: silver;
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.3s ease;
+      }
+      .nav-links a:hover::after {
+        transform: scaleX(1);
+      }
+      .nav-links a:hover {
+        color: #fff;
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+      }
+      .section {
+        padding: 80px 40px;
+        max-width: 1200px;
+        margin: auto;
+        border-bottom: 1px solid #2a2a2a;
+      }
+      .section h2 {
+        color: silver;
+        font-size: 2.4rem;
+        margin-bottom: 30px;
+        text-transform: uppercase;
+        text-align: center;
+      }
+      .feature {
+        display: flex;
+        align-items: center;
+        margin-bottom: 60px;
+        gap: 40px;
+        flex-wrap: wrap;
+        transition: box-shadow 0.4s ease;
+        cursor: pointer;
+      }
+      .feature img {
+        width: 340px;
+        height: auto;
+        border-radius: 16px;
+        border: none;
+        box-shadow: none; /* Kein Grund-Glow */
+        clip-path: inset(0 round 16px);
+        transition: transform 0.4s ease, box-shadow 0.4s ease,
+          filter 0.4s cubic-bezier(0.4, 1.6, 0.6, 1);
+      }
+      .feature img:hover,
+      .feature img:focus {
+        transform: scale(1.04);
+        box-shadow: none; /* Kein Glow beim Hover */
+        filter: none;
+        outline: none;
+        cursor: pointer;
+        z-index: 2;
+      }
+      .feature:hover .feature-text {
+        text-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
+      }
+      .feature-text {
+        flex: 1;
+        min-width: 260px;
+        transition: text-shadow 0.4s ease;
       }
       .feature-text h3 {
-        font-size: 1.25rem;
+        color: silver;
+        font-size: 1.8rem;
+        margin-bottom: 12px;
+        transition: transform 0.4s cubic-bezier(0.4, 1.6, 0.6, 1);
+        will-change: transform;
       }
       .feature-text p {
-        font-size: 0.98rem;
+        font-size: 1.1rem;
+        line-height: 1.6;
+        color: #ccc;
+        margin-bottom: 0;
+        transition: transform 0.4s cubic-bezier(0.4, 1.6, 0.6, 1);
+        will-change: transform;
       }
+      /* Mission Bullets: erscheinen gemeinsam */
       .mission-bullets {
-        font-size: 1.05rem;
+        display: none;
+        margin-top: 28px;
+        margin-bottom: 0;
+        padding-left: 22px;
+        color: #b0b0b0;
+        font-size: 1.25rem;
+        text-align: left;
+        list-style: disc;
+        opacity: 1;
+        transform: none;
       }
-    }
-    .feature-text h3,
-    .feature-text p {
-      transition: transform 0.4s cubic-bezier(.4,1.6,.6,1);
-      will-change: transform;
-    }
 
-    .feature:hover .feature-text h3,
-    .feature:focus-within .feature-text h3,
-    .feature:hover .feature-text p,
-    .feature:focus-within .feature-text p {
-      transform: translateY(-28px);
-    }
-  </style>
-  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&display=swap" rel="stylesheet">
-</head>
-<body>
-  <header data-aos="fade-down">
-    <div class="logo-container">
-      <img src="DB5A56C2-6537-412D-94B5-4C1A72DA5F3C.PNG" alt="Integrow Logo" class="logo-img" />
-    </div>
-    <div class="nav-links">
-      <a href="index.html">Startseite</a>
-      <a href="produkt.html">Produkt</a>
-      <a href="kurse.html">Kurse</a>
-      <a href="support.html">Support</a>
-      <a href="impressum.html">Impressum</a>
-    </div>
-  </header>
-
-  <div class="section" data-aos="fade-up">
-    <h2>Unsere Mission</h2>
-    <div class="feature" data-aos="fade-up">
-      <img src="Photo 1.jpeg" alt="Markenaufbau">
-      <div class="feature-text">
-        <h3>Marke mit Substanz & Wachstumspotenzial</h3>
-        <p>Wir machen deine Marke sichtbar, begehrenswert und bereit für mehr Umsatz.</p>
-        <ul class="mission-bullets">
-          <li>Individuelles Branding für mehr Wiedererkennung</li>
-          <li>Strategische Positionierung am Markt</li>
-          <li>Starke Markenbotschaft, die verkauft</li>
-        </ul>
-      </div>
-    </div>
-    <div class="feature" data-aos="fade-up">
-      <img src="Photo 2.jpeg" alt="Sichtbarkeit">
-      <div class="feature-text">
-        <h3>Gezielt mehr Sichtbarkeit & Reichweite</h3>
-        <p>Wir bringen dich an die Spitze bei Google und direkt zu deinen Wunschkunden.</p>
-        <ul class="mission-bullets">
-          <li>SEO-Optimierung für Top-Rankings</li>
-          <li>Gezielte Ansprache deiner Zielgruppe</li>
-          <li>Mehr Reichweite, mehr Anfragen</li>
-        </ul>
-      </div>
-    </div>
-    <div class="feature" data-aos="fade-up">
-      <img src="Photo 3.jpeg" alt="Tools">
-      <div class="feature-text">
-        <h3>Skalieren durch smarte Automatisierung</h3>
-        <p>Mehr Kunden, weniger Aufwand: Wir automatisieren dein Marketing und Vertrieb.</p>
-        <ul class="mission-bullets">
-          <li>Automatisierte Leadgenerierung</li>
-          <li>Effiziente Marketing-Prozesse</li>
-          <li>Mehr Zeit für dein Kerngeschäft</li>
-        </ul>
-      </div>
-    </div>
-    <div class="feature" data-aos="fade-up">
-      <img src="Photo 4.jpeg" alt="Technik und Branding">
-      <div class="feature-text">
-        <h3>Technik trifft Branding</h3>
-        <p>Modernste Technik, die verkauft – und deine Marke stark inszeniert.</p>
-        <ul class="mission-bullets">
-          <li>Innovative Web-Technologien</li>
-          <li>Starkes Design für mehr Vertrauen</li>
-          <li>Optimiert für Conversion & Wachstum</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <div class="section" data-aos="fade-up">
-    <h2>Unsere Leistungen</h2>
-    <div class="leistungen-list">
-      <ul>
-        <li>Individuell gestaltete Websites — exakt auf deine Zielgruppe zugeschnitten</li>
-        <li>Integration fortschrittlicher KI-Chatbots für bessere Nutzererlebnisse</li>
-        <li>Automatisierte Vertriebs- & Marketingprozesse für mehr Effizienz</li>
-        <li>Umfassende technische Beratung & kontinuierliche Betreuung</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="cta" data-aos="zoom-in">
-    <h2>Bereit für den nächsten Wachstumsschritt?</h2>
-    <p>Starte jetzt mit Integrow — wir bringen deine Ideen zum Leben und dein Business online sichtbar nach vorn.</p>
-    <a href="termin.html" class="cta-button">Jetzt Termin sichern</a>
-  </div>
-
-  <footer>
-    &copy; 2025 Integrow. Digital Elegance. Klar. Stark. Skaliert.
-  </footer>
-
-  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-  <script>
-    AOS.init({
-      once: true,
-      duration: 1000
-    });
-  </script>
-  <!-- Lenis Library einbinden (vor </body>) -->
-  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.18/bundled/lenis.min.js"></script>
-  <script>
-    const lenis = new Lenis({
-      duration: 1.6,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smooth: true
-    })
-    function raf(time) {
-      lenis.raf(time)
-      requestAnimationFrame(raf)
-    }
-    requestAnimationFrame(raf)
-  </script>
-  <script>
-    window.addEventListener('scroll', function() {
-      const btn = document.getElementById('back-to-top');
-      if (window.scrollY > 150) {
-        btn.style.opacity = '1';
-        btn.style.visibility = 'visible';
-      } else {
-        btn.style.opacity = '0';
-        btn.style.visibility = 'hidden';
+      .feature:hover .mission-bullets,
+      .feature:focus-within .mission-bullets,
+      .feature img:hover + .feature-text .mission-bullets {
+        display: block;
       }
-    });
-    function scrollToTop() {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
+
+      .mission-bullets li {
+        opacity: 0;
+        transform: translateX(-40px);
+        animation: fadeInMissionLeft 0.5s cubic-bezier(0.4, 1.6, 0.6, 1)
+          forwards;
+      }
+
+      .feature:hover .mission-bullets li,
+      .feature:focus-within .mission-bullets li,
+      .feature img:hover + .feature-text .mission-bullets li {
+        animation-play-state: running;
+      }
+
+      .feature:hover .mission-bullets li:nth-child(1),
+      .feature:focus-within .mission-bullets li:nth-child(1),
+      .feature img:hover + .feature-text .mission-bullets li:nth-child(1) {
+        animation-delay: 0.08s;
+      }
+      .feature:hover .mission-bullets li:nth-child(2),
+      .feature:focus-within .mission-bullets li:nth-child(2),
+      .feature img:hover + .feature-text .mission-bullets li:nth-child(2) {
+        animation-delay: 0.22s;
+      }
+      .feature:hover .mission-bullets li:nth-child(3),
+      .feature:focus-within .mission-bullets li:nth-child(3),
+      .feature img:hover + .feature-text .mission-bullets li:nth-child(3) {
+        animation-delay: 0.36s;
+      }
+      .feature:hover .mission-bullets li:nth-child(4),
+      .feature:focus-within .mission-bullets li:nth-child(4),
+      .feature img:hover + .feature-text .mission-bullets li:nth-child(4) {
+        animation-delay: 0.5s;
+      }
+
+      @keyframes fadeInMissionLeft {
+        from {
+          opacity: 0;
+          transform: translateX(-40px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+      .cta {
+        background: radial-gradient(circle, #1a1a1a 0%, #0d0d0d 100%);
+        text-align: center;
+        padding: 80px 20px;
+        box-shadow: inset 0 0 60px rgba(192, 192, 192, 0.05);
+      }
+      .cta h2 {
+        font-size: 2.5rem;
+        color: silver;
+        margin-bottom: 10px;
+      }
+      .cta p {
+        color: #aaa;
+        font-size: 1.2rem;
+      }
+      .cta-button {
+        margin-top: 30px;
+        background: linear-gradient(to right, #d8d8d8, #a8a8a8);
+        color: #000;
+        border: none;
+        padding: 16px 36px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        border-radius: 8px;
+        font-weight: bold;
+        transition: 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+      }
+      .cta-button:hover {
+        background: linear-gradient(to bottom, #ffffff, #575757);
+        box-shadow: 0 0 40px rgb(200, 200, 200);
+      }
+      footer {
+        background-color: #111;
+        text-align: center;
+        padding: 40px 20px;
+        color: #777;
+        font-size: 1rem;
+        border-top: 1px solid #2a2a2a;
+      }
+      #back-to-top {
+        position: fixed;
+        bottom: 20px;
+        right: 10px;
+        z-index: 999;
+        display: inline-block;
+        background: #444;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+        cursor: pointer;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.4s, visibility 0.4s, transform 0.3s;
+        user-select: none;
+        outline: none;
+      }
+      #back-to-top:hover {
+        background: #666;
+        transform: scale(1.1);
+      }
+      .leistungen-list {
+        font-size: 1.4rem;
+        line-height: 1.8;
+        color: #e0e0e0;
+        max-width: 800px;
+        margin: 0 auto;
+        padding-top: 20px;
+        border-top: 1px solid #444;
+      }
+      .leistungen-list ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .leistungen-list li {
+        margin-bottom: 12px;
+        padding-left: 28px;
+        text-indent: -22px;
+      }
+      .leistungen-list li::before {
+        content: "✔ ";
+        color: silver;
+        display: inline-block;
+        width: 22px;
+      }
+      @media (max-width: 768px) {
+        .nav-links {
+          flex-direction: row;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 10px;
+          padding-bottom: 10px;
+        }
+        .nav-links a {
+          font-size: 1.1rem;
+          padding: 5px 10px;
+        }
+        .feature {
+          flex-direction: column;
+          text-align: center;
+        }
+        .feature img {
+          width: 90%;
+          display: block;
+          margin: 0 auto 20px;
+        }
+        .leistungen-list {
+          font-size: 1.2rem;
+          line-height: 1.6;
+        }
+        .logo-img {
+          max-width: 400px;
+        }
+        .feature-text h3 {
+          font-size: 1.25rem;
+        }
+        .feature-text p {
+          font-size: 0.98rem;
+        }
+        .mission-bullets {
+          font-size: 1.05rem;
+        }
+      }
+      .feature-text h3,
+      .feature-text p {
+        transition: transform 0.4s cubic-bezier(0.4, 1.6, 0.6, 1);
+        will-change: transform;
+      }
+      .feature:hover .feature-text h3,
+      .feature:focus-within .feature-text h3,
+      .feature:hover .feature-text p,
+      .feature:focus-within .feature-text p {
+        transform: translateY(-28px);
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header data-aos="fade-down">
+      <div class="logo-container">
+        <img
+          src="DB5A56C2-6537-412D-94B5-4C1A72DA5F3C.PNG"
+          alt="Integrow Logo"
+          class="logo-img"
+        />
+      </div>
+      <div class="nav-links">
+        <a href="index.html">Startseite</a>
+        <a href="produkt.html">Produkt</a>
+        <a href="kurse.html">Kurse</a>
+        <a href="support.html">Support</a>
+        <a href="impressum.html">Impressum</a>
+      </div>
+    </header>
+
+    <div class="section" data-aos="fade-up">
+      <h2>Unsere Mission</h2>
+      <div class="feature" data-aos="fade-up">
+        <img src="Photo 1.jpeg" alt="Markenaufbau" />
+        <div class="feature-text">
+          <h3>Marke mit Substanz & Wachstumspotenzial</h3>
+          <p>
+            Wir machen deine Marke sichtbar, begehrenswert und bereit für mehr
+            Umsatz.
+          </p>
+          <ul class="mission-bullets">
+            <li>Individuelles Branding für mehr Wiedererkennung</li>
+            <li>Strategische Positionierung am Markt</li>
+            <li>Starke Markenbotschaft, die verkauft</li>
+          </ul>
+        </div>
+      </div>
+      <div class="feature" data-aos="fade-up">
+        <img src="Photo 2.jpeg" alt="Sichtbarkeit" />
+        <div class="feature-text">
+          <h3>Gezielt mehr Sichtbarkeit & Reichweite</h3>
+          <p>
+            Wir bringen dich an die Spitze bei Google und direkt zu deinen
+            Wunschkunden.
+          </p>
+          <ul class="mission-bullets">
+            <li>SEO-Optimierung für Top-Rankings</li>
+            <li>Gezielte Ansprache deiner Zielgruppe</li>
+            <li>Mehr Reichweite, mehr Anfragen</li>
+          </ul>
+        </div>
+      </div>
+      <div class="feature" data-aos="fade-up">
+        <img src="Photo 3.jpeg" alt="Tools" />
+        <div class="feature-text">
+          <h3>Skalieren durch smarte Automatisierung</h3>
+          <p>
+            Mehr Kunden, weniger Aufwand: Wir automatisieren dein Marketing und
+            Vertrieb.
+          </p>
+          <ul class="mission-bullets">
+            <li>Automatisierte Leadgenerierung</li>
+            <li>Effiziente Marketing-Prozesse</li>
+            <li>Mehr Zeit für dein Kerngeschäft</li>
+          </ul>
+        </div>
+      </div>
+      <div class="feature" data-aos="fade-up">
+        <img src="Photo 4.jpeg" alt="Technik und Branding" />
+        <div class="feature-text">
+          <h3>Technik trifft Branding</h3>
+          <p>
+            Modernste Technik, die verkauft – und deine Marke stark inszeniert.
+          </p>
+          <ul class="mission-bullets">
+            <li>Innovative Web-Technologien</li>
+            <li>Starkes Design für mehr Vertrauen</li>
+            <li>Optimiert für Conversion & Wachstum</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" data-aos="fade-up">
+      <h2>Unsere Leistungen</h2>
+      <div class="leistungen-list">
+        <ul>
+          <li>
+            Individuell gestaltete Websites — exakt auf deine Zielgruppe
+            zugeschnitten
+          </li>
+          <li>
+            Integration fortschrittlicher KI-Chatbots für bessere
+            Nutzererlebnisse
+          </li>
+          <li>
+            Automatisierte Vertriebs- & Marketingprozesse für mehr Effizienz
+          </li>
+          <li>Umfassende technische Beratung & kontinuierliche Betreuung</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="cta" data-aos="zoom-in">
+      <h2>Bereit für den nächsten Wachstumsschritt?</h2>
+      <p>
+        Starte jetzt mit Integrow — wir bringen deine Ideen zum Leben und dein
+        Business online sichtbar nach vorn.
+      </p>
+      <a href="termin.html" class="cta-button">Jetzt Termin sichern</a>
+    </div>
+
+    <footer>
+      &copy; 2025 Integrow. Digital Elegance. Klar. Stark. Skaliert.
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <script>
+      AOS.init({
+        once: true,
+        duration: 1000,
       });
-    }
-  </script>
-  <button id="back-to-top" onclick="scrollToTop()" title="Nach oben">↑</button>
-</body>
+    </script>
+    <!-- Lenis Library einbinden (vor </body>) -->
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.18/bundled/lenis.min.js"></script>
+    <script>
+      const lenis = new Lenis({
+        duration: 1.6,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smooth: true,
+      });
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+      requestAnimationFrame(raf);
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const btn = document.getElementById("back-to-top");
+        window.addEventListener("scroll", function () {
+          if (window.scrollY > 150) {
+            btn.style.opacity = "1";
+            btn.style.visibility = "visible";
+          } else {
+            btn.style.opacity = "0";
+            btn.style.visibility = "hidden";
+          }
+        });
+      });
+      function scrollToTop() {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      }
+    </script>
+    <button id="back-to-top" onclick="scrollToTop()" title="Nach oben">
+      ↑
+    </button>
+  </body>
 </html>
