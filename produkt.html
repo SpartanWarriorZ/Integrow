@@ -580,6 +580,118 @@
         filter: grayscale(0) brightness(1.2) drop-shadow(0 0 6px #ffd70088);
         transform: scale(1.13) rotate(-8deg);
       }
+      /* Modal Overlay für das Widget */
+#calendar-modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0; top: 0; right: 0; bottom: 0;
+  background: rgba(10,10,10,0.85);
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.3s;
+  /* Prevent background scroll when modal is open */
+  overscroll-behavior: contain;
+}
+#calendar-modal.active {
+  display: flex;
+}
+#calendar-modal .calendar-widget {
+  margin: 0;
+  background: #222;
+  border-radius: 16px;
+  padding: 0;
+  box-shadow: 0 8px 40px #000a;
+  max-width: 95vw;
+  width: 420px;
+  max-height: 90vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  /* Allow scrolling inside widget if content overflows */
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+#calendar-modal .calendar-widget iframe {
+  width: 100%;
+  height: 500px;
+  border: none;
+  border-radius: 0 0 16px 16px;
+  display: block;
+}
+#calendar-modal .close-widget {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: #444;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  font-weight: bold;
+  line-height: 40px;
+  font-size: 2rem;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  touch-action: manipulation;
+}
+#calendar-modal .close-widget:active,
+#calendar-modal .close-widget:focus {
+  background: #ffd700;
+  color: #222;
+  outline: none;
+}
+@media (max-width: 600px) {
+  #calendar-modal .calendar-widget {
+    width: 98vw;
+    max-width: 98vw;
+    min-width: 0;
+    border-radius: 10px;
+    padding-bottom: 0;
+    max-height: 96vh;
+  }
+  #calendar-modal .calendar-widget iframe {
+    height: 320px;
+    border-radius: 0 0 10px 10px;
+  }
+  #calendar-modal .close-widget {
+    width: 44px;
+    height: 44px;
+    font-size: 2.2rem;
+    top: 6px;
+    right: 6px;
+  }
+}
+/* Make cards and tab buttons easier to tap on mobile */
+@media (max-width: 600px) {
+  .card {
+    min-height: 140px;
+    font-size: 1.05rem;
+    padding: 18px 8px 24px 8px;
+    border-radius: 12px;
+  }
+  .tab-button {
+    min-width: 120px;
+    font-size: 1.1rem;
+    padding: 12px 8px;
+    border-radius: 8px;
+  }
+  .tabs {
+    gap: 6px;
+    margin: 28px auto 18px;
+  }
+}
+      /* Prevent background scroll when modal is open */
+      body.modal-open {
+        overflow: hidden !important;
+        touch-action: none;
+      }
     </style>
     <script>
       function showTab(tab, btn) {
@@ -674,55 +786,62 @@
         });
       }
 
-      // Widget-Logik anpassen
-      function showCalendar(card, packageName) {
+      let escListenerAdded = false;
+
+function showCalendar(card, packageName) {
+  closeAllWidgets();
+  const modal = document.getElementById('calendar-modal');
+  modal.innerHTML = `
+    <div class="calendar-widget loading" onclick="event.stopPropagation()">
+      <button class="close-widget" onclick="closeAllWidgets()" aria-label="Schließen">&times;</button>
+      <iframe src="https://calendly.com/leonidas-pyka/30min?hide_gdpr_banner=1&background_color=000000&text_color=FFFFFF&primary_color=FFD700&a1=${encodeURIComponent(packageName)}" allowtransparency="true"></iframe>
+    </div>
+  `;
+  modal.classList.add('active');
+  document.body.classList.add('modal-open');
+  modal.querySelector('iframe').addEventListener('load', function() {
+    modal.querySelector('.calendar-widget').classList.remove('loading');
+  });
+  // Add ESC listener only once
+  if (!escListenerAdded) {
+    document.addEventListener('keydown', escCloseModal);
+    escListenerAdded = true;
+  }
+}
+
+// Close modal when clicking outside the widget
+document.addEventListener('DOMContentLoaded', function() {
+  const modal = document.getElementById('calendar-modal');
+  if (modal) {
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) {
         closeAllWidgets();
-        document.querySelectorAll(".card").forEach((c) => {
-          c.classList.remove("premium-selected", "no-scale");
-        });
-
-        if (card.classList.contains("premium")) {
-          card.classList.add("premium-selected");
-        }
-        card.classList.add("no-scale"); // <-- HIER
-
-        const widget = document.createElement("div");
-        widget.classList.add("calendar-widget", "loading");
-        widget.innerHTML = `
-      <button class="close-widget" onclick="closeWidget(this)">&times;</button>
-      <iframe src="https://calendly.com/leonidas-pyka/30min?hide_gdpr_banner=1&background_color=000000&text_color=FFFFFF&primary_color=FFD700&a1=${encodeURIComponent(
-        packageName
-      )}" allowtransparency="true"></iframe>
-    `;
-        card.appendChild(widget);
-
-        // Ladeanimation entfernen, wenn iFrame geladen
-        widget.querySelector("iframe").addEventListener("load", () => {
-          widget.classList.remove("loading");
-        });
-
-        // Info-Box für ausgewähltes Paket anzeigen
-        const isPremium = card.classList.contains("premium");
-        const type = isPremium ? "premium" : "basic";
-        const name = card.querySelector("h3")?.textContent || "";
-        const price = card.querySelector(".price")?.textContent || "";
-        const desc = card.querySelector("p")?.textContent || "";
-        updatePackageInfo(type, name, price, desc);
       }
+    });
+  }
+});
+
+function escCloseModal(e) {
+  if (e.key === "Escape") {
+    closeAllWidgets();
+  }
+}
+
+function closeAllWidgets() {
+  const modal = document.getElementById('calendar-modal');
+  if (modal) {
+    modal.classList.remove('active');
+    modal.innerHTML = '';
+  }
+  document.body.classList.remove('modal-open');
+  document.removeEventListener('keydown', escCloseModal);
+  escListenerAdded = false;
+}
 
       function closeWidget(button) {
         const card = button.closest(".card");
         if (card) card.classList.remove("no-scale"); // <-- HIER
         button.parentElement.remove();
-        updatePackageInfo();
-      }
-
-      function closeAllWidgets() {
-        document.querySelectorAll(".calendar-widget").forEach((widget) => {
-          const card = widget.closest(".card");
-          if (card) card.classList.remove("no-scale"); // <-- HIER
-          widget.remove();
-        });
         updatePackageInfo();
       }
 
@@ -890,5 +1009,8 @@
     <button id="back-to-top" onclick="scrollToTop()" title="Nach oben">
       ↑
     </button>
+    <div id="calendar-modal">
+  <!-- Inhalt wird per JS eingefügt -->
+</div>
   </body>
 </html>
