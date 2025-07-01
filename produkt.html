@@ -447,9 +447,9 @@
           margin: 32px auto 20px;
         }
         .card {
-          /* SHAPE: All cards same size/shape */
-          min-height: 180px; /* Set a fixed min-height for all cards */
-          max-height: 180px; /* Set a fixed max-height for all cards */
+          /* Remove fixed max-height and min-height */
+          /* min-height: 180px; */
+          /* max-height: 180px; */
           display: flex;
           flex-direction: column;
           justify-content: center;
@@ -460,6 +460,8 @@
           box-sizing: border-box;
           margin: 0 auto;
           width: 100%;
+          word-break: break-word;
+          overflow-wrap: break-word;
         }
         .tab-button {
           min-width: 120px;
@@ -676,8 +678,9 @@
 /* Make cards and tab buttons easier to tap on mobile */
 @media (max-width: 600px) {
   .card {
-    min-height: 180px; /* Set a fixed min-height for all cards */
-    max-height: 180px; /* Set a fixed max-height for all cards */
+    /* Remove fixed max-height and min-height */
+    /* min-height: 180px; */
+    /* max-height: 180px; */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -688,6 +691,8 @@
     box-sizing: border-box;
     margin: 0 auto;
     width: 100%;
+    word-break: break-word;
+    overflow-wrap: break-word;
   }
   .tab-button {
     min-width: 120px;
