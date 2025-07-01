@@ -448,38 +448,28 @@
         }
         .card {
           /* SHAPE: All cards same size/shape */
-          min-height: 200px;
-          max-width: 400px;
-          margin: 0 auto;
-          border-radius: 16px;
-          padding: 32px 16px 32px 16px;
-          box-sizing: border-box;
+          min-height: 180px; /* Set a fixed min-height for all cards */
+          max-height: 180px; /* Set a fixed max-height for all cards */
           display: flex;
           flex-direction: column;
           justify-content: center;
-          /* Remove any forced background or border for shape, keep original color */
-          background: #1a1a1a !important;
-          border: 1.5px solid #333;
-          box-shadow: 0 2px 18px 0 #0004;
+          align-items: center;
+          font-size: 1.05rem;
+          padding: 18px 8px 24px 8px;
+          border-radius: 12px;
+          box-sizing: border-box;
+          margin: 0 auto;
+          width: 100%;
         }
-        .card:not(:last-child) {
-          margin-bottom: 14px;
+        .tab-button {
+          min-width: 120px;
+          font-size: 1.1rem;
+          padding: 12px 8px;
+          border-radius: 8px;
         }
-        /* Remove any special background for only the last premium card */
-        .card.premium:nth-child(3) {
-          background: #1a1a1a !important;
-        }
-        .card h3 {
-          font-size: 1.25rem;
-          margin-bottom: 16px;
-        }
-        .card p {
-          font-size: 1.02rem;
-          margin-bottom: 16px;
-        }
-        .price {
-          font-size: 1.35rem;
-          margin-bottom: 0;
+        .tabs {
+          gap: 6px;
+          margin: 28px auto 18px;
         }
       }
 
@@ -686,10 +676,18 @@
 /* Make cards and tab buttons easier to tap on mobile */
 @media (max-width: 600px) {
   .card {
-    min-height: 140px;
+    min-height: 180px; /* Set a fixed min-height for all cards */
+    max-height: 180px; /* Set a fixed max-height for all cards */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     font-size: 1.05rem;
     padding: 18px 8px 24px 8px;
     border-radius: 12px;
+    box-sizing: border-box;
+    margin: 0 auto;
+    width: 100%;
   }
   .tab-button {
     min-width: 120px;
