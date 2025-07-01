@@ -660,12 +660,28 @@
     max-width: 98vw;
     min-width: 0;
     border-radius: 10px;
-    padding-bottom: 0;
+    padding: 0;
     max-height: 96vh;
+    box-shadow: 0 4px 24px #000a;
+  }
+  #calendar-modal .modal-package {
+    font-size: 1.05rem;
+    padding: 14px 6px 8px 6px;
+    border-radius: 10px 10px 0 0;
+    margin-bottom: 0;
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    background: #222;
+    text-align: center;
+    box-shadow: 0 2px 8px #0004;
   }
   #calendar-modal .calendar-widget iframe {
     height: 320px;
     border-radius: 0 0 10px 10px;
+    min-height: 220px;
+    max-height: 60vh;
+    background: #222;
   }
   #calendar-modal .close-widget {
     width: 44px;
@@ -673,6 +689,7 @@
     font-size: 2.2rem;
     top: 6px;
     right: 6px;
+    z-index: 4;
   }
 }
 /* Make cards and tab buttons easier to tap on mobile */
@@ -710,6 +727,26 @@
         overflow: hidden !important;
         touch-action: none;
       }
+
+      .modal-package {
+  text-align: center;
+  font-size: 1.25rem;
+  font-weight: 700;
+  padding: 18px 12px 10px 12px;
+  border-radius: 10px 10px 0 0;
+  margin-bottom: 0;
+  letter-spacing: 0.01em;
+}
+.basic-glow {
+  color: #fff;
+  text-shadow: 0 0 8px #fff, 0 0 2px #fff;
+  background: #222;
+}
+.premium-glow {
+  color: #ffd700;
+  text-shadow: 0 0 12px #ffd700cc, 0 0 2px #ffd700, 0 0 24px #fff70055;
+  background: #222;
+}
     </style>
     <script>
       function showTab(tab, btn) {
@@ -809,52 +846,48 @@
 function showCalendar(card, packageName) {
   closeAllWidgets();
   const modal = document.getElementById('calendar-modal');
+  // Determine package type
+  const isPremium = card.classList.contains('premium');
+  const headerClass = isPremium ? 'modal-package premium-glow' : 'modal-package basic-glow';
   modal.innerHTML = `
-    <div class="calendar-widget loading" onclick="event.stopPropagation()">
-      <button class="close-widget" onclick="closeAllWidgets()" aria-label="Schließen">&times;</button>
-      <iframe src="https://calendly.com/leonidas-pyka/30min?hide_gdpr_banner=1&background_color=000000&text_color=FFFFFF&primary_color=FFD700&a1=${encodeURIComponent(packageName)}" allowtransparency="true"></iframe>
+    <div class="calendar-widget">
+      <div class="${headerClass}">${packageName}</div>
+      <iframe src="https://calendly.com/leonidas-pyka/30min?hide_gdpr_banner=1&background_color=000000&text_color=FFFFFF&primary_color=FFD700&a1=${encodeURIComponent(packageName)}" allowtransparency="true" frameborder="0" style="width:100%;height:500px;border-radius:12px;background:#222;"></iframe>
+      <button class="close-widget" onclick="closeAllWidgets()">&times;</button>
     </div>
   `;
   modal.classList.add('active');
   document.body.classList.add('modal-open');
-  modal.querySelector('iframe').addEventListener('load', function() {
-    modal.querySelector('.calendar-widget').classList.remove('loading');
-  });
-  // Add ESC listener only once
-  if (!escListenerAdded) {
-    document.addEventListener('keydown', escCloseModal);
-    escListenerAdded = true;
-  }
 }
 
-// Close modal when clicking outside the widget
-document.addEventListener('DOMContentLoaded', function() {
-  const modal = document.getElementById('calendar-modal');
-  if (modal) {
-    modal.addEventListener('click', function(e) {
-      if (e.target === modal) {
-        closeAllWidgets();
+      // Close modal when clicking outside the widget
+      document.addEventListener('DOMContentLoaded', function() {
+        const modal = document.getElementById('calendar-modal');
+        if (modal) {
+          modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+              closeAllWidgets();
+            }
+          });
+        }
+      });
+
+      function escCloseModal(e) {
+        if (e.key === "Escape") {
+          closeAllWidgets();
+        }
       }
-    });
-  }
-});
 
-function escCloseModal(e) {
-  if (e.key === "Escape") {
-    closeAllWidgets();
-  }
-}
-
-function closeAllWidgets() {
-  const modal = document.getElementById('calendar-modal');
-  if (modal) {
-    modal.classList.remove('active');
-    modal.innerHTML = '';
-  }
-  document.body.classList.remove('modal-open');
-  document.removeEventListener('keydown', escCloseModal);
-  escListenerAdded = false;
-}
+      function closeAllWidgets() {
+        const modal = document.getElementById('calendar-modal');
+        if (modal) {
+          modal.classList.remove('active');
+          modal.innerHTML = '';
+        }
+        document.body.classList.remove('modal-open');
+        document.removeEventListener('keydown', escCloseModal);
+        escListenerAdded = false;
+      }
 
       function closeWidget(button) {
         const card = button.closest(".card");
