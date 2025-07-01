@@ -447,25 +447,39 @@
           margin: 32px auto 20px;
         }
         .card {
-          padding: 24px 10px 28px 10px;
-          font-size: 1.08rem;
-          min-height: 160px;
-          border-radius: 14px;
+          padding: 28px 14px 32px 14px;
+          font-size: 1.12rem;
+          min-height: 180px;
+          border-radius: 16px;
           background: linear-gradient(120deg, #1a1a1a 70%, #ffd70011 100%) !important;
           box-shadow: 0 2px 18px 0 #0004;
           margin: 0 auto;
-          max-width: 380px;
+          max-width: 400px;
           min-width: 0;
           box-sizing: border-box;
-          /* Remove any border color overrides */
           border: 1.5px solid #ffd70033;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
         }
         .card:not(:last-child) {
-          margin-bottom: 12px;
+          margin-bottom: 14px;
         }
-        /* Remove special background for only the last premium card */
+        /* Remove any special background for only the last premium card */
         .card.premium:nth-child(3) {
           background: linear-gradient(120deg, #1a1a1a 70%, #ffd70011 100%) !important;
+        }
+        .card h3 {
+          font-size: 1.25rem;
+          margin-bottom: 16px;
+        }
+        .card p {
+          font-size: 1.02rem;
+          margin-bottom: 16px;
+        }
+        .price {
+          font-size: 1.35rem;
+          margin-bottom: 0;
         }
       }
 
