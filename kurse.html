@@ -346,37 +346,223 @@
     height: 5px;
   }
 }
+#calendar-modal-overlay {
+  display: none;
+  position: fixed;
+  z-index: 2000;
+  left: 0; top: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.85);
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.25s;
+  opacity: 0;
+}
+#calendar-modal-overlay.show {
+  display: flex;
+  opacity: 1;
+}
+#calendar-modal {
+  background: #181818;
+  border-radius: 16px;
+  box-shadow: 0 0 40px #000a, 0 0 0 2px #FFD70044;
+  padding: 32px 24px 24px;
+  position: relative;
+  max-width: 480px;
+  width: 95vw;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  animation: modal-pop 0.35s cubic-bezier(.4,1.6,.6,1);
+  border: 2px solid #FFD70044;
+  transition: box-shadow 0.4s, border-color 0.4s;
+  /* Remove default animation here */
+}
+/* Subtle glow for Webflow Basics */
+#calendar-modal.webflow-basics {
+  border-color: #FFD700;
+  box-shadow: 0 0 18px 2px #FFD70033, 0 0 32px #000a;
+  /* Soft fade-in border */
+  animation: modal-fade-in 0.7s;
+}
+@keyframes modal-fade-in {
+  0% { box-shadow: 0 0 0 0 #FFD70000, 0 0 0 #0000; }
+  100% { box-shadow: 0 0 18px 2px #FFD70033, 0 0 32px #000a; }
+}
+/* Stronger glow for Professionelles Webdesign */
+#calendar-modal.professionelles-webdesign {
+  border-color: #FFD700;
+  box-shadow: 0 0 36px 8px #FFD70077, 0 0 60px #FFD70022, 0 0 40px #000a;
+  animation: modal-glow-pulse 1.2s ease-in-out;
+}
+@keyframes modal-glow-pulse {
+  0% { box-shadow: 0 0 10px 2px #FFD70033, 0 0 20px #FFD70011, 0 0 20px #000a; }
+  50% { box-shadow: 0 0 36px 8px #FFD70077, 0 0 60px #FFD70022, 0 0 40px #000a; }
+  100% { box-shadow: 0 0 10px 2px #FFD70033, 0 0 20px #FFD70011, 0 0 20px #000a; }
+}
+/* Special animation for Masterclass: animated border only, nothing inside the widget */
+#calendar-modal.masterclass {
+  border: 2.5px solid #FFD700;
+  background: #181818;
+  box-shadow: 0 0 60px 16px #FFD700cc, 0 0 120px 24px #FFD70044, 0 0 40px #000a;
+  position: relative;
+  overflow: visible;
+  animation: masterclass-border-glow 2.2s ease-in-out infinite;
+}
+@keyframes masterclass-border-glow {
+  0%   { box-shadow: 0 0 36px 8px #FFD70077, 0 0 60px #FFD70022, 0 0 40px #000a; }
+  50%  { box-shadow: 0 0 100px 32px #FFD700cc, 0 0 180px 64px #FFD70044, 0 0 60px #FFD70022, 0 0 40px #000a; }
+  100% { box-shadow: 0 0 36px 8px #FFD70077, 0 0 60px #FFD70022, 0 0 40px #000a; }
+}
+/* Remove any ::before, ::after, or .masterclass-beam overlays for masterclass */
+#calendar-modal.masterclass::before,
+#calendar-modal.masterclass::after,
+#calendar-modal.masterclass .masterclass-beam {
+  display: none !important;
+  content: none !important;
+}
+#calendar-modal .close-widget {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  z-index: 10;
+  background: #444;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  font-size: 1.5rem;
+  line-height: 32px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px #0004;
+}
+#calendar-modal .modal-course-title {
+  font-size: 1.15rem;
+  color: #FFD700;
+  font-weight: 700;
+  margin-bottom: 18px;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+#calendar-modal iframe {
+  width: 100%;
+  height: 420px;
+  border: none;
+  border-radius: 12px;
+  background: #222;
+}
+    /* Loader styles */
+#calendar-modal-loader {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(24,24,24,0.92);
+  z-index: 20;
+  border-radius: 16px;
+  transition: opacity 0.3s;
+}
+#calendar-modal-loader.hide {
+  opacity: 0;
+  pointer-events: none;
+}
+.loader-spinner {
+  width: 48px;
+  height: 48px;
+  border: 5px solid #FFD70033;
+  border-top: 5px solid #FFD700;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg);}
+  100% { transform: rotate(360deg);}
+}
+@media (max-width: 600px) {
+  #calendar-modal {
+    padding: 12px 2vw 8px;
+    max-width: 99vw;
+  }
+  #calendar-modal iframe {
+    height: 260px;
+    min-height: 180px;
+  }
+  #calendar-modal .close-widget {
+    top: 4px;
+    right: 4px;
+    width: 26px;
+    height: 26px;
+    font-size: 1.2rem;
+    line-height: 26px;
+  }
+  #calendar-modal .modal-course-title {
+    font-size: 1rem;
+    margin-bottom: 10px;
+  }
+}
   </style>
   <script>
   function showCalendar(card, packageName) {
-    closeAllWidgets();
-    card.classList.add('expanded');
-    const widget = document.createElement('div');
-    widget.classList.add('calendar-widget');
-    widget.innerHTML = `
-      <button class="close-widget" onclick="closeWidget(this)">&times;</button>
-      <iframe src="https://calendly.com/leonidas-pyka/30min?hide_gdpr_banner=1&background_color=000000&text_color=FFFFFF&primary_color=FFD700&a1=${encodeURIComponent(packageName)}" allowtransparency="true"></iframe>
-    `;
-    card.appendChild(widget);
+    // Set course/package info
+    document.getElementById('modal-course-title').textContent = 'Gewählter Kurs: ' + packageName;
+    // Set iframe src
+    document.getElementById('calendar-iframe').src =
+      'https://calendly.com/leonidas-pyka/30min?hide_gdpr_banner=1&background_color=000000&text_color=FFFFFF&primary_color=FFD700&a1=' + encodeURIComponent(packageName);
 
-    requestAnimationFrame(() => {
-      widget.classList.add('show');
-    });
+    // Set modal border glow class
+    var modal = document.getElementById('calendar-modal');
+    modal.classList.remove('webflow-basics', 'professionelles-webdesign', 'masterclass');
+    if (packageName === 'Webflow Basics') {
+      modal.classList.add('webflow-basics');
+    } else if (packageName === 'Professionelles Webdesign') {
+      modal.classList.add('professionelles-webdesign');
+    } else if (packageName === 'Masterclass Webflow & Business') {
+      modal.classList.add('masterclass');
+    }
+
+    // Show loader
+    var loader = document.getElementById('calendar-modal-loader');
+    loader.classList.remove('hide');
+
+    // Show modal
+    document.getElementById('calendar-modal-overlay').style.display = 'flex';
+    setTimeout(() => {
+      document.getElementById('calendar-modal-overlay').classList.add('show');
+    }, 10);
+    document.body.style.overflow = 'hidden';
   }
 
-  function closeWidget(button) {
-    const card = button.closest('.course-card');
-    button.parentElement.remove();
-    card.classList.remove('expanded');
+  // Hide loader when iframe is loaded
+  document.addEventListener('DOMContentLoaded', function() {
+    var iframe = document.getElementById('calendar-iframe');
+    var loader = document.getElementById('calendar-modal-loader');
+    iframe.onload = function() {
+      loader.classList.add('hide');
+    };
+  });
+
+  function closeModal() {
+    document.getElementById('calendar-modal-overlay').classList.remove('show');
+    setTimeout(() => {
+      document.getElementById('calendar-modal-overlay').style.display = 'none';
+      document.getElementById('calendar-iframe').src = '';
+      document.body.style.overflow = '';
+      document.getElementById('calendar-modal').classList.remove('webflow-basics', 'professionelles-webdesign', 'masterclass');
+      // Hide masterclass beam
+      var beam = document.getElementById('calendar-modal').querySelector('.masterclass-beam');
+      if (beam) beam.style.display = 'none';
+      // Reset loader for next open
+      document.getElementById('calendar-modal-loader').classList.remove('hide');
+    }, 250);
   }
 
-  function closeAllWidgets() {
-    document.querySelectorAll('.calendar-widget').forEach(widget => {
-      const card = widget.closest('.course-card');
-      widget.remove();
-      if (card) card.classList.remove('expanded');
-    });
-  }
+  document.getElementById('close-modal-btn').onclick = closeModal;
+  document.getElementById('calendar-modal-overlay').onclick = function(e) {
+    if (e.target === this) closeModal();
+  };
   </script>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&display=swap" rel="stylesheet">
 </head>
@@ -427,6 +613,19 @@
     &copy; 2025 Integrow. Digital Elegance. Klar. Stark. Skaliert.
   </footer>
 
+  <!-- Calendar Modal -->
+  <div id="calendar-modal-overlay" style="display:none;">
+    <div id="calendar-modal">
+      <span class="masterclass-beam" style="display:none"></span>
+      <button class="close-widget" id="close-modal-btn">&times;</button>
+      <div class="modal-course-title" id="modal-course-title"></div>
+      <div id="calendar-modal-loader">
+        <div class="loader-spinner"></div>
+      </div>
+      <iframe id="calendar-iframe" src="" allowtransparency="true"></iframe>
+    </div>
+  </div>
+
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
   <script>
     AOS.init({
@@ -450,5 +649,90 @@
 
   requestAnimationFrame(raf)
 </script>
+<script>
+  // Modal logic
+  function showCalendar(card, packageName) {
+    // Only show the course name, no prefix
+    document.getElementById('modal-course-title').textContent = packageName;
+    document.getElementById('calendar-iframe').src =
+      'https://calendly.com/leonidas-pyka/30min?hide_gdpr_banner=1&background_color=000000&text_color=FFFFFF&primary_color=FFD700&a1=' + encodeURIComponent(packageName);
+
+    // Set modal border glow class
+    var modal = document.getElementById('calendar-modal');
+    var beam = modal.querySelector('.masterclass-beam');
+    modal.classList.remove('webflow-basics', 'professionelles-webdesign', 'masterclass');
+    if (packageName === 'Webflow Basics') {
+      modal.classList.add('webflow-basics');
+      if (beam) beam.style.display = 'none';
+    } else if (packageName === 'Professionelles Webdesign') {
+      modal.classList.add('professionelles-webdesign');
+      if (beam) beam.style.display = 'none';
+    } else if (packageName === 'Masterclass Webflow & Business') {
+      modal.classList.add('masterclass');
+      if (beam) beam.style.display = '';
+    }
+
+    // Show loader
+    var loader = document.getElementById('calendar-modal-loader');
+    loader.classList.remove('hide');
+
+    // Show modal
+    document.getElementById('calendar-modal-overlay').style.display = 'flex';
+    setTimeout(() => {
+      document.getElementById('calendar-modal-overlay').classList.add('show');
+    }, 10);
+    document.body.style.overflow = 'hidden';
+  }
+
+  // Hide loader when iframe is loaded
+  document.addEventListener('DOMContentLoaded', function() {
+    var iframe = document.getElementById('calendar-iframe');
+    var loader = document.getElementById('calendar-modal-loader');
+    iframe.onload = function() {
+      loader.classList.add('hide');
+    };
+  });
+
+  function closeModal() {
+    document.getElementById('calendar-modal-overlay').classList.remove('show');
+    setTimeout(() => {
+      document.getElementById('calendar-modal-overlay').style.display = 'none';
+      document.getElementById('calendar-iframe').src = '';
+      document.body.style.overflow = '';
+      var modal = document.getElementById('calendar-modal');
+      modal.classList.remove('webflow-basics', 'professionelles-webdesign', 'masterclass');
+      // Hide masterclass beam
+      var beam = modal.querySelector('.masterclass-beam');
+      if (beam) beam.style.display = 'none';
+      // Reset loader for next open
+      document.getElementById('calendar-modal-loader').classList.remove('hide');
+    }, 250);
+  }
+
+  document.getElementById('close-modal-btn').onclick = closeModal;
+  document.getElementById('calendar-modal-overlay').onclick = function(e) {
+    if (e.target === this) closeModal();
+  };
+</script>
 </body>
+</html>
+      // Hide masterclass beam
+      var beam = modal.querySelector('.masterclass-beam');
+      if (beam) beam.style.display = 'none';
+      // Reset loader for next open
+      document.getElementById('calendar-modal-loader').classList.remove('hide');
+    }, 250);
+  }
+
+  document.getElementById('close-modal-btn').onclick = closeModal;
+  document.getElementById('calendar-modal-overlay').onclick = function(e) {
+    if (e.target === this) closeModal();
+  };
+</script>
+</body>
+</html>
+</html>
+</script>
+</body>
+</html>
 </html>
