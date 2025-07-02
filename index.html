@@ -41,7 +41,9 @@
         height: auto;
         margin-bottom: 10px;
         filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.4));
-        transition: filter 0.4s ease;
+        transition:
+          filter 0.4s cubic-bezier(.4,1.6,.6,1),
+          transform 0.45s cubic-bezier(.4,1.6,.6,1);
         display: block;
         margin-left: auto;
         margin-right: auto;
@@ -51,6 +53,7 @@
       }
       .logo-img:hover {
         filter: drop-shadow(0 0 18px rgba(255, 255, 255, 0.6));
+        transform: scale(1.08);
       }
       .nav-links {
         margin-top: 10px;
