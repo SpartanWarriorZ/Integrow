@@ -483,21 +483,23 @@
 }
 @media (max-width: 600px) {
   #calendar-modal {
-    padding: 12px 4vw 8px;
+    padding: 28px 4vw 24px;
     max-width: 96vw;
     min-width: 0;
     width: auto;
-    margin-left: 2vw;
-    margin-right: 2vw;
+    margin: 6vh 2vw 6vh 2vw;
     border-radius: 12px;
+    /* Add more vertical space */
+    max-height: 96vh;
+    height: auto;
   }
   #calendar-modal iframe {
-    height: 320px;
-    min-height: 220px;
+    height: 400px;
+    min-height: 260px;
   }
   #calendar-modal .close-widget {
-    top: 4px;
-    right: 4px;
+    top: 8px;
+    right: 8px;
     width: 26px;
     height: 26px;
     font-size: 1.2rem;
@@ -720,19 +722,4 @@
   };
 </script>
 </body>
-</html>
-    }, 250);
-  }
-
-  document.getElementById('close-modal-btn').onclick = closeModal;
-  document.getElementById('calendar-modal-overlay').onclick = function(e) {
-    if (e.target === this) closeModal();
-  };
-</script>
-</body>
-</html>
-</html>
-</script>
-</body>
-</html>
 </html>
