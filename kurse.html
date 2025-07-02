@@ -483,12 +483,17 @@
 }
 @media (max-width: 600px) {
   #calendar-modal {
-    padding: 12px 2vw 8px;
-    max-width: 99vw;
+    padding: 12px 4vw 8px;
+    max-width: 96vw;
+    min-width: 0;
+    width: auto;
+    margin-left: 2vw;
+    margin-right: 2vw;
+    border-radius: 12px;
   }
   #calendar-modal iframe {
-    height: 260px;
-    min-height: 180px;
+    height: 320px;
+    min-height: 220px;
   }
   #calendar-modal .close-widget {
     top: 4px;
@@ -716,11 +721,6 @@
 </script>
 </body>
 </html>
-      // Hide masterclass beam
-      var beam = modal.querySelector('.masterclass-beam');
-      if (beam) beam.style.display = 'none';
-      // Reset loader for next open
-      document.getElementById('calendar-modal-loader').classList.remove('hide');
     }, 250);
   }
 
