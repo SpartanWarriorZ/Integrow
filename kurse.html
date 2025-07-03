@@ -375,14 +375,16 @@
   position: relative;
   max-width: 480px;
   width: 95vw;
-  max-height: 90vh;
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  animation: modal-pop 0.35s cubic-bezier(.4,1.6,.6,1);
+  align-items: center; /* zentriert den Inhalt */
+  justify-content: flex-start;
   border: 2px solid #FFD70044;
   transition: box-shadow 0.4s, border-color 0.4s;
   /* Remove default animation here */
+  max-height: none; /* Modal soll sich anpassen */
+  height: auto;
+  min-height: 0;
 }
 /* Subtle glow for Webflow Basics */
 #calendar-modal.webflow-basics {
@@ -496,8 +498,9 @@
     margin: 6vh 2vw 6vh 2vw;
     border-radius: 12px;
     /* Add more vertical space */
-    max-height: 96vh;
+    max-height: none;
     height: auto;
+    min-height: 0;
   }
   #calendar-modal iframe {
     height: 400px;
@@ -514,6 +517,50 @@
   #calendar-modal .modal-course-title {
     font-size: 1rem;
     margin-bottom: 10px;
+  }
+}
+#calendar-captcha-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 0; /* entfernt die Mindesthöhe */
+  padding: 0;
+  background: none; /* entfernt graue Fläche */
+  border: none;
+  box-shadow: none;
+  margin: 0;
+  max-width: 340px;
+  width: 100%;
+  gap: 8px; /* Abstand zwischen Hinweis und Captcha */
+}
+#calendar-captcha-step .captcha-hint {
+  background: #181818;
+  border-radius: 14px;
+  border: 2px solid #FFD70055;
+  box-shadow: 0 0 24px 4px #FFD70022, 0 0 0 2px #FFD70022;
+  padding: 12px 16px 8px 16px;
+  margin-bottom: 0;
+  color: #FFD700;
+  font-weight: 600;
+  font-size: 1.1rem;
+  text-align: center;
+  width: 100%;
+  max-width: 340px;
+}
+@media (max-width: 600px) {
+  #calendar-modal {
+    padding: 18px 2vw 16px;
+    align-items: center;
+  }
+  #calendar-captcha-step {
+    max-width: 98vw;
+    gap: 6px;
+  }
+  #calendar-captcha-step .captcha-hint {
+    padding: 8px 2vw 6px 2vw;
+    max-width: 98vw;
+    font-size: 1rem;
   }
 }
   </style>
@@ -630,10 +677,10 @@
       <div class="modal-course-title" id="modal-course-title"></div>
       <!-- Step 1: Captcha -->
       <div id="calendar-captcha-step">
-        <div style="text-align:center; margin-bottom:18px; color:#FFD700; font-weight:600;">
+        <div class="captcha-hint">
           Bitte bestätige, dass du kein Roboter bist
         </div>
-        <div style="display:flex; justify-content:center;">
+        <div>
           <div class="g-recaptcha"
             data-sitekey="6LdTf3YrAAAAAEOkh8vLYzvd-qH9qwvdNMTpNdzc"
             data-callback="onCaptchaSuccess"
@@ -650,9 +697,7 @@
       </div>
     </div>
   </div>
-<!-- ...existing code... -->
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-<!-- ...existing code... -->
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
   <script>
     AOS.init({
