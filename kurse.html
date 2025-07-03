@@ -375,16 +375,14 @@
   position: relative;
   max-width: 480px;
   width: 95vw;
+  max-height: 90vh;
   display: flex;
   flex-direction: column;
-  align-items: center; /* zentriert den Inhalt */
-  justify-content: flex-start;
+  align-items: stretch;
+  animation: modal-pop 0.35s cubic-bezier(.4,1.6,.6,1);
   border: 2px solid #FFD70044;
   transition: box-shadow 0.4s, border-color 0.4s;
   /* Remove default animation here */
-  max-height: none; /* Modal soll sich anpassen */
-  height: auto;
-  min-height: 0;
 }
 /* Subtle glow for Webflow Basics */
 #calendar-modal.webflow-basics {
@@ -498,9 +496,8 @@
     margin: 6vh 2vw 6vh 2vw;
     border-radius: 12px;
     /* Add more vertical space */
-    max-height: none;
+    max-height: 96vh;
     height: auto;
-    min-height: 0;
   }
   #calendar-modal iframe {
     height: 400px;
@@ -517,50 +514,6 @@
   #calendar-modal .modal-course-title {
     font-size: 1rem;
     margin-bottom: 10px;
-  }
-}
-#calendar-captcha-step {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  min-height: 0; /* entfernt die Mindesthöhe */
-  padding: 0;
-  background: none; /* entfernt graue Fläche */
-  border: none;
-  box-shadow: none;
-  margin: 0;
-  max-width: 340px;
-  width: 100%;
-  gap: 8px; /* Abstand zwischen Hinweis und Captcha */
-}
-#calendar-captcha-step .captcha-hint {
-  background: #181818;
-  border-radius: 14px;
-  border: 2px solid #FFD70055;
-  box-shadow: 0 0 24px 4px #FFD70022, 0 0 0 2px #FFD70022;
-  padding: 12px 16px 8px 16px;
-  margin-bottom: 0;
-  color: #FFD700;
-  font-weight: 600;
-  font-size: 1.1rem;
-  text-align: center;
-  width: 100%;
-  max-width: 340px;
-}
-@media (max-width: 600px) {
-  #calendar-modal {
-    padding: 18px 2vw 16px;
-    align-items: center;
-  }
-  #calendar-captcha-step {
-    max-width: 98vw;
-    gap: 6px;
-  }
-  #calendar-captcha-step .captcha-hint {
-    padding: 8px 2vw 6px 2vw;
-    max-width: 98vw;
-    font-size: 1rem;
   }
 }
   </style>
@@ -582,6 +535,10 @@
     } else if (packageName === 'Masterclass Webflow & Business') {
       modal.classList.add('masterclass');
     }
+
+    // Show loader
+    var loader = document.getElementById('calendar-modal-loader');
+    loader.classList.remove('hide');
 
     // Show modal
     document.getElementById('calendar-modal-overlay').style.display = 'flex';
@@ -676,11 +633,11 @@
       <button class="close-widget" id="close-modal-btn">&times;</button>
       <div class="modal-course-title" id="modal-course-title"></div>
       <!-- Step 1: Captcha -->
-      <div id="calendar-captcha-step">
-        <div class="captcha-hint">
+      <div id="calendar-captcha-step" style="display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:180px;">
+        <div style="text-align:center; margin-bottom:18px; color:#FFD700; font-weight:600; font-size:1.1rem;">
           Bitte bestätige, dass du kein Roboter bist
         </div>
-        <div>
+        <div style="display:flex; justify-content:center;">
           <div class="g-recaptcha"
             data-sitekey="6LdTf3YrAAAAAEOkh8vLYzvd-qH9qwvdNMTpNdzc"
             data-callback="onCaptchaSuccess"
@@ -744,6 +701,10 @@
       if (beam) beam.style.display = '';
     }
 
+    // Show loader
+    var loader = document.getElementById('calendar-modal-loader');
+    loader.classList.remove('hide');
+
     // Show modal
     document.getElementById('calendar-modal-overlay').style.display = 'flex';
     setTimeout(() => {
@@ -789,8 +750,8 @@
     pendingPackageName = packageName;
     document.getElementById('modal-course-title').textContent = packageName;
 
-    // Hide Calendly, show Captcha step
-    document.getElementById('calendar-captcha-step').style.display = '';
+    // Show only captcha step, hide calendly step
+    document.getElementById('calendar-captcha-step').style.display = 'flex';
     document.getElementById('calendar-widget-step').style.display = 'none';
 
     // Set modal border glow class
@@ -859,7 +820,7 @@
       // Reset loader for next open
       document.getElementById('calendar-modal-loader').classList.remove('hide');
       // Reset to captcha step for next open
-      document.getElementById('calendar-captcha-step').style.display = '';
+      document.getElementById('calendar-captcha-step').style.display = 'flex';
       document.getElementById('calendar-widget-step').style.display = 'none';
       // Reset captcha
       if (typeof grecaptcha !== "undefined") {
