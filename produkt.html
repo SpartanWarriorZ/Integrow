@@ -858,21 +858,19 @@
         // Set iframe src
         var iframe = document.getElementById('calendar-iframe');
         var loader = document.getElementById('calendar-modal-loader');
-        // Zeige Loader sofort
-        loader.classList.remove('hide');
+        // Loader sofort ausblenden, da das Widget direkt nach Captcha sichtbar sein soll
+        loader.classList.add('hide');
         iframe.src =
           'https://calendly.com/leonidas-pyka/30min?hide_gdpr_banner=1&background_color=000000&text_color=FFFFFF&primary_color=FFD700&a1=' + encodeURIComponent(pendingPackageName);
 
-        // Loader ausblenden, wenn iframe geladen ist
+        // Optional: falls du trotzdem kurz einen Loader willst, kannst du loader.classList.remove('hide'); vor iframe.src setzen und dann wie gehabt onload wieder ausblenden.
         iframe.onload = function() {
           loader.classList.add('hide');
-          // Bedienung wieder möglich machen
           iframe.style.pointerEvents = '';
           loader.style.pointerEvents = 'none';
         };
-        // Während des Ladens keine Bedienung
-        iframe.style.pointerEvents = 'none';
-        loader.style.pointerEvents = 'auto';
+        iframe.style.pointerEvents = '';
+        loader.style.pointerEvents = 'none';
       }
 
       function showCalendar(card, packageName) {
@@ -1197,21 +1195,19 @@
         // Set iframe src
         var iframe = document.getElementById('calendar-iframe');
         var loader = document.getElementById('calendar-modal-loader');
-        // Zeige Loader sofort
-        loader.classList.remove('hide');
+        // Loader sofort ausblenden, da das Widget direkt nach Captcha sichtbar sein soll
+        loader.classList.add('hide');
         iframe.src =
           'https://calendly.com/leonidas-pyka/30min?hide_gdpr_banner=1&background_color=000000&text_color=FFFFFF&primary_color=FFD700&a1=' + encodeURIComponent(pendingPackageName);
 
-        // Loader ausblenden, wenn iframe geladen ist
+        // Optional: falls du trotzdem kurz einen Loader willst, kannst du loader.classList.remove('hide'); vor iframe.src setzen und dann wie gehabt onload wieder ausblenden.
         iframe.onload = function() {
           loader.classList.add('hide');
-          // Bedienung wieder möglich machen
           iframe.style.pointerEvents = '';
           loader.style.pointerEvents = 'none';
         };
-        // Während des Ladens keine Bedienung
-        iframe.style.pointerEvents = 'none';
-        loader.style.pointerEvents = 'auto';
+        iframe.style.pointerEvents = '';
+        loader.style.pointerEvents = 'none';
       }
 
       function closeAllWidgets() {
@@ -1261,6 +1257,10 @@
       // Initial Events setzen
       document.addEventListener("DOMContentLoaded", () => {
         addCardHoverEvents();
+      });
+    </script>
+  </body>
+</html>
       });
     </script>
   </body>
