@@ -753,6 +753,113 @@
   text-shadow: 0 0 12px #ffd700cc, 0 0 2px #ffd700, 0 0 24px #fff70055;
   background: #222;
 }
+
+/* --- Beispielseiten-Button: schöner Hover-Effekt & Animation --- */
+#show-examples-btn {
+  background: #232323;
+  color: #ffd700;
+  font-size: 1.15rem;
+  padding: 12px 32px;
+  border-radius: 8px;
+  border: 1.5px solid #ffd700;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 2px 12px #ffd70022;
+  transition:
+    background 0.25s cubic-bezier(.4,1.6,.6,1),
+    color 0.25s cubic-bezier(.4,1.6,.6,1),
+    box-shadow 0.3s cubic-bezier(.4,1.6,.6,1),
+    transform 0.22s cubic-bezier(.4,1.6,.6,1);
+  position: relative;
+  overflow: hidden;
+  outline: none;
+}
+#show-examples-btn::before {
+  content: "";
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 0; height: 0;
+  background: radial-gradient(circle, #ffd700cc 0%, #ffd70044 60%, transparent 100%);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: width 0.4s cubic-bezier(.4,1.6,.6,1), height 0.4s cubic-bezier(.4,1.6,.6,1), opacity 0.4s;
+  z-index: 0;
+  pointer-events: none;
+}
+#show-examples-btn:hover,
+#show-examples-btn:focus {
+  background: #ffd700;
+  color: #232323;
+  box-shadow: 0 0 32px 8px #ffd700cc, 0 0 0 4px #ffd700;
+  transform: scale(1.06) translateY(-2px);
+}
+#show-examples-btn:hover::before,
+#show-examples-btn:focus::before {
+  width: 260%;
+  height: 260%;
+  opacity: 0.32;
+  transition: width 0.4s, height 0.4s, opacity 0.4s;
+}
+#show-examples-btn:focus-visible {
+  outline: 2.5px solid #ffd700;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px #ffd70088;
+}
+
+/* --- Modal schöner Rahmen & Animation --- */
+#examples-modal {
+  /* ...existing code... */
+  border: none;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s cubic-bezier(.4,1.6,.6,1);
+}
+#examples-modal.active,
+#examples-modal[style*="display: flex"] {
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 0.35s cubic-bezier(.4,1.6,.6,1);
+}
+#examples-modal > div {
+  background: #232323;
+  padding: 32px 18px 24px 18px;
+  border-radius: 18px;
+  max-width: 95vw;
+  width: 420px;
+  box-shadow: 0 8px 40px #000a;
+  position: relative;
+  border: 2.5px solid #ffd700;
+  animation: modal-pop-in 0.45s cubic-bezier(.4,1.6,.6,1);
+}
+@keyframes modal-pop-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.85) translateY(40px);
+    box-shadow: 0 0 0 #ffd70000;
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.04) translateY(-8px);
+    box-shadow: 0 0 32px #ffd70044;
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    box-shadow: 0 8px 40px #000a;
+  }
+}
+/* Responsive Anpassung für Modal */
+@media (max-width: 600px) {
+  #examples-modal > div {
+    width: 98vw;
+    max-width: 98vw;
+    border-radius: 12px;
+    padding: 18px 6px 12px 6px;
+  }
+}
+
+/* ...existing code... */
     </style>
     <script>
       function showTab(tab, btn) {
@@ -820,7 +927,8 @@
         const info = document.getElementById("package-info");
         if (!name) {
           info.className = "package-info";
-          info.innerHTML = ""; // Inhalt leeren, aber Box bleibt sichtbar
+          // Zeige einen Standard-Infotext, wenn kein Paket ausgewählt ist
+          info.innerHTML = `<span>Fahre mit der Maus über ein Paket, um Details zu sehen.</span>`;
           return;
         }
         info.className = "package-info " + type;
@@ -955,6 +1063,49 @@
         updatePackageInfo();
       }
 
+      // Beispielseiten-Modal öffnen/schließen
+      document.addEventListener('DOMContentLoaded', function() {
+        const btn = document.getElementById('show-examples-btn');
+        const modal = document.getElementById('examples-modal');
+        const closeBtn = document.getElementById('close-examples-btn');
+        if(btn && modal && closeBtn) {
+          btn.onclick = function() {
+            modal.style.display = 'flex';
+            setTimeout(() => {
+              modal.classList.add('active');
+            }, 10);
+            document.body.classList.add('modal-open');
+          };
+          closeBtn.onclick = function() {
+            modal.classList.remove('active');
+            setTimeout(() => {
+              modal.style.display = 'none';
+            }, 350);
+            document.body.classList.remove('modal-open');
+          };
+          // Modal schließen bei Klick außerhalb
+          modal.onclick = function(e) {
+            if(e.target === modal) {
+              modal.classList.remove('active');
+              setTimeout(() => {
+                modal.style.display = 'none';
+              }, 350);
+              document.body.classList.remove('modal-open');
+            }
+          };
+          // ESC schließt Modal
+          document.addEventListener('keydown', function(e) {
+            if(e.key === "Escape" && modal.style.display === 'flex') {
+              modal.classList.remove('active');
+              setTimeout(() => {
+                modal.style.display = 'none';
+              }, 350);
+              document.body.classList.remove('modal-open');
+            }
+          });
+        }
+      });
+
       // Nach jedem Tab-Wechsel Events neu setzen
       const origShowTab = showTab;
       showTab = function (tab, btn) {
@@ -968,6 +1119,7 @@
       // Initial Events setzen
       document.addEventListener("DOMContentLoaded", () => {
         addCardHoverEvents();
+        updatePackageInfo(); // Info-Box initial anzeigen
       });
     </script>
     <link
@@ -1009,6 +1161,11 @@
         Premium Webseiten
       </button>
     </div>
+    <div style="text-align:center; margin: 18px 0;">
+      <button id="show-examples-btn" style="background:#232323;color:#ffd700;font-size:1.15rem;padding:12px 32px;border-radius:8px;border:1.5px solid #ffd700;cursor:pointer;font-weight:600;box-shadow:0 2px 12px #ffd70022;transition:background 0.2s,color 0.2s;">
+        Beispielseiten ansehen
+      </button>
+    </div>
 
     <div id="pricing-container" class="pricing-section active">
       <!-- Basis Pakete initial -->
@@ -1048,6 +1205,31 @@
     <div id="package-info" class="package-info"></div>
     <div class="package-info-spacer"></div>
     <!-- Direkt unter dem Info-Text -->
+    <div id="examples-modal" style="display:none;position:fixed;z-index:10000;left:0;top:0;right:0;bottom:0;background:rgba(10,10,10,0.92);justify-content:center;align-items:center;">
+      <div>
+        <button id="close-examples-btn" style="position:absolute;top:10px;right:12px;background:#444;color:white;border:none;border-radius:50%;width:36px;height:36px;cursor:pointer;font-weight:bold;line-height:36px;font-size:1.6rem;z-index:2;">&times;</button>
+        <h2 style="color:#ffd700;text-align:center;margin-top:0;">Beispiel Referenzseiten</h2>
+        <ul style="list-style:none;padding:0;margin:0;">
+          <li style="margin-bottom:14px;">
+            <a href="https://spartanwarriorz.github.io/Hair-Luxury/" target="_blank" style="color:#ffd700;text-decoration:underline;font-size:1.08rem;">Hair-Fantasy.de</a>
+            <span style="color:#aaa;font-size:0.98rem;">– Friseurladen</span>
+          </li>
+          <li style="margin-bottom:14px;">
+            <a href="https://beispiel1.de" target="_blank" style="color:#ffd700;text-decoration:underline;font-size:1.08rem;">www.beispiel1.de</a>
+            <span style="color:#aaa;font-size:0.98rem;">– Portfolio</span>
+          </li>
+          <li style="margin-bottom:14px;">
+            <a href="https://beispiel2.de" target="_blank" style="color:#ffd700;text-decoration:underline;font-size:1.08rem;">www.beispiel2.de</a>
+            <span style="color:#aaa;font-size:0.98rem;">– Business Landingpage</span>
+          </li>
+          <li>
+            <a href="https://beispiel3.de" target="_blank" style="color:#ffd700;text-decoration:underline;font-size:1.08rem;">www.beispiel3.de</a>
+            <span style="color:#aaa;font-size:0.98rem;">– Shop</span>
+          </li>
+          <!-- Weitere Beispiele nach Bedarf -->
+        </ul>
+      </div>
+    </div>
 
     <footer>
       &copy; 2025 Integrow. Digital Elegance. Klar. Stark. Skaliert.
@@ -1234,33 +1416,47 @@
         updatePackageInfo();
       }
 
-      // Nach jedem Tab-Wechsel Events neu setzen
-      const origShowTab = showTab;
-      showTab = function (tab, btn) {
-        origShowTab(tab, btn);
-        setTimeout(() => {
-          addCardHoverEvents();
-          updatePackageInfo(); // Info-Box erst nach dem Neuladen zurücksetzen
-        }, 250);
-      };
-
-      // Initial Events setzen
-      document.addEventListener("DOMContentLoaded", () => {
-        addCardHoverEvents();
-      });
-    </script>
-  </body>
-</html>
-        }, 250);
-      };
-
-      // Initial Events setzen
-      document.addEventListener("DOMContentLoaded", () => {
-        addCardHoverEvents();
-      });
-    </script>
-  </body>
-</html>
+      // Beispielseiten-Modal öffnen/schließen
+      document.addEventListener('DOMContentLoaded', function() {
+        const btn = document.getElementById('show-examples-btn');
+        const modal = document.getElementById('examples-modal');
+        const closeBtn = document.getElementById('close-examples-btn');
+        if(btn && modal && closeBtn) {
+          btn.onclick = function() {
+            modal.style.display = 'flex';
+            setTimeout(() => {
+              modal.classList.add('active');
+            }, 10);
+            document.body.classList.add('modal-open');
+          };
+          closeBtn.onclick = function() {
+            modal.classList.remove('active');
+            setTimeout(() => {
+              modal.style.display = 'none';
+            }, 350);
+            document.body.classList.remove('modal-open');
+          };
+          // Modal schließen bei Klick außerhalb
+          modal.onclick = function(e) {
+            if(e.target === modal) {
+              modal.classList.remove('active');
+              setTimeout(() => {
+                modal.style.display = 'none';
+              }, 350);
+              document.body.classList.remove('modal-open');
+            }
+          };
+          // ESC schließt Modal
+          document.addEventListener('keydown', function(e) {
+            if(e.key === "Escape" && modal.style.display === 'flex') {
+              modal.classList.remove('active');
+              setTimeout(() => {
+                modal.style.display = 'none';
+              }, 350);
+              document.body.classList.remove('modal-open');
+            }
+          });
+        }
       });
     </script>
   </body>
