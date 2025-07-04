@@ -858,19 +858,14 @@
         // Set iframe src
         var iframe = document.getElementById('calendar-iframe');
         var loader = document.getElementById('calendar-modal-loader');
-        // Loader sofort ausblenden, da das Widget direkt nach Captcha sichtbar sein soll
-        loader.classList.add('hide');
+        // Ladeanimation komplett ausblenden
+        loader.style.display = 'none';
         iframe.src =
           'https://calendly.com/leonidas-pyka/30min?hide_gdpr_banner=1&background_color=000000&text_color=FFFFFF&primary_color=FFD700&a1=' + encodeURIComponent(pendingPackageName);
 
-        // Optional: falls du trotzdem kurz einen Loader willst, kannst du loader.classList.remove('hide'); vor iframe.src setzen und dann wie gehabt onload wieder ausblenden.
-        iframe.onload = function() {
-          loader.classList.add('hide');
-          iframe.style.pointerEvents = '';
-          loader.style.pointerEvents = 'none';
-        };
+        // Widget sofort bedienbar
+        iframe.onload = null;
         iframe.style.pointerEvents = '';
-        loader.style.pointerEvents = 'none';
       }
 
       function showCalendar(card, packageName) {
@@ -1195,19 +1190,14 @@
         // Set iframe src
         var iframe = document.getElementById('calendar-iframe');
         var loader = document.getElementById('calendar-modal-loader');
-        // Loader sofort ausblenden, da das Widget direkt nach Captcha sichtbar sein soll
-        loader.classList.add('hide');
+        // Ladeanimation komplett ausblenden
+        loader.style.display = 'none';
         iframe.src =
           'https://calendly.com/leonidas-pyka/30min?hide_gdpr_banner=1&background_color=000000&text_color=FFFFFF&primary_color=FFD700&a1=' + encodeURIComponent(pendingPackageName);
 
-        // Optional: falls du trotzdem kurz einen Loader willst, kannst du loader.classList.remove('hide'); vor iframe.src setzen und dann wie gehabt onload wieder ausblenden.
-        iframe.onload = function() {
-          loader.classList.add('hide');
-          iframe.style.pointerEvents = '';
-          loader.style.pointerEvents = 'none';
-        };
+        // Widget sofort bedienbar
+        iframe.onload = null;
         iframe.style.pointerEvents = '';
-        loader.style.pointerEvents = 'none';
       }
 
       function closeAllWidgets() {
@@ -1251,6 +1241,16 @@
         setTimeout(() => {
           addCardHoverEvents();
           updatePackageInfo(); // Info-Box erst nach dem Neuladen zurücksetzen
+        }, 250);
+      };
+
+      // Initial Events setzen
+      document.addEventListener("DOMContentLoaded", () => {
+        addCardHoverEvents();
+      });
+    </script>
+  </body>
+</html>
         }, 250);
       };
 
