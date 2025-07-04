@@ -849,22 +849,87 @@
 
       let escListenerAdded = false;
 
-function showCalendar(card, packageName) {
-  closeAllWidgets();
-  const modal = document.getElementById('calendar-modal');
-  // Determine package type
-  const isPremium = card.classList.contains('premium');
-  const headerClass = isPremium ? 'modal-package premium-glow' : 'modal-package basic-glow';
-  modal.innerHTML = `
-    <div class="calendar-widget">
-      <div class="${headerClass}">${packageName}</div>
-      <iframe src="https://calendly.com/leonidas-pyka/30min?hide_gdpr_banner=1&background_color=000000&text_color=FFFFFF&primary_color=FFD700&a1=${encodeURIComponent(packageName)}" allowtransparency="true" frameborder="0" style="width:100%;height:500px;border-radius:12px;background:#222;"></iframe>
-      <button class="close-widget" onclick="closeAllWidgets()">&times;</button>
-    </div>
-  `;
-  modal.classList.add('active');
-  document.body.classList.add('modal-open');
-}
+      // Google reCAPTCHA
+      function onCaptchaSuccess() {
+        // Hide captcha, show Calendly
+        document.getElementById('calendar-captcha-step').style.display = 'none';
+        document.getElementById('calendar-widget-step').style.display = '';
+
+        // Set iframe src
+        document.getElementById('calendar-iframe').src =
+          'https://calendly.com/leonidas-pyka/30min?hide_gdpr_banner=1&background_color=000000&text_color=FFFFFF&primary_color=FFD700&a1=' + encodeURIComponent(pendingPackageName);
+
+        // Show loader
+        var loader = document.getElementById('calendar-modal-loader');
+        loader.classList.remove('hide');
+
+        // Hide loader when iframe is loaded
+        document.getElementById('calendar-iframe').onload = function() {
+          loader.classList.add('hide');
+        };
+      }
+
+      function showCalendar(card, packageName) {
+        pendingPackageName = packageName;
+        pendingIsPremium = card.classList.contains('premium');
+
+        // Show modal with only captcha step
+        const modal = document.getElementById('calendar-modal');
+        modal.innerHTML = `
+          <div class="calendar-widget" style="display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:180px;">
+            <div class="modal-package ${pendingIsPremium ? 'premium-glow' : 'basic-glow'}">${packageName}</div>
+            <div id="calendar-captcha-step" style="display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:120px;">
+              <div style="text-align:center; margin-bottom:18px; color:#FFD700; font-weight:600; font-size:1.1rem;">
+                Bitte bestätige, dass du kein Roboter bist
+              </div>
+              <div style="display:flex; justify-content:center;">
+                <!-- Container for reCAPTCHA -->
+                <div id="recaptcha-container"></div>
+              </div>
+            </div>
+            <div id="calendar-widget-step" style="display:none; width:100%;">
+              <div id="calendar-modal-loader" style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:center;background:rgba(24,24,24,0.92);z-index:20;border-radius:16px;transition:opacity 0.3s;">
+                <div class="loader-spinner" style="width:48px;height:48px;border:5px solid #FFD70033;border-top:5px solid #FFD700;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto;"></div>
+              </div>
+              <iframe id="calendar-iframe" src="" allowtransparency="true" style="width:100%;height:500px;border:none;border-radius:12px;background:#222;"></iframe>
+            </div>
+            <button class="close-widget" onclick="closeAllWidgets()" style="position:absolute;top:10px;right:12px;background:#444;color:white;border:none;border-radius:50%;width:40px;height:40px;cursor:pointer;font-weight:bold;line-height:40px;font-size:2rem;z-index:2;display:flex;align-items:center;justify-content:center;transition:background 0.2s;touch-action:manipulation;">&times;</button>
+          </div>
+        `;
+        modal.classList.add('active');
+        document.body.classList.add('modal-open');
+
+        // Render reCAPTCHA widget dynamically
+        function renderCaptcha() {
+          if (typeof grecaptcha !== "undefined" && document.getElementById('recaptcha-container')) {
+            grecaptcha.render('recaptcha-container', {
+              sitekey: '6LdTf3YrAAAAAEOkh8vLYzvd-qH9qwvdNMTpNdzc',
+              callback: onCaptchaSuccess,
+              theme: 'dark'
+            });
+          }
+        }
+        // Wait for reCAPTCHA to be loaded if not yet available
+        if (typeof grecaptcha === "undefined") {
+          let interval = setInterval(() => {
+            if (typeof grecaptcha !== "undefined") {
+              clearInterval(interval);
+              renderCaptcha();
+            }
+          }, 100);
+        } else {
+          renderCaptcha();
+        }
+      }
+
+      function closeAllWidgets() {
+        const modal = document.getElementById('calendar-modal');
+        if (modal) {
+          modal.classList.remove('active');
+          modal.innerHTML = '';
+        }
+        document.body.classList.remove('modal-open');
+      }
 
       // Close modal when clicking outside the widget
       document.addEventListener('DOMContentLoaded', function() {
@@ -882,17 +947,6 @@ function showCalendar(card, packageName) {
         if (e.key === "Escape") {
           closeAllWidgets();
         }
-      }
-
-      function closeAllWidgets() {
-        const modal = document.getElementById('calendar-modal');
-        if (modal) {
-          modal.classList.remove('active');
-          modal.innerHTML = '';
-        }
-        document.body.classList.remove('modal-open');
-        document.removeEventListener('keydown', escCloseModal);
-        escListenerAdded = false;
       }
 
       function closeWidget(button) {
@@ -1069,5 +1123,133 @@ function showCalendar(card, packageName) {
     <div id="calendar-modal">
   <!-- Inhalt wird per JS eingefügt -->
 </div>
+    <!-- Google reCAPTCHA -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script>
+      let pendingPackageName = null;
+      let pendingIsPremium = false;
+
+      function showCalendar(card, packageName) {
+        pendingPackageName = packageName;
+        pendingIsPremium = card.classList.contains('premium');
+
+        // Show modal with only captcha step
+        const modal = document.getElementById('calendar-modal');
+        modal.innerHTML = `
+          <div class="calendar-widget" style="display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:180px;">
+            <div class="modal-package ${pendingIsPremium ? 'premium-glow' : 'basic-glow'}">${packageName}</div>
+            <div id="calendar-captcha-step" style="display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:120px;">
+              <div style="text-align:center; margin-bottom:18px; color:#FFD700; font-weight:600; font-size:1.1rem;">
+                Bitte bestätige, dass du kein Roboter bist
+              </div>
+              <div style="display:flex; justify-content:center;">
+                <!-- Container for reCAPTCHA -->
+                <div id="recaptcha-container"></div>
+              </div>
+            </div>
+            <div id="calendar-widget-step" style="display:none; width:100%;">
+              <div id="calendar-modal-loader" style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:center;background:rgba(24,24,24,0.92);z-index:20;border-radius:16px;transition:opacity 0.3s;">
+                <div class="loader-spinner" style="width:48px;height:48px;border:5px solid #FFD70033;border-top:5px solid #FFD700;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto;"></div>
+              </div>
+              <iframe id="calendar-iframe" src="" allowtransparency="true" style="width:100%;height:500px;border:none;border-radius:12px;background:#222;"></iframe>
+            </div>
+            <button class="close-widget" onclick="closeAllWidgets()" style="position:absolute;top:10px;right:12px;background:#444;color:white;border:none;border-radius:50%;width:40px;height:40px;cursor:pointer;font-weight:bold;line-height:40px;font-size:2rem;z-index:2;display:flex;align-items:center;justify-content:center;transition:background 0.2s;touch-action:manipulation;">&times;</button>
+          </div>
+        `;
+        modal.classList.add('active');
+        document.body.classList.add('modal-open');
+
+        // Render reCAPTCHA widget dynamically
+        function renderCaptcha() {
+          if (typeof grecaptcha !== "undefined" && document.getElementById('recaptcha-container')) {
+            grecaptcha.render('recaptcha-container', {
+              sitekey: '6LdTf3YrAAAAAEOkh8vLYzvd-qH9qwvdNMTpNdzc',
+              callback: onCaptchaSuccess,
+              theme: 'dark'
+            });
+          }
+        }
+        // Wait for reCAPTCHA to be loaded if not yet available
+        if (typeof grecaptcha === "undefined") {
+          let interval = setInterval(() => {
+            if (typeof grecaptcha !== "undefined") {
+              clearInterval(interval);
+              renderCaptcha();
+            }
+          }, 100);
+        } else {
+          renderCaptcha();
+        }
+      }
+
+      // Called by Google reCAPTCHA after success
+      function onCaptchaSuccess() {
+        // Hide captcha, show Calendly
+        document.getElementById('calendar-captcha-step').style.display = 'none';
+        document.getElementById('calendar-widget-step').style.display = '';
+
+        // Set iframe src
+        document.getElementById('calendar-iframe').src =
+          'https://calendly.com/leonidas-pyka/30min?hide_gdpr_banner=1&background_color=000000&text_color=FFFFFF&primary_color=FFD700&a1=' + encodeURIComponent(pendingPackageName);
+
+        // Show loader
+        var loader = document.getElementById('calendar-modal-loader');
+        loader.classList.remove('hide');
+
+        // Hide loader when iframe is loaded
+        document.getElementById('calendar-iframe').onload = function() {
+          loader.classList.add('hide');
+        };
+      }
+
+      function closeAllWidgets() {
+        const modal = document.getElementById('calendar-modal');
+        if (modal) {
+          modal.classList.remove('active');
+          modal.innerHTML = '';
+        }
+        document.body.classList.remove('modal-open');
+      }
+
+      // Close modal when clicking outside the widget
+      document.addEventListener('DOMContentLoaded', function() {
+        const modal = document.getElementById('calendar-modal');
+        if (modal) {
+          modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+              closeAllWidgets();
+            }
+          });
+        }
+      });
+
+      function escCloseModal(e) {
+        if (e.key === "Escape") {
+          closeAllWidgets();
+        }
+      }
+
+      function closeWidget(button) {
+        const card = button.closest(".card");
+        if (card) card.classList.remove("no-scale"); // <-- HIER
+        button.parentElement.remove();
+        updatePackageInfo();
+      }
+
+      // Nach jedem Tab-Wechsel Events neu setzen
+      const origShowTab = showTab;
+      showTab = function (tab, btn) {
+        origShowTab(tab, btn);
+        setTimeout(() => {
+          addCardHoverEvents();
+          updatePackageInfo(); // Info-Box erst nach dem Neuladen zurücksetzen
+        }, 250);
+      };
+
+      // Initial Events setzen
+      document.addEventListener("DOMContentLoaded", () => {
+        addCardHoverEvents();
+      });
+    </script>
   </body>
 </html>
