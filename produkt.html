@@ -856,17 +856,23 @@
         document.getElementById('calendar-widget-step').style.display = '';
 
         // Set iframe src
-        document.getElementById('calendar-iframe').src =
+        var iframe = document.getElementById('calendar-iframe');
+        var loader = document.getElementById('calendar-modal-loader');
+        // Zeige Loader sofort
+        loader.classList.remove('hide');
+        iframe.src =
           'https://calendly.com/leonidas-pyka/30min?hide_gdpr_banner=1&background_color=000000&text_color=FFFFFF&primary_color=FFD700&a1=' + encodeURIComponent(pendingPackageName);
 
-        // Show loader
-        var loader = document.getElementById('calendar-modal-loader');
-        loader.classList.remove('hide');
-
-        // Hide loader when iframe is loaded
-        document.getElementById('calendar-iframe').onload = function() {
+        // Loader ausblenden, wenn iframe geladen ist
+        iframe.onload = function() {
           loader.classList.add('hide');
+          // Bedienung wieder möglich machen
+          iframe.style.pointerEvents = '';
+          loader.style.pointerEvents = 'none';
         };
+        // Während des Ladens keine Bedienung
+        iframe.style.pointerEvents = 'none';
+        loader.style.pointerEvents = 'auto';
       }
 
       function showCalendar(card, packageName) {
@@ -1189,17 +1195,23 @@
         document.getElementById('calendar-widget-step').style.display = '';
 
         // Set iframe src
-        document.getElementById('calendar-iframe').src =
+        var iframe = document.getElementById('calendar-iframe');
+        var loader = document.getElementById('calendar-modal-loader');
+        // Zeige Loader sofort
+        loader.classList.remove('hide');
+        iframe.src =
           'https://calendly.com/leonidas-pyka/30min?hide_gdpr_banner=1&background_color=000000&text_color=FFFFFF&primary_color=FFD700&a1=' + encodeURIComponent(pendingPackageName);
 
-        // Show loader
-        var loader = document.getElementById('calendar-modal-loader');
-        loader.classList.remove('hide');
-
-        // Hide loader when iframe is loaded
-        document.getElementById('calendar-iframe').onload = function() {
+        // Loader ausblenden, wenn iframe geladen ist
+        iframe.onload = function() {
           loader.classList.add('hide');
+          // Bedienung wieder möglich machen
+          iframe.style.pointerEvents = '';
+          loader.style.pointerEvents = 'none';
         };
+        // Während des Ladens keine Bedienung
+        iframe.style.pointerEvents = 'none';
+        loader.style.pointerEvents = 'auto';
       }
 
       function closeAllWidgets() {
