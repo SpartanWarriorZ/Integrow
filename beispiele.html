@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Integrow – Beispielseiten</title>
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Rajdhani:wght@700&display=swap" rel="stylesheet" />
+    <style>
+      html, body { max-width: 100%; overflow-x: hidden; }
+      body {
+        margin: 0;
+        background-color: #0a0a0a;
+        color: #e0e0e0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(to bottom right, #0a0a0a, #1c1c1c);
+        scroll-behavior: smooth;
+      }
+      header {
+        padding: 60px 40px 40px;
+        background: linear-gradient(to right, #1c1c1c, #000);
+        text-align: center;
+        border-bottom: 1px solid #444;
+        box-shadow: 0 0 40px rgba(192, 192, 192, 0.1);
+      }
+      .logo-img {
+        max-width: 600px;
+        width: 100%;
+        height: auto;
+        margin-bottom: 10px;
+        filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.4));
+        transition: filter 0.4s cubic-bezier(.4,1.6,.6,1), transform 0.45s cubic-bezier(.4,1.6,.6,1);
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        user-select: none;
+        -webkit-user-select: none;
+        pointer-events: auto;
+      }
+      .logo-img:hover {
+        filter: drop-shadow(0 0 18px rgba(255, 255, 255, 0.6));
+        transform: scale(1.08);
+      }
+      .nav-links {
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        gap: 50px;
+        z-index: 1000;
+        position: relative;
+        flex-wrap: wrap;
+      }
+      .nav-links a {
+        color: silver;
+        text-decoration: none;
+        font-size: 1.4rem;
+        font-family: "Rajdhani", sans-serif;
+        font-weight: 600;
+        letter-spacing: 1px;
+        transition: color 0.3s ease, text-shadow 0.3s ease;
+        position: relative;
+      }
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -5px;
+        width: 100%;
+        height: 2px;
+        background: silver;
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.3s ease;
+      }
+      .nav-links a:hover::after {
+        transform: scaleX(1);
+      }
+      .nav-links a:hover {
+        color: #fff;
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+      }
+      .referenzen-section {
+        max-width: 1100px;
+        margin: 60px auto 40px auto;
+        padding: 0 20px;
+      }
+      .referenzen-title {
+        color: #ffd700;
+        font-size: 2.2rem;
+        text-align: center;
+        margin-bottom: 40px;
+        text-shadow: 0 0 18px #ffd70088, 0 1px 0 #fff2;
+        letter-spacing: 0.5px;
+      }
+      .referenzen-list {
+        display: flex;
+        flex-direction: column;
+        gap: 36px;
+        justify-content: center;
+        align-items: stretch;
+      }
+      .referenz-row {
+        display: flex;
+        align-items: center;
+        background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
+        border-radius: 18px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.05), inset 0 1px 0 rgba(255,255,255,0.1);
+        padding: 0;
+        text-decoration: none;
+        border: 2px solid transparent;
+        transition: box-shadow 0.4s, border-color 0.4s, transform 0.4s;
+        cursor: pointer;
+        overflow: hidden;
+      }
+      .referenz-row:hover {
+        box-shadow: 0 0 40px rgba(255, 215, 0, 0.18);
+        border-color: #ffd700;
+        transform: translateY(-4px) scale(1.01);
+      }
+      .referenz-row-img {
+        width: 220px;
+        height: 140px;
+        object-fit: cover;
+        border-radius: 12px 0 0 12px;
+        margin: 0;
+        background: #222;
+        flex-shrink: 0;
+        box-shadow: 0 4px 18px #ffd70022;
+      }
+      .referenz-row-content {
+        padding: 28px 32px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-width: 0;
+      }
+      .referenz-row-title {
+        font-size: 1.3rem;
+        color: #ffd700;
+        font-weight: 700;
+        margin-bottom: 10px;
+        text-shadow: 0 0 10px #ffd70055;
+      }
+      .referenz-row-desc {
+        color: #ccc;
+        font-size: 1.05rem;
+      }
+      .referenz-row-anim {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+        margin-bottom: 48px;
+        border-radius: 12px;
+        transition: box-shadow 0.35s, transform 0.35s, background 0.35s;
+        background: none;
+        cursor: pointer;
+      }
+      .referenz-row-anim:hover {
+        /* Keine Hintergrundfarbe, kein Rahmen, keine Hervorhebung mehr */
+        background: none;
+        transform: translateY(-6px) scale(1.025);
+      }
+      .referenz-row-anim img {
+        width: 320px;
+        max-width: 100%;
+        height: auto;
+        display: block;
+        border-radius: 10px;
+        transition: transform 0.35s cubic-bezier(.4,1.6,.6,1);
+      }
+      .referenz-row-anim:hover img {
+        transform: scale(1.045);
+      }
+      .referenz-row-anim .referenz-name-link {
+        font-size: 1.3rem;
+        color: #ffd700;
+        font-weight: 700;
+        text-decoration: none;
+        transition: color 0.25s, text-shadow 0.25s;
+      }
+      .referenz-row-anim:hover .referenz-name-link {
+        color: #fffbe6;
+        text-shadow: 0 0 12px #ffd700cc, 0 0 2px #ffd700, 0 0 24px #fff70055;
+      }
+      .referenz-row-anim .referenz-desc {
+        color: #ccc;
+        font-size: 1.05rem;
+        margin-top: 8px;
+        transition: color 0.25s;
+      }
+      .referenz-row-anim:hover .referenz-desc {
+        color: #fff;
+      }
+      @media (max-width: 900px) {
+        .referenz-row {
+          flex-direction: column;
+          align-items: stretch;
+          border-radius: 14px;
+        }
+        .referenz-row-img {
+          width: 100%;
+          height: 180px;
+          border-radius: 14px 14px 0 0;
+        }
+        .referenz-row-content {
+          padding: 18px 16px 24px 16px;
+        }
+      }
+      @media (max-width: 700px) {
+        .referenz-row-anim {
+          flex-direction: column;
+          align-items: stretch;
+          gap: 18px;
+          padding: 0;
+        }
+        .referenz-row-anim img {
+          width: 100%;
+          min-width: 0;
+          border-radius: 10px 10px 0 0;
+        }
+      }
+      footer {
+        background-color: #111;
+        text-align: center;
+        padding: 40px 20px;
+        color: #777;
+        font-size: 1rem;
+        border-top: 1px solid #2a2a2a;
+      }
+      .footer-social {
+        margin-top: 18px;
+        display: flex;
+        justify-content: center;
+        gap: 22px;
+      }
+      .footer-social img {
+        width: 28px;
+        height: 28px;
+        filter: grayscale(0.2) brightness(0.95);
+        transition: filter 0.2s, transform 0.2s;
+        vertical-align: middle;
+      }
+      .footer-social a:hover img {
+        filter: grayscale(0) brightness(1.2) drop-shadow(0 0 6px #ffd70088);
+        transform: scale(1.13) rotate(-8deg);
+      }
+      .referenz-title-modern {
+        font-family: 'Rajdhani', 'Segoe UI', Arial, sans-serif;
+        font-size: 2.3rem;
+        font-weight: 700;
+        color: #FFD700;
+        text-align: center;
+        margin-bottom: 18px;
+        margin-top: 18px;
+        letter-spacing: 0.5px;
+        text-shadow: none;
+        position: relative;
+      }
+      .referenz-title-modern::after {
+        content: '';
+        display: block;
+        margin: 14px auto 0 auto;
+        width: 54px;
+        height: 2px;
+        border-radius: 1px;
+        background: #FFD700;
+        opacity: 0.7;
+      }
+      .referenz-subtitle {
+        font-family: 'Segoe UI', Arial, sans-serif;
+        font-size: 1.18rem;
+        color: #e0e0e0;
+        text-align: center;
+        margin-top: -10px;
+        margin-bottom: 32px;
+        letter-spacing: 0.2px;
+        font-weight: 400;
+        opacity: 0.85;
+      }
+      @media (max-width: 600px) {
+        .referenz-title-modern {
+          font-size: 1.2rem;
+          margin-bottom: 16px;
+          gap: 8px;
+        }
+        .referenz-title-modern::after {
+          width: 32px;
+          height: 2px;
+          margin-top: 7px;
+        }
+        .referenz-title-modern .icon-star {
+          font-size: 1.1em;
+          margin-right: 4px;
+        }
+        .referenz-subtitle {
+          font-size: 1rem;
+          margin-bottom: 18px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header data-aos="fade-down">
+      <img src="DB5A56C2-6537-412D-94B5-4C1A72DA5F3C.PNG" alt="Integrow Logo" class="logo-img" />
+      <div class="nav-links">
+        <a href="index.html">Startseite</a>
+        <a href="produkt.html">Produkt</a>
+        <a href="kurse.html">Kurse</a>
+        <a href="support.html">Support</a>
+        <a href="impressum.html">Impressum</a>
+      </div>
+    </header>
+    <main>
+      <section style="max-width: 900px; margin: 60px auto 40px auto; padding: 0 10px;">
+        <h2 class="referenz-title-modern">Referenzseiten</h2>
+        <div class="referenz-subtitle">So könnte Ihre Seite aussehen!</div>
+        <div class="referenz-row-anim" data-aos="fade-right">
+          <img src="FashionWayRef.png" alt="Fashion-Way Referenz" />
+          <div>
+            <a href="https://spartanwarriorz.github.io/Fashion-Way/" target="_blank" class="referenz-name-link">Fashion-Way.de</a>
+            <div class="referenz-desc">Shoppingseite mit elegantem, modernen Design und Shop-Charakter.</div>
+          </div>
+        </div>
+        <div class="referenz-row-anim" data-aos="fade-right" data-aos-delay="100">
+          <img src="WesselRef.png" alt="Wessel-GmbH Referenz" />
+          <div>
+            <a href="https://spartanwarriorz.github.io/Wessel-GmbH/" target="_blank" class="referenz-name-link">Wessel-GmbH.de</a>
+            <div class="referenz-desc">Kesselbau-Firma mit professionellem Webauftritt und Leistungsübersicht.</div>
+          </div>
+        </div>
+        <div class="referenz-row-anim" data-aos="fade-right" data-aos-delay="200">
+          <img src="LuxuryHairRef.png" alt="Hair-Luxury Referenz" />
+          <div>
+            <a href="https://spartanwarriorz.github.io/Hair-Luxury/" target="_blank" class="referenz-name-link">Hair-Fantasy.de</a>
+            <div class="referenz-desc">Friseurladen mit modernem, luxuriösem Design und Online-Terminbuchung.</div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      &copy; 2025 Integrow. Digital Elegance. Klar. Stark. Skaliert.
+      <div class="footer-social">
+        <a href="https://www.instagram.com/integrow.de/" target="_blank" rel="noopener" aria-label="Instagram">
+          <img src="instagram.svg" alt="Instagram" />
+        </a>
+        <a href="mailto:info@integrow.de" aria-label="E-Mail">
+          <img src="mail.svg" alt="E-Mail" />
+        </a>
+        <a href="https://www.linkedin.com/company/integrow/" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <img src="linkedin.svg" alt="LinkedIn" />
+        </a>
+      </div>
+    </footer>
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <script>AOS.init({ once: true, duration: 1000 });</script>
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.18/bundled/lenis.min.js"></script>
+    <script>
+      const lenis = new Lenis({
+        duration: 1.6,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smooth: true,
+      });
+
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+
+      requestAnimationFrame(raf);
+    </script>
+  </body>
+</html> 

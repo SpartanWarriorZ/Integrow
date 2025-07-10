@@ -2239,7 +2239,7 @@
       </button>
     </div>
     <div style="text-align:center; margin: 30px 0;">
-      <button id="show-examples-btn" style="background:linear-gradient(145deg,#1a1a1a,#2a2a2a);color:#ffd700;font-size:1.2rem;padding:18px 40px;border-radius:16px;border:2px solid rgba(255,215,0,0.3);cursor:pointer;font-weight:600;box-shadow:0 6px 25px rgba(255,215,0,0.15),0 0 0 1px rgba(255,215,0,0.1),inset 0 1px 0 rgba(255,215,0,0.1);transition:all 0.4s cubic-bezier(0.4,1.6,0.6,1);position:relative;overflow:hidden;backdrop-filter:blur(10px);letter-spacing:0.5px;text-transform:uppercase;">
+      <button id="show-examples-btn" onclick="window.location.href='beispiele.html'" style="background:linear-gradient(145deg,#1a1a1a,#2a2a2a);color:#ffd700;font-size:1.2rem;padding:18px 40px;border-radius:16px;border:2px solid rgba(255,215,0,0.3);cursor:pointer;font-weight:600;box-shadow:0 6px 25px rgba(255,215,0,0.15),0 0 0 1px rgba(255,215,0,0.1),inset 0 1px 0 rgba(255,215,0,0.1);transition:all 0.4s cubic-bezier(0.4,1.6,0.6,1);position:relative;overflow:hidden;backdrop-filter:blur(10px);letter-spacing:0.5px;text-transform:uppercase;">
         Beispielseiten ansehen
       </button>
     </div>
@@ -2282,30 +2282,8 @@
     <div id="package-info" class="package-info"></div>
     <div class="package-info-spacer"></div>
     <!-- Beispielseiten Modal mit verbessertem Design -->
-    <div id="examples-modal" style="display:none;position:fixed;z-index:10000;left:0;top:0;right:0;bottom:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);justify-content:center;align-items:center;transition:all 0.4s cubic-bezier(0.4,1.6,0.6,1);">
-      <div style="background:linear-gradient(145deg,#1a1a1a,#2a2a2a);border-radius:20px;padding:40px 30px;max-width:95vw;width:480px;box-shadow:0 20px 60px rgba(0,0,0,0.8),0 0 0 1px rgba(255,255,255,0.1),inset 0 1px 0 rgba(255,255,255,0.1);position:relative;border:2.5px solid #ffd700;animation:modal-pop-in 0.45s cubic-bezier(0.4,1.6,0.6,1);">
-        <button id="close-examples-btn" style="position:absolute;top:16px;right:16px;background:rgba(68,68,68,0.8);color:white;border:none;border-radius:50%;width:44px;height:44px;cursor:pointer;font-weight:bold;font-size:1.8rem;z-index:10;display:flex;align-items:center;justify-content:center;transition:all 0.3s cubic-bezier(0.4,1.6,0.6,1);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.1);" title="Schließen">×</button>
-        <h2 style="color:#ffd700;text-align:center;margin:0 0 30px 0;font-size:1.8rem;text-shadow:0 0 20px rgba(255,215,0,0.5);letter-spacing:0.5px;">Beispiel Referenzseiten</h2>
-        <ul style="list-style:none;padding:0;margin:0;">
-          <li style="margin-bottom:20px;padding:16px;background:rgba(255,255,255,0.05);border-radius:12px;border:1px solid rgba(255,255,255,0.1);transition:all 0.3s ease;">
-            <a href="https://spartanwarriorz.github.io/Hair-Luxury/" target="_blank" style="color:#ffd700;text-decoration:none;font-size:1.1rem;font-weight:600;display:block;margin-bottom:4px;transition:color 0.3s ease;">Hair-Fantasy.de</a>
-            <span style="color:#ccc;font-size:1rem;">Friseurladen mit modernem Design</span>
-          </li>
-          <li style="margin-bottom:20px;padding:16px;background:rgba(255,255,255,0.05);border-radius:12px;border:1px solid rgba(255,255,255,0.1);transition:all 0.3s ease;">
-            <a href="https://spartanwarriorz.github.io/Wessel-GmbH/" target="_blank" style="color:#ffd700;text-decoration:none;font-size:1.1rem;font-weight:600;display:block;margin-bottom:4px;transition:color 0.3s ease;">Wessel-GmbH.de</a>
-            <span style="color:#ccc;font-size:1rem;">Kesselbau Firma mit professionellem Auftritt</span>
-          </li>
-          <li style="margin-bottom:20px;padding:16px;background:rgba(255,255,255,0.05);border-radius:12px;border:1px solid rgba(255,255,255,0.1);transition:all 0.3s ease;">
-            <a href="https://spartanwarriorz.github.io/Fashion-Way/" target="_blank" style="color:#ffd700;text-decoration:none;font-size:1.1rem;font-weight:600;display:block;margin-bottom:4px;transition:color 0.3s ease;">Fashion-Way.de</a>
-            <span style="color:#ccc;font-size:1rem;">Shoppingseite mit elegantem Design</span>
-          </li>
-          <li style="padding:16px;background:rgba(255,255,255,0.05);border-radius:12px;border:1px solid rgba(255,255,255,0.1);transition:all 0.3s ease;">
-            <a href="https://beispiel3.de" target="_blank" style="color:#ffd700;text-decoration:none;font-size:1.1rem;font-weight:600;display:block;margin-bottom:4px;transition:color 0.3s ease;">www.beispiel3.de</a>
-            <span style="color:#ccc;font-size:1rem;">Shop mit moderner Benutzeroberfläche</span>
-          </li>
-        </ul>
-      </div>
-    </div>
+    <!-- ENTFERNT: Modal für Beispielseiten und zugehöriges JS -->
+    <!-- ... existing code ... -->
 
     <footer>
       &copy; 2025 Integrow. Digital Elegance. Klar. Stark. Skaliert.
