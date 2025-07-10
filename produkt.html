@@ -2105,21 +2105,9 @@
         document.getElementById('calendar-captcha-step').style.display = 'none';
         document.getElementById('calendar-widget-step').style.display = '';
 
-        // Set iframe src
-        var iframe = document.getElementById('calendar-iframe');
-        var loader = document.getElementById('calendar-modal-loader');
         // Loader anzeigen
+        var loader = document.getElementById('calendar-modal-loader');
         loader.classList.remove('hide');
-        iframe.src =
-          'https://calendly.com/leonidas-pyka/30min?background_color=000000&text_color=FFFFFF&primary_color=FFD700&hide_landing_page_details=1&hide_event_type_details=1&a1=' + encodeURIComponent(pendingPackageName);
-
-        // Widget sofort bedienbar
-        iframe.onload = null;
-        iframe.style.pointerEvents = '';
-        
-        // Direktes Styling für schwarzen Hintergrund
-        iframe.style.background = '#000000';
-        iframe.style.backgroundColor = '#000000';
 
         // Setze das Calendly Inline Widget
         var calendlyContainer = document.getElementById('calendly-inline-container');
@@ -2132,6 +2120,7 @@
             utm: {}
           });
         }
+        
         // Loader ausblenden, wenn Widget geladen
         setTimeout(function() {
           document.getElementById('calendar-modal-loader').classList.add('hide');
@@ -2472,14 +2461,10 @@
         }
       }
 
-      // Iframe loaded event (optional for debugging)
+      // Calendly Widget loaded event (optional for debugging)
       document.addEventListener('DOMContentLoaded', function() {
-        var iframe = document.getElementById('calendar-iframe');
-        if (iframe) {
-          iframe.onload = function() {
-            console.log('Calendly iframe loaded successfully');
-          };
-        }
+        // Optional: Add any initialization logic here
+        console.log('Calendly widget script loaded');
       });
       
       // Handle reCAPTCHA expiration
@@ -2512,22 +2497,32 @@
         // Hide captcha, show Calendly
         var captchaStep = document.getElementById('calendar-captcha-step');
         var widgetStep = document.getElementById('calendar-widget-step');
-        var iframe = document.getElementById('calendar-iframe');
         
         if (captchaStep) captchaStep.style.display = 'none';
         if (widgetStep) widgetStep.style.display = 'block';
         
         console.log('Captcha step hidden, widget step shown');
 
-        // Set iframe src
-        if (iframe) {
-          iframe.src = 'https://calendly.com/leonidas-pyka/30min?background_color=000000&text_color=FFFFFF&primary_color=FFD700&hide_landing_page_details=1&hide_event_type_details=1&a1=' + encodeURIComponent(pendingPackageName);
-          console.log('Iframe src set');
-          
-          // Direktes Styling für schwarzen Hintergrund
-          iframe.style.background = '#000000';
-          iframe.style.backgroundColor = '#000000';
+        // Loader anzeigen
+        var loader = document.getElementById('calendar-modal-loader');
+        loader.classList.remove('hide');
+
+        // Setze das Calendly Inline Widget
+        var calendlyContainer = document.getElementById('calendly-inline-container');
+        if (calendlyContainer) {
+          calendlyContainer.innerHTML = '';
+          Calendly.initInlineWidget({
+            url: 'https://calendly.com/leonidas-pyka/30min?background_color=000000&text_color=FFFFFF&primary_color=FFD700&hide_landing_page_details=1&hide_event_type_details=1&a1=' + encodeURIComponent(pendingPackageName),
+            parentElement: calendlyContainer,
+            prefill: {},
+            utm: {}
+          });
         }
+        
+        // Loader ausblenden, wenn Widget geladen
+        setTimeout(function() {
+          document.getElementById('calendar-modal-loader').classList.add('hide');
+        }, 1500);
       }
       
       // Handle reCAPTCHA errors
@@ -2541,13 +2536,19 @@
         document.getElementById('calendar-modal-overlay').classList.remove('show');
         setTimeout(() => {
           document.getElementById('calendar-modal-overlay').style.display = 'none';
-          document.getElementById('calendar-iframe').src = '';
           document.body.style.overflow = '';
           document.getElementById('calendar-modal').classList.remove('starter', 'business', 'premium', 'starter-premium', 'business-premium', 'premium-deluxe');
           // Reset for next open
           // Reset to captcha step for next open
           document.getElementById('calendar-captcha-step').style.display = 'flex';
           document.getElementById('calendar-widget-step').style.display = 'none';
+          // Clear calendly container
+          var calendlyContainer = document.getElementById('calendly-inline-container');
+          if (calendlyContainer) {
+            calendlyContainer.innerHTML = '';
+          }
+          // Reset loader
+          document.getElementById('calendar-modal-loader').classList.remove('hide');
           // Reset captcha
           if (typeof grecaptcha !== "undefined") {
             grecaptcha.reset();
