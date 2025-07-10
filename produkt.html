@@ -2403,11 +2403,12 @@
       let pendingIsPremium = false;
 
       function showCalendar(card, packageName) {
-        // Setze pendingPackageName für reCAPTCHA Callback
         pendingPackageName = packageName;
-        
-        // Setze den Paketnamen ins Label
         document.getElementById('modal-package-label').textContent = packageName;
+
+        // Show only captcha step, hide calendly step
+        document.getElementById('calendar-captcha-step').style.display = 'flex';
+        document.getElementById('calendar-widget-step').style.display = 'none';
 
         // Set modal border glow class based on package type
         var modal = document.getElementById('calendar-modal');
@@ -2427,16 +2428,17 @@
           modal.classList.add('premium-deluxe');
         }
 
-        // Show modal mit reCAPTCHA Step
+        // Show modal
         document.getElementById('calendar-modal-overlay').style.display = 'flex';
         setTimeout(() => {
           document.getElementById('calendar-modal-overlay').classList.add('show');
         }, 10);
         document.body.style.overflow = 'hidden';
-        
-        // Zeige reCAPTCHA Step an, verstecke Calendly Step
-        document.getElementById('calendar-captcha-step').style.display = 'flex';
-        document.getElementById('calendar-widget-step').style.display = 'none';
+
+        // Reset captcha if needed
+        if (typeof grecaptcha !== "undefined") {
+          grecaptcha.reset();
+        }
       }
 
       // Hide loader when iframe is loaded
@@ -2471,24 +2473,19 @@
         }
       }
       
-      // Google reCAPTCHA Success Callback
+      // Called by Google reCAPTCHA after success
       function onCaptchaSuccess() {
-        console.log('reCAPTCHA successful, loading Calendly...');
         // Hide captcha, show Calendly
         document.getElementById('calendar-captcha-step').style.display = 'none';
         document.getElementById('calendar-widget-step').style.display = '';
 
         // Set iframe src
-        var iframe = document.getElementById('calendar-iframe');
-        var loader = document.getElementById('calendar-modal-loader');
-        // Loader anzeigen
-        loader.classList.remove('hide');
-        iframe.src =
+        document.getElementById('calendar-iframe').src =
           'https://calendly.com/leonidas-pyka/30min?hide_gdpr_banner=1&background_color=000000&text_color=FFFFFF&primary_color=FFD700&a1=' + encodeURIComponent(pendingPackageName);
 
-        // Widget sofort bedienbar
-        iframe.onload = null;
-        iframe.style.pointerEvents = '';
+        // Show loader
+        var loader = document.getElementById('calendar-modal-loader');
+        loader.classList.remove('hide');
       }
       
       // Handle reCAPTCHA errors
@@ -2507,6 +2504,13 @@
           document.getElementById('calendar-modal').classList.remove('starter', 'business', 'premium', 'starter-premium', 'business-premium', 'premium-deluxe');
           // Reset loader for next open
           document.getElementById('calendar-modal-loader').classList.remove('hide');
+          // Reset to captcha step for next open
+          document.getElementById('calendar-captcha-step').style.display = 'flex';
+          document.getElementById('calendar-widget-step').style.display = 'none';
+          // Reset captcha
+          if (typeof grecaptcha !== "undefined") {
+            grecaptcha.reset();
+          }
         }, 250);
       }
 
