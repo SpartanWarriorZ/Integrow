@@ -2475,17 +2475,30 @@
       
       // Called by Google reCAPTCHA after success
       function onCaptchaSuccess() {
+        console.log('onCaptchaSuccess called, pendingPackageName:', pendingPackageName);
+        
         // Hide captcha, show Calendly
-        document.getElementById('calendar-captcha-step').style.display = 'none';
-        document.getElementById('calendar-widget-step').style.display = '';
+        var captchaStep = document.getElementById('calendar-captcha-step');
+        var widgetStep = document.getElementById('calendar-widget-step');
+        var iframe = document.getElementById('calendar-iframe');
+        var loader = document.getElementById('calendar-modal-loader');
+        
+        if (captchaStep) captchaStep.style.display = 'none';
+        if (widgetStep) widgetStep.style.display = 'block';
+        
+        console.log('Captcha step hidden, widget step shown');
 
         // Set iframe src
-        document.getElementById('calendar-iframe').src =
-          'https://calendly.com/leonidas-pyka/30min?hide_gdpr_banner=1&background_color=000000&text_color=FFFFFF&primary_color=FFD700&a1=' + encodeURIComponent(pendingPackageName);
+        if (iframe) {
+          iframe.src = 'https://calendly.com/leonidas-pyka/30min?hide_gdpr_banner=1&background_color=000000&text_color=FFFFFF&primary_color=FFD700&a1=' + encodeURIComponent(pendingPackageName);
+          console.log('Iframe src set');
+        }
 
         // Show loader
-        var loader = document.getElementById('calendar-modal-loader');
-        loader.classList.remove('hide');
+        if (loader) {
+          loader.classList.remove('hide');
+          console.log('Loader shown');
+        }
       }
       
       // Handle reCAPTCHA errors
