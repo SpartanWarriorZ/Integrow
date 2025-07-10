@@ -894,6 +894,36 @@
   margin: 0 auto;
   width: 100%;
 }
+
+/* Stärkere CSS-Overrides für Calendly Dark Mode */
+#calendar-iframe {
+  background: #000000 !important;
+  background-color: #000000 !important;
+}
+
+/* Calendly-spezifische Overrides */
+#calendar-iframe iframe {
+  background: #000000 !important;
+  background-color: #000000 !important;
+}
+
+/* CSS-Injection für Calendly Dark Mode */
+#calendar-iframe::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #000000 !important;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* JavaScript-basierte CSS-Injection */
+#calendar-iframe {
+  filter: brightness(0.1) contrast(1.2) !important;
+}
   </style>
   <script>
   function showCalendar(card, packageName) {
@@ -1033,7 +1063,7 @@
         <div id="calendar-modal-loader">
           <div class="loader-spinner"></div>
         </div>
-        <iframe id="calendar-iframe" src="" allowtransparency="true"></iframe>
+        <div id="calendly-inline-container"></div>
       </div>
     </div>
   </div>
@@ -1171,20 +1201,21 @@
     document.getElementById('calendar-captcha-step').style.display = 'none';
     document.getElementById('calendar-widget-step').style.display = '';
 
-    // Set iframe src
-    document.getElementById('calendar-iframe').src =
-      'https://calendly.com/leonidas-pyka/30min?background_color=000000&text_color=FFFFFF&primary_color=FFD700&hide_landing_page_details=1&hide_event_type_details=1&a1=' + encodeURIComponent(pendingPackageName);
-
-    // Direktes Styling für schwarzen Hintergrund
-    var iframe = document.getElementById('calendar-iframe');
-    if (iframe) {
-      iframe.style.background = '#000000';
-      iframe.style.backgroundColor = '#000000';
+    // Setze das Calendly Inline Widget
+    var calendlyContainer = document.getElementById('calendly-inline-container');
+    if (calendlyContainer) {
+      calendlyContainer.innerHTML = '';
+      Calendly.initInlineWidget({
+        url: 'https://calendly.com/leonidas-pyka/30min?background_color=000000&text_color=FFFFFF&primary_color=FFD700&hide_landing_page_details=1&hide_event_type_details=1&a1=' + encodeURIComponent(pendingPackageName),
+        parentElement: calendlyContainer,
+        prefill: {},
+        utm: {}
+      });
     }
-
-    // Show loader
-    var loader = document.getElementById('calendar-modal-loader');
-    loader.classList.remove('hide');
+    // Loader ausblenden, wenn Widget geladen
+    setTimeout(function() {
+      document.getElementById('calendar-modal-loader').classList.add('hide');
+    }, 1500);
   }
 
   // Hide loader when iframe is loaded
@@ -1224,5 +1255,6 @@
     if (e.target === this) closeModal();
   };
 </script>
+<script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
 </body>
 </html>

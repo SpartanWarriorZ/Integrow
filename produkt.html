@@ -2120,6 +2120,22 @@
         // Direktes Styling für schwarzen Hintergrund
         iframe.style.background = '#000000';
         iframe.style.backgroundColor = '#000000';
+
+        // Setze das Calendly Inline Widget
+        var calendlyContainer = document.getElementById('calendly-inline-container');
+        if (calendlyContainer) {
+          calendlyContainer.innerHTML = '';
+          Calendly.initInlineWidget({
+            url: 'https://calendly.com/leonidas-pyka/30min?background_color=000000&text_color=FFFFFF&primary_color=FFD700&hide_landing_page_details=1&hide_event_type_details=1&a1=' + encodeURIComponent(pendingPackageName),
+            parentElement: calendlyContainer,
+            prefill: {},
+            utm: {}
+          });
+        }
+        // Loader ausblenden, wenn Widget geladen
+        setTimeout(function() {
+          document.getElementById('calendar-modal-loader').classList.add('hide');
+        }, 1500);
       }
 
 
@@ -2201,6 +2217,7 @@
       href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&display=swap"
       rel="stylesheet"
     />
+    <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
   </head>
   <body>
     <header data-aos="fade-down">
@@ -2403,7 +2420,10 @@
           </div>
         <!-- Step 2: Calendly -->
         <div id="calendar-widget-step" style="display:none;">
-          <iframe id="calendar-iframe" src="" allowtransparency="true"></iframe>
+          <div id="calendar-modal-loader">
+            <div class="loader-spinner"></div>
+          </div>
+          <div id="calendly-inline-container"></div>
         </div>
       </div>
 </div>
