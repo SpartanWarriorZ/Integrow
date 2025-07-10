@@ -297,11 +297,41 @@
           margin-bottom: 18px;
         }
       }
+      @media (max-width: 768px) {
+        .nav-links {
+          flex-direction: row;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 10px;
+          padding-bottom: 10px;
+        }
+        .nav-links a {
+          font-size: 1.1rem;
+          padding: 5px 10px;
+        }
+        .logo-img {
+          max-width: 400px;
+        }
+        .referenz-title-modern {
+          font-size: 2rem;
+          margin-bottom: 18px;
+        }
+        .referenz-subtitle {
+          font-size: 1.25rem;
+          margin-bottom: 22px;
+        }
+      }
     </style>
   </head>
   <body>
     <header data-aos="fade-down">
-      <img src="DB5A56C2-6537-412D-94B5-4C1A72DA5F3C.PNG" alt="Integrow Logo" class="logo-img" />
+      <div class="logo-container">
+        <img
+          src="DB5A56C2-6537-412D-94B5-4C1A72DA5F3C.PNG"
+          alt="Integrow Logo"
+          class="logo-img"
+        />
+      </div>
       <div class="nav-links">
         <a href="index.html">Startseite</a>
         <a href="produkt.html">Produkt</a>
@@ -373,6 +403,76 @@
       }
 
       requestAnimationFrame(raf);
+    </script>
+    <script>
+      // Unterschiedliche Animationen für Desktop und Mobil, vorher alle AOS-Attribute bereinigen
+      function setAOSAnimations() {
+        document.querySelectorAll('.referenz-row-anim').forEach(function(el) {
+          el.removeAttribute('data-aos');
+          el.removeAttribute('data-aos-delay');
+          el.removeAttribute('data-aos-anchor-placement');
+          var img = el.querySelector('img');
+          var text = el.querySelector('div');
+          if (img) {
+            img.removeAttribute('data-aos');
+            img.removeAttribute('data-aos-delay');
+            img.removeAttribute('data-aos-anchor-placement');
+          }
+          if (text) {
+            text.removeAttribute('data-aos');
+            text.removeAttribute('data-aos-delay');
+            text.removeAttribute('data-aos-anchor-placement');
+          }
+        });
+        if (window.innerWidth <= 768) {
+          // Mobil: Referenzzeilen fade-up, gestaffelt, hoher Offset
+          document.querySelectorAll('.referenz-row-anim').forEach(function(el, i) {
+            el.setAttribute('data-aos', 'fade-up');
+            el.setAttribute('data-aos-delay', String(100 + i * 100));
+            el.setAttribute('data-aos-anchor-placement', 'top-bottom');
+          });
+          var title = document.querySelector('.referenz-title-modern');
+          if (title) title.removeAttribute('data-aos');
+          var subtitle = document.querySelector('.referenz-subtitle');
+          if (subtitle) subtitle.removeAttribute('data-aos');
+          if (window.AOS) {
+            AOS.init({
+              once: false,
+              offset: 500,
+              duration: 1000
+            });
+          }
+        } else {
+          // Desktop: Bilder von links, Texte von rechts
+          document.querySelectorAll('.referenz-row-anim').forEach(function(el, i) {
+            var img = el.querySelector('img');
+            var text = el.querySelector('div');
+            if (img) {
+              img.setAttribute('data-aos', 'fade-right');
+              img.setAttribute('data-aos-delay', String(100 + i * 100));
+              img.setAttribute('data-aos-anchor-placement', 'top-bottom');
+            }
+            if (text) {
+              text.setAttribute('data-aos', 'fade-left');
+              text.setAttribute('data-aos-delay', String(200 + i * 100));
+              text.setAttribute('data-aos-anchor-placement', 'top-bottom');
+            }
+          });
+          var title = document.querySelector('.referenz-title-modern');
+          if (title) title.removeAttribute('data-aos');
+          var subtitle = document.querySelector('.referenz-subtitle');
+          if (subtitle) subtitle.removeAttribute('data-aos');
+          if (window.AOS) {
+            AOS.init({
+              once: false,
+              offset: 120,
+              duration: 1000
+            });
+          }
+        }
+      }
+      window.addEventListener('DOMContentLoaded', setAOSAnimations);
+      window.addEventListener('resize', setAOSAnimations);
     </script>
   </body>
 </html> 
