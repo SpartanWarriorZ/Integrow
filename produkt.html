@@ -2445,9 +2445,12 @@
       document.addEventListener('DOMContentLoaded', function() {
         var iframe = document.getElementById('calendar-iframe');
         var loader = document.getElementById('calendar-modal-loader');
-        iframe.onload = function() {
-          loader.classList.add('hide');
-        };
+        if (iframe && loader) {
+          iframe.onload = function() {
+            console.log('Iframe loaded, hiding loader');
+            loader.classList.add('hide');
+          };
+        }
       });
       
       // Handle reCAPTCHA expiration
@@ -2492,6 +2495,22 @@
         if (iframe) {
           iframe.src = 'https://calendly.com/leonidas-pyka/30min?hide_gdpr_banner=1&background_color=000000&text_color=FFFFFF&primary_color=FFD700&a1=' + encodeURIComponent(pendingPackageName);
           console.log('Iframe src set');
+          
+          // Set onload event to hide loader
+          iframe.onload = function() {
+            console.log('Iframe loaded, hiding loader');
+            if (loader) {
+              loader.classList.add('hide');
+            }
+          };
+          
+          // Fallback: Hide loader after 5 seconds if onload doesn't work
+          setTimeout(function() {
+            if (loader && !loader.classList.contains('hide')) {
+              console.log('Fallback: Hiding loader after timeout');
+              loader.classList.add('hide');
+            }
+          }, 5000);
         }
 
         // Show loader
