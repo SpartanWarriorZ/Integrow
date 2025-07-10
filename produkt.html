@@ -2111,7 +2111,7 @@
         // Loader anzeigen
         loader.classList.remove('hide');
         iframe.src =
-          'https://calendly.com/leonidas-pyka/30min?hide_gdpr_banner=1&background_color=000000&text_color=FFFFFF&primary_color=FFD700&dark_mode=1&a1=' + encodeURIComponent(pendingPackageName);
+          'https://calendly.com/leonidas-pyka/30min?hide_gdpr_banner=1&background_color=000000&text_color=FFFFFF&primary_color=FFD700&hide_landing_page_details=1&hide_event_type_details=1&a1=' + encodeURIComponent(pendingPackageName);
 
         // Widget sofort bedienbar
         iframe.onload = null;
@@ -2501,7 +2501,7 @@
 
         // Set iframe src
         if (iframe) {
-          iframe.src = 'https://calendly.com/leonidas-pyka/30min?hide_gdpr_banner=1&background_color=000000&text_color=FFFFFF&primary_color=FFD700&dark_mode=1&a1=' + encodeURIComponent(pendingPackageName);
+          iframe.src = 'https://calendly.com/leonidas-pyka/30min?hide_gdpr_banner=1&background_color=000000&text_color=FFFFFF&primary_color=FFD700&hide_landing_page_details=1&hide_event_type_details=1&a1=' + encodeURIComponent(pendingPackageName);
           console.log('Iframe src set');
           
           // Direktes Styling für schwarzen Hintergrund
