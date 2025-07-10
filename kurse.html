@@ -149,7 +149,7 @@
       color: #ccc;
       margin-bottom: 25px;
       transition: all 0.4s cubic-bezier(0.4, 1.6, 0.6, 1);
-      position: relative;
+  position: relative;
       z-index: 2;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
@@ -166,7 +166,7 @@
       transition: all 0.4s cubic-bezier(0.4, 1.6, 0.6, 1);
       text-shadow: 0 2px 8px rgba(0,0,0,0.5);
       position: relative;
-      z-index: 2;
+  z-index: 2;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       will-change: transform, color, text-shadow;
@@ -214,7 +214,7 @@
     }
     .course-card:nth-child(2):hover::before {
       content: '';
-      position: absolute;
+  position: absolute;
       top: 0;
       left: -100%;
       width: 100%;
@@ -303,7 +303,7 @@
        }
        .course-card {
          padding: 30px 20px;
-         font-size: 1rem;
+      font-size: 1rem;
          margin: 0 auto;
          max-width: 100%;
          min-width: 0;
@@ -319,7 +319,7 @@
        .course-card p { font-size: 1rem; margin-bottom: 20px; }
        .course-card .price { font-size: 1.8rem; margin-bottom: 20px; }
        .course-card:not(:last-child) { margin-bottom: 10px; }
-     }
+    }
     .calendar-widget {
   margin-top: 20px;
   background: #222;
@@ -388,14 +388,15 @@
     margin-bottom: 6px;
   }
   .nav-links {
-    gap: 10px;
+    flex-direction: row;
     flex-wrap: wrap;
-    font-size: 1rem;
-    padding-bottom: 8px;
+    justify-content: center;
+    gap: 10px;
+    padding-bottom: 10px;
   }
   .nav-links a {
-    font-size: 1.05rem;
-    padding: 4px 8px;
+    font-size: 1.1rem;
+    padding: 5px 10px;
   }
   .courses-section {
     gap: 20px;
@@ -467,7 +468,7 @@
   background: rgba(30,30,40,0.85);
   border-radius: 28px;
   box-shadow: 0 8px 48px 0 rgba(0,0,0,0.35), 0 0 0 1.5px rgba(255,255,255,0.08), 0 1.5px 0 rgba(255,255,255,0.08) inset;
-  padding: 38px 0 36px 0; /* oben Platz für Label */
+  padding: 50px 0 36px 0; /* mehr Platz oben für Label */
   max-width: 410px;
   width: 95vw;
   margin: 0 auto;
@@ -503,10 +504,10 @@
 
 .modal-package-label {
   position: absolute;
-  top: -38px;
+  top: -50px;
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(40,40,60,0.97);
+  background: #232323;
   color: #fff;
   font-size: 1.35rem;
   font-weight: 900;
@@ -527,7 +528,7 @@
   .modal-package-label {
     font-size: 1.08rem;
     padding: 10px 18px 7px 18px;
-    top: -22px;
+    top: -30px;
     border-radius: 10px 10px 16px 16px;
   }
 }
@@ -632,14 +633,28 @@
   #calendar-modal {
     max-width: 99vw;
     border-radius: 14px;
-    padding: 28px 0 14px 0;
+    padding: 40px 0 14px 0;
     min-height: 0;
   }
   .modal-package-label {
     border-radius: 10px 10px 16px 16px;
     font-size: 1.05rem;
     padding: 10px 16px 7px 16px;
-    top: -22px;
+    top: -30px;
+  }
+  
+  /* Nur für das letzte Paket (Masterclass) - größeres Modal */
+  #calendar-modal.masterclass {
+    padding: 60px 0 20px 0;
+  }
+  
+  #calendar-modal.masterclass .modal-package-label {
+    top: -40px;
+  }
+  
+  /* Für das erste Paket (Webflow Basics) - Paketname tiefer */
+  #calendar-modal.webflow-basics .modal-package-label {
+    top: -20px;
   }
   .modal-title {
     font-size: 1rem;
@@ -692,41 +707,44 @@
     box-shadow: 0 20px 60px rgba(0,0,0,0.6);
   }
 }
-/* Subtle glow for Webflow Basics */
+/* Rahmen-Effekte je nach Preishöhe mit sichtbaren zusätzlichen Rahmen */
+/* Webflow Basics (299€) - Wenige Rahmen */
 #calendar-modal.webflow-basics {
-  border-color: #FFD700;
-  box-shadow: 0 0 18px 2px #FFD70033, 0 0 32px #000a;
-  /* Soft fade-in border */
-  animation: modal-fade-in 0.7s;
+  border: 2px solid #FFD700;
+  box-shadow: 
+    0 8px 48px 0 rgba(0,0,0,0.35),
+    0 0 0 1px rgba(255,215,0,0.4),
+    0 0 0 4px rgba(255,215,0,0.2),
+    0 0 0 8px rgba(255,215,0,0.1);
 }
-@keyframes modal-fade-in {
-  0% { box-shadow: 0 0 0 0 #FFD70000, 0 0 0 #0000; }
-  100% { box-shadow: 0 0 18px 2px #FFD70033, 0 0 32px #000a; }
-}
-/* Stronger glow for Professionelles Webdesign */
+
+/* Professionelles Webdesign (499€) - Mehr Rahmen */
 #calendar-modal.professionelles-webdesign {
-  border-color: #FFD700;
-  box-shadow: 0 0 36px 8px #FFD70077, 0 0 60px #FFD70022, 0 0 40px #000a;
-  animation: modal-glow-pulse 1.2s ease-in-out;
+  border: 2px solid #FFD700;
+  box-shadow: 
+    0 8px 48px 0 rgba(0,0,0,0.35),
+    0 0 0 1px rgba(255,215,0,0.4),
+    0 0 0 4px rgba(255,215,0,0.2),
+    0 0 0 8px rgba(255,215,0,0.1),
+    0 0 0 12px rgba(255,215,0,0.05),
+    0 0 0 16px rgba(255,215,0,0.03),
+    0 0 0 20px rgba(255,215,0,0.02);
 }
-@keyframes modal-glow-pulse {
-  0% { box-shadow: 0 0 10px 2px #FFD70033, 0 0 20px #FFD70011, 0 0 20px #000a; }
-  50% { box-shadow: 0 0 36px 8px #FFD70077, 0 0 60px #FFD70022, 0 0 40px #000a; }
-  100% { box-shadow: 0 0 10px 2px #FFD70033, 0 0 20px #FFD70011, 0 0 20px #000a; }
-}
-/* Special animation for Masterclass: animated border only, nothing inside the widget */
+
+/* Masterclass (999€) - Viele Rahmen */
 #calendar-modal.masterclass {
-  border: 2.5px solid #FFD700;
-  background: #181818;
-  box-shadow: 0 0 60px 16px #FFD700cc, 0 0 120px 24px #FFD70044, 0 0 40px #000a;
-  position: relative;
-  overflow: visible;
-  animation: masterclass-border-glow 2.2s ease-in-out infinite;
-}
-@keyframes masterclass-border-glow {
-  0%   { box-shadow: 0 0 36px 8px #FFD70077, 0 0 60px #FFD70022, 0 0 40px #000a; }
-  50%  { box-shadow: 0 0 100px 32px #FFD700cc, 0 0 180px 64px #FFD70044, 0 0 60px #FFD70022, 0 0 40px #000a; }
-  100% { box-shadow: 0 0 36px 8px #FFD70077, 0 0 60px #FFD70022, 0 0 40px #000a; }
+  border: 2px solid #FFD700;
+  box-shadow: 
+    0 8px 48px 0 rgba(0,0,0,0.35),
+    0 0 0 1px rgba(255,215,0,0.4),
+    0 0 0 4px rgba(255,215,0,0.2),
+    0 0 0 8px rgba(255,215,0,0.1),
+    0 0 0 12px rgba(255,215,0,0.05),
+    0 0 0 16px rgba(255,215,0,0.03),
+    0 0 0 20px rgba(255,215,0,0.02),
+    0 0 0 24px rgba(255,215,0,0.01),
+    0 0 0 28px rgba(255,215,0,0.008),
+    0 0 0 32px rgba(255,215,0,0.005);
 }
 /* Remove any ::before, ::after, or .masterclass-beam overlays for masterclass */
 #calendar-modal.masterclass::before,
@@ -974,10 +992,10 @@
         <div style="display:flex; justify-content:center;">
           <div class="recaptcha-anchor">
             <div class="recaptcha-frame">
-              <div class="g-recaptcha"
-                data-sitekey="6LdTf3YrAAAAAEOkh8vLYzvd-qH9qwvdNMTpNdzc"
-                data-callback="onCaptchaSuccess"
-                data-theme="dark">
+          <div class="g-recaptcha"
+            data-sitekey="6LdTf3YrAAAAAEOkh8vLYzvd-qH9qwvdNMTpNdzc"
+            data-callback="onCaptchaSuccess"
+            data-theme="dark">
               </div>
             </div>
           </div>
