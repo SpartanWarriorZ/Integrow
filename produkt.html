@@ -1641,19 +1641,19 @@
       }
       #examples-modal.closing > div {
         animation: modal-pop-out 0.2s cubic-bezier(.4,1.6,.6,1) forwards;
-      }
-      @keyframes modal-pop-in {
-        0% {
-          opacity: 0;
+}
+@keyframes modal-pop-in {
+  0% {
+    opacity: 0;
           transform: scale(0.8) translateY(60px) rotateX(10deg);
           box-shadow: 0 0 0 rgba(255,215,0,0);
-        }
-        60% {
-          opacity: 1;
+  }
+  60% {
+    opacity: 1;
           transform: scale(1.05) translateY(-12px) rotateX(-2deg);
           box-shadow: 0 0 40px rgba(255,215,0,0.3);
-        }
-        100% {
+  }
+  100% {
           opacity: 1;
           transform: scale(1) translateY(0) rotateX(0deg);
           box-shadow: 0 20px 60px rgba(0,0,0,0.6);
@@ -1663,7 +1663,7 @@
       @keyframes modal-pop-out {
         0% {
     opacity: 1;
-          transform: scale(1) translateY(0);
+    transform: scale(1) translateY(0);
   }
   100% {
           opacity: 0;
@@ -2128,7 +2128,7 @@
           btn.onclick = function() {
             modal.style.display = 'flex';
             // Sofort die active Klasse hinzufügen für bessere Fade-In Animation
-            modal.classList.add('active');
+              modal.classList.add('active');
             document.body.classList.add('modal-open');
           };
           closeBtn.onclick = function() {
@@ -2395,7 +2395,7 @@
           <iframe id="calendar-iframe" src="" allowtransparency="true"></iframe>
         </div>
       </div>
-    </div>
+</div>
     <!-- Google reCAPTCHA -->
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script>
@@ -2463,9 +2463,9 @@
           setTimeout(() => {
             container.innerHTML = '<div id="recaptcha-container"></div>';
             if (typeof grecaptcha !== "undefined") {
-              grecaptcha.render('recaptcha-container', {
-                sitekey: '6LdTf3YrAAAAAEOkh8vLYzvd-qH9qwvdNMTpNdzc',
-                callback: onCaptchaSuccess,
+            grecaptcha.render('recaptcha-container', {
+              sitekey: '6LdTf3YrAAAAAEOkh8vLYzvd-qH9qwvdNMTpNdzc',
+              callback: onCaptchaSuccess,
                 'expired-callback': onCaptchaExpired,
                 'error-callback': onCaptchaError,
                 theme: 'dark',
@@ -2475,11 +2475,11 @@
           }, 2000);
         }
       }
-      
+
       // Called by Google reCAPTCHA after success
       function onCaptchaSuccess() {
         console.log('onCaptchaSuccess called, pendingPackageName:', pendingPackageName);
-        
+
         // Hide captcha, show Calendly
         var captchaStep = document.getElementById('calendar-captcha-step');
         var widgetStep = document.getElementById('calendar-widget-step');
@@ -2562,7 +2562,7 @@
           btn.onclick = function() {
             modal.style.display = 'flex';
             // Sofort die active Klasse hinzufügen für bessere Fade-In Animation
-            modal.classList.add('active');
+              modal.classList.add('active');
             document.body.classList.add('modal-open');
           };
           closeBtn.onclick = function() {
