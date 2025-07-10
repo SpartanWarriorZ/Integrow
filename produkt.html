@@ -1983,8 +1983,15 @@
           0 0 0 32px rgba(255,215,0,0.005);
       }
 
-      #calendar-iframe { background: #000 !important; }
-      #calendar-widget-step { background: #000 !important; border-radius: 18px; }
+      #calendar-iframe { 
+        background: #000000 !important; 
+        background-color: #000000 !important; 
+      }
+      #calendar-widget-step { 
+        background: #000000 !important; 
+        background-color: #000000 !important; 
+        border-radius: 18px; 
+      }
     </style>
     <script>
       function showTab(tab, btn) {
@@ -2109,6 +2116,10 @@
         // Widget sofort bedienbar
         iframe.onload = null;
         iframe.style.pointerEvents = '';
+        
+        // Direktes Styling für schwarzen Hintergrund
+        iframe.style.background = '#000000';
+        iframe.style.backgroundColor = '#000000';
       }
 
 
@@ -2492,6 +2503,10 @@
         if (iframe) {
           iframe.src = 'https://calendly.com/leonidas-pyka/30min?hide_gdpr_banner=1&background_color=000000&text_color=FFFFFF&primary_color=FFD700&a1=' + encodeURIComponent(pendingPackageName);
           console.log('Iframe src set');
+          
+          // Direktes Styling für schwarzen Hintergrund
+          iframe.style.background = '#000000';
+          iframe.style.backgroundColor = '#000000';
         }
       }
       
