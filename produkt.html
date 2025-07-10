@@ -2471,6 +2471,26 @@
         }
       }
       
+      // Google reCAPTCHA Success Callback
+      function onCaptchaSuccess() {
+        console.log('reCAPTCHA successful, loading Calendly...');
+        // Hide captcha, show Calendly
+        document.getElementById('calendar-captcha-step').style.display = 'none';
+        document.getElementById('calendar-widget-step').style.display = '';
+
+        // Set iframe src
+        var iframe = document.getElementById('calendar-iframe');
+        var loader = document.getElementById('calendar-modal-loader');
+        // Loader anzeigen
+        loader.classList.remove('hide');
+        iframe.src =
+          'https://calendly.com/leonidas-pyka/30min?hide_gdpr_banner=1&background_color=000000&text_color=FFFFFF&primary_color=FFD700&a1=' + encodeURIComponent(pendingPackageName);
+
+        // Widget sofort bedienbar
+        iframe.onload = null;
+        iframe.style.pointerEvents = '';
+      }
+      
       // Handle reCAPTCHA errors
       function onCaptchaError() {
         console.error('reCAPTCHA error occurred');
