@@ -19,6 +19,7 @@
         background: linear-gradient(to bottom right, #0a0a0a, #1c1c1c);
       }
       header {
+        position: relative;
         padding: 60px 40px 40px;
         background: linear-gradient(to right, #1c1c1c, #000);
         text-align: center;
@@ -26,6 +27,25 @@
         box-shadow: 0 0 40px rgba(192, 192, 192, 0.1);
         user-select: none;
         -webkit-user-select: none;
+        z-index: 1;
+        overflow: hidden;
+      }
+      .parallax-bg {
+        position: absolute;
+        left: 0; top: 0; right: 0; bottom: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('Integrow-Background.png');
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        z-index: 0;
+        pointer-events: none;
+        transition: filter 0.3s;
+      }
+      header > * {
+        position: relative;
+        z-index: 3;
       }
       .logo-container {
         display: flex;
@@ -360,6 +380,209 @@
       .feature:focus-within .feature-text p {
         transform: translateY(-28px);
       }
+      .leistungen-cards {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: stretch;
+        gap: 72px;
+        margin: 56px 0 0 0;
+        row-gap: 0;
+        flex-wrap: nowrap;
+      }
+      .flipcard-modern {
+        width: 270px;
+        height: 350px;
+        perspective: 1200px;
+        border-radius: 22px;
+        background: none;
+        box-shadow: none;
+        margin-bottom: 0;
+        position: relative;
+        transition: box-shadow 0.3s;
+      }
+      .flipcard-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transition: transform 0.7s cubic-bezier(.4,1.6,.6,1);
+        transform-style: preserve-3d;
+        border-radius: 22px;
+        transform-origin: center center;
+      }
+      .flipcard-modern:hover .flipcard-inner,
+      .flipcard-modern:focus-within .flipcard-inner {
+        transform: rotateY(180deg);
+      }
+      .flipcard-front, .flipcard-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        border-radius: 22px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 36px 18px 24px 18px;
+        background: rgba(24, 24, 28, 0.92);
+        box-shadow: 0 0 24px 2px rgba(255,255,255,0.07);
+        border: none;
+        left: 0;
+        top: 0;
+      }
+      .flipcard-front {
+        background: rgba(24, 24, 28, 0.92);
+        backdrop-filter: blur(2.5px);
+        z-index: 2;
+        box-shadow: 0 0 32px 0 rgba(255,255,255,0.10);
+      }
+      .flipcard-back {
+        background: rgba(32, 32, 38, 0.97);
+        backdrop-filter: blur(3px);
+        box-shadow: 0 0 32px 0 rgba(255,255,255,0.13);
+        transform: rotateY(180deg) translateX(35px);
+        z-index: 3;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+      }
+      .card-icon {
+        font-size: 2.3rem;
+        margin-bottom: 18px;
+        filter: drop-shadow(0 0 8px #fff2);
+        color: #e0e0e0;
+      }
+      .card-title {
+        font-size: 1.18rem;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 10px;
+        text-align: center;
+        letter-spacing: 0.2px;
+      }
+      .card-desc {
+        color: #bfc0c2;
+        font-size: 1.01rem;
+        text-align: center;
+        margin-bottom: 12px;
+      }
+      .card-bullets-modern {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        margin-top: 18px;
+      }
+      .card-bullets-modern li {
+        opacity: 0;
+        transform: translateY(24px);
+        font-size: 1.01rem;
+        color: #fff;
+        margin-bottom: 16px;
+        text-align: left;
+        animation: cardBulletFadeIn 0.5s forwards;
+        position: relative;
+        padding-left: 26px;
+        font-weight: 400;
+        letter-spacing: 0.1px;
+      }
+      .flipcard-modern:hover .flipcard-back .card-bullets-modern li,
+      .flipcard-modern:focus-within .flipcard-back .card-bullets-modern li {
+        animation-play-state: running;
+      }
+      .flipcard-modern:hover .flipcard-back .card-bullets-modern li:nth-child(1),
+      .flipcard-modern:focus-within .flipcard-back .card-bullets-modern li:nth-child(1) {
+        animation-delay: 0.12s;
+      }
+      .flipcard-modern:hover .flipcard-back .card-bullets-modern li:nth-child(2),
+      .flipcard-modern:focus-within .flipcard-back .card-bullets-modern li:nth-child(2) {
+        animation-delay: 0.32s;
+      }
+      .flipcard-modern:hover .flipcard-back .card-bullets-modern li:nth-child(3),
+      .flipcard-modern:focus-within .flipcard-back .card-bullets-modern li:nth-child(3) {
+        animation-delay: 0.52s;
+      }
+      .card-bullets-modern li::before {
+        content: '';
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #fff;
+        position: absolute;
+        left: 0;
+        top: 7px;
+        opacity: 0.7;
+      }
+      @keyframes cardBulletFadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(24px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @media (max-width: 900px) {
+        .leistungen-cards {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 60px 60px;
+          justify-items: center;
+          align-items: stretch;
+          margin: 40px 0 0 0;
+        }
+        .flipcard-modern {
+          width: 92vw;
+          max-width: 120px;
+          margin-bottom: 30px;
+        }
+      }
+      @media (max-width: 600px) {
+        .leistungen-cards {
+          box-sizing: border-box;
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 0;
+          margin: 40px 0 0 0;
+          padding: 0;
+          justify-items: stretch;
+        }
+        .flipcard-modern {
+          width: 100%;
+          max-width: unset;
+          max-height: 200px;
+          min-width: 0;
+          aspect-ratio: 7 / 1;
+          margin-bottom: 40px;
+          /* Kompakteres Padding für Mobil */
+          margin-left: 0;
+          margin-right: 0;
+        }
+        .flipcard-front, .flipcard-back {
+          padding: 8px 10px 8px 10px;
+        }
+        .flipcard-back {
+          transform: rotateY(180deg) translateX(18px);
+        }
+      }
+      /* Animation für Kartenausteil-Effekt */
+      .leistungen-cards .flipcard-modern {
+        opacity: 0;
+        transform: translateX(300px);
+        transition: opacity 0.4s cubic-bezier(.4,1.6,.6,1), transform 0.4s cubic-bezier(.4,1.6,.6,1);
+      }
+      .leistungen-cards.cards-in-view .flipcard-modern {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      .leistungen-cards.cards-in-view .flipcard-modern:nth-child(1) { transition-delay: 0.08s; }
+      .leistungen-cards.cards-in-view .flipcard-modern:nth-child(2) { transition-delay: 0.22s; }
+      .leistungen-cards.cards-in-view .flipcard-modern:nth-child(3) { transition-delay: 0.36s; }
+      .leistungen-cards.cards-in-view .flipcard-modern:nth-child(4) { transition-delay: 0.50s; }
     </style>
     <link
       href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&display=swap"
@@ -368,12 +591,9 @@
   </head>
   <body>
     <header data-aos="fade-down">
+      <div class="parallax-bg"></div>
       <div class="logo-container">
-        <img
-          src="DB5A56C2-6537-412D-94B5-4C1A72DA5F3C.PNG"
-          alt="Integrow Logo"
-          class="logo-img"
-        />
+        <img src="DB5A56C2-6537-412D-94B5-4C1A72DA5F3C.PNG" alt="Integrow Logo" class="logo-img" />
       </div>
       <div class="nav-links">
         <a href="index.html">Startseite</a>
@@ -385,63 +605,60 @@
     </header>
 
     <div class="section" data-aos="fade-up">
-      <h2>Unsere Mission</h2>
-      <div class="feature" data-aos="fade-up">
-        <img src="Photo 1.jpeg" alt="Markenaufbau" />
+      <h2>Webdesign, das Eindruck hinterlässt</h2>
+      <div class="feature" data-aos="fade-up" style="margin-top: 100px;">
+        <img src="Photo 1.jpeg" alt="Individuelle Websites" />
         <div class="feature-text">
-          <h3>Marke mit Substanz & Wachstumspotenzial</h3>
+          <h3>Maßgeschneiderte Online-Auftritte, die begeistern</h3>
           <p>
-            Wir machen deine Marke sichtbar, begehrenswert und bereit für mehr
-            Umsatz.
+            Ihre Website ist mehr als nur eine Visitenkarte – sie ist das Herzstück Ihrer digitalen Strategie und entscheidet über den ersten Eindruck bei Ihren Kunden.
           </p>
           <ul class="mission-bullets">
-            <li>Individuelles Branding für mehr Wiedererkennung</li>
-            <li>Strategische Positionierung am Markt</li>
-            <li>Starke Markenbotschaft, die verkauft</li>
+            <li>Websites, die Nutzer fesseln und Suchmaschinen überzeugen</li>
+            <li>Modernes, responsives Design für alle Endgeräte</li>
+            <li>Gezielte Optimierung für mehr Anfragen und Umsatz</li>
           </ul>
         </div>
       </div>
       <div class="feature" data-aos="fade-up">
-        <img src="Photo 2.jpeg" alt="Sichtbarkeit" />
+        <img src="Photo 2.jpeg" alt="KI & SEO" />
         <div class="feature-text">
-          <h3>Gezielt mehr Sichtbarkeit & Reichweite</h3>
+          <h3>Innovative Weblösungen mit KI-Power</h3>
           <p>
-            Wir bringen dich an die Spitze bei Google und direkt zu deinen
-            Wunschkunden.
+            Wir setzen auf künstliche Intelligenz und datenbasierte Methoden, um Ihre Inhalte und Ihr Ranking nachhaltig zu verbessern.
           </p>
           <ul class="mission-bullets">
-            <li>SEO-Optimierung für Top-Rankings</li>
-            <li>Gezielte Ansprache deiner Zielgruppe</li>
-            <li>Mehr Reichweite, mehr Anfragen</li>
+            <li>Automatisierte Content-Optimierung mit KI</li>
+            <li>Effektive SEO-Strategien für Top-Platzierungen</li>
+            <li>Dauerhafte Sichtbarkeit für Ihr Unternehmen</li>
           </ul>
         </div>
       </div>
       <div class="feature" data-aos="fade-up">
-        <img src="Photo 3.jpeg" alt="Tools" />
+        <img src="Photo 3.jpeg" alt="Design & Technologie" />
         <div class="feature-text">
-          <h3>Skalieren durch smarte Automatisierung</h3>
+          <h3>Kreativität trifft Hightech</h3>
           <p>
-            Mehr Kunden, weniger Aufwand: Wir automatisieren dein Marketing und
-            Vertrieb.
+            Wir verbinden frisches Design mit technischer Raffinesse und sorgen so für einen starken, unverwechselbaren Webauftritt.
           </p>
           <ul class="mission-bullets">
-            <li>Automatisierte Leadgenerierung</li>
-            <li>Effiziente Marketing-Prozesse</li>
-            <li>Mehr Zeit für dein Kerngeschäft</li>
+            <li>Individuelle Gestaltung mit Wiedererkennungswert</li>
+            <li>Technische Umsetzung auf dem neuesten Stand</li>
+            <li>Innovative Tools für messbare Ergebnisse</li>
           </ul>
         </div>
       </div>
       <div class="feature" data-aos="fade-up">
-        <img src="Photo 4.jpeg" alt="Technik und Branding" />
+        <img src="Photo 4.jpeg" alt="Beratung & Strategie" />
         <div class="feature-text">
-          <h3>Technik trifft Branding</h3>
+          <h3>Gemeinsam zur digitalen Strategie</h3>
           <p>
-            Modernste Technik, die verkauft – und deine Marke stark inszeniert.
+            Wir nehmen uns Zeit, Ihre Ziele und Zielgruppe zu verstehen, und begleiten Sie als zuverlässiger Partner auf dem Weg zu nachhaltigem Wachstum.
           </p>
           <ul class="mission-bullets">
-            <li>Innovative Web-Technologien</li>
-            <li>Starkes Design für mehr Vertrauen</li>
-            <li>Optimiert für Conversion & Wachstum</li>
+            <li>Intensive Beratung und Strategieentwicklung</li>
+            <li>Langfristige Betreuung und Support</li>
+            <li>Individuelle Lösungen für Ihr Erfolg</li>
           </ul>
         </div>
       </div>
@@ -449,21 +666,71 @@
 
     <div class="section" data-aos="fade-up">
       <h2>Unsere Leistungen</h2>
-      <div class="leistungen-list">
-        <ul>
-          <li>
-            Individuell gestaltete Websites — exakt auf deine Zielgruppe
-            zugeschnitten
-          </li>
-          <li>
-            Integration fortschrittlicher KI-Chatbots für bessere
-            Nutzererlebnisse
-          </li>
-          <li>
-            Automatisierte Vertriebs- & Marketingprozesse für mehr Effizienz
-          </li>
-          <li>Umfassende technische Beratung & kontinuierliche Betreuung</li>
-        </ul>
+      <div class="leistungen-cards">
+        <div class="flipcard-modern">
+          <div class="flipcard-inner">
+            <div class="flipcard-front">
+              <span class="card-icon">💻</span>
+              <div class="card-title">Webentwicklung</div>
+              <div class="card-desc">Individuelle Lösungen für Ihren digitalen Auftritt</div>
+            </div>
+            <div class="flipcard-back">
+              <ul class="card-bullets-modern">
+                <li>Maßgeschneiderte WordPress-Projekte</li>
+                <li>Responsives Design für alle Geräte</li>
+                <li>Optimiert für Nutzer und Suchmaschinen</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="flipcard-modern">
+          <div class="flipcard-inner">
+            <div class="flipcard-front">
+              <span class="card-icon">🤖</span>
+              <div class="card-title">KI & Sichtbarkeit</div>
+              <div class="card-desc">Intelligente Tools für nachhaltigen Erfolg</div>
+            </div>
+            <div class="flipcard-back">
+              <ul class="card-bullets-modern">
+                <li>Automatisierte Content-Optimierung</li>
+                <li>SEO-Strategien mit KI-Unterstützung</li>
+                <li>Langfristige Reichweite</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="flipcard-modern">
+          <div class="flipcard-inner">
+            <div class="flipcard-front">
+              <span class="card-icon">🎨</span>
+              <div class="card-title">Design & Technik</div>
+              <div class="card-desc">Kreativität und Technologie vereint</div>
+            </div>
+            <div class="flipcard-back">
+              <ul class="card-bullets-modern">
+                <li>Individuelles, modernes Webdesign</li>
+                <li>Technische Umsetzung auf Top-Niveau</li>
+                <li>Innovative Lösungen für Ihr Business</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="flipcard-modern">
+          <div class="flipcard-inner">
+            <div class="flipcard-front">
+              <span class="card-icon">🤝</span>
+              <div class="card-title">Beratung & Strategie</div>
+              <div class="card-desc">Ihr Partner für nachhaltige Entwicklung</div>
+            </div>
+            <div class="flipcard-back">
+              <ul class="card-bullets-modern">
+                <li>Persönliche Beratung & Strategiegespräche</li>
+                <li>Langfristige Begleitung</li>
+                <li>Individuelle Konzepte für Ihr Wachstum</li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -482,9 +749,13 @@
 
     <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
     <script>
-      AOS.init({
-        once: true,
-        duration: 1000,
+      document.addEventListener('DOMContentLoaded', function() {
+        var aosOffset = window.innerWidth > 900 ? 250 : 120;
+        AOS.init({
+          once: true,
+          duration: 1000,
+          offset: aosOffset
+        });
       });
     </script>
     <!-- Lenis Library einbinden (vor </body>) -->
@@ -524,5 +795,39 @@
     <button id="back-to-top" onclick="scrollToTop()" title="Nach oben">
       ↑
     </button>
+    <!-- Parallax-Effekt für Header-Background -->
+    <script>
+      window.addEventListener('DOMContentLoaded', function() {
+        function parallaxHeader() {
+          var scrolled = window.scrollY;
+          var parallax = document.querySelector('.parallax-bg');
+          var header = document.querySelector('header');
+          if (parallax && header) {
+            var maxOffset = header.offsetHeight * 0.6;
+            var parallaxOffset = Math.min(scrolled * 0.25, maxOffset);
+            parallax.style.transform = 'translateY(' + parallaxOffset + 'px)';
+          }
+        }
+        window.addEventListener('scroll', parallaxHeader);
+        parallaxHeader();
+      });
+    </script>
+    <!-- Intersection Observer für Kartenausteil-Animation -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var leistungenSection = document.querySelector('.leistungen-cards');
+        if (leistungenSection) {
+          var observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+              if (entry.isIntersecting) {
+                leistungenSection.classList.add('cards-in-view');
+                observer.disconnect();
+              }
+            });
+          }, { threshold: 0.85 });
+          observer.observe(leistungenSection);
+        }
+      });
+    </script>
   </body>
 </html>
