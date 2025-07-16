@@ -1539,721 +1539,734 @@
           top: 12px;
           right: 12px;
         }
-}
-
-/* --- Beispielseiten-Button: schöner Hover-Effekt & Animation --- */
-#show-examples-btn {
-  background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
-  color: #ffd700;
-  font-size: 1.2rem;
-  padding: 18px 40px;
-  border-radius: 16px;
-  border: 2px solid rgba(255, 215, 0, 0.3);
-  cursor: pointer;
-  font-weight: 600;
-  box-shadow: 
-    0 6px 25px rgba(255, 215, 0, 0.15),
-    0 0 0 1px rgba(255, 215, 0, 0.1),
-    inset 0 1px 0 rgba(255, 215, 0, 0.1);
-  transition: all 0.3s cubic-bezier(0.4, 1.6, 0.6, 1);
-  position: relative;
-  overflow: hidden;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  outline: none;
-  will-change: transform, box-shadow;
-  backface-visibility: hidden;
-  transform: translateZ(0);
-  /* Desktop-Optimierungen für bessere Schärfe */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  /* Zusätzliche Schärfe-Optimierungen */
-  text-rendering: optimizeLegibility;
-  font-feature-settings: "kern" 1;
-}
-
-#show-examples-btn::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(90deg, transparent 0%, rgba(255, 215, 0, 0.1) 50%, transparent 100%);
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  pointer-events: none;
-  transform: translateX(-100%);
-}
-
-#show-examples-btn::after {
-  content: "";
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(255, 215, 0, 0.15) 0%, transparent 70%);
-  opacity: 0;
-  transform: scale(0);
-  transition: all 0.6s cubic-bezier(0.4, 1.6, 0.6, 1);
-  pointer-events: none;
-}
-
-#show-examples-btn:hover,
-#show-examples-btn:focus {
-  background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
-  color: #ffd700;
-  border-color: rgba(255, 215, 0, 0.5);
-  box-shadow: 
-    0 8px 25px rgba(255, 215, 0, 0.2),
-    0 0 0 2px rgba(255, 215, 0, 0.3),
-    inset 0 1px 0 rgba(255, 215, 0, 0.2);
-  transform: translateY(-2px) scale(1.01);
-  text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
-}
-
-#show-examples-btn:hover::before,
-#show-examples-btn:focus::before {
-  opacity: 0;
-}
-
-#show-examples-btn:hover::after,
-#show-examples-btn:focus::after {
-  opacity: 0.2;
-  transform: scale(1);
-}
-
-#show-examples-btn:focus-visible {
-  outline: 2px solid rgba(255, 215, 0, 0.5);
-  outline-offset: 3px;
-}
-
-
-
-/* --- Modal schöner Rahmen & Animation --- */
-#examples-modal {
-  /* ...existing code... */
-  border: none;
-  opacity: 0;
-  pointer-events: none;
-        transition: opacity 0.2s cubic-bezier(.4,1.6,.6,1);
-}
-#examples-modal.active,
-#examples-modal[style*="display: flex"] {
-  opacity: 1;
-  pointer-events: auto;
-        transition: opacity 0.2s cubic-bezier(.4,1.6,.6,1);
       }
-      #examples-modal.closing {
+
+      /* --- Beispielseiten-Button: schöner Hover-Effekt & Animation --- */
+      #show-examples-btn {
+        background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
+        color: #ffd700;
+        font-size: 1.2rem;
+        padding: 18px 40px;
+        border-radius: 16px;
+        border: 2px solid rgba(255, 215, 0, 0.3);
+        cursor: pointer;
+        font-weight: 600;
+        box-shadow: 
+          0 6px 25px rgba(255, 215, 0, 0.15),
+          0 0 0 1px rgba(255, 215, 0, 0.1),
+          inset 0 1px 0 rgba(255, 215, 0, 0.1);
+        transition: all 0.3s cubic-bezier(0.4, 1.6, 0.6, 1);
+        position: relative;
+        overflow: hidden;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        outline: none;
+        will-change: transform, box-shadow;
+        backface-visibility: hidden;
+        transform: translateZ(0);
+        /* Desktop-Optimierungen für bessere Schärfe */
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        /* Zusätzliche Schärfe-Optimierungen */
+        text-rendering: optimizeLegibility;
+        font-feature-settings: "kern" 1;
+      }
+
+      #show-examples-btn::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(90deg, transparent 0%, rgba(255, 215, 0, 0.1) 50%, transparent 100%);
+        opacity: 0;
+        transition: opacity 0.4s ease;
+        pointer-events: none;
+        transform: translateX(-100%);
+      }
+
+      #show-examples-btn::after {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255, 215, 0, 0.15) 0%, transparent 70%);
+        opacity: 0;
+        transform: scale(0);
+        transition: all 0.6s cubic-bezier(0.4, 1.6, 0.6, 1);
+        pointer-events: none;
+      }
+
+      #show-examples-btn:hover,
+      #show-examples-btn:focus {
+        background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+        color: #ffd700;
+        border-color: rgba(255, 215, 0, 0.5);
+        box-shadow: 
+          0 8px 25px rgba(255, 215, 0, 0.2),
+          0 0 0 2px rgba(255, 215, 0, 0.3),
+          inset 0 1px 0 rgba(255, 215, 0, 0.2);
+        transform: translateY(-2px) scale(1.01);
+        text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+      }
+
+      #show-examples-btn:hover::before,
+      #show-examples-btn:focus::before {
+        opacity: 0;
+      }
+
+      #show-examples-btn:hover::after,
+      #show-examples-btn:focus::after {
+        opacity: 0.2;
+        transform: scale(1);
+      }
+
+      #show-examples-btn:focus-visible {
+        outline: 2px solid rgba(255, 215, 0, 0.5);
+        outline-offset: 3px;
+      }
+
+
+
+      /* --- Modal schöner Rahmen & Animation --- */
+      #examples-modal {
+        /* ...existing code... */
+        border: none;
         opacity: 0;
         pointer-events: none;
-}
-#examples-modal > div {
-  background: #232323;
-  padding: 32px 18px 24px 18px;
-  border-radius: 18px;
-  max-width: 95vw;
-  width: 420px;
-  box-shadow: 0 8px 40px #000a;
-  position: relative;
-  border: 2.5px solid #ffd700;
-  animation: modal-pop-in 0.45s cubic-bezier(.4,1.6,.6,1);
-        transition: opacity 0.2s, transform 0.2s;
+              transition: opacity 0.2s cubic-bezier(.4,1.6,.6,1);
       }
-      #examples-modal.closing > div {
-        animation: modal-pop-out 0.2s cubic-bezier(.4,1.6,.6,1) forwards;
-}
-@keyframes modal-pop-in {
-  0% {
-    opacity: 0;
-          transform: scale(0.8) translateY(60px) rotateX(10deg);
-          box-shadow: 0 0 0 rgba(255,215,0,0);
-  }
-  60% {
-    opacity: 1;
-          transform: scale(1.05) translateY(-12px) rotateX(-2deg);
-          box-shadow: 0 0 40px rgba(255,215,0,0.3);
-  }
-  100% {
-          opacity: 1;
-          transform: scale(1) translateY(0) rotateX(0deg);
-          box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-        }
-      }
-      
-      @keyframes modal-pop-out {
-        0% {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-  100% {
-          opacity: 0;
-          transform: scale(0.92) translateY(40px);
-  }
-}
-/* Responsive Anpassung für Modal */
-@media (max-width: 600px) {
-  #examples-modal > div {
-    width: 98vw;
-    max-width: 98vw;
-    border-radius: 12px;
-    padding: 18px 6px 12px 6px;
-  }
-}
-
-/* ...existing code... */
-
-      /* CSS: Übernehme die wichtigsten Modal-Styles aus kurse.html und passe sie für Produkte an */
-      #calendar-modal-overlay {
-        display: none;
-        position: fixed;
-        z-index: 2000;
-        left: 0; top: 0; right: 0; bottom: 0;
-        background: rgba(10,10,20,0.65);
-        backdrop-filter: blur(10px) saturate(1.2);
-        justify-content: center;
-        align-items: center;
-        transition: all 0.5s cubic-bezier(.4,1.6,.6,1);
-        opacity: 0;
-        overflow-y: auto;
-      }
-      #calendar-modal-overlay.show {
-        display: flex;
+      #examples-modal.active,
+      #examples-modal[style*="display: flex"] {
         opacity: 1;
+        pointer-events: auto;
+              transition: opacity 0.2s cubic-bezier(.4,1.6,.6,1);
+            }
+            #examples-modal.closing {
+              opacity: 0;
+              pointer-events: none;
       }
-      #calendar-modal {
-        background: #1C1C1C;
-        border-radius: 28px;
-        box-shadow: 0 8px 48px 0 rgba(0,0,0,0.35), 0 0 0 1.5px rgba(255,255,255,0.08), 0 1.5px 0 rgba(255,255,255,0.08) inset;
-        padding: 38px 0 36px 0;
-        max-width: 410px;
-        width: 95vw;
-        margin: 0 auto;
-        border: none;
+      #examples-modal > div {
+        background: #232323;
+        padding: 32px 18px 24px 18px;
+        border-radius: 18px;
+        max-width: 95vw;
+        width: 420px;
+        box-shadow: 0 8px 40px #000a;
         position: relative;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        overflow: visible;
-        animation: modal-modern-pop 0.55s cubic-bezier(.4,1.6,.6,1);
-        will-change: transform, opacity;
-        min-height: 320px;
-        max-height: 90vh;
-        box-sizing: border-box;
+        border: 2.5px solid #ffd700;
+        animation: modal-pop-in 0.45s cubic-bezier(.4,1.6,.6,1);
+              transition: opacity 0.2s, transform 0.2s;
+            }
+            #examples-modal.closing > div {
+              animation: modal-pop-out 0.2s cubic-bezier(.4,1.6,.6,1) forwards;
       }
-      @keyframes modal-modern-pop {
+      @keyframes modal-pop-in {
         0% {
           opacity: 0;
-          transform: scale(0.85) translateY(60px) perspective(800px) rotateX(10deg);
-          filter: blur(8px);
+                transform: scale(0.8) translateY(60px) rotateX(10deg);
+                box-shadow: 0 0 0 rgba(255,215,0,0);
         }
         60% {
           opacity: 1;
-          transform: scale(1.04) translateY(-8px) perspective(800px) rotateX(-2deg);
-          filter: blur(2px);
+                transform: scale(1.05) translateY(-12px) rotateX(-2deg);
+                box-shadow: 0 0 40px rgba(255,215,0,0.3);
         }
         100% {
+                opacity: 1;
+                transform: scale(1) translateY(0) rotateX(0deg);
+                box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+              }
+            }
+            
+            @keyframes modal-pop-out {
+              0% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+      100% {
+                opacity: 0;
+                transform: scale(0.92) translateY(40px);
+      }
+    }
+    /* Responsive Anpassung für Modal */
+    @media (max-width: 600px) {
+      #examples-modal > div {
+        width: 98vw;
+        max-width: 98vw;
+        border-radius: 12px;
+        padding: 18px 6px 12px 6px;
+      }
+    }
+
+    /* ...existing code... */
+
+        /* CSS: Übernehme die wichtigsten Modal-Styles aus kurse.html und passe sie für Produkte an */
+        #calendar-modal-overlay {
+          display: none;
+          position: fixed;
+          z-index: 2000;
+          left: 0; top: 0; right: 0; bottom: 0;
+          background: rgba(10,10,20,0.65);
+          backdrop-filter: blur(10px) saturate(1.2);
+          justify-content: center;
+          align-items: center;
+          transition: all 0.5s cubic-bezier(.4,1.6,.6,1);
+          opacity: 0;
+          overflow-y: auto;
+        }
+        #calendar-modal-overlay.show {
+          display: flex;
           opacity: 1;
-          transform: scale(1) translateY(0) perspective(800px) rotateX(0deg);
-          filter: blur(0);
         }
-      }
-
-      .modal-package-label {
-        position: absolute;
-        top: -38px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: #232323;
-        color: #fff;
-        font-size: 1.35rem;
-        font-weight: 900;
-        border-radius: 18px 18px 26px 26px;
-        padding: 16px 44px 12px 44px;
-        letter-spacing: 0.8px;
-        text-align: center;
-        z-index: 30;
-        user-select: none;
-        pointer-events: none;
-        overflow: visible;
-      }
-
-      /* Basic Webseiten: Weißer Glow für Label und alle gelben Elemente weiß */
-      #calendar-modal.starter .modal-package-label,
-      #calendar-modal.business .modal-package-label,
-      #calendar-modal.premium .modal-package-label {
-        box-shadow: 0 0 24px #ffffff88, 0 4px 24px 0 #ffffff44, 0 2px 8px #0002;
-        text-shadow: 0 0 16px #ffffff88, 0 1px 0 #fff2;
-        border: 2.5px solid #ffffff;
-        filter: drop-shadow(0 0 12px #ffffff66);
-      }
-
-      /* Basic Webseiten: Captcha-Container und Schrift weiß */
-      #calendar-modal.starter .recaptcha-frame,
-      #calendar-modal.business .recaptcha-frame,
-      #calendar-modal.premium .recaptcha-frame {
-        border: 2px solid #ffffff;
-        box-shadow: 0 2px 12px #ffffff22, 0 0 0 1.5px #ffffff22;
-      }
-
-      #calendar-modal.starter .modal-title,
-      #calendar-modal.business .modal-title,
-      #calendar-modal.premium .modal-title {
-        color: #ffffff;
-        text-shadow: 0 0 18px #ffffff88, 0 1px 0 #fff2;
-      }
-
-      #calendar-modal.starter #calendar-captcha-step div[style*="color:#FFD700"],
-      #calendar-modal.business #calendar-captcha-step div[style*="color:#FFD700"],
-      #calendar-modal.premium #calendar-captcha-step div[style*="color:#FFD700"] {
-        color: #ffffff !important;
-      }
-
-      /* Premium Webseiten: Goldener Glow für Label mit steigender Intensität */
-      #calendar-modal.starter-premium .modal-package-label {
-        color: #FFD700;
-        box-shadow: 0 0 24px #FFD70088, 0 4px 24px 0 #ffd70044, 0 2px 8px #0002;
-        text-shadow: 0 0 16px #ffd70088, 0 1px 0 #fff2;
-        border: 2.5px solid #FFD700;
-        filter: drop-shadow(0 0 12px #ffd70066);
-      }
-
-      #calendar-modal.business-premium .modal-package-label {
-        color: #FFD700;
-        box-shadow: 0 0 32px #FFD700aa, 0 6px 32px 0 #ffd70066, 0 2px 8px #0002;
-        text-shadow: 0 0 20px #ffd700aa, 0 1px 0 #fff2;
-        border: 2.5px solid #FFD700;
-        filter: drop-shadow(0 0 16px #ffd70088);
-      }
-
-      #calendar-modal.premium-deluxe .modal-package-label {
-        color: #FFD700;
-        box-shadow: 0 0 40px #FFD700cc, 0 8px 40px 0 #ffd70088, 0 2px 8px #0002;
-        text-shadow: 0 0 24px #ffd700cc, 0 1px 0 #fff2;
-        border: 2.5px solid #FFD700;
-        filter: drop-shadow(0 0 20px #ffd700aa);
-      }
-
-      /* Premium Webseiten: Paketname im Modal gelb */
-      #calendar-modal.starter-premium .modal-title,
-      #calendar-modal.business-premium .modal-title,
-      #calendar-modal.premium-deluxe .modal-title {
-        color: #FFD700;
-        text-shadow: 0 0 18px #ffd70088, 0 1px 0 #fff2;
-      }
-      @media (max-width: 600px) {
-        .modal-package-label {
-          font-size: 1.25rem;
-          padding: 12px 20px 8px 20px;
-          top: -22px;
-          border-radius: 10px 10px 16px 16px;
-        }
-      }
-
-      .close-widget {
-        position: absolute;
-        top: 18px;
-        right: 22px;
-        background: #1C1C1C;
-        color: #fff;
-        border: none;
-        font-size: 2.3rem;
-        font-weight: 700;
-        cursor: pointer;
-        z-index: 20;
-        border-radius: 50%;
-        width: 44px;
-        height: 44px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 2px 12px #ffd70033, 0 0 0 1.5px #ffd70022;
-        transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.2s;
-      }
-      .close-widget:hover {
-        background: #ffd700;
-        color: #181818;
-        box-shadow: 0 4px 24px #ffd70077, 0 0 0 2px #ffd700;
-        transform: scale(1.08);
-      }
-
-      .modal-title {
-        color: #FFD700;
-        font-size: 1.18rem;
-        font-weight: 800;
-        text-align: center;
-        margin: 18px 0 0 0;
-        letter-spacing: 0.7px;
-        text-shadow: 0 0 18px #ffd70088, 0 1px 0 #fff2;
-        text-transform: uppercase;
-        line-height: 1.3;
-      }
-
-      .captcha-box {
-        background: #1C1C1C;
-        border-radius: 18px;
-        padding: 20px 14px 14px 14px;
-        margin: 18px auto 0 auto;
-        box-shadow: 0 2px 16px #ffd70022, 0 0 0 1.5px #ffd70022;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        max-width: 340px;
-        width: 100%;
-        min-height: 90px;
-        overflow-x: auto;
-      }
-      .recaptcha-anchor {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        min-height: 78px;
-        max-height: 90px;
-        overflow: hidden;
-        margin: 0 auto;
-        padding: 0;
-        box-sizing: border-box;
-      }
-      .recaptcha-frame {
-        background: #1C1C1C;
-        border: 2px solid #FFD700;
-        border-radius: 14px;
-        box-shadow: 0 2px 12px #ffd70022, 0 0 0 1.5px #ffd70022;
-        padding: 10px 8px 8px 8px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-width: 180px;
-        min-height: 68px;
-        max-width: 320px;
-        margin: 0 auto;
-      }
-
-      /* Rahmen-Effekte je nach Preishöhe mit sichtbaren zusätzlichen Rahmen */
-      /* Basic Webseiten: Weiße Rahmen mit zusätzlichen Rahmen */
-      #calendar-modal.starter {
-        border: 2px solid #ffffff;
-        box-shadow: 
-          0 8px 48px 0 rgba(0,0,0,0.35),
-          0 0 0 1px rgba(255,255,255,0.3),
-          0 0 0 4px rgba(255,255,255,0.15),
-          0 0 0 8px rgba(255,255,255,0.08);
-      }
-      
-      #calendar-modal.business {
-        border: 2px solid #ffffff;
-        box-shadow: 
-          0 8px 48px 0 rgba(0,0,0,0.35),
-          0 0 0 1px rgba(255,255,255,0.3),
-          0 0 0 4px rgba(255,255,255,0.15),
-          0 0 0 8px rgba(255,255,255,0.08),
-          0 0 0 12px rgba(255,255,255,0.05),
-          0 0 0 16px rgba(255,255,255,0.03);
-      }
-      
-      #calendar-modal.premium {
-        border: 2px solid #ffffff;
-        box-shadow: 
-          0 8px 48px 0 rgba(0,0,0,0.35),
-          0 0 0 1px rgba(255,255,255,0.3),
-          0 0 0 4px rgba(255,255,255,0.15),
-          0 0 0 8px rgba(255,255,255,0.08),
-          0 0 0 12px rgba(255,255,255,0.05),
-          0 0 0 16px rgba(255,255,255,0.03),
-          0 0 0 20px rgba(255,255,255,0.02),
-          0 0 0 24px rgba(255,255,255,0.01);
-      }
-      
-      /* Premium Webseiten: Goldene Rahmen mit zusätzlichen Rahmen */
-      #calendar-modal.starter-premium {
-        border: 2px solid #FFD700;
-        box-shadow: 
-          0 8px 48px 0 rgba(0,0,0,0.35),
-          0 0 0 1px rgba(255,215,0,0.4),
-          0 0 0 4px rgba(255,215,0,0.2),
-          0 0 0 8px rgba(255,215,0,0.1),
-          0 0 0 12px rgba(255,215,0,0.05);
-      }
-      
-      #calendar-modal.business-premium {
-        border: 2px solid #FFD700;
-        box-shadow: 
-          0 8px 48px 0 rgba(0,0,0,0.35),
-          0 0 0 1px rgba(255,215,0,0.4),
-          0 0 0 4px rgba(255,215,0,0.2),
-          0 0 0 8px rgba(255,215,0,0.1),
-          0 0 0 12px rgba(255,215,0,0.05),
-          0 0 0 16px rgba(255,215,0,0.03),
-          0 0 0 20px rgba(255,215,0,0.02),
-          0 0 0 24px rgba(255,215,0,0.01);
-      }
-      
-      #calendar-modal.premium-deluxe {
-        border: 2px solid #FFD700;
-        box-shadow: 
-          0 8px 48px 0 rgba(0,0,0,0.35),
-          0 0 0 1px rgba(255,215,0,0.4),
-          0 0 0 4px rgba(255,215,0,0.2),
-          0 0 0 8px rgba(255,215,0,0.1),
-          0 0 0 12px rgba(255,215,0,0.05),
-          0 0 0 16px rgba(255,215,0,0.03),
-          0 0 0 20px rgba(255,215,0,0.02),
-          0 0 0 24px rgba(255,215,0,0.01),
-          0 0 0 28px rgba(255,215,0,0.008),
-          0 0 0 32px rgba(255,215,0,0.005);
-      }
-
-      #calendar-iframe { 
-        background: #000000 !important; 
-        background-color: #000000 !important; 
-      }
-      #calendar-widget-step { 
-        background: #000000 !important; 
-        background-color: #000000 !important; 
-        border-radius: 18px; 
-      }
-
-      .weitere-leistungen-section .card {
-        opacity: 1 !important;
-        transform: none !important;
-        box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.05), inset 0 1px 0 rgba(255,255,255,0.1);
-        background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
-        border-radius: 20px;
-        border: 2px solid transparent;
-        color: #e0e0e0;
-        margin-bottom: 0;
-        transition: all 0.5s cubic-bezier(0.4, 1.6, 0.6, 1);
-      }
-      .weitere-leistungen-section .card:hover {
-        box-shadow: 0 20px 45px rgba(255, 215, 0, 0.18), 0 0 0 2px rgba(255, 215, 0, 0.3), inset 0 1px 0 rgba(255, 215, 0, 0.2);
-        border-color: rgba(255, 215, 0, 0.5);
-        background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
-        color: #ffd700;
-      }
-
-      @media (max-width: 600px) {
-        .weitere-leistungen-section .pricing-section {
-          gap: 18px !important;
-          width: 100%;
+        #calendar-modal {
+          background: #1C1C1C;
+          border-radius: 28px;
+          box-shadow: 0 8px 48px 0 rgba(0,0,0,0.35), 0 0 0 1.5px rgba(255,255,255,0.08), 0 1.5px 0 rgba(255,255,255,0.08) inset;
+          padding: 38px 0 36px 0;
+          max-width: 410px;
+          width: 95vw;
+          margin: 0 auto;
+          border: none;
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          overflow: visible;
+          animation: modal-modern-pop 0.55s cubic-bezier(.4,1.6,.6,1);
+          will-change: transform, opacity;
+          min-height: 320px;
+          max-height: 90vh;
           box-sizing: border-box;
-          padding-left: 3vw;
-          padding-right: 3vw;
         }
-        .weitere-leistungen-section .card {
-          width: 100% !important;
-          max-width: 420px !important;
-          min-width: 0;
-          margin: 0 auto 0 auto;
-          padding: 22px 10px 18px 10px !important;
-          font-size: 1.05rem;
-          border-radius: 14px !important;
+        @keyframes modal-modern-pop {
+          0% {
+            opacity: 0;
+            transform: scale(0.85) translateY(60px) perspective(800px) rotateX(10deg);
+            filter: blur(8px);
+          }
+          60% {
+            opacity: 1;
+            transform: scale(1.04) translateY(-8px) perspective(800px) rotateX(-2deg);
+            filter: blur(2px);
+          }
+          100% {
+            opacity: 1;
+            transform: scale(1) translateY(0) perspective(800px) rotateX(0deg);
+            filter: blur(0);
+          }
         }
-        .weitere-leistungen-section .card h3 {
-          font-size: 1.18rem !important;
-        }
-        .weitere-leistungen-section .card span[style*='font-size:2.1rem'] {
-          font-size: 1.7rem !important;
-        }
-      }
 
-      @media (min-width: 601px) {
-        .weitere-leistungen-section .pricing-section {
-          display: grid !important;
-          grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-          gap: 36px 40px;
-          justify-items: center;
-          align-items: stretch;
-          padding-left: 0;
-          padding-right: 0;
-        }
-        .weitere-leistungen-section .card {
-          width: 100% !important;
-          max-width: 340px !important;
-          margin: 0;
-        }
-        .weitere-leistungen-swiper .swiper-slide {
-          border-radius: 20px;
-          padding: 50px 40px;
+        .modal-package-label {
+          position: absolute;
+          top: -38px;
+          left: 50%;
+          transform: translateX(-50%);
+          background: #232323;
+          color: #fff;
+          font-size: 1.35rem;
+          font-weight: 900;
+          border-radius: 18px 18px 26px 26px;
+          padding: 16px 44px 12px 44px;
+          letter-spacing: 0.8px;
           text-align: center;
-          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-          background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
-          border: 2px solid transparent;
-          font-size: 1.08rem;
+          z-index: 30;
+          user-select: none;
+          pointer-events: none;
+          overflow: visible;
         }
-        .weitere-leistungen-swiper .swiper-slide h3 {
-          font-size: 2rem;
-          color: silver;
-          margin-bottom: 25px;
+
+        /* Basic Webseiten: Weißer Glow für Label und alle gelben Elemente weiß */
+        #calendar-modal.starter .modal-package-label,
+        #calendar-modal.business .modal-package-label,
+        #calendar-modal.premium .modal-package-label {
+          box-shadow: 0 0 24px #ffffff88, 0 4px 24px 0 #ffffff44, 0 2px 8px #0002;
+          text-shadow: 0 0 16px #ffffff88, 0 1px 0 #fff2;
+          border: 2.5px solid #ffffff;
+          filter: drop-shadow(0 0 12px #ffffff66);
+        }
+
+        /* Basic Webseiten: Captcha-Container und Schrift weiß */
+        #calendar-modal.starter .recaptcha-frame,
+        #calendar-modal.business .recaptcha-frame,
+        #calendar-modal.premium .recaptcha-frame {
+          border: 2px solid #ffffff;
+          box-shadow: 0 2px 12px #ffffff22, 0 0 0 1.5px #ffffff22;
+        }
+
+        #calendar-modal.starter .modal-title,
+        #calendar-modal.business .modal-title,
+        #calendar-modal.premium .modal-title {
+          color: #ffffff;
+          text-shadow: 0 0 18px #ffffff88, 0 1px 0 #fff2;
+        }
+
+        #calendar-modal.starter #calendar-captcha-step div[style*="color:#FFD700"],
+        #calendar-modal.business #calendar-captcha-step div[style*="color:#FFD700"],
+        #calendar-modal.premium #calendar-captcha-step div[style*="color:#FFD700"] {
+          color: #ffffff !important;
+        }
+
+        /* Premium Webseiten: Goldener Glow für Label mit steigender Intensität */
+        #calendar-modal.starter-premium .modal-package-label {
+          color: #FFD700;
+          box-shadow: 0 0 24px #FFD70088, 0 4px 24px 0 #ffd70044, 0 2px 8px #0002;
+          text-shadow: 0 0 16px #ffd70088, 0 1px 0 #fff2;
+          border: 2.5px solid #FFD700;
+          filter: drop-shadow(0 0 12px #ffd70066);
+        }
+
+        #calendar-modal.business-premium .modal-package-label {
+          color: #FFD700;
+          box-shadow: 0 0 32px #FFD700aa, 0 6px 32px 0 #ffd70066, 0 2px 8px #0002;
+          text-shadow: 0 0 20px #ffd700aa, 0 1px 0 #fff2;
+          border: 2.5px solid #FFD700;
+          filter: drop-shadow(0 0 16px #ffd70088);
+        }
+
+        #calendar-modal.premium-deluxe .modal-package-label {
+          color: #FFD700;
+          box-shadow: 0 0 40px #FFD700cc, 0 8px 40px 0 #ffd70088, 0 2px 8px #0002;
+          text-shadow: 0 0 24px #ffd700cc, 0 1px 0 #fff2;
+          border: 2.5px solid #FFD700;
+          filter: drop-shadow(0 0 20px #ffd700aa);
+        }
+
+        /* Premium Webseiten: Paketname im Modal gelb */
+        #calendar-modal.starter-premium .modal-title,
+        #calendar-modal.business-premium .modal-title,
+        #calendar-modal.premium-deluxe .modal-title {
+          color: #FFD700;
+          text-shadow: 0 0 18px #ffd70088, 0 1px 0 #fff2;
+        }
+        @media (max-width: 600px) {
+          .modal-package-label {
+            font-size: 1.25rem;
+            padding: 12px 20px 8px 20px;
+            top: -22px;
+            border-radius: 10px 10px 16px 16px;
+          }
+        }
+
+        .close-widget {
+          position: absolute;
+          top: 18px;
+          right: 22px;
+          background: #1C1C1C;
+          color: #fff;
+          border: none;
+          font-size: 2.3rem;
           font-weight: 700;
-          letter-spacing: 0.5px;
-          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+          cursor: pointer;
+          z-index: 20;
+          border-radius: 50%;
+          width: 44px;
+          height: 44px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 2px 12px #ffd70033, 0 0 0 1.5px #ffd70022;
+          transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.2s;
         }
-        .weitere-leistungen-swiper .swiper-slide p,
-        .weitere-leistungen-swiper .swiper-slide .desc {
-          font-size: 1.1rem;
-          line-height: 1.7;
-          color: #ccc;
-          margin-bottom: 25px;
+        .close-widget:hover {
+          background: #ffd700;
+          color: #181818;
+          box-shadow: 0 4px 24px #ffd70077, 0 0 0 2px #ffd700;
+          transform: scale(1.08);
         }
-        .weitere-leistungen-swiper .swiper-slide.swiper-slide-active {
+
+        .modal-title {
+          color: #FFD700;
+          font-size: 1.18rem;
+          font-weight: 800;
+          text-align: center;
+          margin: 18px 0 0 0;
+          letter-spacing: 0.7px;
+          text-shadow: 0 0 18px #ffd70088, 0 1px 0 #fff2;
+          text-transform: uppercase;
+          line-height: 1.3;
+        }
+
+        .captcha-box {
+          background: #1C1C1C;
+          border-radius: 18px;
+          padding: 20px 14px 14px 14px;
+          margin: 18px auto 0 auto;
+          box-shadow: 0 2px 16px #ffd70022, 0 0 0 1.5px #ffd70022;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          max-width: 340px;
+          width: 100%;
+          min-height: 90px;
+          overflow-x: auto;
+        }
+        .recaptcha-anchor {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          min-height: 78px;
+          max-height: 90px;
+          overflow: hidden;
+          margin: 0 auto;
+          padding: 0;
+          box-sizing: border-box;
+        }
+        .recaptcha-frame {
+          background: #1C1C1C;
+          border: 2px solid #FFD700;
+          border-radius: 14px;
+          box-shadow: 0 2px 12px #ffd70022, 0 0 0 1.5px #ffd70022;
+          padding: 10px 8px 8px 8px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          min-width: 180px;
+          min-height: 68px;
+          max-width: 320px;
+          margin: 0 auto;
+        }
+
+        /* Rahmen-Effekte je nach Preishöhe mit sichtbaren zusätzlichen Rahmen */
+        /* Basic Webseiten: Weiße Rahmen mit zusätzlichen Rahmen */
+        #calendar-modal.starter {
+          border: 2px solid #ffffff;
+          box-shadow: 
+            0 8px 48px 0 rgba(0,0,0,0.35),
+            0 0 0 1px rgba(255,255,255,0.3),
+            0 0 0 4px rgba(255,255,255,0.15),
+            0 0 0 8px rgba(255,255,255,0.08);
+        }
+        
+        #calendar-modal.business {
+          border: 2px solid #ffffff;
+          box-shadow: 
+            0 8px 48px 0 rgba(0,0,0,0.35),
+            0 0 0 1px rgba(255,255,255,0.3),
+            0 0 0 4px rgba(255,255,255,0.15),
+            0 0 0 8px rgba(255,255,255,0.08),
+            0 0 0 12px rgba(255,255,255,0.05),
+            0 0 0 16px rgba(255,255,255,0.03);
+        }
+        
+        #calendar-modal.premium {
+          border: 2px solid #ffffff;
+          box-shadow: 
+            0 8px 48px 0 rgba(0,0,0,0.35),
+            0 0 0 1px rgba(255,255,255,0.3),
+            0 0 0 4px rgba(255,255,255,0.15),
+            0 0 0 8px rgba(255,255,255,0.08),
+            0 0 0 12px rgba(255,255,255,0.05),
+            0 0 0 16px rgba(255,255,255,0.03),
+            0 0 0 20px rgba(255,255,255,0.02),
+            0 0 0 24px rgba(255,255,255,0.01);
+        }
+        
+        /* Premium Webseiten: Goldene Rahmen mit zusätzlichen Rahmen */
+        #calendar-modal.starter-premium {
+          border: 2px solid #FFD700;
+          box-shadow: 
+            0 8px 48px 0 rgba(0,0,0,0.35),
+            0 0 0 1px rgba(255,215,0,0.4),
+            0 0 0 4px rgba(255,215,0,0.2),
+            0 0 0 8px rgba(255,215,0,0.1),
+            0 0 0 12px rgba(255,215,0,0.05);
+        }
+        
+        #calendar-modal.business-premium {
+          border: 2px solid #FFD700;
+          box-shadow: 
+            0 8px 48px 0 rgba(0,0,0,0.35),
+            0 0 0 1px rgba(255,215,0,0.4),
+            0 0 0 4px rgba(255,215,0,0.2),
+            0 0 0 8px rgba(255,215,0,0.1),
+            0 0 0 12px rgba(255,215,0,0.05),
+            0 0 0 16px rgba(255,215,0,0.03),
+            0 0 0 20px rgba(255,215,0,0.02),
+            0 0 0 24px rgba(255,215,0,0.01);
+        }
+        
+        #calendar-modal.premium-deluxe {
+          border: 2px solid #FFD700;
+          box-shadow: 
+            0 8px 48px 0 rgba(0,0,0,0.35),
+            0 0 0 1px rgba(255,215,0,0.4),
+            0 0 0 4px rgba(255,215,0,0.2),
+            0 0 0 8px rgba(255,215,0,0.1),
+            0 0 0 12px rgba(255,215,0,0.05),
+            0 0 0 16px rgba(255,215,0,0.03),
+            0 0 0 20px rgba(255,215,0,0.02),
+            0 0 0 24px rgba(255,215,0,0.01),
+            0 0 0 28px rgba(255,215,0,0.008),
+            0 0 0 32px rgba(255,215,0,0.005);
+        }
+
+        #calendar-iframe { 
+          background: #000000 !important; 
+          background-color: #000000 !important; 
+        }
+        #calendar-widget-step { 
+          background: #000000 !important; 
+          background-color: #000000 !important; 
+          border-radius: 18px; 
+        }
+
+        .weitere-leistungen-section .card {
+          opacity: 1 !important;
+          transform: none !important;
+          box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.05), inset 0 1px 0 rgba(255,255,255,0.1);
+          background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
+          border-radius: 20px;
+          border: 2px solid transparent;
+          color: #e0e0e0;
+          margin-bottom: 0;
+          transition: all 0.5s cubic-bezier(0.4, 1.6, 0.6, 1);
+        }
+        .weitere-leistungen-section .card:hover {
           box-shadow: 0 20px 45px rgba(255, 215, 0, 0.18), 0 0 0 2px rgba(255, 215, 0, 0.3), inset 0 1px 0 rgba(255, 215, 0, 0.2);
           border-color: rgba(255, 215, 0, 0.5);
           background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
           color: #ffd700;
-          z-index: 2;
-          transform: scale(1.08);
         }
-        .weitere-leistungen-swiper .swiper-slide:not(.swiper-slide-active) {
-          opacity: 0.7;
-          filter: blur(1px);
-          transform: scale(0.92);
-          z-index: 1;
+
+        @media (max-width: 600px) {
+          .weitere-leistungen-section .pricing-section {
+            gap: 18px !important;
+            width: 100%;
+            box-sizing: border-box;
+            padding-left: 3vw;
+            padding-right: 3vw;
+          }
+          .weitere-leistungen-section .card {
+            width: 100% !important;
+            max-width: 420px !important;
+            min-width: 0;
+            margin: 0 auto 0 auto;
+            padding: 22px 10px 18px 10px !important;
+            font-size: 1.05rem;
+            border-radius: 14px !important;
+          }
+          .weitere-leistungen-section .card h3 {
+            font-size: 1.18rem !important;
+          }
+          .weitere-leistungen-section .card span[style*='font-size:2.1rem'] {
+            font-size: 1.7rem !important;
+          }
         }
-      }
-      .weitere-leistungen-swiper {
-        width: 100%;
-        margin: 0 auto;
-        padding-bottom: 24px;
-      }
-      .weitere-leistungen-swiper .swiper-slide h3 {
-        font-size: 1.3rem;
-        margin-bottom: 10px;
-      }
-      .weitere-leistungen-swiper .swiper-slide span[style*='font-size:2.1rem'] {
-        font-size: 2.1rem;
-        margin-bottom: 12px;
-      }
-      .weitere-leistungen-swiper .swiper-button-next,
-      .weitere-leistungen-swiper .swiper-button-prev {
-        color: #ffd700;
-        top: 50%;
-        width: 44px;
-        height: 44px;
-        border-radius: 50%;
-        background: rgba(30,30,30,0.7);
-        box-shadow: 0 2px 12px #ffd70033;
-        transition: background 0.2s, color 0.2s;
-      }
-      .weitere-leistungen-swiper .swiper-button-next:hover,
-      .weitere-leistungen-swiper .swiper-button-prev:hover {
-        background: #ffd700;
-        color: #181818;
-      }
-      @media (max-width: 600px) {
-        .weitere-leistungen-swiper {
-          max-width: 100vw;
+
+        @media (min-width: 601px) {
+          .weitere-leistungen-section .pricing-section {
+            display: grid !important;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 36px 40px;
+            justify-items: center;
+            align-items: stretch;
+            padding-left: 0;
+            padding-right: 0;
+          }
+          .weitere-leistungen-section .card {
+            width: 100% !important;
+            max-width: 340px !important;
+            margin: 0;
+          }
+          .weitere-leistungen-swiper .swiper-slide {
+            border-radius: 20px;
+            padding: 50px 40px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
+            border: 2px solid transparent;
+            font-size: 1.08rem;
+          }
+          .weitere-leistungen-swiper .swiper-slide h3 {
+            font-size: 2rem;
+            color: silver;
+            margin-bottom: 25px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+          }
+          .weitere-leistungen-swiper .swiper-slide p,
+          .weitere-leistungen-swiper .swiper-slide .desc {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #ccc;
+            margin-bottom: 25px;
+          }
+          .weitere-leistungen-swiper .swiper-slide.swiper-slide-active {
+            box-shadow: 0 20px 45px rgba(255, 215, 0, 0.18), 0 0 0 2px rgba(255, 215, 0, 0.3), inset 0 1px 0 rgba(255, 215, 0, 0.2);
+            border-color: rgba(255, 215, 0, 0.5);
+            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+            color: #ffd700;
+            z-index: 2;
+            transform: scale(1.08);
+          }
+          .weitere-leistungen-swiper .swiper-slide:not(.swiper-slide-active) {
+            opacity: 0.7;
+            filter: blur(1px);
+            transform: scale(0.92);
+            z-index: 1;
+          }
         }
-        .weitere-leistungen-swiper .swiper-slide {
-          width: 96vw !important;
-          max-width: 400px !important;
-          min-width: 0 !important;
-          min-height: 110px;
-          max-height: 160px;
-          padding: 12px 8px;
-          font-size: 0.98rem;
-          border-radius: 12px;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-        }
-        .weitere-leistungen-swiper .swiper-slide h3 {
-          font-size: 1rem;
-          margin-bottom: 8px;
-        }
-        .weitere-leistungen-swiper .swiper-slide span[style*='font-size:2.1rem'] {
-          font-size: 1.1rem;
-          margin-bottom: 6px;
-        }
-        #leistungen-detail {
-          padding: 12px 3vw 8px 3vw !important;
-          min-height: 60px !important;
-        }
-        .weitere-leistungen-swiper .swiper-button-next,
-        .weitere-leistungen-swiper .swiper-button-prev {
-          z-index: 10;
-        }
-      }
-      @media (min-width: 601px) {
         .weitere-leistungen-swiper {
           width: 100%;
-          max-width: 1200px;
           margin: 0 auto;
           padding-bottom: 24px;
         }
-        .weitere-leistungen-swiper .swiper-slide {
-          max-width: 340px !important;
-          min-width: 340px !important;
-          min-height: 320px;
-          padding: 50px 40px;
-          border-radius: 20px;
-          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-          background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
-          border: 2px solid transparent;
-          font-size: 1.08rem;
-          text-align: center;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-        }
         .weitere-leistungen-swiper .swiper-slide h3 {
-          font-size: 2rem;
-          color: silver;
-          margin-bottom: 25px;
-          font-weight: 700;
-          letter-spacing: 0.5px;
-          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+          font-size: 1.3rem;
+          margin-bottom: 10px;
         }
-        .weitere-leistungen-swiper .swiper-slide p,
-        .weitere-leistungen-swiper .swiper-slide .desc {
-          font-size: 1.1rem;
-          line-height: 1.7;
-          color: #ccc;
-          margin-bottom: 25px;
+        .weitere-leistungen-swiper .swiper-slide span[style*='font-size:2.1rem'] {
+          font-size: 2.1rem;
+          margin-bottom: 12px;
+        }
+        .weitere-leistungen-swiper .swiper-button-next,
+        .weitere-leistungen-swiper .swiper-button-prev {
+          color: #ffd700;
+          top: 50%;
+          width: 44px;
+          height: 44px;
+          border-radius: 50%;
+          background: rgba(30,30,30,0.7);
+          box-shadow: 0 2px 12px #ffd70033;
+          transition: background 0.2s, color 0.2s;
+        }
+        .weitere-leistungen-swiper .swiper-button-next:hover,
+        .weitere-leistungen-swiper .swiper-button-prev:hover {
+          background: #ffd700;
+          color: #181818;
+        }
+        @media (max-width: 600px) {
+          .weitere-leistungen-swiper {
+            max-width: 100vw;
+          }
+          .weitere-leistungen-swiper .swiper-slide {
+            width: 96vw !important;
+            max-width: 400px !important;
+            min-width: 0 !important;
+            min-height: 110px;
+            max-height: 160px;
+            padding: 12px 8px;
+            font-size: 0.98rem;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+          }
+          .weitere-leistungen-swiper .swiper-slide h3 {
+            font-size: 1rem;
+            margin-bottom: 8px;
+          }
+          .weitere-leistungen-swiper .swiper-slide span[style*='font-size:2.1rem'] {
+            font-size: 1.1rem;
+            margin-bottom: 6px;
+          }
+          #leistungen-detail {
+            padding: 12px 3vw 8px 3vw !important;
+            min-height: 60px !important;
+          }
+          .weitere-leistungen-swiper .swiper-button-next,
+          .weitere-leistungen-swiper .swiper-button-prev {
+            z-index: 10;
+          }
+        }
+        @media (min-width: 601px) {
+          .weitere-leistungen-swiper {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-bottom: 24px;
+          }
+          .weitere-leistungen-swiper .swiper-slide {
+            max-width: 340px !important;
+            min-width: 340px !important;
+            min-height: 320px;
+            padding: 50px 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
+            border: 2px solid transparent;
+            font-size: 1.08rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+          }
+          .weitere-leistungen-swiper .swiper-slide h3 {
+            font-size: 2rem;
+            color: silver;
+            margin-bottom: 25px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+          }
+          .weitere-leistungen-swiper .swiper-slide p,
+          .weitere-leistungen-swiper .swiper-slide .desc {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #ccc;
+            margin-bottom: 25px;
+          }
+        }
+        #leistungen-termin-btn {
+          position: relative;
+          overflow: hidden;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        #leistungen-termin-btn::before {
+          content: '';
+          position: absolute;
+          left: 0; top: 0; bottom: 0;
+          width: 0%;
+          z-index: 1;
+          background: linear-gradient(90deg, #ffd700 0%, #fffbe6 100%);
+          transition: width 0.5s cubic-bezier(.4,1.6,.6,1);
+        }
+        #leistungen-termin-btn:hover::before, #leistungen-termin-btn:focus::before {
+          width: 100%;
+        }
+        #leistungen-termin-btn span {
+          position: relative;
+          z-index: 2;
+          transition: color 0.35s;
+        }
+        #leistungen-termin-btn:hover span, #leistungen-termin-btn:focus span {
+          color: #181818;
+        }
+        #leistungen-termin-btn {
+          background: linear-gradient(145deg,#232323,#181818);
+          color: #ffd700;
+          border:2px solid #ffd700;
+          border-radius:16px;
+          box-shadow:0 4px 18px #ffd70022,0 2px 12px #000a;
+          cursor:pointer;
+          transition:background 0.35s cubic-bezier(.4,1.6,.6,1),color 0.35s,box-shadow 0.35s,border-color 0.35s;
+          letter-spacing:0.5px;
+          outline:none;
+        }
+        #leistungen-termin-btn:hover, #leistungen-termin-btn:focus {
+          box-shadow: 0 8px 32px #ffd70055, 0 2px 12px #000a;
+          transform: scale(1.045);
         }
       }
-      #leistungen-termin-btn {
-        position: relative;
-        overflow: hidden;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      }
-      #leistungen-termin-btn::before {
-        content: '';
-        position: absolute;
-        left: 0; top: 0; bottom: 0;
-        width: 0%;
-        z-index: 1;
-        background: linear-gradient(90deg, #ffd700 0%, #fffbe6 100%);
-        transition: width 0.5s cubic-bezier(.4,1.6,.6,1);
-      }
-      #leistungen-termin-btn:hover::before, #leistungen-termin-btn:focus::before {
-        width: 100%;
-      }
-      #leistungen-termin-btn span {
-        position: relative;
-        z-index: 2;
-        transition: color 0.35s;
-      }
-      #leistungen-termin-btn:hover span, #leistungen-termin-btn:focus span {
-        color: #181818;
-      }
-      #leistungen-termin-btn {
-        background: linear-gradient(145deg,#232323,#181818);
-        color: #ffd700;
-        border:2px solid #ffd700;
-        border-radius:16px;
-        box-shadow:0 4px 18px #ffd70022,0 2px 12px #000a;
-        cursor:pointer;
-        transition:background 0.35s cubic-bezier(.4,1.6,.6,1),color 0.35s,box-shadow 0.35s,border-color 0.35s;
-        letter-spacing:0.5px;
-        outline:none;
-      }
-      #leistungen-termin-btn:hover, #leistungen-termin-btn:focus {
-        box-shadow: 0 8px 32px #ffd70055, 0 2px 12px #000a;
-        transform: scale(1.045);
+
+      @media (max-width: 600px) {
+        .logo-img {
+          max-width: 108vw;
+          width: 100%;
+          height: auto;
+          margin-bottom: 6px;
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+        }
       }
     </style>
     <script>
@@ -2471,7 +2484,7 @@
     <header data-aos="fade-down">
       <div class="parallax-bg"></div>
       <div class="logo-container">
-        <img src="DB5A56C2-6537-412D-94B5-4C1A72DA5F3C.PNG" alt="Integrow Logo" class="logo-img" />
+        <img src="Integrow-Logo.png" alt="Integrow Logo" class="logo-img" />
       </div>
       <div class="nav-links">
         <a href="index.html">Startseite</a>

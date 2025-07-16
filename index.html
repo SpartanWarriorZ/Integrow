@@ -134,6 +134,7 @@
         flex-wrap: wrap;
         transition: box-shadow 0.4s ease;
         cursor: pointer;
+        align-items: flex-start; /* Verhindert vertikales Springen */
       }
       .feature img {
         width: 340px;
@@ -144,6 +145,9 @@
         clip-path: inset(0 round 16px);
         transition: transform 0.4s ease, box-shadow 0.4s ease,
           filter 0.4s cubic-bezier(0.4, 1.6, 0.6, 1);
+        flex-basis: 340px; /* Fixiert die Bildbreite im Flex-Layout */
+        flex-shrink: 0;
+        align-self: flex-start; /* Bild bleibt immer oben ausgerichtet */
       }
       .feature img:hover,
       .feature img:focus {
@@ -161,6 +165,7 @@
         flex: 1;
         min-width: 260px;
         transition: text-shadow 0.4s ease;
+        min-height: 260px; /* Noch mehr Platz, damit auch beim dritten Bild kein Springen entsteht */
       }
       .feature-text h3 {
         color: silver;
@@ -345,19 +350,25 @@
         }
         .feature {
           flex-direction: column;
+          align-items: center;
           text-align: center;
+          gap: 24px;
+          margin-bottom: 48px;
         }
         .feature img {
           width: 90%;
+          max-width: 340px;
+          height: auto;
           display: block;
-          margin: 0 auto 20px;
+          margin: 0 auto 20px auto;
+          border-radius: 16px;
+          object-fit: cover;
         }
-        .leistungen-list {
-          font-size: 1.2rem;
-          line-height: 1.6;
-        }
-        .logo-img {
-          max-width: 400px;
+        .feature-text {
+          width: 100%;
+          max-width: 500px;
+          margin: 0 auto;
+          min-height: unset;
         }
         .feature-text h3 {
           font-size: 1.25rem;
@@ -367,6 +378,61 @@
         }
         .mission-bullets {
           font-size: 1.05rem;
+          padding-left: 1.2em; /* Platz für Listenpunkt auf Mobil */
+          text-align: left;
+          margin: 18px auto 0 auto;
+          max-width: 420px;
+        }
+        .mission-bullets li {
+          text-align: left;
+          word-break: break-word;
+          padding-left: 0.2em;
+        }
+        .leistungen-list {
+          font-size: 1.2rem;
+          line-height: 1.6;
+          padding-left: 0;
+          text-align: left;
+          margin-left: auto;
+          margin-right: auto;
+          max-width: 420px;
+        }
+        .logo-img {
+          max-width: 400px;
+        }
+        .section {
+          padding: 40px 8px;
+        }
+        .leistungen-cards {
+          flex-direction: column;
+          align-items: center;
+          gap: 32px;
+          padding-left: 0;
+          padding-right: 7vw;
+          box-sizing: border-box;
+        }
+        .flipcard-modern {
+          width: 100%;
+          max-width: 340px;
+          min-width: 0;
+          margin: 0 auto 24px auto;
+          box-sizing: border-box;
+        }
+        .cta {
+          padding-left: 5vw;
+          padding-right: 5vw;
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        .cta h2 {
+          width: 100%;
+          max-width: 420px;
+          margin-left: auto;
+          margin-right: auto;
+          text-align: center;
+          word-break: break-word;
         }
       }
       .feature-text h3,
@@ -378,7 +444,8 @@
       .feature:focus-within .feature-text h3,
       .feature:hover .feature-text p,
       .feature:focus-within .feature-text p {
-        transform: translateY(-28px);
+        /* Kein Springen mehr beim Hover */
+        transform: none;
       }
       .leistungen-cards {
         display: flex;
@@ -541,19 +608,95 @@
           margin-bottom: 30px;
         }
       }
+      @media (min-width: 601px) and (max-width: 900px) {
+        .leistungen-cards {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          grid-template-rows: 1fr 1fr;
+          gap: 60px 40px;
+          justify-items: center;
+          align-items: stretch;
+          margin: 4vw 0 10vw -4vw;
+          padding: 0 4vw;
+          box-sizing: border-box;
+        }
+        .flipcard-modern {
+          width: 100%;
+          max-width: 43vw;
+          min-width: 0;
+          margin: 0 auto;
+          box-sizing: border-box;
+          height: 370px;
+          /* Abstand nach oben */
+          padding-top: 20px;
+        }
+      }
       @media (max-width: 600px) {
+        .feature {
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          gap: 14px;
+          margin-bottom: 32px;
+        }
+        .feature img {
+          width: 85vw;
+          max-width: 320px;
+          margin: 0 auto 12px auto;
+          border-radius: 14px;
+          object-fit: cover;
+        }
+        .feature-text {
+          width: 100%;
+          max-width: 95vw;
+          margin: 0 auto;
+          min-height: unset;
+        }
+        .feature-text h3 {
+          font-size: 1.08rem;
+        }
+        .feature-text p {
+          font-size: 0.95rem;
+        }
+        .mission-bullets {
+          font-size: 0.98rem;
+          padding-left: 1em;
+          max-width: 95vw;
+          margin: 12px auto 0 auto;
+        }
+        .mission-bullets li {
+          text-align: left;
+          word-break: break-word;
+          padding-left: 0.2em;
+        }
+        .leistungen-list {
+          font-size: 1.2rem;
+          line-height: 1.6;
+          padding-left: 0;
+          text-align: left;
+          margin-left: auto;
+          margin-right: auto;
+          max-width: 420px;
+        }
+        .logo-img {
+          max-width: 400px;
+        }
+        .section {
+          padding: 40px 8px;
+        }
         .leistungen-cards {
           box-sizing: border-box;
           display: grid;
           grid-template-columns: 1fr;
           gap: 0;
-          margin: 40px 0 0 0;
+          margin: 40px 0 0 -0.5vw;
           padding: 0;
           justify-items: stretch;
         }
         .flipcard-modern {
           width: 100%;
           max-width: unset;
+          max-width: 395px;
           max-height: 200px;
           min-width: 0;
           aspect-ratio: 7 / 1;
@@ -597,6 +740,46 @@
           transition-delay: 0s !important;
         }
       }
+      .leistungen-cards .flipcard-modern,
+      .leistungen-cards.cards-in-view .flipcard-modern {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+      }
+      .flip-underline-title {
+        position: relative;
+        display: inline-block;
+      }
+      .flip-underline {
+        display: block;
+        position: absolute;
+        left: 0;
+        bottom: -6px;
+        height: 2.5px;
+        background: rgba(255,255,255,0.85);
+        border-radius: 1.5px;
+        width: 0;
+        transition: width 0.5s cubic-bezier(.4,1.6,.6,1);
+      }
+      /* Sichtbarkeit und Länge des animierten Unterstrichs auf Mobil sicherstellen */
+      .flip-underline {
+        display: block;
+        position: absolute;
+        left: 0;
+        bottom: -6px;
+        height: 2.5px;
+        background: rgba(255,255,255,0.85);
+        border-radius: 1.5px;
+        width: 0;
+        min-width: 0;
+        max-width: 100%;
+        transition: width 0.7s cubic-bezier(.4,1.6,.6,1);
+        z-index: 10;
+        overflow: visible;
+      }
+      .flipcard-back .flip-underline-title .flip-underline.active-underline {
+        width: 100%;
+        max-width: 100%;
+      }
     </style>
     <link
       href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&display=swap"
@@ -607,7 +790,7 @@
     <header data-aos="fade-down">
       <div class="parallax-bg"></div>
       <div class="logo-container">
-        <img src="DB5A56C2-6537-412D-94B5-4C1A72DA5F3C.PNG" alt="Integrow Logo" class="logo-img" />
+        <img src="Integrow-Logo.png" alt="Integrow Logo" class="logo-img" />
       </div>
       <div class="nav-links">
         <a href="index.html">Startseite</a>
@@ -621,7 +804,7 @@
     <div class="section" data-aos="fade-up">
       <h2>Webdesign, das Eindruck hinterlässt</h2>
       <div class="feature" data-aos="fade-up" style="margin-top: 100px;">
-        <img src="Photo 1.jpeg" alt="Individuelle Websites" />
+        <img src="Webseiten-Massgeschneidert-begeistern.png" alt="Individuelle Websites" />
         <div class="feature-text">
           <h3>Maßgeschneiderte Online-Auftritte, die begeistern</h3>
           <p>
@@ -635,7 +818,7 @@
         </div>
       </div>
       <div class="feature" data-aos="fade-up">
-        <img src="Photo 2.jpeg" alt="KI & SEO" />
+        <img src="Webseiten-KI-Integration2.png" alt="KI & SEO" />
         <div class="feature-text">
           <h3>Innovative Weblösungen mit KI-Power</h3>
           <p>
@@ -685,12 +868,19 @@
           <div class="flipcard-inner">
             <div class="flipcard-front">
               <span class="card-icon">💻</span>
-              <div class="card-title">Webentwicklung</div>
+              <div class="card-title flip-underline-title" style="margin-bottom:6px;position:relative;display:inline-block;">
+                Webentwicklung
+                <span class="flip-underline"></span>
+              </div>
               <div class="card-desc">Individuelle Lösungen für Ihren digitalen Auftritt</div>
             </div>
             <div class="flipcard-back">
+              <div class="card-title flip-underline-title" style="margin-bottom:6px;position:relative;display:inline-block;">
+                Webentwicklung
+                <span class="flip-underline"></span>
+              </div>
               <ul class="card-bullets-modern">
-                <li>Maßgeschneiderte WordPress-Projekte</li>
+                <li>Maßgeschneiderte Projekte</li>
                 <li>Responsives Design für alle Geräte</li>
                 <li>Optimiert für Nutzer und Suchmaschinen</li>
               </ul>
@@ -701,10 +891,17 @@
           <div class="flipcard-inner">
             <div class="flipcard-front">
               <span class="card-icon">🤖</span>
-              <div class="card-title">KI & Sichtbarkeit</div>
+              <div class="card-title flip-underline-title" style="margin-bottom:6px;position:relative;display:inline-block;">
+                KI & Sichtbarkeit
+                <span class="flip-underline"></span>
+              </div>
               <div class="card-desc">Intelligente Tools für nachhaltigen Erfolg</div>
             </div>
             <div class="flipcard-back">
+              <div class="card-title flip-underline-title" style="margin-bottom:6px;position:relative;display:inline-block;">
+                KI & Sichtbarkeit
+                <span class="flip-underline"></span>
+              </div>
               <ul class="card-bullets-modern">
                 <li>Automatisierte Content-Optimierung</li>
                 <li>SEO-Strategien mit KI-Unterstützung</li>
@@ -717,10 +914,17 @@
           <div class="flipcard-inner">
             <div class="flipcard-front">
               <span class="card-icon">🎨</span>
-              <div class="card-title">Design & Technik</div>
+              <div class="card-title flip-underline-title" style="margin-bottom:6px;position:relative;display:inline-block;">
+                Design & Technik
+                <span class="flip-underline"></span>
+              </div>
               <div class="card-desc">Kreativität und Technologie vereint</div>
             </div>
             <div class="flipcard-back">
+              <div class="card-title flip-underline-title" style="margin-bottom:6px;position:relative;display:inline-block;">
+                Design & Technik
+                <span class="flip-underline"></span>
+              </div>
               <ul class="card-bullets-modern">
                 <li>Individuelles, modernes Webdesign</li>
                 <li>Technische Umsetzung auf Top-Niveau</li>
@@ -733,10 +937,17 @@
           <div class="flipcard-inner">
             <div class="flipcard-front">
               <span class="card-icon">🤝</span>
-              <div class="card-title">Beratung & Strategie</div>
+              <div class="card-title flip-underline-title" style="margin-bottom:6px;position:relative;display:inline-block;">
+                Beratung & Strategie
+                <span class="flip-underline"></span>
+              </div>
               <div class="card-desc">Ihr Partner für nachhaltige Entwicklung</div>
             </div>
             <div class="flipcard-back">
+              <div class="card-title flip-underline-title" style="margin-bottom:6px;position:relative;display:inline-block;">
+                Beratung & Strategie
+                <span class="flip-underline"></span>
+              </div>
               <ul class="card-bullets-modern">
                 <li>Persönliche Beratung & Strategiegespräche</li>
                 <li>Langfristige Begleitung</li>
@@ -841,6 +1052,77 @@
           }, { threshold: 0.85 });
           observer.observe(leistungenSection);
         }
+      });
+    </script>
+    <script>
+      // Flipcard-Underline Animation nach Flip – jetzt NUR wenn Rückseite sichtbar, und sofort weg beim Zurückdrehen
+      document.addEventListener('DOMContentLoaded', function() {
+        var flipcards = document.querySelectorAll('.flipcard-modern');
+        flipcards.forEach(function(card) {
+          var inner = card.querySelector('.flipcard-inner');
+          var underline = card.querySelector('.flipcard-back .flip-underline');
+          var flipTimeout = null;
+
+          function isBackVisible() {
+            var style = window.getComputedStyle(inner);
+            var transform = style.transform || style.webkitTransform;
+            if (!transform || transform === 'none') return false;
+            var values = transform.match(/matrix3d\((.+)\)/);
+            if (values) {
+              var arr = values[1].split(', ');
+              return parseFloat(arr[0]) < 0;
+            }
+            values = transform.match(/matrix\((.+)\)/);
+            if (values) {
+              var arr2 = values[1].split(', ');
+              return parseFloat(arr2[0]) < 0;
+            }
+            return false;
+          }
+
+          function startUnderlineIfBack() {
+            if (isBackVisible() && !underline.classList.contains('active-underline')) {
+              underline.classList.add('active-underline');
+            }
+          }
+
+          function removeUnderline() {
+            underline.classList.remove('active-underline');
+            if (flipTimeout) {
+              clearTimeout(flipTimeout);
+              flipTimeout = null;
+            }
+          }
+
+          card.addEventListener('mouseenter', function() {
+            flipTimeout = setTimeout(startUnderlineIfBack, 1000);
+          });
+          card.addEventListener('touchstart', function(e) {
+            flipTimeout = setTimeout(function() {
+              startUnderlineIfBack();
+            }, 500);
+          });
+          card.addEventListener('touchend', removeUnderline);
+          card.addEventListener('mouseleave', removeUnderline);
+
+          inner.addEventListener('transitionend', function(e) {
+            if (e.propertyName === 'transform') {
+              if (!isBackVisible()) {
+                removeUnderline();
+              }
+            }
+          });
+
+          card.addEventListener('click', function() {
+            setTimeout(function() {
+              if (isBackVisible()) {
+                underline.classList.add('active-underline');
+              } else {
+                underline.classList.remove('active-underline');
+              }
+            }, 550);
+          });
+        });
       });
     </script>
   </body>

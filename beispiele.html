@@ -344,6 +344,17 @@
           margin-bottom: 22px;
         }
       }
+      @media (max-width: 600px) {
+        .logo-img {
+          max-width: 108vw;
+          width: 100%;
+          height: auto;
+          margin-bottom: 6px;
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+        }
+      }
     </style>
   </head>
   <body>
@@ -351,7 +362,7 @@
       <div class="parallax-bg"></div>
       <div class="logo-container">
         <img
-          src="DB5A56C2-6537-412D-94B5-4C1A72DA5F3C.PNG"
+          src="Integrow-Logo.png"
           alt="Integrow Logo"
           class="logo-img"
         />
@@ -370,7 +381,7 @@
         <div class="referenz-subtitle">So könnte Ihre Seite aussehen!</div>
         <div class="referenz-row-anim" data-aos="fade-right">
           <a href="https://spartanwarriorz.github.io/Fashion-Way/" target="_blank" style="display:contents;">
-            <img src="FashionWayRef.png" alt="Fashion-Way Referenz" style="cursor:pointer;" />
+            <img src="Fashion-Way-Ref.png" alt="Fashion-Way Referenz" style="cursor:pointer;" />
             <div>
               <span class="referenz-name-link" style="font-size:1.3rem;color:#ffd700;font-weight:700;text-decoration:none;cursor:pointer;">Fashion-Way.de</span>
               <div class="referenz-desc">Shoppingseite mit elegantem, modernen Design und Shop-Charakter.</div>
@@ -379,7 +390,7 @@
         </div>
         <div class="referenz-row-anim" data-aos="fade-right" data-aos-delay="100">
           <a href="https://spartanwarriorz.github.io/Wessel-GmbH/" target="_blank" style="display:contents;">
-            <img src="WesselRef.png" alt="Wessel-GmbH Referenz" style="cursor:pointer;" />
+            <img src="Wessel-GmbH-Ref.png" alt="Wessel-GmbH Referenz" style="cursor:pointer;" />
             <div>
               <span class="referenz-name-link" style="font-size:1.3rem;color:#ffd700;font-weight:700;text-decoration:none;cursor:pointer;">Wessel-GmbH.de</span>
               <div class="referenz-desc">Kesselbau-Firma mit professionellem Webauftritt und Leistungsübersicht.</div>
@@ -388,7 +399,7 @@
         </div>
         <div class="referenz-row-anim" data-aos="fade-right" data-aos-delay="200">
           <a href="https://spartanwarriorz.github.io/Hair-Luxury/" target="_blank" style="display:contents;">
-            <img src="LuxuryHairRef.png" alt="Hair-Luxury Referenz" style="cursor:pointer;" />
+            <img src="Luxury-Hair-Ref.png" alt="Hair-Luxury Referenz" style="cursor:pointer;" />
             <div>
               <span class="referenz-name-link" style="font-size:1.3rem;color:#ffd700;font-weight:700;text-decoration:none;cursor:pointer;">Hair-Fantasy.de</span>
               <div class="referenz-desc">Friseurladen mit modernem, luxuriösem Design und Online-Terminbuchung.</div>
@@ -397,7 +408,7 @@
         </div>
         <div class="referenz-row-anim" data-aos="fade-right" data-aos-delay="300">
           <a href="https://spartanwarriorz.github.io/Naildesign/" target="_blank" style="display:contents;">
-            <img src="NageldesignRef.png" alt="Nageldesign Referenz" style="cursor:pointer;" />
+            <img src="Nagel-design-Ref.png" alt="Nageldesign Referenz" style="cursor:pointer;" />
             <div>
               <span class="referenz-name-link" style="font-size:1.3rem;color:#ffd700;font-weight:700;text-decoration:none;cursor:pointer;">Nageldesign-Studio.de</span>
               <div class="referenz-desc">Modernes Nagelstudio mit stilvollem Webauftritt und Online-Terminbuchung.</div>
@@ -444,7 +455,7 @@
         var scrolled = window.scrollY;
         var parallax = document.querySelector('.parallax-bg');
         // Starker Parallaxeffekt: Faktor 0.25 (je kleiner, desto "tiefer")
-        var parallaxOffset = Math.min(scrolled * 0.25, 120); // Maximal 120px Offset
+        var parallaxOffset = Math.min(scrolled * 0.25, 180); // Maximal 180px Offset für längeren Parallaxeffekt
         parallax.style.transform = 'translateY(' + parallaxOffset + 'px)';
       }
       window.addEventListener('scroll', parallaxHeader);

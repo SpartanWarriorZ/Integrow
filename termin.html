@@ -135,13 +135,24 @@
         min-height: 800px;
       }
     }
+    @media (max-width: 600px) {
+      .logo-img {
+        max-width: 108vw;
+        width: 100%;
+        height: auto;
+        margin-bottom: 6px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&display=swap" rel="stylesheet" />
 </head>
 <body>
   <header data-aos="fade-down">
     <div class="parallax-bg"></div>
-    <img src="DB5A56C2-6537-412D-94B5-4C1A72DA5F3C.PNG" alt="Integrow Logo" class="logo-img" />
+    <img src="Integrow-Logo.png" alt="Integrow Logo" class="logo-img" />
     <div class="nav-links">
       <a href="index.html">Startseite</a>
       <a href="produkt.html">Produkt</a>
@@ -194,7 +205,7 @@
   function parallaxHeader() {
     var scrolled = window.scrollY;
     var parallax = document.querySelector('.parallax-bg');
-    var parallaxOffset = Math.min(scrolled * 0.25, 120); // Maximal 120px Offset
+    var parallaxOffset = Math.min(scrolled * 0.25, 180); // Maximal 180px Offset für längeren Parallaxeffekt
     if (parallax) parallax.style.transform = 'translateY(' + parallaxOffset + 'px)';
   }
   window.addEventListener('scroll', parallaxHeader);
