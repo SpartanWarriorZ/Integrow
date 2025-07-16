@@ -583,6 +583,20 @@
       .leistungen-cards.cards-in-view .flipcard-modern:nth-child(2) { transition-delay: 0.22s; }
       .leistungen-cards.cards-in-view .flipcard-modern:nth-child(3) { transition-delay: 0.36s; }
       .leistungen-cards.cards-in-view .flipcard-modern:nth-child(4) { transition-delay: 0.50s; }
+      @media (max-width: 600px) {
+        .leistungen-cards .flipcard-modern,
+        .leistungen-cards.cards-in-view .flipcard-modern {
+          transform: none !important;
+          opacity: 1 !important;
+          transition: none !important;
+        }
+        .leistungen-cards.cards-in-view .flipcard-modern:nth-child(1),
+        .leistungen-cards.cards-in-view .flipcard-modern:nth-child(2),
+        .leistungen-cards.cards-in-view .flipcard-modern:nth-child(3),
+        .leistungen-cards.cards-in-view .flipcard-modern:nth-child(4) {
+          transition-delay: 0s !important;
+        }
+      }
     </style>
     <link
       href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&display=swap"
