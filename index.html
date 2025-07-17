@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Integrow – Startseite</title>
+    <link rel="icon" type="image/png" href="Integrow-Favicon.png" />
     <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
     <style>
       html,
@@ -119,6 +120,12 @@
         margin: auto;
         border-bottom: 1px solid #2a2a2a;
       }
+      /* Weniger Abstand über 'Unsere Leistungen' auf Desktop */
+      @media (min-width: 901px) {
+        .section:has(> h2:contains('Unsere Leistungen')) {
+          padding-top: 32px;
+        }
+      }
       .section h2 {
         color: silver;
         font-size: 2.4rem;
@@ -166,6 +173,13 @@
         min-width: 260px;
         transition: text-shadow 0.4s ease;
         min-height: 260px; /* Noch mehr Platz, damit auch beim dritten Bild kein Springen entsteht */
+        display: flex;
+        flex-direction: column;
+        justify-content: center; /* Zentriert den Text vertikal */
+      }
+      .feature-text--hightech {
+        justify-content: flex-end;
+        padding-bottom: 80px;
       }
       .feature-text h3 {
         color: silver;
@@ -184,7 +198,7 @@
       }
       /* Mission Bullets: erscheinen gemeinsam */
       .mission-bullets {
-        display: none;
+        min-height: 80px; /* Platz für 3 Bullets, ggf. anpassen */
         margin-top: 28px;
         margin-bottom: 0;
         padding-left: 22px;
@@ -192,14 +206,15 @@
         font-size: 1.25rem;
         text-align: left;
         list-style: disc;
-        opacity: 1;
-        transform: none;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.5s, visibility 0.5s;
       }
-
       .feature:hover .mission-bullets,
       .feature:focus-within .mission-bullets,
       .feature img:hover + .feature-text .mission-bullets {
-        display: block;
+        opacity: 1;
+        visibility: visible;
       }
 
       .mission-bullets li {
@@ -833,7 +848,7 @@
       </div>
       <div class="feature" data-aos="fade-up">
         <img src="Photo 3.jpeg" alt="Design & Technologie" />
-        <div class="feature-text">
+        <div class="feature-text feature-text--hightech">
           <h3>Kreativität trifft Hightech</h3>
           <p>
             Wir verbinden frisches Design mit technischer Raffinesse und sorgen so für einen starken, unverwechselbaren Webauftritt.
@@ -958,6 +973,167 @@
         </div>
       </div>
     </div>
+
+    <!-- Referenz-Kunden Logo-Karussell -->
+    <div class="clients-section" data-aos="fade-up">
+      <h3>Vertrauen Sie uns – Unsere Referenzkunden</h3>
+      <div class="clients-carousel">
+        <div class="clients-track">
+          <div class="client-logo">
+            <img src="Referenzlogos/Logo-Agas-Naildesign.png" alt="Agas Naildesign" />
+          </div>
+          <div class="client-logo">
+            <img src="Referenzlogos/logo-hairluxury.png" alt="Hair Luxury" />
+          </div>
+          <div class="client-logo">
+            <img src="Referenzlogos/logo.png" alt="Referenzkunde" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <style>
+      .clients-section {
+        padding: 60px 20px;
+        max-width: 100vw;
+        margin: 0 auto;
+        text-align: center;
+      }
+      .clients-section h3 {
+        color: silver;
+        font-size: 1.8rem;
+        margin-bottom: 40px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+      }
+      .clients-carousel {
+        width: 100vw;
+        max-width: 100vw;
+        min-width: 100vw;
+        margin-left: 50%;
+        transform: translateX(-50%);
+        overflow: hidden;
+        position: relative;
+        background: none;
+        border-radius: 0;
+        padding: 40px 0;
+        box-shadow: none;
+      }
+      .clients-track {
+        display: flex;
+        align-items: center;
+        gap: 120px;
+        will-change: transform;
+        transition: none;
+      }
+      .client-logo {
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.4s ease, filter 0.4s ease;
+        background: none;
+        border: none;
+        box-shadow: none;
+      }
+      .client-logo img {
+        max-height: 160px;
+        max-width: 340px;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        filter: grayscale(1) brightness(0.8);
+        opacity: 0.7;
+        transition: all 0.4s ease;
+        border: none;
+        border-radius: 0;
+        padding: 0;
+        background: none;
+        box-shadow: none;
+      }
+      .client-logo:hover img {
+        filter: grayscale(0) brightness(1.15);
+        opacity: 1;
+        transform: scale(1.12);
+        box-shadow: none;
+      }
+      @media (max-width: 900px) {
+        .clients-track {
+          gap: 60px;
+        }
+        .client-logo img {
+          max-height: 100px;
+          max-width: 200px;
+        }
+      }
+      @media (max-width: 600px) {
+        .clients-section {
+          padding: 30px 5px;
+        }
+        .clients-carousel {
+          padding: 20px 0;
+        }
+        .clients-track {
+          gap: 30px;
+        }
+        .client-logo img {
+          max-height: 60px;
+          max-width: 120px;
+        }
+      }
+    </style>
+
+    <script>
+    window.addEventListener('load', function() {
+      const track = document.querySelector('.clients-track');
+      const carousel = document.querySelector('.clients-carousel');
+      if (!track || !carousel) return;
+      // Ursprüngliche Logos sichern
+      const originalLogos = Array.from(track.children);
+      // Track leeren
+      track.innerHTML = '';
+      // Logos so oft duplizieren, bis Track mindestens 2x Carousel-Breite
+      let minWidth = carousel.offsetWidth * 2;
+      let currentWidth = 0;
+      let loops = 0;
+      while (currentWidth < minWidth && loops < 20) { // Sicherheitsgrenze
+        originalLogos.forEach(logo => track.appendChild(logo.cloneNode(true)));
+        currentWidth = track.offsetWidth;
+        loops++;
+      }
+
+      // Jetzt Animation wie gehabt
+      let groupWidth = 0;
+      let pos = 0;
+      let speed = 0.5;
+      let paused = false;
+
+      // Breite der ersten Logo-Gruppe (einmal alle Originale)
+      for (let i = 0; i < originalLogos.length; i++) {
+        groupWidth += track.children[i].offsetWidth;
+        if (i < originalLogos.length - 1) {
+          const style = getComputedStyle(track);
+          groupWidth += parseInt(style.gap || 0, 10);
+        }
+      }
+
+      function animate() {
+        if (!paused) {
+          pos -= speed;
+          if (Math.abs(pos) >= groupWidth) pos = 0;
+          track.style.transform = `translateX(${pos}px)`;
+        }
+        requestAnimationFrame(animate);
+      }
+
+      track.parentElement.addEventListener('mouseenter', () => paused = true);
+      track.parentElement.addEventListener('mouseleave', () => paused = false);
+
+      setTimeout(() => {
+        animate();
+      }, 100);
+    });
+    </script>
 
     <div class="cta" data-aos="zoom-in">
       <h2>Bereit für den nächsten Wachstumsschritt?</h2>

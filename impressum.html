@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Integrow – Impressum</title>
+  <link rel="icon" type="image/png" href="Integrow-Favicon.png">
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
   <style>
     body {
@@ -208,177 +209,147 @@
     </p>
   </div>
 
-  <!-- Referenz-Logos Laufband -->
-  <div class="logo-marquee-container" aria-label="Referenzkunden">
-    <div class="logo-marquee-track" id="logo-marquee-track">
-      <!-- Logos für nahtlosen Loop (2x für Endlos-Animation) -->
-      <img src="https://dummyimage.com/120x48/222/fff&text=LOGO+1" alt="Kundenlogo 1" />
-      <img src="https://dummyimage.com/120x48/222/fff&text=LOGO+2" alt="Kundenlogo 2" />
-      <img src="https://dummyimage.com/120x48/222/fff&text=LOGO+3" alt="Kundenlogo 3" />
-      <img src="https://dummyimage.com/120x48/222/fff&text=LOGO+4" alt="Kundenlogo 4" />
-      <img src="https://dummyimage.com/120x48/222/fff&text=LOGO+5" alt="Kundenlogo 5" />
-      <img src="https://dummyimage.com/120x48/222/fff&text=LOGO+6" alt="Kundenlogo 6" />
-      <img src="https://dummyimage.com/120x48/222/fff&text=LOGO+7" alt="Kundenlogo 7" />
-      <img src="https://dummyimage.com/120x48/222/fff&text=LOGO+8" alt="Kundenlogo 8" />
-      <!-- Kopie für Endlos-Loop -->
-      <img src="https://dummyimage.com/120x48/222/fff&text=LOGO+1" alt="Kundenlogo 1" />
-      <img src="https://dummyimage.com/120x48/222/fff&text=LOGO+2" alt="Kundenlogo 2" />
-      <img src="https://dummyimage.com/120x48/222/fff&text=LOGO+3" alt="Kundenlogo 3" />
-      <img src="https://dummyimage.com/120x48/222/fff&text=LOGO+4" alt="Kundenlogo 4" />
-      <img src="https://dummyimage.com/120x48/222/fff&text=LOGO+5" alt="Kundenlogo 5" />
-      <img src="https://dummyimage.com/120x48/222/fff&text=LOGO+6" alt="Kundenlogo 6" />
-      <img src="https://dummyimage.com/120x48/222/fff&text=LOGO+7" alt="Kundenlogo 7" />
-      <img src="https://dummyimage.com/120x48/222/fff&text=LOGO+8" alt="Kundenlogo 8" />
+  <!-- Referenz-Kunden Logo-Karussell -->
+  <div class="clients-section" data-aos="fade-up">
+    <h3>Vertrauen Sie uns - Unsere Referenzkunden</h3>
+    <div class="clients-carousel">
+      <div class="clients-track">
+        <!-- Erste Reihe Logos -->
+        <div class="client-logo">
+          <img src="Referenzlogos/Logo-Agas-Naildesign.png" alt="Agas Naildesign" />
+        </div>
+        <div class="client-logo">
+          <img src="Referenzlogos/logo-hairluxury.png" alt="Hair Luxury" />
+        </div>
+        <div class="client-logo">
+          <img src="Referenzlogos/logo.png" alt="Referenzkunde" />
+        </div>
+        <!-- Duplikate für nahtlosen Loop -->
+        <div class="client-logo">
+          <img src="Referenzlogos/Logo-Agas-Naildesign.png" alt="Agas Naildesign" />
+        </div>
+        <div class="client-logo">
+          <img src="Referenzlogos/logo-hairluxury.png" alt="Hair Luxury" />
+        </div>
+        <div class="client-logo">
+          <img src="Referenzlogos/logo.png" alt="Referenzkunde" />
+        </div>
+      </div>
     </div>
-    <div class="logo-marquee-hover left"></div>
-    <div class="logo-marquee-hover right"></div>
   </div>
+
   <style>
-    .logo-marquee-container {
-      width: 100%;
+    .clients-section {
+      padding: 60px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    
+    .clients-section h3 {
+      color: silver;
+      font-size: 1.8rem;
+      margin-bottom: 40px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    
+    .clients-carousel {
+      width: 100vw;
+      max-width: 100vw;
+      min-width: 100vw;
+      margin-left: 50%;
+      transform: translateX(-50%);
       overflow: hidden;
-      background: none;
-      margin: 0 auto 40px auto;
-      padding: 18px 0 10px 0;
-      box-sizing: border-box;
-      border-bottom: 1px solid #222;
-      border-top: 1px solid #222;
       position: relative;
-      min-height: 70px;
+      background: none;
+      border-radius: 0;
+      padding: 40px 0;
+      box-shadow: none;
+    }
+    
+    .clients-track {
+      display: flex;
+      align-items: center;
+      gap: 120px;
+      will-change: transform;
+      /* Keine CSS-Animation mehr! */
+      transition: none;
+    }
+    
+    .client-logo {
+      flex-shrink: 0;
       display: flex;
       align-items: center;
       justify-content: center;
+      transition: transform 0.4s ease, filter 0.4s ease;
+      background: none;
+      border: none;
+      box-shadow: none;
     }
-    .logo-marquee-track {
-      display: flex;
-      align-items: center;
-      gap: 48px;
-      will-change: transform;
-      pointer-events: auto;
-      /* Keine CSS-Transition, Animation läuft über JS */
-    }
-    .logo-marquee-track img {
-      height: 48px;
-      width: 120px;
+    
+    .client-logo img {
+      max-height: 160px;
+      max-width: 340px;
+      width: auto;
+      height: auto;
       object-fit: contain;
-      filter: grayscale(1) brightness(0.98) drop-shadow(0 2px 8px #0006);
-      opacity: 0.85;
-      transition: filter 0.2s, opacity 0.2s, transform 0.2s;
-      background: #fff1;
-      border-radius: 8px;
-      padding: 6px 18px;
-      box-sizing: border-box;
-      user-select: none;
-      pointer-events: auto;
-      cursor: pointer;
+      filter: grayscale(1) brightness(0.8);
+      opacity: 0.7;
+      transition: all 0.4s ease;
+      border: none;
+      border-radius: 0;
+      padding: 0;
+      background: none;
+      box-shadow: none;
     }
-    .logo-marquee-track img:hover {
-      filter: grayscale(0) brightness(1.1) drop-shadow(0 0 12px #FFD70088);
+    
+    .client-logo:hover img {
+      filter: grayscale(0) brightness(1.15);
       opacity: 1;
-      transform: scale(1.08);
-      background: #222;
+      transform: scale(1.12);
+      box-shadow: none;
     }
-    .logo-marquee-hover {
-      position: absolute;
-      top: 0;
-      width: 33.33%;
-      height: 100%;
-      z-index: 2;
-      cursor: pointer;
-      background: transparent;
-      opacity: 0;
-      transition: opacity 0.2s;
-      pointer-events: auto;
+    
+    @keyframes scrollLogos {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(-50%);
+      }
     }
-    .logo-marquee-hover.right {
-      right: 0;
-      left: auto;
+    
+    .clients-carousel:hover .clients-track {
+      animation-play-state: paused;
     }
-    .logo-marquee-hover.left {
-      left: 0;
-      right: auto;
-    }
-    .logo-marquee-hover:hover {
-      opacity: 0.10;
-      background: linear-gradient(to right, #181818cc 60%, transparent 100%);
-    }
-    .logo-marquee-hover.right:hover {
-      background: linear-gradient(to left, #181818cc 60%, transparent 100%);
+    
+    @media (max-width: 900px) {
+      .clients-track {
+        gap: 60px;
+      }
+      .client-logo img {
+        max-height: 100px;
+        max-width: 200px;
+      }
     }
     @media (max-width: 600px) {
-      .logo-marquee-container {
-        min-height: 44px;
-        padding: 8px 0 6px 0;
+      .clients-section {
+        padding: 30px 5px;
       }
-      .logo-marquee-track img {
-        height: 32px;
-        width: 80px;
-        padding: 4px 10px;
-        gap: 18px;
+      .clients-carousel {
+        padding: 20px 0;
       }
-      .logo-marquee-track {
-        gap: 24px;
+      .clients-track {
+        gap: 30px;
       }
-      .logo-marquee-hover {
-        width: 33.33%;
+      .client-logo img {
+        max-height: 60px;
+        max-width: 120px;
       }
     }
   </style>
-  <script>
-    // Endlos animierter Logo-Slider (Loop, smooth, keine Lücken, echtes Kreislauf-Verhalten)
-    (function() {
-      const track = document.getElementById('logo-marquee-track');
-      let pos = 0;
-      let speed = 0.7;
-      let direction = 1;
-      let hoverLeft = false;
-      let hoverRight = false;
-      let reqId;
 
-      function getLoopWidth() {
-        // Die Hälfte der Track-Breite, weil die Logos 2x hintereinander stehen
-        return track.scrollWidth / 2;
-      }
-
-      function animate() {
-        const loopWidth = getLoopWidth();
-        pos -= speed * direction;
-
-        // Nahtloser Loop: Wenn ein kompletter Satz durch ist, zurücksetzen
-        if (pos <= -loopWidth) pos += loopWidth;
-        if (pos >= 0) pos -= loopWidth;
-
-        track.style.transform = `translate3d(${pos}px,0,0)`;
-        reqId = requestAnimationFrame(animate);
-      }
-
-      function setDirection(newDir) {
-        direction = newDir;
-      }
-      function setSpeed(newSpeed) {
-        speed = newSpeed;
-      }
-      function handleHover(area, isHover) {
-        if (area === 'left') hoverLeft = isHover;
-        if (area === 'right') hoverRight = isHover;
-        if (hoverLeft && !hoverRight) {
-          setDirection(-1);
-          setSpeed(1.5);
-        } else if (hoverRight && !hoverLeft) {
-          setDirection(1);
-          setSpeed(1.5);
-        } else {
-          setSpeed(0.7);
-          setDirection(1);
-        }
-      }
-      document.querySelector('.logo-marquee-hover.left').addEventListener('mouseenter', () => handleHover('left', true));
-      document.querySelector('.logo-marquee-hover.left').addEventListener('mouseleave', () => handleHover('left', false));
-      document.querySelector('.logo-marquee-hover.right').addEventListener('mouseenter', () => handleHover('right', true));
-      document.querySelector('.logo-marquee-hover.right').addEventListener('mouseleave', () => handleHover('right', false));
-      animate();
-    })();
-  </script>
   <footer>
     &copy; 2025 Integrow. Digital Elegance. Klar. Stark. Skaliert.
   </footer>
@@ -407,59 +378,7 @@
 
   requestAnimationFrame(raf)
 </script>
-<script>
-(function() {
-  // Endlos-Loop-Animation
-  const track = document.querySelector('.logo-carousel-mouse-track');
-  const inners = track.querySelectorAll('.logo-carousel-mouse-inner');
-  let pos = 0;
-  let speed = 0.7; // px per frame
-  let direction = 1; // 1 = rechts nach links, -1 = links nach rechts
-  let reqId;
-  let hoverLeft = false;
-  let hoverRight = false;
 
-  function animate() {
-    // Endlos-Loop: Wenn eine Hälfte komplett raus ist, zurücksetzen
-    const innerWidth = inners[0].offsetWidth;
-    pos -= speed * direction;
-    if (pos <= -innerWidth) pos += innerWidth;
-    if (pos >= 0) pos -= innerWidth;
-    track.style.transform = `translateX(${pos}px)`;
-    reqId = requestAnimationFrame(animate);
-  }
-
-  function setDirection(newDir) {
-    direction = newDir;
-  }
-
-  function setSpeed(newSpeed) {
-    speed = newSpeed;
-  }
-
-  function handleHover(area, isHover) {
-    if (area === 'left') hoverLeft = isHover;
-    if (area === 'right') hoverRight = isHover;
-    if (hoverLeft && !hoverRight) {
-      setDirection(-1);
-      setSpeed(1.5);
-    } else if (hoverRight && !hoverLeft) {
-      setDirection(1);
-      setSpeed(1.5);
-    } else {
-      setSpeed(0.7);
-      setDirection(1);
-    }
-  }
-
-  document.querySelector('.logo-carousel-mouse-area.left').addEventListener('mouseenter', () => handleHover('left', true));
-  document.querySelector('.logo-carousel-mouse-area.left').addEventListener('mouseleave', () => handleHover('left', false));
-  document.querySelector('.logo-carousel-mouse-area.right').addEventListener('mouseenter', () => handleHover('right', true));
-  document.querySelector('.logo-carousel-mouse-area.right').addEventListener('mouseleave', () => handleHover('right', false));
-
-  animate();
-})();
-</script>
   <!-- Parallax-Effekt für Header-Background -->
   <script>
     window.addEventListener('DOMContentLoaded', function() {
@@ -477,5 +396,50 @@
       parallaxHeader();
     });
   </script>
+
+<script>
+(function() {
+  const track = document.querySelector('.clients-track');
+  if (!track) return;
+  // Logos sichern und duplizieren
+  const logos = Array.from(track.children);
+  logos.forEach(logo => track.appendChild(logo.cloneNode(true)));
+
+  let groupWidth = 0;
+  let pos = 0;
+  let speed = 0.5;
+  let paused = false;
+
+  // Nach dem Rendern messen!
+  function measureAndStart() {
+    groupWidth = 0;
+    for (let i = 0; i < logos.length; i++) {
+      groupWidth += track.children[i].offsetWidth;
+      if (i < logos.length - 1) {
+        const style = getComputedStyle(track);
+        groupWidth += parseInt(style.gap || 0, 10);
+      }
+    }
+    animate();
+  }
+
+  function animate() {
+    if (!paused) {
+      pos -= speed;
+      if (Math.abs(pos) >= groupWidth) pos = 0;
+      track.style.transform = `translateX(${pos}px)`;
+    }
+    requestAnimationFrame(animate);
+  }
+
+  track.parentElement.addEventListener('mouseenter', () => paused = true);
+  track.parentElement.addEventListener('mouseleave', () => paused = false);
+
+  window.addEventListener('load', () => {
+    requestAnimationFrame(measureAndStart);
+  });
+})();
+</script>
+
 </body>
 </html>
