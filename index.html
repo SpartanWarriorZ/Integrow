@@ -180,6 +180,12 @@
       .feature-text--hightech {
         justify-content: flex-end;
         padding-bottom: 80px;
+        /* Nur auf Desktop mehr Abstand nach unten */
+      }
+      @media (min-width: 901px) {
+        .feature-text--hightech {
+          padding-top: 120px;
+        }
       }
       .feature-text h3 {
         color: silver;
@@ -448,6 +454,9 @@
           margin-right: auto;
           text-align: center;
           word-break: break-word;
+          font-size: 2rem;
+          max-width: 95vw;
+          margin-bottom: 8px;
         }
       }
       .feature-text h3,
@@ -651,7 +660,7 @@
           flex-direction: column;
           align-items: center;
           text-align: center;
-          gap: 14px;
+          gap: 18px;
           margin-bottom: 32px;
         }
         .feature img {
@@ -669,20 +678,27 @@
         }
         .feature-text h3 {
           font-size: 1.08rem;
+          margin-bottom: 8px;
         }
         .feature-text p {
-          font-size: 0.95rem;
+          font-size: 0.98rem;
+          margin-bottom: 10px;
         }
         .mission-bullets {
-          font-size: 0.98rem;
-          padding-left: 1em;
+          font-size: 1.08rem;
+          padding-left: 1.2em;
           max-width: 95vw;
-          margin: 12px auto 0 auto;
+          margin: 14px auto 0 auto;
+          text-align: left;
+          line-height: 1.7;
         }
         .mission-bullets li {
           text-align: left;
           word-break: break-word;
-          padding-left: 0.2em;
+          padding-left: 0.5em;
+          margin-bottom: 8px;
+          font-size: 1.02rem;
+          line-height: 1.7;
         }
         .leistungen-list {
           font-size: 1.2rem;
@@ -794,6 +810,110 @@
       .flipcard-back .flip-underline-title .flip-underline.active-underline {
         width: 100%;
         max-width: 100%;
+      }
+      .clients-section {
+        padding: 60px 20px;
+        max-width: 100vw;
+        margin: 0 auto;
+        text-align: center;
+      }
+      .clients-section h3 {
+        color: silver;
+        font-size: 1.8rem;
+        margin-bottom: 40px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+      }
+      .clients-carousel {
+        overflow-x: auto;
+        overflow-y: hidden;
+        width: 100vw;
+        max-width: 100vw;
+        min-width: 100vw;
+        margin-left: 50%;
+        transform: translateX(-50%);
+        position: relative;
+        background: none;
+        border-radius: 0;
+        padding: 40px 0;
+        box-shadow: none;
+        cursor: grab;
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+        scrollbar-width: none;
+      }
+      .clients-carousel::-webkit-scrollbar {
+        display: none;
+      }
+      .clients-track {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center;
+        gap: 120px;
+        will-change: transform;
+        transition: none;
+        min-width: 600px;
+      }
+      .client-logo {
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: none;
+        border: none;
+        box-shadow: none;
+        user-select: none;
+        cursor: pointer;
+        -webkit-user-select: none;
+      }
+      .client-logo img {
+        max-height: 160px;
+        max-width: 340px;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        filter: grayscale(1) brightness(0.8);
+        opacity: 0.7;
+        border: none;
+        border-radius: 0;
+        padding: 0;
+        background: none;
+        box-shadow: none;
+        user-select: none;
+        pointer-events: auto;
+        cursor: pointer;
+        transition: all 0.4s ease;
+        -webkit-user-drag: none;
+      }
+      .client-logo:hover img {
+        filter: grayscale(0) brightness(1.15);
+        opacity: 1;
+        transform: scale(1.12);
+        box-shadow: none;
+      }
+      @media (max-width: 900px) {
+        .clients-track {
+          gap: 60px !important;
+        }
+        .client-logo img {
+          max-height: 100px;
+          max-width: 200px;
+        }
+      }
+      @media (max-width: 600px) {
+        .clients-section {
+          padding: 30px 5px;
+        }
+        .clients-carousel {
+          padding: 20px 0;
+        }
+        .clients-track {
+          gap: 30px !important;
+        }
+        .client-logo img {
+          max-height: 60px;
+          max-width: 120px;
+        }
       }
     </style>
     <link
@@ -992,97 +1112,6 @@
       </div>
     </div>
 
-    <style>
-      .clients-section {
-        padding: 60px 20px;
-        max-width: 100vw;
-        margin: 0 auto;
-        text-align: center;
-      }
-      .clients-section h3 {
-        color: silver;
-        font-size: 1.8rem;
-        margin-bottom: 40px;
-        font-weight: 600;
-        letter-spacing: 0.5px;
-      }
-      .clients-carousel {
-        width: 100vw;
-        max-width: 100vw;
-        min-width: 100vw;
-        margin-left: 50%;
-        transform: translateX(-50%);
-        overflow: hidden;
-        position: relative;
-        background: none;
-        border-radius: 0;
-        padding: 40px 0;
-        box-shadow: none;
-      }
-      .clients-track {
-        display: flex;
-        align-items: center;
-        gap: 120px;
-        will-change: transform;
-        transition: none;
-      }
-      .client-logo {
-        flex-shrink: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: transform 0.4s ease, filter 0.4s ease;
-        background: none;
-        border: none;
-        box-shadow: none;
-      }
-      .client-logo img {
-        max-height: 160px;
-        max-width: 340px;
-        width: auto;
-        height: auto;
-        object-fit: contain;
-        filter: grayscale(1) brightness(0.8);
-        opacity: 0.7;
-        transition: all 0.4s ease;
-        border: none;
-        border-radius: 0;
-        padding: 0;
-        background: none;
-        box-shadow: none;
-      }
-      .client-logo:hover img {
-        filter: grayscale(0) brightness(1.15);
-        opacity: 1;
-        transform: scale(1.12);
-        box-shadow: none;
-      }
-      @media (max-width: 900px) {
-        .clients-track {
-          gap: 60px;
-        }
-        .client-logo img {
-          max-height: 100px;
-          max-width: 200px;
-        }
-      }
-      @media (max-width: 600px) {
-        .clients-section {
-          padding: 30px 5px;
-        }
-        .clients-carousel {
-          padding: 20px 0;
-        }
-        .clients-track {
-          gap: 30px;
-        }
-        .client-logo img {
-          max-height: 60px;
-          max-width: 120px;
-        }
-      }
-    </style>
-
     <script>
     window.addEventListener('load', function() {
       const track = document.querySelector('.clients-track');
@@ -1102,12 +1131,63 @@
         loops++;
       }
 
-      // Jetzt Animation wie gehabt
+      // --- Drag/Swipe-Scroll für Desktop & Mobil ---
+      let isDown = false;
+      let startX;
+      let scrollLeft;
+      let isTouch = false;
+
+      // Touch Events (Mobil)
+      carousel.addEventListener('touchstart', (e) => {
+        isDown = true;
+        isTouch = true;
+        startX = e.touches[0].pageX - carousel.offsetLeft;
+        scrollLeft = carousel.scrollLeft;
+      });
+      carousel.addEventListener('touchmove', (e) => {
+        if (!isDown) return;
+        const x = e.touches[0].pageX - carousel.offsetLeft;
+        const walk = (startX - x);
+        carousel.scrollLeft = scrollLeft + walk;
+      });
+      carousel.addEventListener('touchend', () => {
+        isDown = false;
+        isTouch = false;
+      });
+
+      // Maus-Drag (Desktop)
+      carousel.addEventListener('mousedown', (e) => {
+        if (e.button !== 0) return; // Nur linker Mausklick
+        isDown = true;
+        isTouch = false;
+        startX = e.pageX - carousel.offsetLeft;
+        scrollLeft = carousel.scrollLeft;
+        carousel.style.cursor = 'grabbing';
+      });
+      carousel.addEventListener('mouseleave', () => {
+        isDown = false;
+        carousel.style.cursor = 'grab';
+      });
+      carousel.addEventListener('mouseup', () => {
+        isDown = false;
+        carousel.style.cursor = 'grab';
+      });
+      carousel.addEventListener('mousemove', (e) => {
+        if (!isDown || isTouch) return;
+        const x = e.pageX - carousel.offsetLeft;
+        const walk = (startX - x);
+        carousel.scrollLeft = scrollLeft + walk;
+      });
+
+      // --- Automatische Animation nur auf Desktop ---
+      // Autoscroll jetzt auch auf Mobil aktiv
+      function isMobile() {
+        return false;
+      }
       let groupWidth = 0;
       let pos = 0;
       let speed = 0.5;
       let paused = false;
-
       // Breite der ersten Logo-Gruppe (einmal alle Originale)
       for (let i = 0; i < originalLogos.length; i++) {
         groupWidth += track.children[i].offsetWidth;
@@ -1116,23 +1196,107 @@
           groupWidth += parseInt(style.gap || 0, 10);
         }
       }
-
       function animate() {
-        if (!paused) {
+        if (!paused && !isMobile()) {
           pos -= speed;
-          if (Math.abs(pos) >= groupWidth) pos = 0;
+          if (Math.abs(pos) >= groupWidth) {
+            pos += groupWidth;
+          }
           track.style.transform = `translateX(${pos}px)`;
         }
         requestAnimationFrame(animate);
       }
-
       track.parentElement.addEventListener('mouseenter', () => paused = true);
       track.parentElement.addEventListener('mouseleave', () => paused = false);
-
       setTimeout(() => {
         animate();
       }, 100);
     });
+    </script>
+    <!-- Mission-Bullets: Animationen nacheinander triggern -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        function isMobile() {
+          return window.innerWidth <= 900;
+        }
+        if (isMobile()) {
+          // Mobil: Sichtbarkeit per Intersection Observer
+          document.querySelectorAll('.feature').forEach(feature => {
+            const bullets = feature.querySelector('.mission-bullets');
+            const bulletLis = bullets.querySelectorAll('li');
+            // Anfangszustand: unsichtbar
+            bullets.style.opacity = '0';
+            bullets.style.visibility = 'hidden';
+            bulletLis.forEach(li => {
+              li.style.animation = 'none';
+              li.style.opacity = '0';
+              li.style.transform = 'translateX(-40px)';
+            });
+          });
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              const feature = entry.target;
+              const bullets = feature.querySelector('.mission-bullets');
+              const bulletLis = bullets.querySelectorAll('li');
+              // Wir merken uns, ob die Bullets schon einmal sichtbar waren
+              if (!feature._bulletsShown) feature._bulletsShown = false;
+              if (entry.isIntersecting && !feature._bulletsShown) {
+                bullets.style.opacity = '1';
+                bullets.style.visibility = 'visible';
+                const delays = [0.08, 0.22, 0.36, 0.5];
+                bulletLis.forEach((li, idx) => {
+                  li.style.animation = 'none';
+                  li.style.opacity = '0';
+                  li.style.transform = 'translateX(-40px)';
+                  void li.offsetWidth;
+                  li.style.animation = `fadeInMissionLeft 0.5s cubic-bezier(0.4, 1.6, 0.6, 1) forwards`;
+                  li.style.animationDelay = (delays[idx] || 0) + 's';
+                });
+                feature._bulletsShown = true;
+              }
+              if (feature._bulletsShown) {
+                bullets.style.opacity = '1';
+                bullets.style.visibility = 'visible';
+                bulletLis.forEach(li => {
+                  li.style.opacity = '1';
+                  li.style.transform = 'translateX(0)';
+                  li.style.animationDelay = '0s';
+                });
+              }
+            });
+          }, { threshold: 0.8 });
+          document.querySelectorAll('.feature').forEach(feature => {
+            observer.observe(feature);
+          });
+        } else {
+          // Desktop: wie gehabt (Hover/Fokus/Touch)
+          document.querySelectorAll('.feature').forEach(feature => {
+            const bullets = feature.querySelectorAll('.mission-bullets li');
+            function resetBulletsAnimation() {
+              if (!feature.querySelector('.mission-bullets').classList.contains('bullets-animated')) {
+                bullets.forEach((li) => {
+                  li.style.animation = 'none';
+                  void li.offsetWidth;
+                  li.style.animation = '';
+                });
+                feature.querySelector('.mission-bullets').classList.add('bullets-animated');
+              }
+            }
+            feature.addEventListener('mouseenter', resetBulletsAnimation);
+            feature.addEventListener('focusin', resetBulletsAnimation);
+            feature.addEventListener('touchstart', resetBulletsAnimation);
+            feature.addEventListener('mouseleave', function() {
+              feature.querySelector('.mission-bullets').classList.remove('bullets-animated');
+            });
+            feature.addEventListener('focusout', function() {
+              feature.querySelector('.mission-bullets').classList.remove('bullets-animated');
+            });
+            feature.addEventListener('touchend', function() {
+              feature.querySelector('.mission-bullets').classList.remove('bullets-animated');
+            });
+          });
+        }
+      });
     </script>
 
     <div class="cta" data-aos="zoom-in">
@@ -1298,6 +1462,15 @@
               }
             }, 550);
           });
+        });
+      });
+    </script>
+    <!-- Ziehen/Markieren von Logos im Karussell verhindern -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.client-logo img').forEach(function(img) {
+          img.addEventListener('dragstart', function(e) { e.preventDefault(); });
+          img.addEventListener('mousedown', function(e) { e.preventDefault(); });
         });
       });
     </script>
