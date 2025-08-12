@@ -2283,6 +2283,33 @@
           position: relative;
           overflow: hidden;
           font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          display: flex;          /* Block-level für zentrierbares Auto-Margin */
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          margin: 28px auto 0 auto; /* immer zentriert */
+          padding: 16px 28px;
+          border-radius: 14px;
+          border: 1.5px solid rgba(255,215,0,0.55);
+          background: linear-gradient(180deg,#232323,#1a1a1a);
+          color: #ffd700;
+          font-weight: 800;
+          letter-spacing: 0.4px;
+          font-size: 1.05rem;
+          cursor: pointer;
+          box-shadow: 0 6px 24px rgba(255,215,0,0.12), 0 0 0 1px rgba(255,215,0,0.18) inset;
+          transition: transform .18s ease, box-shadow .25s ease, color .25s ease, border-color .25s ease, background .25s ease;
+          width: fit-content;
+          max-width: 100%;
+        }
+        #leistungen-termin-btn:hover, #leistungen-termin-btn:focus-visible {
+          transform: translateY(-1px);
+          box-shadow: 0 10px 34px rgba(255,215,0,0.2), 0 0 0 1px rgba(255,215,0,0.45) inset;
+          outline: none;
+        }
+        #leistungen-termin-btn:active {
+          transform: translateY(0);
+          box-shadow: 0 6px 20px rgba(255,215,0,0.16), 0 0 0 1px rgba(255,215,0,0.35) inset;
         }
         #leistungen-termin-btn::before {
           content: '';
@@ -2293,7 +2320,7 @@
           background: linear-gradient(90deg, #ffd700 0%, #fffbe6 100%);
           transition: width 0.5s cubic-bezier(.4,1.6,.6,1);
         }
-        #leistungen-termin-btn:hover::before, #leistungen-termin-btn:focus::before {
+        #leistungen-termin-btn:hover::before {
           width: 100%;
         }
         #leistungen-termin-btn span {
@@ -2304,7 +2331,16 @@
         #leistungen-termin-btn:hover span, #leistungen-termin-btn:focus span {
           color: #181818;
         }
-        /* Button-Styling ist oberhalb definiert; dieser doppelte Block wurde entfernt, um CSS-Fehler zu vermeiden */
+        /* Mobile Anpassungen für Button */
+        @media (max-width: 600px) {
+          #leistungen-termin-btn {
+            width: 92vw;
+            max-width: 420px;
+            padding: 14px 20px;
+            border-radius: 12px;
+            font-size: 1rem;
+          }
+        }
 
       @media (max-width: 600px) {
         .logo-img {
@@ -2654,7 +2690,7 @@
           </ul>
         </div>
       </div>
-      <button id="leistungen-termin-btn" style="display:block;margin:28px auto 0 auto;padding:18px 44px;font-size:1.15rem;font-weight:700;" tabindex="0"><span>Termin buchen</span></button>
+      <button id="leistungen-termin-btn" tabindex="0"><span>Termin buchen</span></button>
       <div style="height:60px;"></div>
     </section>
 
@@ -3074,8 +3110,8 @@
       };
     </script>
     <!-- Calendly Modal für Terminbuchung mit Captcha-Step -->
-    <div id="calendly-modal-overlay" style="display:none;position:fixed;z-index:9999;left:0;top:0;width:100vw;height:100vh;background:rgba(10,10,20,0.75);backdrop-filter:blur(4px);justify-content:center;align-items:center;padding:12px;">
-      <div id="calendly-modal-content" style="background:#181818;border-radius:18px;max-width:96vw;width:min(580px,96vw);max-height:92vh;box-shadow:0 8px 48px 0 rgba(0,0,0,0.35),0 0 0 1.5px #ffd70022;padding:0;position:relative;display:flex;flex-direction:column;align-items:center;overflow:hidden;box-sizing:border-box;">
+    <div id="calendly-modal-overlay" style="display:none;position:fixed;z-index:9999;left:0;top:0;right:0;bottom:0;background:rgba(10,10,20,0.75);backdrop-filter:blur(4px);justify-content:center;align-items:center;padding:12px;box-sizing:border-box;">
+      <div id="calendly-modal-content" style="background:#181818;border-radius:18px;max-width:96vw;width:min(580px,96vw);max-height:92vh;box-shadow:0 8px 48px 0 rgba(0,0,0,0.35),0 0 0 1.5px #ffd70022;padding:0;position:relative;display:flex;flex-direction:column;align-items:center;overflow:hidden;box-sizing:border-box;margin:0 auto;">
         <button id="close-calendly-modal" style="position:absolute;top:10px;right:10px;background:#ffd700;color:#181818;border:none;border-radius:50%;width:36px;height:36px;font-size:1.5rem;font-weight:700;cursor:pointer;z-index:10;">&times;</button>
         <div id="slider-captcha-step" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:200px;padding:40px 20px;background:linear-gradient(135deg,#1a1a1a,#222);width:100%;">
           <div class="captcha-title" style="text-align:center;margin-bottom:30px;color:#ffd700;font-weight:600;font-size:1.3rem;text-shadow:0 0 15px rgba(255,215,0,0.5);letter-spacing:0.5px;">Sicherheitsabfrage</div>
@@ -3094,7 +3130,10 @@
         window.__sliderCalendlyUrl = 'https://calendly.com/leonidas-pyka/30min?background_color=000000&text_color=FFFFFF&primary_color=FFD700&hide_landing_page_details=1&hide_event_type_details=1&a1=' + encodeURIComponent(title);
         document.getElementById('slider-captcha-step').style.display = 'flex';
         document.getElementById('calendly-iframe').style.display = 'none';
-        document.getElementById('calendly-modal-overlay').style.display = 'flex';
+        const ov = document.getElementById('calendly-modal-overlay');
+        const mc = document.getElementById('calendly-modal-content');
+        ov.style.display = 'flex';
+        if (mc) { mc.style.margin = '0 auto'; }
         // Render Captcha
         if (!window.__sliderCaptchaRendered) {
           if (window.grecaptcha) {
