@@ -3074,15 +3074,15 @@
       };
     </script>
     <!-- Calendly Modal für Terminbuchung mit Captcha-Step -->
-    <div id="calendly-modal-overlay" style="display:none;position:fixed;z-index:9999;left:0;top:0;width:100vw;height:100vh;background:rgba(10,10,20,0.75);backdrop-filter:blur(4px);justify-content:center;align-items:center;">
-      <div id="calendly-modal-content" style="background:#181818;border-radius:18px;max-width:98vw;width:420px;max-height:90vh;box-shadow:0 8px 48px 0 rgba(0,0,0,0.35),0 0 0 1.5px #ffd70022;padding:0;position:relative;display:flex;flex-direction:column;align-items:center;">
+    <div id="calendly-modal-overlay" style="display:none;position:fixed;z-index:9999;left:0;top:0;width:100vw;height:100vh;background:rgba(10,10,20,0.75);backdrop-filter:blur(4px);justify-content:center;align-items:center;padding:12px;">
+      <div id="calendly-modal-content" style="background:#181818;border-radius:18px;max-width:96vw;width:min(580px,96vw);max-height:92vh;box-shadow:0 8px 48px 0 rgba(0,0,0,0.35),0 0 0 1.5px #ffd70022;padding:0;position:relative;display:flex;flex-direction:column;align-items:center;overflow:hidden;">
         <button id="close-calendly-modal" style="position:absolute;top:10px;right:10px;background:#ffd700;color:#181818;border:none;border-radius:50%;width:36px;height:36px;font-size:1.5rem;font-weight:700;cursor:pointer;z-index:10;">&times;</button>
         <div id="slider-captcha-step" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:200px;padding:40px 20px;background:linear-gradient(135deg,#1a1a1a,#222);width:100%;">
           <div class="captcha-title" style="text-align:center;margin-bottom:30px;color:#ffd700;font-weight:600;font-size:1.3rem;text-shadow:0 0 15px rgba(255,215,0,0.5);letter-spacing:0.5px;">Sicherheitsabfrage</div>
           <div class="captcha-subtitle" style="text-align:center;margin-bottom:25px;color:#ccc;font-size:1rem;line-height:1.5;max-width:300px;">Bitte löse das Captcha, um einen Termin zu buchen.</div>
           <div id="slider-recaptcha-container" style="display:flex;justify-content:center;margin:20px 0;padding:20px;background:rgba(255,255,255,0.05);border-radius:12px;border:1px solid rgba(255,255,255,0.1);"></div>
         </div>
-        <iframe id="calendly-iframe" src="" style="width:100%;height:80vh;min-height:520px;border:none;border-radius:0 0 18px 18px;display:none;" allowfullscreen></iframe>
+        <iframe id="calendly-iframe" src="" style="width:100%;height:70vh;min-height:480px;max-height:calc(92vh - 180px);border:none;border-radius:0 0 18px 18px;display:none;overflow:hidden;" allowfullscreen></iframe>
       </div>
     </div>
     <script>
@@ -3109,11 +3109,17 @@
         var iframe = document.getElementById('calendly-iframe');
         iframe.src = window.__sliderCalendlyUrl;
         iframe.style.display = 'block';
+        // Sicherheits-Layoutfix für iOS: nach dem Einblenden Höhe/Scroll fixieren
+        setTimeout(function(){
+          iframe.style.width = '100%';
+          iframe.style.maxWidth = '100%';
+        }, 50);
       }
       document.getElementById('close-calendly-modal').onclick = function() {
         document.getElementById('calendly-modal-overlay').style.display = 'none';
         document.getElementById('calendly-iframe').src = '';
         document.getElementById('slider-captcha-step').style.display = 'flex';
+        document.getElementById('calendly-iframe').style.display = 'none';
         if(window.grecaptcha && window.__sliderCaptchaRendered) {
           grecaptcha.reset();
         }
@@ -3123,6 +3129,7 @@
           this.style.display = 'none';
           document.getElementById('calendly-iframe').src = '';
           document.getElementById('slider-captcha-step').style.display = 'flex';
+          document.getElementById('calendly-iframe').style.display = 'none';
           if(window.grecaptcha && window.__sliderCaptchaRendered) {
             grecaptcha.reset();
           }
