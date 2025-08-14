@@ -3124,20 +3124,7 @@
         }
       };
     </script>
-    <style>
-      /* Zentrierung und Responsive-Scaling für reCAPTCHA im "Weitere Leistungen" Modal */
-      #leistungen-captcha-step { text-align: center; }
-      .leistungen-recaptcha-box { display: flex; justify-content: center; align-items: center; width: 100%; }
-      #leistungen-recaptcha-container { display: inline-block; }
-      #leistungen-recaptcha-container iframe { display: block; margin: 0 auto; }
-      @media (max-width: 380px) {
-        #leistungen-recaptcha-container { transform: scale(0.9); transform-origin: top center; }
-      }
-      @media (max-width: 340px) {
-        #leistungen-recaptcha-container { transform: scale(0.85); transform-origin: top center; }
-      }
-    </style>
-    <!-- Neues Modal für "Weitere Leistungen" (mobil + desktop), mit vorgeschaltetem reCAPTCHA -->
+    <!-- Neues Modal für "Weitere Leistungen" (mobil + desktop), ohne Captcha -->
     <div id="leistungen-modal-overlay" style="display:none;position:fixed;z-index:9999;left:0;top:0;right:0;bottom:0;background:rgba(10,10,20,0.75);backdrop-filter:blur(4px);justify-content:center;align-items:center;padding:12px;box-sizing:border-box;">
       <div id="leistungen-modal" style="background:#181818;border-radius:18px;max-width:96vw;width:min(760px,96vw);max-height:92vh;box-shadow:0 8px 48px 0 rgba(0,0,0,0.35),0 0 0 1.5px #ffd70022;padding:0;position:relative;display:flex;flex-direction:column;align-items:stretch;overflow:hidden;box-sizing:border-box;margin:0 auto;">
         <button id="leistungen-modal-close" style="position:absolute;top:10px;right:10px;background:#ffd700;color:#181818;border:none;border-radius:50%;width:36px;height:36px;font-size:1.5rem;font-weight:700;cursor:pointer;z-index:10;">&times;</button>
@@ -3148,14 +3135,7 @@
             <span id="leistungen-selected-title" style="font-weight:600;color:#fff;"></span>
           </div>
         </div>
-        <div id="leistungen-captcha-step" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:200px;padding:32px 20px;background:linear-gradient(135deg,#1a1a1a,#222);width:100%;">
-          <div style="text-align:center;margin-bottom:18px;color:#ffd700;font-weight:600;font-size:1.2rem;letter-spacing:0.4px;">Sicherheitsabfrage</div>
-          <div style="text-align:center;margin-bottom:16px;color:#ccc;font-size:0.98rem;line-height:1.5;max-width:320px;">Bitte löse das Captcha, um den Kalender zu öffnen.</div>
-          <div class="leistungen-recaptcha-box" style="display:flex;justify-content:center;margin:8px 0;padding:16px;background:rgba(255,255,255,0.05);border-radius:12px;border:1px solid rgba(255,255,255,0.1);">
-            <div id="leistungen-recaptcha-container"></div>
-          </div>
-        </div>
-        <div id="leistungen-iframe-container" style="width:100%;display:none;overflow:hidden;background:#000;">
+        <div style="width:100%;display:block;overflow:hidden;background:#000;">
           <iframe id="leistungen-iframe" src="" style="display:block;width:100%;max-width:100%;min-width:0;height:70vh;min-height:480px;max-height:calc(92vh - 140px);border:none;background:#000;" allowfullscreen></iframe>
         </div>
       </div>
@@ -3166,69 +3146,11 @@
           var ov = document.getElementById('leistungen-modal-overlay');
           var titleEl = document.getElementById('leistungen-selected-title');
           var iframe = document.getElementById('leistungen-iframe');
-          var stepC = document.getElementById('leistungen-captcha-step');
-          var stepI = document.getElementById('leistungen-iframe-container');
           if (titleEl) titleEl.textContent = title || '';
-          window.__leistungenCalendlyUrl = 'https://calendly.com/leonidas-pyka/30min?background_color=000000&text_color=FFFFFF&primary_color=FFD700&hide_landing_page_details=1&hide_event_type_details=1&a1=' + encodeURIComponent(title || '');
-          if (iframe) { iframe.src = ''; }
-          if (stepI) { stepI.style.display = 'none'; }
-          if (stepC) { stepC.style.display = 'flex'; }
+          var url = 'https://calendly.com/leonidas-pyka/30min?background_color=000000&text_color=FFFFFF&primary_color=FFD700&hide_landing_page_details=1&hide_event_type_details=1&a1=' + encodeURIComponent(title || '');
+          if (iframe) { iframe.src = url; }
           if (ov) { ov.style.display = 'flex'; }
           document.body.style.overflow = 'hidden';
-          // reCAPTCHA rendern oder zurücksetzen
-          if (window.grecaptcha) {
-            try {
-              if (window.__leistungenCaptchaId === undefined) {
-                window.__leistungenCaptchaId = grecaptcha.render('leistungen-recaptcha-container', {
-                  sitekey: '6LdTf3YrAAAAAEOkh8vLYzvd-qH9qwvdNMTpNdzc',
-                  callback: onLeistungenCaptchaSuccess,
-                  'expired-callback': function(){ try { if(window.__leistungenCaptchaId!==undefined){ grecaptcha.reset(window.__leistungenCaptchaId); } } catch(e){} },
-                  'error-callback': function(){ try { if(window.__leistungenCaptchaId!==undefined){ grecaptcha.reset(window.__leistungenCaptchaId); } } catch(e){} },
-                  theme: 'dark'
-                });
-                window.__leistungenCaptchaRendered = true;
-              } else {
-                grecaptcha.reset(window.__leistungenCaptchaId);
-              }
-            } catch(e) {}
-          } else {
-            // Script nachladen, falls noch nicht vorhanden
-            try {
-              if (!window.__recaptchaLoading) {
-                window.__recaptchaLoading = true;
-                var s = document.createElement('script');
-                s.src = 'https://www.google.com/recaptcha/api.js';
-                s.async = true; s.defer = true;
-                s.onload = function(){
-                  try {
-                    if (window.__leistungenCaptchaId === undefined) {
-                      window.__leistungenCaptchaId = grecaptcha.render('leistungen-recaptcha-container', {
-                        sitekey: '6LdTf3YrAAAAAEOkh8vLYzvd-qH9qwvdNMTpNdzc',
-                        callback: onLeistungenCaptchaSuccess,
-                        'expired-callback': function(){ try { if(window.__leistungenCaptchaId!==undefined){ grecaptcha.reset(window.__leistungenCaptchaId); } } catch(e){} },
-                        'error-callback': function(){ try { if(window.__leistungenCaptchaId!==undefined){ grecaptcha.reset(window.__leistungenCaptchaId); } } catch(e){} },
-                        theme: 'dark'
-                      });
-                      window.__leistungenCaptchaRendered = true;
-                    } else {
-                      grecaptcha.reset(window.__leistungenCaptchaId);
-                    }
-                  } catch(e) {}
-                };
-                document.body.appendChild(s);
-              }
-            } catch(e) {}
-          }
-        } catch(e) {}
-      }
-      function onLeistungenCaptchaSuccess() {
-        try {
-          var stepC = document.getElementById('leistungen-captcha-step');
-          var stepI = document.getElementById('leistungen-iframe-container');
-          var iframe = document.getElementById('leistungen-iframe');
-          if (stepC) stepC.style.display = 'none';
-          if (stepI) stepI.style.display = 'block';
-          if (iframe) iframe.src = window.__leistungenCalendlyUrl || '';
         } catch(e) {}
       }
       (function setupLeistungenModal(){
@@ -3238,11 +3160,6 @@
           try {
             var iframe = document.getElementById('leistungen-iframe');
             if (iframe) iframe.src = '';
-            var stepC = document.getElementById('leistungen-captcha-step');
-            var stepI = document.getElementById('leistungen-iframe-container');
-            if (stepI) stepI.style.display = 'none';
-            if (stepC) stepC.style.display = 'flex';
-            try { if (window.grecaptcha && window.__leistungenCaptchaId !== undefined) { grecaptcha.reset(window.__leistungenCaptchaId); } } catch(e) {}
             if (ov) ov.style.display = 'none';
             document.body.style.overflow = '';
           } catch(e) {}
