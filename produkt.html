@@ -2462,17 +2462,12 @@
 
       // Google reCAPTCHA
       function onCaptchaSuccess() {
-        // Hide captcha, show Calendly
-        document.getElementById('calendar-captcha-step').style.display = 'none';
-        document.getElementById('calendar-widget-step').style.display = 'block';
-
-        // Set iframe src
-        var iframe = document.getElementById('calendar-iframe');
-        var loader = document.getElementById('calendar-modal-loader');
-        // Loader anzeigen
-        if (loader) { loader.classList.remove('hide'); }
-        iframe.src =
-          'https://calendly.com/leonidas-pyka/30min?background_color=000000&text_color=FFFFFF&primary_color=FFD700&hide_landing_page_details=1&hide_event_type_details=1&a1=' + encodeURIComponent(pendingPackageName);
+        // Alte Captcha-zu-Kalender-Logik wird nicht mehr benötigt, da das neue Modal verwendet wird
+        try {
+          if (typeof openLeistungenModal === 'function') {
+            openLeistungenModal(pendingPackageName || '');
+          }
+        } catch(e) {}
 
         // Widget sofort bedienbar
         iframe.onload = null;
@@ -2798,62 +2793,16 @@
         </div>
       </div>
     </div>
-    <!-- Google reCAPTCHA -->
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script>
       let pendingPackageName = null;
-      let pendingIsPremium = false;
 
       function showCalendar(card, packageName) {
-        pendingPackageName = packageName;
-        document.getElementById('modal-package-label').textContent = packageName;
-
-        // Show only captcha step, hide calendly step
-        document.getElementById('calendar-captcha-step').style.display = 'flex';
-        document.getElementById('calendar-widget-step').style.display = 'none';
-
-        // Set modal border glow class based on package type
-        var modal = document.getElementById('calendar-modal');
-        modal.classList.remove('starter', 'business', 'premium', 'starter-premium', 'business-premium', 'premium-deluxe');
-        
-        if (packageName === 'Starter') {
-          modal.classList.add('starter');
-        } else if (packageName === 'Business') {
-          modal.classList.add('business');
-        } else if (packageName === 'Premium') {
-          modal.classList.add('premium');
-        } else if (packageName === 'Starter Premium') {
-          modal.classList.add('starter-premium');
-        } else if (packageName === 'Business Premium') {
-          modal.classList.add('business-premium');
-        } else if (packageName === 'Premium Deluxe') {
-          modal.classList.add('premium-deluxe');
-        }
-
-        // Show modal (robust)
-        const overlay = document.getElementById('calendar-modal-overlay');
-        const modalEl = document.getElementById('calendar-modal');
-        if (overlay && modalEl) {
-          overlay.style.display = 'flex';
-          modalEl.style.display = 'block';
-          requestAnimationFrame(() => overlay.classList.add('show'));
-        }
-        document.body.style.overflow = 'hidden';
-
-        // Captcha (neu) rendern oder gezielt zurücksetzen
         try {
-          if (window.grecaptcha) {
-            if (window.__productCaptchaId === undefined) {
-              window.__productCaptchaId = grecaptcha.render('recaptcha-container', {
-                sitekey: '6LdTf3YrAAAAAEOkh8vLYzvd-qH9qwvdNMTpNdzc',
-                callback: onCaptchaSuccess,
-                'expired-callback': onCaptchaExpired,
-                'error-callback': onCaptchaError,
-                theme: 'dark'
-              });
-            } else {
-              grecaptcha.reset(window.__productCaptchaId);
-            }
+          if (typeof openLeistungenModal === 'function') {
+            openLeistungenModal(packageName || '');
+          } else {
+            var url = 'https://calendly.com/leonidas-pyka/30min?a1=' + encodeURIComponent(packageName || '');
+            window.open(url, '_blank');
           }
         } catch(e) {}
       }
@@ -2869,27 +2818,7 @@
       });
       
       // Handle reCAPTCHA expiration
-      function onCaptchaExpired() {
-        console.log('reCAPTCHA expired, please try again');
-        // Optionally show a message to the user
-        const container = document.getElementById('recaptcha-container');
-        if (container) {
-          container.innerHTML = '<div style="color: #ff6b6b; text-align: center; padding: 10px;">Verifizierung abgelaufen. Bitte versuche es erneut.</div>';
-          setTimeout(() => {
-            container.innerHTML = '<div id="recaptcha-container"></div>';
-            if (typeof grecaptcha !== "undefined") {
-            grecaptcha.render('recaptcha-container', {
-              sitekey: '6LdTf3YrAAAAAEOkh8vLYzvd-qH9qwvdNMTpNdzc',
-              callback: onCaptchaSuccess,
-                'expired-callback': onCaptchaExpired,
-                'error-callback': onCaptchaError,
-                theme: 'dark',
-                size: 'normal'
-              });
-            }
-          }, 2000);
-        }
-      }
+      function onCaptchaExpired() {}
 
       // Called by Google reCAPTCHA after success
       function onCaptchaSuccess() {
@@ -2922,11 +2851,7 @@
       }
       
       // Handle reCAPTCHA errors
-      function onCaptchaError() {
-        console.error('reCAPTCHA error occurred');
-        // Fallback: proceed to calendar
-        setTimeout(() => onCaptchaSuccess(), 1000);
-      }
+      function onCaptchaError() {}
 
       function closeModal() {
         const overlayEl = document.getElementById('calendar-modal-overlay');
@@ -3132,7 +3057,7 @@
           <div style="color:#ffd700;font-weight:700;letter-spacing:0.5px;">Termin buchen</div>
           <div style="color:#fff;font-size:1.05rem;line-height:1.4;display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
             <span style="opacity:0.9;">Leistung:</span>
-            <span id="leistungen-selected-title" style="font-weight:600;color:#fff;"></span>
+            <span id="leistungen-selected-title"></span>
           </div>
         </div>
         <div style="width:100%;display:block;overflow:hidden;background:#000;">
@@ -3140,13 +3065,64 @@
         </div>
       </div>
     </div>
+    <style>
+      /* Badge-Stufen für Leistungs-Titel im neuen Modal */
+      #leistungen-modal .leistung-badge {
+        font-weight: 700;
+        letter-spacing: 0.2px;
+        transition: color 200ms ease, text-shadow 200ms ease, filter 200ms ease;
+        will-change: color, text-shadow, filter;
+      }
+      /* Basiswebseiten: Weiß → mehr weißer Glow */
+      #leistungen-modal .leistung-badge--basic-1 { /* normal weiß */
+        color: #ffffff;
+        text-shadow: none;
+      }
+      #leistungen-modal .leistung-badge--basic-2 { /* leichter Weiß-Glow */
+        color: #ffffff;
+        text-shadow: 0 0 6px rgba(255,255,255,0.35);
+      }
+      #leistungen-modal .leistung-badge--basic-3 { /* starker Weiß-Glow */
+        color: #ffffff;
+        text-shadow: 0 0 10px rgba(255,255,255,0.6), 0 0 20px rgba(255,255,255,0.35);
+      }
+      /* Premium-Webseiten: Gold → mehr goldener Glow */
+      #leistungen-modal .leistung-badge--premium-1 { /* gold, minimaler Glow */
+        color: #ffd700;
+        text-shadow: 0 0 4px rgba(255,215,0,0.25);
+      }
+      #leistungen-modal .leistung-badge--premium-2 { /* gold, mittlerer Glow */
+        color: #ffd700;
+        text-shadow: 0 0 10px rgba(255,215,0,0.55), 0 0 18px rgba(255,215,0,0.35);
+      }
+      #leistungen-modal .leistung-badge--premium-3 { /* gold, starker Glow */
+        color: #ffd700;
+        text-shadow: 0 0 14px rgba(255,215,0,0.85), 0 0 28px rgba(255,215,0,0.55), 0 0 42px rgba(255,215,0,0.35);
+        filter: saturate(1.1) brightness(1.05);
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #leistungen-modal .leistung-badge { transition: none; }
+      }
+    </style>
     <script>
       function openLeistungenModal(title) {
         try {
           var ov = document.getElementById('leistungen-modal-overlay');
           var titleEl = document.getElementById('leistungen-selected-title');
           var iframe = document.getElementById('leistungen-iframe');
-          if (titleEl) titleEl.textContent = title || '';
+          if (titleEl) {
+            var t = (title || '').trim().toLowerCase();
+            var variant;
+            if (t === 'starter') variant = 'basic-1';
+            else if (t === 'business') variant = 'basic-2';
+            else if (t === 'premium') variant = 'basic-3';
+            else if (t === 'starter premium') variant = 'premium-1';
+            else if (t === 'business premium') variant = 'premium-2';
+            else if (t === 'premium deluxe') variant = 'premium-3';
+            else variant = 'basic-1';
+            titleEl.className = 'leistung-badge leistung-badge--' + variant;
+            titleEl.textContent = title || '';
+          }
           var url = 'https://calendly.com/leonidas-pyka/30min?background_color=000000&text_color=FFFFFF&primary_color=FFD700&hide_landing_page_details=1&hide_event_type_details=1&a1=' + encodeURIComponent(title || '');
           if (iframe) { iframe.src = url; }
           if (ov) { ov.style.display = 'flex'; }
