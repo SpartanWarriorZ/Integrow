@@ -3052,7 +3052,7 @@
     <!-- Neues Modal für "Weitere Leistungen" (mobil + desktop), ohne Captcha -->
     <div id="leistungen-modal-overlay" style="display:none;position:fixed;z-index:9999;left:0;top:0;right:0;bottom:0;background:rgba(10,10,20,0.75);backdrop-filter:blur(4px);justify-content:center;align-items:center;padding:12px;box-sizing:border-box;">
       <div id="leistungen-modal" style="background:#181818;border-radius:18px;max-width:96vw;width:min(760px,96vw);max-height:92vh;box-shadow:0 8px 48px 0 rgba(0,0,0,0.35),0 0 0 1.5px #ffd70022;padding:0;position:relative;display:flex;flex-direction:column;align-items:stretch;overflow:hidden;box-sizing:border-box;margin:0 auto;">
-        <button id="leistungen-modal-close" style="position:absolute;top:10px;right:10px;background:#ffd700;color:#181818;border:none;border-radius:50%;width:36px;height:36px;font-size:1.5rem;font-weight:700;cursor:pointer;z-index:10;">&times;</button>
+        <button id="leistungen-modal-close" style="position:absolute;top:10px;right:10px;background:#ffd700;color:#181818;border:none;border-radius:50%;width:36px;height:36px;font-size:1.5rem;font-weight:700;cursor:pointer;z-index:10;transition: transform .18s ease, box-shadow .18s ease;">&times;</button>
         <div style="padding:18px 48px 10px 48px;display:flex;flex-direction:column;gap:6px;border-bottom:1px solid rgba(255,255,255,0.08);background:linear-gradient(135deg,#1a1a1a,#212121);">
           <div style="color:#ffd700;font-weight:700;letter-spacing:0.5px;">Termin buchen</div>
           <div style="color:#fff;font-size:1.05rem;line-height:1.4;display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
@@ -3066,6 +3066,35 @@
       </div>
     </div>
     <style>
+      /* Close-Button Feedback (Hover/Active + Ring-Pulse) */
+      #leistungen-modal-close, #close-modal-btn { position: relative; overflow: visible; }
+      #leistungen-modal-close::after, #close-modal-btn::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        border: 2px solid #ffd700;
+        opacity: 0;
+        transform: scale(1);
+        pointer-events: none;
+      }
+      #leistungen-modal-close:hover, #close-modal-btn:hover {
+        transform: translateY(-1px) scale(1.04);
+        box-shadow: 0 8px 22px rgba(255,215,0,0.55), 0 0 0 2px #ffd700;
+        background: linear-gradient(145deg, #ffd700, #ffdf33);
+      }
+      #leistungen-modal-close:hover::after, #close-modal-btn:hover::after {
+        opacity: 1;
+        animation: button-ring 0.55s ease-out 1;
+      }
+      #leistungen-modal-close:active, #close-modal-btn:active {
+        transform: translateY(0) scale(0.96);
+        box-shadow: inset 0 2px 10px rgba(0,0,0,0.25), 0 2px 10px rgba(255,215,0,0.35);
+      }
+      @keyframes button-ring {
+        0% { transform: scale(1); opacity: 0.5; }
+        100% { transform: scale(1.6); opacity: 0; }
+      }
       /* Badge-Stufen für Leistungs-Titel im neuen Modal */
       #leistungen-modal .leistung-badge {
         font-weight: 700;
@@ -3100,6 +3129,11 @@
         text-shadow: 0 0 14px rgba(255,215,0,0.85), 0 0 28px rgba(255,215,0,0.55), 0 0 42px rgba(255,215,0,0.35);
         filter: saturate(1.1) brightness(1.05);
       }
+      /* Springende Öffnungsanimation wie bei den Produktmodals */
+      #leistungen-modal {
+        animation: modal-modern-pop 0.55s cubic-bezier(.4,1.6,.6,1);
+        will-change: transform, opacity;
+      }
       @media (prefers-reduced-motion: reduce) {
         #leistungen-modal .leistung-badge { transition: none; }
       }
@@ -3110,6 +3144,7 @@
           var ov = document.getElementById('leistungen-modal-overlay');
           var titleEl = document.getElementById('leistungen-selected-title');
           var iframe = document.getElementById('leistungen-iframe');
+          var modal = document.getElementById('leistungen-modal');
           if (titleEl) {
             var t = (title || '').trim().toLowerCase();
             var variant;
@@ -3126,6 +3161,13 @@
           var url = 'https://calendly.com/leonidas-pyka/30min?background_color=000000&text_color=FFFFFF&primary_color=FFD700&hide_landing_page_details=1&hide_event_type_details=1&a1=' + encodeURIComponent(title || '');
           if (iframe) { iframe.src = url; }
           if (ov) { ov.style.display = 'flex'; }
+          // Animation bei jedem Öffnen neu triggern
+          if (modal) {
+            modal.style.animation = 'none';
+            // Reflow erzwingen, dann Animation wieder setzen
+            void modal.offsetWidth;
+            modal.style.animation = 'modal-modern-pop 0.55s cubic-bezier(.4,1.6,.6,1)';
+          }
           document.body.style.overflow = 'hidden';
         } catch(e) {}
       }

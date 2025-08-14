@@ -941,64 +941,46 @@
   width: 100%;
 }
   </style>
-  <script>
-  function showCalendar(card, packageName) {
-    // Paketname setzen
-    document.getElementById('modal-package-label').textContent = packageName;
-    document.getElementById('modal-title').textContent = 'Termin buchen';
-
-    // Captcha-Step anzeigen, Calendly verstecken
-    document.getElementById('calendar-captcha-step').style.display = 'flex';
-    document.getElementById('calendar-widget-step').style.display = 'none';
-
-    // Rahmen/Glow je Kurs
-    var modal = document.getElementById('calendar-modal');
-    modal.classList.remove('webflow-basics', 'professionelles-webdesign', 'masterclass');
-    if (packageName === 'Webflow Basics') modal.classList.add('webflow-basics');
-    else if (packageName === 'Professionelles Webdesign') modal.classList.add('professionelles-webdesign');
-    else if (packageName === 'Masterclass Webflow & Business') modal.classList.add('masterclass');
-
-    // Modal anzeigen
-    const overlay = document.getElementById('calendar-modal-overlay');
-    overlay.style.display = 'flex';
-    requestAnimationFrame(() => overlay.classList.add('show'));
-    document.body.style.overflow = 'hidden';
-
-    // Captcha ggf. zurücksetzen
-    if (typeof grecaptcha !== 'undefined') {
-      grecaptcha.reset();
+  <style>
+    /* Close-Button Feedback (Hover/Active + Ring-Pulse) */
+    #leistungen-modal-close, #close-modal-btn { position: relative; overflow: visible; transition: transform .18s ease, box-shadow .18s ease, background .18s ease; }
+    #leistungen-modal-close::after, #close-modal-btn::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 2px solid #ffd700;
+      opacity: 0;
+      transform: scale(1);
+      pointer-events: none;
     }
-  }
-
-  // Hide loader when iframe is loaded
-  document.addEventListener('DOMContentLoaded', function() {
-    var iframe = document.getElementById('calendar-iframe');
-    var loader = document.getElementById('calendar-modal-loader');
-    iframe.onload = function() {
-      loader.classList.add('hide');
-    };
-  });
-
-  function closeModal() {
-    document.getElementById('calendar-modal-overlay').classList.remove('show');
-    setTimeout(() => {
-      document.getElementById('calendar-modal-overlay').style.display = 'none';
-      document.getElementById('calendar-iframe').src = '';
-      document.body.style.overflow = '';
-      document.getElementById('calendar-modal').classList.remove('webflow-basics', 'professionelles-webdesign', 'masterclass');
-      // Hide masterclass beam
-      var beam = document.getElementById('calendar-modal').querySelector('.masterclass-beam');
-      if (beam) beam.style.display = 'none';
-      // Reset loader for next open
-      document.getElementById('calendar-modal-loader').classList.remove('hide');
-    }, 250);
-  }
-
-  document.getElementById('close-modal-btn').onclick = closeModal;
-  document.getElementById('calendar-modal-overlay').onclick = function(e) {
-    if (e.target === this) closeModal();
-  };
-  </script>
+    #leistungen-modal-close:hover, #close-modal-btn:hover {
+      transform: translateY(-1px) scale(1.04);
+      box-shadow: 0 8px 22px rgba(255,215,0,0.55), 0 0 0 2px #ffd700;
+      background: linear-gradient(145deg, #ffd700, #ffdf33);
+    }
+    #leistungen-modal-close:hover::after, #close-modal-btn:hover::after {
+      opacity: 1;
+      animation: button-ring 0.55s ease-out 1;
+    }
+    #leistungen-modal-close:active, #close-modal-btn:active {
+      transform: translateY(0) scale(0.96);
+      box-shadow: inset 0 2px 10px rgba(0,0,0,0.25), 0 2px 10px rgba(255,215,0,0.35);
+    }
+    @keyframes button-ring {
+      0% { transform: scale(1); opacity: 0.5; }
+      100% { transform: scale(1.6); opacity: 0; }
+    }
+    /* Kurs-spezifische Titel-Styles im Modal */
+    #leistungen-modal .kurs-badge { font-weight: 700; letter-spacing: 0.2px; }
+    /* 1. Kurs: weiße, normale Schrift */
+    #leistungen-modal .kurs-badge--webflow-basics { color: #ffffff; text-shadow: none; }
+    /* 2. Kurs: goldene Schrift ohne Glow */
+    #leistungen-modal .kurs-badge--professionelles-webdesign { color: #ffd700; text-shadow: none; }
+    /* 3. Kurs: hochwertig/premium – dezenter goldener Look mit leichtem, edlem Glow */
+    #leistungen-modal .kurs-badge--masterclass { color: #ffd700; text-shadow: 0 0 10px rgba(255,215,0,0.55), 0 0 18px rgba(255,215,0,0.35); filter: saturate(1.05) brightness(1.02); }
+  </style>
+  
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -1051,45 +1033,22 @@
     &copy; 2025 Integrow. Digital Elegance. Klar. Stark. Skaliert.
   </footer>
 
-  <!-- Calendar Modal -->
-  <div id="calendar-modal-overlay" style="display:none;">
-    <div id="calendar-modal">
-      <div class="modal-shell">
-        <button class="close-widget" id="close-modal-btn">&times;</button>
-        <div class="modal-header">
-          <div class="modal-package-label" id="modal-package-label"></div>
-          <div class="modal-title" id="modal-title">Termin buchen</div>
-          <div class="modal-steps" id="modal-steps">
-            <span class="step-dot active" aria-label="Schritt 1"></span>
-            <span class="step-dot" aria-label="Schritt 2"></span>
-          </div>
-        </div>
-        <div class="modal-content">
-          <!-- Step 1: Captcha -->
-          <div id="calendar-captcha-step" class="step" style="display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:200px;">
-            <div class="captcha-title">Sicherheitsabfrage</div>
-            <div class="captcha-subtitle">Bitte bestätige, dass du kein Roboter bist.</div>
-            <div class="captcha-box">
-              <div class="recaptcha-anchor">
-                <div class="recaptcha-frame">
-                  <div class="g-recaptcha"
-                       data-sitekey="6LdTf3YrAAAAAEOkh8vLYzvd-qH9qwvdNMTpNdzc"
-                       data-callback="onCaptchaSuccess"
-                       data-theme="dark"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Step 2: Calendly -->
-          <div id="calendar-widget-step" class="step" style="display:none;">
-            <div id="calendar-modal-loader"><div class="loader-spinner"></div></div>
-            <iframe id="calendar-iframe" src="" allowtransparency="true"></iframe>
-          </div>
-        </div>
+<!-- Neues, einheitliches Modal wie auf der Produktseite -->
+<div id="leistungen-modal-overlay" style="display:none;position:fixed;z-index:9999;left:0;top:0;right:0;bottom:0;background:rgba(10,10,20,0.75);backdrop-filter:blur(4px);justify-content:center;align-items:center;padding:12px;box-sizing:border-box;">
+  <div id="leistungen-modal" style="background:#181818;border-radius:18px;max-width:96vw;width:min(760px,96vw);max-height:92vh;box-shadow:0 8px 48px 0 rgba(0,0,0,0.35),0 0 0 1.5px #ffd70022;padding:0;position:relative;display:flex;flex-direction:column;align-items:stretch;overflow:hidden;box-sizing:border-box;margin:0 auto;animation: modal-modern-pop 0.55s cubic-bezier(.4,1.6,.6,1);will-change: transform, opacity;">
+    <button id="leistungen-modal-close" style="position:absolute;top:10px;right:10px;background:#ffd700;color:#181818;border:none;border-radius:50%;width:36px;height:36px;font-size:1.5rem;font-weight:700;cursor:pointer;z-index:10;transition: transform .18s ease, box-shadow .18s ease;">&times;</button>
+    <div style="padding:18px 48px 10px 48px;display:flex;flex-direction:column;gap:6px;border-bottom:1px solid rgba(255,255,255,0.08);background:linear-gradient(135deg,#1a1a1a,#212121);">
+      <div style="color:#ffd700;font-weight:700;letter-spacing:0.5px;">Termin buchen</div>
+      <div style="color:#fff;font-size:1.05rem;line-height:1.4;display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+        <span style="opacity:0.9;">Leistung:</span>
+        <span id="leistungen-selected-title" class="kurs-badge"></span>
       </div>
     </div>
+    <div style="width:100%;display:block;overflow:hidden;background:#000;">
+      <iframe id="leistungen-iframe" src="" style="display:block;width:100%;max-width:100%;min-width:0;height:70vh;min-height:480px;max-height:calc(92vh - 140px);border:none;background:#000;" allowfullscreen></iframe>
+    </div>
   </div>
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</div>
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
   <script>
     AOS.init({
@@ -1114,38 +1073,55 @@
   requestAnimationFrame(raf)
 </script>
 <script>
-  // Modal logic
-  function showCalendar(card, packageName) {
-    // Only show the course name, no prefix
-    document.getElementById('modal-package-label').textContent = packageName;
-    document.getElementById('calendar-iframe').src =
-      'https://calendly.com/leonidas-pyka/30min?background_color=000000&text_color=FFFFFF&primary_color=FFD700&hide_landing_page_details=1&hide_event_type_details=1&a1=' + encodeURIComponent(packageName);
-
-    // Set modal border glow class
-    var modal = document.getElementById('calendar-modal');
-    var beam = modal.querySelector('.masterclass-beam');
-    modal.classList.remove('webflow-basics', 'professionelles-webdesign', 'masterclass');
-    if (packageName === 'Webflow Basics') {
-      modal.classList.add('webflow-basics');
-      if (beam) beam.style.display = 'none';
-    } else if (packageName === 'Professionelles Webdesign') {
-      modal.classList.add('professionelles-webdesign');
-      if (beam) beam.style.display = 'none';
-    } else if (packageName === 'Masterclass Webflow & Business') {
-      modal.classList.add('masterclass');
-      if (beam) beam.style.display = '';
+  // Modal logic – delegiert an das neue, einheitliche Modal wie in produkt.html
+  function openLeistungenModal(title) {
+    try {
+      var ov = document.getElementById('leistungen-modal-overlay');
+      var titleEl = document.getElementById('leistungen-selected-title');
+      var iframe = document.getElementById('leistungen-iframe');
+      var modal = document.getElementById('leistungen-modal');
+      if (titleEl) {
+        var t = (title || '').trim().toLowerCase();
+        var cls = 'kurs-badge';
+        if (t === 'webflow basics') cls += ' kurs-badge--webflow-basics';
+        else if (t === 'professionelles webdesign') cls += ' kurs-badge--professionelles-webdesign';
+        else if (t === 'masterclass webflow & business') cls += ' kurs-badge--masterclass';
+        titleEl.className = cls;
+        titleEl.textContent = title || '';
+      }
+      var url = 'https://calendly.com/leonidas-pyka/30min?background_color=000000&text_color=FFFFFF&primary_color=FFD700&hide_landing_page_details=1&hide_event_type_details=1&a1=' + encodeURIComponent(title || '');
+      if (iframe) { iframe.src = url; }
+      if (ov) { ov.style.display = 'flex'; }
+      if (modal) { modal.style.animation = 'none'; void modal.offsetWidth; modal.style.animation = 'modal-modern-pop 0.55s cubic-bezier(.4,1.6,.6,1)'; }
+      document.body.style.overflow = 'hidden';
+    } catch(e) {}
+  }
+  (function setupLeistungenModal(){
+    var ov = document.getElementById('leistungen-modal-overlay');
+    var closeBtn = document.getElementById('leistungen-modal-close');
+    function closeModal(){
+      try {
+        var iframe = document.getElementById('leistungen-iframe');
+        if (iframe) iframe.src = '';
+        if (ov) ov.style.display = 'none';
+        document.body.style.overflow = '';
+      } catch(e) {}
     }
-
-    // Show loader
-    var loader = document.getElementById('calendar-modal-loader');
-    loader.classList.remove('hide');
-
-    // Show modal
-    document.getElementById('calendar-modal-overlay').style.display = 'flex';
-    setTimeout(() => {
-      document.getElementById('calendar-modal-overlay').classList.add('show');
-    }, 10);
-    document.body.style.overflow = 'hidden';
+    if (closeBtn) { closeBtn.onclick = closeModal; }
+    if (ov) { ov.addEventListener('click', function(e){ if (e.target === ov) closeModal(); }); }
+    document.addEventListener('keydown', function(e){
+      var visible = ov && ov.style.display === 'flex';
+      if (visible && e.key === 'Escape') closeModal();
+    });
+  })();
+  function showCalendar(card, packageName) {
+    var title = packageName || '';
+    if (typeof openLeistungenModal === 'function') {
+      openLeistungenModal(title);
+    } else {
+      var fallback = 'https://calendly.com/leonidas-pyka/30min?a1=' + encodeURIComponent(title);
+      window.open(fallback, '_blank');
+    }
   }
 
   // Hide loader when iframe is loaded
@@ -1179,82 +1155,7 @@
   };
 </script>
 <script>
-  let pendingPackageName = null;
-
-  function showCalendar(card, packageName) {
-    pendingPackageName = packageName;
-    document.getElementById('modal-package-label').textContent = packageName;
-
-    // Show only captcha step, hide calendly step
-    document.getElementById('calendar-captcha-step').style.display = 'flex';
-    document.getElementById('calendar-widget-step').style.display = 'none';
-
-    // Set modal border glow class
-    var modal = document.getElementById('calendar-modal');
-    var beam = modal.querySelector('.masterclass-beam');
-    modal.classList.remove('webflow-basics', 'professionelles-webdesign', 'masterclass');
-    if (packageName === 'Webflow Basics') {
-      modal.classList.add('webflow-basics');
-      if (beam) beam.style.display = 'none';
-    } else if (packageName === 'Professionelles Webdesign') {
-      modal.classList.add('professionelles-webdesign');
-      if (beam) beam.style.display = 'none';
-    } else if (packageName === 'Masterclass Webflow & Business') {
-      modal.classList.add('masterclass');
-      if (beam) beam.style.display = '';
-    }
-
-    // Show modal
-    document.getElementById('calendar-modal-overlay').style.display = 'flex';
-    setTimeout(() => {
-      document.getElementById('calendar-modal-overlay').classList.add('show');
-    }, 10);
-    document.body.style.overflow = 'hidden';
-
-    // Reset captcha if needed
-    if (typeof grecaptcha !== "undefined") {
-      grecaptcha.reset();
-    }
-  }
-
-  // Called by Google reCAPTCHA after success
-  function onCaptchaSuccess() {
-    document.getElementById('calendar-captcha-step').style.display = 'none';
-    document.getElementById('calendar-widget-step').style.display = 'block';
-    var iframe = document.getElementById('calendar-iframe');
-    iframe.src = 'https://calendly.com/leonidas-pyka/30min?background_color=000000&text_color=FFFFFF&primary_color=FFD700&hide_landing_page_details=1&hide_event_type_details=1&a1=' + encodeURIComponent(pendingPackageName || 'Kurs');
-    iframe.style.background = '#000';
-    iframe.style.backgroundColor = '#000';
-  }
-
-  // Hide loader when iframe is loaded
-  document.addEventListener('DOMContentLoaded', function() {
-    var iframe = document.getElementById('calendar-iframe');
-    var loader = document.getElementById('calendar-modal-loader');
-    iframe.onload = function() {
-      loader.classList.add('hide');
-    };
-  });
-
-  function closeModal() {
-    const overlay = document.getElementById('calendar-modal-overlay');
-    overlay.classList.remove('show');
-    setTimeout(() => {
-      overlay.style.display = 'none';
-      document.getElementById('calendar-iframe').src = '';
-      document.body.style.overflow = '';
-      var modal = document.getElementById('calendar-modal');
-      modal.classList.remove('webflow-basics', 'professionelles-webdesign', 'masterclass');
-      document.getElementById('calendar-captcha-step').style.display = 'flex';
-      document.getElementById('calendar-widget-step').style.display = 'none';
-      if (typeof grecaptcha !== 'undefined') { grecaptcha.reset(); }
-    }, 250);
-  }
-
-  document.getElementById('close-modal-btn').onclick = closeModal;
-  document.getElementById('calendar-modal-overlay').onclick = function(e) {
-    if (e.target === this) closeModal();
-  };
+  // Entfernt: alter Kurse-Modal-Flow (Captcha + altes Modal)
 </script>
   <!-- Parallax-Effekt für Header-Background -->
   <script>
