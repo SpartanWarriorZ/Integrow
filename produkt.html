@@ -3130,6 +3130,11 @@
         window.__sliderCalendlyUrl = 'https://calendly.com/leonidas-pyka/30min?background_color=000000&text_color=FFFFFF&primary_color=FFD700&hide_landing_page_details=1&hide_event_type_details=1&a1=' + encodeURIComponent(title);
         document.getElementById('slider-captcha-step').style.display = 'flex';
         document.getElementById('calendly-iframe').style.display = 'none';
+        // Sicherstellen, dass der Kalender-Container verborgen ist und das Iframe geleert wird
+        var ctn = document.getElementById('calendly-iframe-container');
+        if (ctn) { ctn.style.display = 'none'; }
+        var ifr = document.getElementById('calendly-iframe');
+        if (ifr) { ifr.src = ''; }
         const ov = document.getElementById('calendly-modal-overlay');
         const mc = document.getElementById('calendly-modal-content');
         ov.style.display = 'flex';
@@ -3137,11 +3142,25 @@
         // Render Captcha
         if (!window.__sliderCaptchaRendered) {
           if (window.grecaptcha) {
-            grecaptcha.render('slider-recaptcha-container', {
-              sitekey: '6LdTf3YrAAAAAEOkh8vLYzvd-qH9qwvdNMTpNdzc',
-              callback: onSliderCaptchaSuccess
-            });
-            window.__sliderCaptchaRendered = true;
+            try {
+              window.__sliderCaptchaId = grecaptcha.render('slider-recaptcha-container', {
+                sitekey: '6LdTf3YrAAAAAEOkh8vLYzvd-qH9qwvdNMTpNdzc',
+                callback: onSliderCaptchaSuccess,
+                'expired-callback': function() {
+                  try { if (window.__sliderCaptchaId !== undefined) { grecaptcha.reset(window.__sliderCaptchaId); } } catch(e) {}
+                },
+                'error-callback': function() {
+                  // Optional: Bei Fehlern erneut versuchen
+                  try { if (window.__sliderCaptchaId !== undefined) { grecaptcha.reset(window.__sliderCaptchaId); } } catch(e) {}
+                }
+              });
+              window.__sliderCaptchaRendered = true;
+            } catch(e) {}
+          }
+        } else {
+          // Bereits gerendert: immer frisch zurücksetzen
+          if (window.grecaptcha && window.__sliderCaptchaId !== undefined) {
+            try { grecaptcha.reset(window.__sliderCaptchaId); } catch(e) {}
           }
         }
       };
@@ -3164,7 +3183,10 @@
         document.getElementById('slider-captcha-step').style.display = 'flex';
         document.getElementById('calendly-iframe-container').style.display = 'none';
         if(window.grecaptcha && window.__sliderCaptchaRendered) {
-          grecaptcha.reset();
+          try {
+            if (window.__sliderCaptchaId !== undefined) { grecaptcha.reset(window.__sliderCaptchaId); }
+            else { grecaptcha.reset(); }
+          } catch(e) {}
         }
       };
       document.getElementById('calendly-modal-overlay').addEventListener('click', function(e) {
@@ -3174,7 +3196,10 @@
           document.getElementById('slider-captcha-step').style.display = 'flex';
           document.getElementById('calendly-iframe-container').style.display = 'none';
           if(window.grecaptcha && window.__sliderCaptchaRendered) {
-            grecaptcha.reset();
+            try {
+              if (window.__sliderCaptchaId !== undefined) { grecaptcha.reset(window.__sliderCaptchaId); }
+              else { grecaptcha.reset(); }
+            } catch(e) {}
           }
         }
       });
@@ -3184,6 +3209,23 @@
         recaptchaScript.src = 'https://www.google.com/recaptcha/api.js';
         recaptchaScript.async = true;
         recaptchaScript.defer = true;
+        recaptchaScript.onload = function() {
+          try {
+            if (!window.__sliderCaptchaRendered) {
+              window.__sliderCaptchaId = grecaptcha.render('slider-recaptcha-container', {
+                sitekey: '6LdTf3YrAAAAAEOkh8vLYzvd-qH9qwvdNMTpNdzc',
+                callback: onSliderCaptchaSuccess,
+                'expired-callback': function() {
+                  try { if (window.__sliderCaptchaId !== undefined) { grecaptcha.reset(window.__sliderCaptchaId); } } catch(e) {}
+                },
+                'error-callback': function() {
+                  try { if (window.__sliderCaptchaId !== undefined) { grecaptcha.reset(window.__sliderCaptchaId); } } catch(e) {}
+                }
+              });
+              window.__sliderCaptchaRendered = true;
+            }
+          } catch(e) {}
+        };
         document.body.appendChild(recaptchaScript);
       }
     </script>
