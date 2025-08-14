@@ -2464,13 +2464,13 @@
       function onCaptchaSuccess() {
         // Hide captcha, show Calendly
         document.getElementById('calendar-captcha-step').style.display = 'none';
-        document.getElementById('calendar-widget-step').style.display = '';
+        document.getElementById('calendar-widget-step').style.display = 'block';
 
         // Set iframe src
         var iframe = document.getElementById('calendar-iframe');
         var loader = document.getElementById('calendar-modal-loader');
         // Loader anzeigen
-        loader.classList.remove('hide');
+        if (loader) { loader.classList.remove('hide'); }
         iframe.src =
           'https://calendly.com/leonidas-pyka/30min?background_color=000000&text_color=FFFFFF&primary_color=FFD700&hide_landing_page_details=1&hide_event_type_details=1&a1=' + encodeURIComponent(pendingPackageName);
 
@@ -2785,10 +2785,7 @@
               <div class="captcha-box">
                 <div class="recaptcha-anchor">
                   <div class="recaptcha-frame">
-                    <div class="g-recaptcha"
-                      data-sitekey="6LdTf3YrAAAAAEOkh8vLYzvd-qH9qwvdNMTpNdzc"
-                      data-callback="onCaptchaSuccess"
-                      data-theme="dark"></div>
+                    <div id="recaptcha-container"></div>
                   </div>
                 </div>
               </div>
@@ -2843,10 +2840,22 @@
         }
         document.body.style.overflow = 'hidden';
 
-        // Reset captcha if needed
-        if (typeof grecaptcha !== "undefined") {
-          grecaptcha.reset();
-        }
+        // Captcha (neu) rendern oder gezielt zurücksetzen
+        try {
+          if (window.grecaptcha) {
+            if (window.__productCaptchaId === undefined) {
+              window.__productCaptchaId = grecaptcha.render('recaptcha-container', {
+                sitekey: '6LdTf3YrAAAAAEOkh8vLYzvd-qH9qwvdNMTpNdzc',
+                callback: onCaptchaSuccess,
+                'expired-callback': onCaptchaExpired,
+                'error-callback': onCaptchaError,
+                theme: 'dark'
+              });
+            } else {
+              grecaptcha.reset(window.__productCaptchaId);
+            }
+          }
+        } catch(e) {}
       }
 
       // Iframe loaded event (optional for debugging)
@@ -2931,9 +2940,11 @@
           document.getElementById('calendar-modal').classList.remove('starter', 'business', 'premium', 'starter-premium', 'business-premium', 'premium-deluxe');
           document.getElementById('calendar-captcha-step').style.display = 'flex';
           document.getElementById('calendar-widget-step').style.display = 'none';
-          if (typeof grecaptcha !== "undefined") {
-            grecaptcha.reset();
-          }
+          try {
+            if (window.grecaptcha && window.__productCaptchaId !== undefined) {
+              grecaptcha.reset(window.__productCaptchaId);
+            }
+          } catch(e) {}
         }, 250);
       }
 
