@@ -2356,9 +2356,28 @@
     </style>
     <style>
       /* Einheitliche silberne Glow-Blobs wie Startseite */
-      .bg-blob { position: fixed; z-index: 0; pointer-events: none; filter: blur(46px) saturate(1.0); opacity: 0.22; }
-      .blob-1 { width: 420px; height: 420px; left: -120px; top: 40vh; background: radial-gradient(circle at 30% 30%, #b7bcc6, transparent 60%); }
-      .blob-2 { width: 360px; height: 360px; right: -120px; top: 75vh; background: radial-gradient(circle at 70% 70%, #d8dbe2, transparent 60%); opacity: 0.16; }
+      .bg-blob { 
+        position: fixed; 
+        z-index: 0; 
+        pointer-events: none; 
+        filter: blur(46px) saturate(1.0); 
+        opacity: 0.22; 
+      }
+      .blob-1 { 
+        width: 420px; 
+        height: 420px; 
+        left: -120px; 
+        top: 40vh; 
+        background: radial-gradient(circle at 30% 30%, #b7bcc6, transparent 60%); 
+      }
+      .blob-2 { 
+        width: 360px; 
+        height: 360px; 
+        right: -120px; 
+        top: 75vh; 
+        background: radial-gradient(circle at 70% 70%, #d8dbe2, transparent 60%); 
+        opacity: 0.16; 
+      }
     </style>
     <script>
       function showTab(tab, btn) {
@@ -3198,6 +3217,23 @@
           var visible = ov && ov.style.display === 'flex';
           if (visible && e.key === 'Escape') closeModal();
         });
+      })();
+    </script>
+    
+    <!-- Parallax-Animation für Blobs -->
+    <script>
+      // Subtiles Parallaxen der Hintergrund-Blobs beim Scrollen
+      (function blobParallax(){
+        var b1 = document.querySelector('.blob-1');
+        var b2 = document.querySelector('.blob-2');
+        if (!b1 || !b2) return;
+        function onScroll(){
+          var y = window.scrollY || window.pageYOffset;
+          b1.style.transform = 'translateY(' + (y*0.06) + 'px)';
+          b2.style.transform = 'translateY(' + (y*0.1) + 'px)';
+        }
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
       })();
     </script>
   </body>
