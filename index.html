@@ -1269,89 +1269,7 @@
       /* Magnetische Buttons */
       .btn.magnet { position: relative; will-change: transform; }
       
-      /* Reference Grid Styling */
-      .reference-grid { 
-        display: grid; 
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-        gap: 24px; 
-        margin-top: 20px; 
-      }
-      .reference-card { 
-        background: rgba(24,24,28,0.92); 
-        border: 1px solid rgba(255,255,255,0.08); 
-        border-radius: 16px; 
-        padding: 20px; 
-        display: flex; 
-        align-items: center; 
-        gap: 16px; 
-        transition: all .4s cubic-bezier(.4,1.6,.6,1); 
-        box-shadow: 0 8px 28px rgba(0,0,0,0.35); 
-        position: relative;
-        overflow: hidden;
-      }
-      .reference-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255,215,0,0.06), transparent);
-        transition: left 0.5s ease-out;
-        pointer-events: none;
-        opacity: 0;
-      }
-      .reference-card:hover::before {
-        left: 100%;
-        opacity: 1;
-      }
-      .reference-card:hover { 
-        transform: translateY(-3px); 
-        box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-        border-color: rgba(255,215,0,0.15);
-      }
-      .ref-logo { 
-        flex-shrink: 0; 
-        width: 60px; 
-        height: 60px; 
-        display: flex; 
-        align-items: center; 
-        justify-content: center; 
-      }
-      .ref-logo img { 
-        max-height: 50px; 
-        max-width: 50px; 
-        width: auto; 
-        height: auto; 
-        filter: grayscale(1) brightness(1.1); 
-        opacity: 0.9; 
-        transition: all 0.3s ease; 
-      }
-      .reference-card:hover .ref-logo img { 
-        filter: grayscale(0) brightness(1.2); 
-        opacity: 1; 
-      }
-      .ref-content h3 { 
-        margin: 0 0 6px 0; 
-        color: #fff; 
-        font-size: 1.1rem; 
-      }
-      .ref-content p { 
-        margin: 0; 
-        color: #cfcfcf; 
-        font-size: 0.95rem; 
-        line-height: 1.5; 
-      }
-      @media (max-width: 768px) { 
-        .reference-grid { 
-          grid-template-columns: 1fr; 
-          gap: 16px; 
-        }
-        .reference-card { 
-          padding: 16px; 
-          gap: 12px; 
-        }
-      }
+
       
       /* Feature Grid Styling (vereinfacht) */
       .feature-grid { 
@@ -1407,68 +1325,132 @@
         color: #cfcfcf; 
         line-height: 1.6; 
       }
-      /* Prozess-Sektion Styling */
+      /* Prozess-Sektion mit Timeline Styling */
       .process-steps {
         position: relative;
         overflow: hidden;
       }
       
+      .timeline-container {
+        position: relative;
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 0 40px;
+      }
+      
+      .timeline-line {
+        position: absolute;
+        left: 60px;
+        top: 0;
+        bottom: 0;
+        width: 3px;
+        background: rgba(255,255,255,0.1);
+        border-radius: 2px;
+        z-index: 998;
+      }
+      
+      .timeline-progress {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 0%;
+        background: linear-gradient(to bottom, #ffd700, #ffdf33);
+        border-radius: 2px;
+        transition: height 0.3s ease-out;
+        box-shadow: 0 0 10px rgba(255,215,0,0.3);
+        z-index: 999;
+      }
+      
       .process-container {
         display: flex;
         flex-direction: column;
-        gap: 40px;
-        max-width: 800px;
-        margin: 0 auto;
+        gap: 60px;
         position: relative;
       }
       
       .process-step {
         display: flex;
         align-items: flex-start;
-        gap: 24px;
+        gap: 40px;
         padding: 24px;
         background: rgba(255,255,255,0.03);
         border: 1px solid rgba(255,255,255,0.08);
         border-radius: 16px;
         position: relative;
         transition: all 0.3s ease-out;
-        overflow: hidden;
+        overflow: visible;
         cursor: pointer;
+        margin-left: 160px;
+        z-index: 1;
       }
       
-      .process-step::before {
-        content: '';
+      .timeline-point {
         position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255,215,0,0.08), transparent);
-        transition: left 0.6s ease-out;
-        pointer-events: none;
-        opacity: 0;
+        left: -60px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 50px;
+        height: 50px;
+        background: rgba(255,255,255,0.05);
+        border: 3px solid rgba(255,255,255,0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.4s ease-out;
+        z-index: 1000;
       }
       
-      .process-step:hover::before {
-        left: 100%;
-        opacity: 1;
+      .timeline-point.active {
+        background: #ffd700;
+        border-color: #ffd700;
+        box-shadow: 0 0 20px rgba(255,215,0,0.6);
+        transform: translateY(-50%) scale(1.15);
       }
+      
+      .point-number {
+        font-size: 1.2rem;
+        font-weight: 800;
+        color: rgba(255,255,255,0.8);
+        font-family: "Rajdhani", sans-serif;
+        transition: color 0.3s ease-out;
+      }
+      
+      .timeline-point.active .point-number {
+        color: #181818;
+      }
+      
+      .timeline-connector {
+        position: absolute;
+        left: -8px;
+        top: 50%;
+        width: 15px;
+        height: 3px;
+        background: rgba(255,255,255,0.1);
+        transform: translateY(-50%);
+        transition: all 0.4s ease-out;
+        z-index: 999;
+      }
+      
+      .timeline-connector.active {
+        background: linear-gradient(to right, #ffd700, #ffdf33);
+        box-shadow: 0 0 10px rgba(255,215,0,0.5);
+        width: 21px;
+      }
+      
+
+      
+
       
       .process-step:hover {
         transform: translateX(8px);
-        box-shadow: 0 12px 35px rgba(0,0,0,0.4);
-        border-color: rgba(255,215,0,0.2);
+        border: 2px solid #ffd700;
+        box-shadow: 0 0 20px rgba(255,215,0,0.6), 0 12px 35px rgba(0,0,0,0.4);
         padding-bottom: 40px;
       }
       
-      .step-number {
-        font-size: 2.5rem;
-        font-weight: 800;
-        color: rgba(255,215,0,0.3);
-        min-width: 60px;
-        text-align: center;
-        font-family: "Rajdhani", sans-serif;
-      }
+
       
       .step-icon {
         font-size: 2.5rem;
@@ -1528,6 +1510,12 @@
         max-height: 120px;
       }
       
+      @media (max-width: 768px) {
+        .process-step:hover .step-bullets {
+          max-height: 150px;
+        }
+      }
+      
       .step-bullets li {
         color: #b0b0b0;
         font-size: 0.95rem;
@@ -1545,22 +1533,18 @@
         font-size: 1.2rem;
       }
       
-      .step-connector {
-        position: absolute;
-        left: 50%;
-        bottom: -40px;
-        width: 2px;
-        height: 40px;
-        background: linear-gradient(to bottom, rgba(255,215,0,0.4), transparent);
-        transform: translateX(-50%);
-      }
-      
-      .process-step:last-child .step-connector {
-        display: none;
-      }
+
       
                     /* Mobile Anpassungen */
         @media (max-width: 768px) {
+          .timeline-container {
+            padding: 0 20px;
+          }
+          
+          .timeline-line {
+            left: 30px;
+          }
+          
           .process-container {
             gap: 30px;
           }
@@ -1571,16 +1555,26 @@
             gap: 20px;
             padding: 24px 20px;
             align-items: center;
+            margin-left: 100px;
           }
           
           .process-step:hover {
-            padding-bottom: 40px;
+            padding-bottom: 60px;
           }
-         
-          .step-number {
-            font-size: 2.5rem;
-            min-width: auto;
-            order: 1;
+          
+          .timeline-point {
+            left: -50px;
+            width: 40px;
+            height: 40px;
+            z-index: 1000;
+          }
+          
+
+          
+          .timeline-connector {
+            left: -10px;
+            width: 15px;
+            z-index: 999;
           }
           
           .step-icon {
@@ -1608,16 +1602,14 @@
           .step-bullets {
             text-align: left;
             padding-left: 20px;
+            margin-top: 10px;
           }
           
           .step-bullets li {
             font-size: 1rem;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             padding-left: 25px;
-          }
-          
-          .step-connector {
-            display: none;
+            line-height: 1.4;
           }
         }
       
@@ -1739,22 +1731,22 @@
       </div>
     </section>
 
-    <section class="section services" data-aos="fade-up" data-aos-duration="700">
+    <section class="section services" data-aos="fade-up" data-aos-duration="600">
       <h2 data-aos="fade-down" data-aos-delay="100">Unsere Leistungen</h2>
       <div class="services-grid">
-        <div class="service-card" data-aos="slide-up" data-aos-delay="400" data-aos-duration="700">
+        <div class="service-card" data-aos="slide-up" data-aos-delay="200" data-aos-duration="600">
           <div class="service-icon">💻</div>
           <h3>Webseiten</h3>
           <p>Modern, schnell, responsiv – perfekt auf Ihr Ziel ausgerichtet.</p>
           <a class="btn btn-secondary" href="produkt.html">Mehr erfahren</a>
         </div>
-        <div class="service-card" data-aos="slide-up" data-aos-delay="600" data-aos-duration="700">
+        <div class="service-card" data-aos="slide-up" data-aos-delay="300" data-aos-duration="600">
           <div class="service-icon">🤖</div>
           <h3>KI & Sichtbarkeit</h3>
           <p>Struktur, SEO-Basics und Automatisierung für mehr Reichweite.</p>
           <a class="btn btn-secondary" href="produkt.html">Mehr erfahren</a>
         </div>
-        <div class="service-card" data-aos="slide-up" data-aos-delay="800" data-aos-duration="700">
+        <div class="service-card" data-aos="slide-up" data-aos-delay="400" data-aos-duration="600">
           <div class="service-icon">🛟</div>
           <h3>Support & Betreuung</h3>
           <p>Updates und persönliche Begleitung – dauerhaft stark.</p>
@@ -1763,104 +1755,89 @@
       </div>
     </section>
 
-    <!-- Prozess-Sektion mit animierten Schritten -->
-    <section class="section process-steps" data-aos="fade-up" data-aos-duration="800">
-      <h2 data-aos="fade-down" data-aos-delay="200">Unser Prozess</h2>
-      <div class="process-container">
-                 <div class="process-step" data-aos="fade-right" data-aos-delay="200">
-           <div class="step-number">01</div>
-           <div class="step-icon">💬</div>
-           <div class="step-content">
-             <h3>Beratungsgespräch</h3>
-             <p>Wir analysieren Ihre Ziele und Anforderungen im persönlichen Gespräch.</p>
-             <ul class="step-bullets">
-               <li>Analyse Ihrer Geschäftsziele</li>
-               <li>Identifikation der Zielgruppe</li>
-               <li>Definition der Kernfunktionen</li>
-             </ul>
-           </div>
-           <div class="step-connector"></div>
-         </div>
+    <!-- Prozess-Sektion mit Timeline -->
+    <section class="section process-steps" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
+      <h2 data-aos="fade-down" data-aos-delay="500">Unser Prozess</h2>
+      
+      <!-- Timeline Container -->
+      <div class="timeline-container">
+        <div class="timeline-line">
+          <div class="timeline-progress"></div>
+        </div>
         
-                 <div class="process-step" data-aos="fade-left" data-aos-delay="350">
-           <div class="step-number">02</div>
-           <div class="step-icon">🎨</div>
-           <div class="step-content">
-             <h3>Konzept & Design</h3>
-             <p>Entwicklung eines maßgeschneiderten Konzepts mit modernem Design.</p>
-             <ul class="step-bullets">
-               <li>Erstellung des Wireframes</li>
-               <li>Design-System und Branding</li>
-               <li>Responsive Layout-Planung</li>
-             </ul>
-           </div>
-           <div class="step-connector"></div>
-         </div>
-        
-                 <div class="process-step" data-aos="fade-right" data-aos-delay="500">
-           <div class="step-number">03</div>
-           <div class="step-icon">⚡</div>
-           <div class="step-content">
-             <h3>Entwicklung</h3>
-             <p>Professionelle Umsetzung mit Fokus auf Performance und UX.</p>
-             <ul class="step-bullets">
-               <li>Clean Code & Best Practices</li>
-               <li>Performance-Optimierung</li>
-               <li>Cross-Browser Kompatibilität</li>
-             </ul>
-           </div>
-           <div class="step-connector"></div>
-         </div>
-        
-                 <div class="process-step" data-aos="fade-left" data-aos-delay="600">
-           <div class="step-number">04</div>
-           <div class="step-icon">🚀</div>
-           <div class="step-content">
-             <h3>Launch & Support</h3>
-             <p>Go-Live und kontinuierliche Betreuung für nachhaltigen Erfolg.</p>
-             <ul class="step-bullets">
-               <li>Go-Live & Testing</li>
-               <li>SEO-Optimierung</li>
-               <li>Kontinuierlicher Support</li>
-             </ul>
-           </div>
-         </div>
+        <div class="process-container">
+          <div class="process-step" data-step="1">
+            <div class="timeline-point">
+              <div class="point-number">1</div>
+            </div>
+            <div class="timeline-connector"></div>
+            <div class="step-content">
+              <div class="step-icon">💬</div>
+              <h3>Beratungsgespräch</h3>
+              <p>Wir analysieren Ihre Ziele und Anforderungen im persönlichen Gespräch.</p>
+              <ul class="step-bullets">
+                <li>Analyse Ihrer Geschäftsziele</li>
+                <li>Identifikation der Zielgruppe</li>
+                <li>Definition der Kernfunktionen</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="process-step" data-step="2">
+            <div class="timeline-point">
+              <div class="point-number">2</div>
+            </div>
+            <div class="timeline-connector"></div>
+            <div class="step-content">
+              <div class="step-icon">🎨</div>
+              <h3>Konzept & Design</h3>
+              <p>Entwicklung eines maßgeschneiderten Konzepts mit modernem Design.</p>
+              <ul class="step-bullets">
+                <li>Erstellung des Wireframes</li>
+                <li>Design-System und Branding</li>
+                <li>Responsive Layout-Planung</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="process-step" data-step="3">
+            <div class="timeline-point">
+              <div class="point-number">3</div>
+            </div>
+            <div class="timeline-connector"></div>
+            <div class="step-content">
+              <div class="step-icon">⚡</div>
+              <h3>Entwicklung</h3>
+              <p>Professionelle Umsetzung mit Fokus auf Performance und UX.</p>
+              <ul class="step-bullets">
+                <li>Clean Code & Best Practices</li>
+                <li>Performance-Optimierung</li>
+                <li>Cross-Browser Kompatibilität</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="process-step" data-step="4">
+            <div class="timeline-point">
+              <div class="point-number">4</div>
+            </div>
+            <div class="timeline-connector"></div>
+            <div class="step-content">
+              <div class="step-icon">🚀</div>
+              <h3>Launch & Support</h3>
+              <p>Go-Live und kontinuierliche Betreuung für nachhaltigen Erfolg.</p>
+              <ul class="step-bullets">
+                <li>Go-Live & Testing</li>
+                <li>SEO-Optimierung</li>
+                <li>Kontinuierlicher Support</li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- Kompakte Referenz-Kacheln -->
-    <section class="section references" data-aos="fade-up" data-aos-duration="600">
-      <h2 data-aos="fade-down" data-aos-delay="100">Einblicke in unsere Arbeit</h2>
-      <div class="reference-grid">
-        <div class="reference-card" data-aos="fade-right" data-aos-delay="200">
-          <div class="ref-logo">
-            <img src="Referenzlogos/Logo-Agas-Naildesign.png" alt="Agas Naildesign"/>
-          </div>
-          <div class="ref-content">
-            <h3>Agas Naildesign</h3>
-            <p>Eleganter Auftritt mit Fokus auf Terminbuchungen.</p>
-          </div>
-        </div>
-        <div class="reference-card" data-aos="fade-up" data-aos-delay="300">
-          <div class="ref-logo">
-            <img src="Referenzlogos/logo-hairluxury.png" alt="Hair Luxury"/>
-          </div>
-          <div class="ref-content">
-            <h3>Hair Luxury</h3>
-            <p>Performance + SEO: sichtbar vor Ort.</p>
-          </div>
-        </div>
-        <div class="reference-card" data-aos="fade-left" data-aos-delay="400">
-          <div class="ref-logo">
-            <img src="Referenzlogos/fashion_way_logo_transparent.png" alt="Fashion Way"/>
-          </div>
-          <div class="ref-content">
-            <h3>Fashion Way</h3>
-            <p>Bildstarker Auftritt, klare Userführung.</p>
-          </div>
-        </div>
-      </div>
-    </section>
+
 
     <!-- Vereinfachte Feature Cards -->
     <section class="section features" data-aos="fade-up" data-aos-duration="600">
@@ -2236,10 +2213,10 @@
     <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
     <script>
       document.addEventListener('DOMContentLoaded', function() {
-        var aosOffset = window.innerWidth > 900 ? 400 : 200;
+        var aosOffset = window.innerWidth > 900 ? 300 : 150;
         AOS.init({
           once: true,
-          duration: 1000,
+          duration: 800,
           offset: aosOffset,
           delay: 0,
           easing: 'ease-out-cubic'
@@ -2424,6 +2401,95 @@
           carousel.style.webkitUserDrag = 'none';
         }
       });
+    </script>
+    
+    <!-- Timeline-Animation für Prozess-Sektion -->
+    <script>
+      // Timeline-Animation beim Scrollen
+      (function timelineAnimation(){
+        const processSection = document.querySelector('.process-steps');
+        const timelineProgress = document.querySelector('.timeline-progress');
+        const processSteps = document.querySelectorAll('.process-step');
+        
+        if (!processSection || !timelineProgress) return;
+        
+        function updateTimeline() {
+          const rect = processSection.getBoundingClientRect();
+          const windowHeight = window.innerHeight;
+          const sectionHeight = processSection.offsetHeight;
+          
+          // Berechne Scroll-Fortschritt innerhalb der Sektion
+          const sectionTop = rect.top;
+          const sectionBottom = rect.bottom;
+          const visibleHeight = windowHeight;
+          
+          let progress = 0;
+          
+          if (sectionTop < visibleHeight && sectionBottom > 0) {
+            // Sektion ist sichtbar
+            const totalScrollDistance = sectionHeight + visibleHeight;
+            const scrolledDistance = visibleHeight - sectionTop;
+            let rawProgress = Math.max(0, Math.min(1, scrolledDistance / totalScrollDistance));
+            
+            // Starte später (bei 30% Scroll-Fortschritt) und mache schneller
+            if (rawProgress < 0.3) {
+              progress = 0;
+            } else {
+              // Beschleunige den Fortschritt zwischen 30% und 100%
+              const adjustedProgress = (rawProgress - 0.3) / 0.7;
+              progress = Math.min(1, adjustedProgress * 1.4); // 1.4x schneller
+            }
+          }
+          
+          // Update Timeline-Progress
+          timelineProgress.style.height = (progress * 100) + '%';
+          
+          // Update Timeline-Punkte und Verbindungen
+          const stepCount = processSteps.length;
+          const stepProgress = progress * stepCount;
+          
+          processSteps.forEach((step, index) => {
+            const point = step.querySelector('.timeline-point');
+            const connector = step.querySelector('.timeline-connector');
+            
+            if (point) {
+              if (index < stepProgress) {
+                point.classList.add('active');
+              } else {
+                point.classList.remove('active');
+              }
+            }
+            
+            if (connector) {
+              if (index < stepProgress - 0.5) {
+                connector.classList.add('active');
+              } else {
+                connector.classList.remove('active');
+              }
+            }
+          });
+        }
+        
+        window.addEventListener('scroll', updateTimeline, { passive: true });
+        updateTimeline(); // Initial call
+      })();
+    </script>
+    
+    <!-- Parallax-Animation für Blobs -->
+    <script>
+      // Subtiles Parallaxen der Hintergrund-Blobs beim Scrollen
+      (function blobParallax(){
+        var b1 = document.querySelector('.blob-1');
+        var b2 = document.querySelector('.blob-2');
+        if (!b1 || !b2) return;
+        function onScroll(){
+          var y = window.scrollY || window.pageYOffset;
+          b1.style.transform = 'translateY(' + (y*0.06) + 'px)';
+          b2.style.transform = 'translateY(' + (y*0.1) + 'px)';
+        }
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+      })();
     </script>
   </body>
 </html>
