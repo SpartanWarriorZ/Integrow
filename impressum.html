@@ -179,9 +179,17 @@
       }
     }
   </style>
+  <style>
+    /* Einheitliche silberne Glow-Blobs wie Startseite */
+    .bg-blob { position: fixed; z-index: 0; pointer-events: none; filter: blur(46px) saturate(1.0); opacity: 0.22; }
+    .blob-1 { width: 420px; height: 420px; left: -120px; top: 40vh; background: radial-gradient(circle at 30% 30%, #b7bcc6, transparent 60%); }
+    .blob-2 { width: 360px; height: 360px; right: -120px; top: 75vh; background: radial-gradient(circle at 70% 70%, #d8dbe2, transparent 60%); opacity: 0.16; }
+  </style>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
+  <div class="bg-blob blob-1"></div>
+  <div class="bg-blob blob-2"></div>
   <header data-aos="fade-down">
     <div class="parallax-bg"></div>
     <div class="logo-container">
