@@ -88,25 +88,56 @@
         margin-top: 24px;
         flex-wrap: wrap;
       }
-      .hero-visual {
-        position: relative;
-        height: 320px;
-        border-radius: 18px;
-        overflow: hidden;
-        perspective: 800px;
-        background: linear-gradient(180deg, rgba(20,20,24,0.8), rgba(18,18,20,0.8));
-        border: 1px solid rgba(255,255,255,0.06);
-        box-shadow: 0 10px 34px rgba(0,0,0,0.5);
-      }
-      .plx-layer {
-        position: absolute;
-        will-change: transform, filter;
-        transition: transform 0.12s ease-out;
-        filter: drop-shadow(0 12px 30px rgba(0,0,0,0.35));
-      }
-      .plx-1 { width: 62%; left: 4%; top: 10%; border-radius: 14px; transform: translateY(0) translateZ(30px) rotateZ(-1deg); }
-      .plx-2 { width: 54%; right: 6%; bottom: 6%; border-radius: 14px; transform: translateY(0) translateZ(60px) rotateZ(2deg); }
-      .plx-3 { width: 42%; right: 24%; top: 2%; border-radius: 12px; transform: translateY(0) translateZ(90px) rotateZ(-2deg); }
+              .hero-visual {
+          position: relative;
+          height: 400px;
+          border-radius: 18px;
+          overflow: hidden;
+          perspective: 800px;
+          background: transparent;
+          border: none;
+          box-shadow: none;
+        }
+        
+        .slideshow-container {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          overflow: hidden;
+        }
+        
+        .slide {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          opacity: 0;
+          transform: translateX(100%);
+          transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        
+        .slide.active {
+          opacity: 1;
+          transform: translateX(0);
+        }
+        
+        .slide.prev {
+          transform: translateX(100%);
+        }
+        
+        .slide img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+          border-radius: 18px;
+          filter: drop-shadow(0 12px 30px rgba(0,0,0,0.35));
+          image-rendering: -webkit-optimize-contrast;
+          image-rendering: crisp-edges;
+        }
       .hero-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 8px; }
       .btn {
         display: inline-flex;
@@ -1230,6 +1261,52 @@
           max-height: 60px;
           max-width: 120px;
         }
+        
+        /* Mobile Hero Layout - Diashow zwischen Titel und Text */
+        .hero-inner {
+          flex-direction: column;
+          gap: 20px;
+        }
+        
+        .hero-left {
+          order: 1;
+          text-align: center;
+        }
+        
+        .hero-left h1 {
+          margin-bottom: 20px;
+        }
+        
+        .hero-left p {
+          display: none; /* Verstecke Text in hero-left auf Mobile */
+        }
+        
+        .hero-left .hero-cta {
+          display: none; /* Verstecke Buttons in hero-left auf Mobile */
+        }
+        
+        .hero-left .hero-stats {
+          display: none; /* Verstecke Stats in hero-left auf Mobile */
+        }
+        
+        .hero-visual {
+          order: 2;
+          height: 350px;
+          width: 100%;
+          margin: 20px 0;
+        }
+        
+        /* Mobile-only Elemente */
+        .hero-left::after {
+          content: "Präzises Design, starke Performance, smarte Inhalte – für mehr Anfragen in weniger Zeit.";
+          display: block;
+          order: 3;
+          text-align: center;
+          margin-top: 20px;
+          font-size: 1.1rem;
+          line-height: 1.6;
+          color: #ccc;
+        }
       }
       /* Sticky Showcase – horizontales Scrolling beim Vertikalscroll */
       .showcase-sticky { position: relative; height: 180vh; }
@@ -1369,21 +1446,20 @@
         position: relative;
       }
       
-      .process-step {
-        display: flex;
-        align-items: flex-start;
-        gap: 40px;
-        padding: 24px;
-        background: rgba(255,255,255,0.03);
-        border: 1px solid rgba(255,255,255,0.08);
-        border-radius: 16px;
-        position: relative;
-        transition: all 0.3s ease-out;
-        overflow: visible;
-        cursor: pointer;
-        margin-left: 160px;
-        z-index: 1;
-      }
+              .process-step {
+          display: flex;
+          align-items: flex-start;
+          gap: 40px;
+          padding: 24px;
+          background: rgba(255,255,255,0.03);
+          border: 1px solid rgba(255,255,255,0.08);
+          border-radius: 16px;
+          position: relative;
+          transition: all 0.3s ease-out;
+          overflow: visible;
+          margin-left: 160px;
+          z-index: 1;
+        }
       
       .timeline-point {
         position: absolute;
@@ -1443,12 +1519,7 @@
       
 
       
-      .process-step:hover {
-        transform: translateX(8px);
-        border: 2px solid #ffd700;
-        box-shadow: 0 0 20px rgba(255,215,0,0.6), 0 12px 35px rgba(0,0,0,0.4);
-        padding-bottom: 40px;
-      }
+      /* Hover-Animation entfernt - nur noch Scroll-basierte Aktivierung */
       
 
       
@@ -1505,9 +1576,22 @@
         transition: all 0.3s ease-out;
       }
       
-      .process-step:hover .step-bullets {
+      .process-step.scroll-active .step-bullets {
         opacity: 1;
         max-height: 120px;
+      }
+      
+      @media (max-width: 768px) {
+        .process-step.scroll-active .step-bullets {
+          max-height: 200px !important;
+        }
+      }
+      
+      .process-step.scroll-active {
+        transform: translateX(8px);
+        border: 2px solid #ffd700;
+        box-shadow: 0 0 20px rgba(255,215,0,0.6), 0 12px 35px rgba(0,0,0,0.4);
+        padding-bottom: 40px;
       }
       
       @media (max-width: 768px) {
@@ -1546,7 +1630,7 @@
           }
           
           .process-container {
-            gap: 30px;
+            gap: 40px;
           }
           
           .process-step {
@@ -1556,10 +1640,15 @@
             padding: 24px 20px;
             align-items: center;
             margin-left: 100px;
+            min-height: 200px;
           }
           
-          .process-step:hover {
-            padding-bottom: 60px;
+          .process-step.scroll-active {
+            padding-bottom: 80px;
+            min-height: 280px;
+            transform: translateY(-5px);
+            border: 2px solid #ffd700;
+            box-shadow: 0 0 20px rgba(255,215,0,0.6), 0 12px 35px rgba(0,0,0,0.4);
           }
           
           .timeline-point {
@@ -1575,6 +1664,12 @@
             left: -10px;
             width: 15px;
             z-index: 999;
+          }
+          
+          .timeline-connector.active {
+            background: linear-gradient(to right, #ffd700, #ffdf33);
+            box-shadow: 0 0 10px rgba(255,215,0,0.5);
+            width: 21px;
           }
           
           .step-icon {
@@ -1603,13 +1698,16 @@
             text-align: left;
             padding-left: 20px;
             margin-top: 10px;
+            max-height: 200px !important;
           }
           
           .step-bullets li {
             font-size: 1rem;
             margin-bottom: 12px;
             padding-left: 25px;
-            line-height: 1.4;
+            line-height: 1.5;
+            word-wrap: break-word;
+            hyphens: auto;
           }
         }
       
@@ -1703,9 +1801,26 @@
           </div>
         </div>
         <div class="hero-visual" id="hero-visual" data-aos="fade-left" data-aos-delay="400">
-          <img class="plx-layer plx-1" src="Webseiten-KI-Integration2.png" alt="Preview 1"/>
-          <img class="plx-layer plx-2" src="Webseiten-KI-Integration.jpg" alt="Preview 2"/>
-          <img class="plx-layer plx-3" src="Webseiten-AI-Integration.png" alt="Preview 3"/>
+          <div class="slideshow-container">
+            <div class="slide active">
+              <img src="Fashion-Way-Ref.png" alt="Fashion Way Referenzwebsite"/>
+            </div>
+            <div class="slide">
+              <img src="Luxury-Hair-Ref.png" alt="Luxury Hair Referenzwebsite"/>
+            </div>
+            <div class="slide">
+              <img src="MiCare-Ref.png" alt="MiCare Referenzwebsite"/>
+            </div>
+            <div class="slide">
+              <img src="Wessel-GmbH-Ref.png" alt="Wessel GmbH Referenzwebsite"/>
+            </div>
+            <div class="slide">
+              <img src="Nagel-design-Ref.png" alt="Nagel Design Referenzwebsite"/>
+            </div>
+            <div class="slide">
+              <img src="Geruestbau-RynkiewiczRef.png" alt="Gerüstbau Rynkiewicz Referenzwebsite"/>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -2467,6 +2582,15 @@
                 connector.classList.remove('active');
               }
             }
+            
+            // Automatisches Auffächern der Prozess-Schritte beim Scrollen
+            if (index < stepProgress - 0.3) {
+              // Schritt ist erreicht - auffächern
+              step.classList.add('scroll-active');
+            } else {
+              // Schritt noch nicht erreicht - zurückfahren
+              step.classList.remove('scroll-active');
+            }
           });
         }
         
@@ -2489,7 +2613,37 @@
         }
         window.addEventListener('scroll', onScroll, { passive: true });
         onScroll();
-      })();
-    </script>
-  </body>
-</html>
+              })();
+      </script>
+      
+      <!-- Diashow für Referenzwebsites -->
+      <script>
+        (function slideshow() {
+          const slides = document.querySelectorAll('.slide');
+          let currentSlide = 0;
+          
+          function nextSlide() {
+            // Setze aktuelles Slide als 'prev' für Exit-Animation nach rechts
+            slides[currentSlide].classList.add('prev');
+            slides[currentSlide].classList.remove('active');
+            
+            // Wechsle zum nächsten Slide
+            currentSlide = (currentSlide + 1) % slides.length;
+            
+            // Aktiviere neues Slide (kommt von rechts)
+            slides[currentSlide].classList.add('active');
+            
+            // Entferne 'prev' Klasse nach Animation
+            setTimeout(() => {
+              slides.forEach(slide => slide.classList.remove('prev'));
+            }, 600);
+          }
+          
+          // Starte Diashow nach 2 Sekunden und wechsle alle 4 Sekunden
+          setTimeout(() => {
+            setInterval(nextSlide, 4000);
+          }, 2000);
+        })();
+      </script>
+    </body>
+  </html>
