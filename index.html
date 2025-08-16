@@ -1561,12 +1561,20 @@
       
       .step-image {
         flex-shrink: 0;
-        width: 200px;
-        height: 150px;
+        width: 320px;
+        height: 240px;
         border-radius: 12px;
         overflow: hidden;
         box-shadow: 0 8px 25px rgba(0,0,0,0.3);
         border: 1px solid rgba(255,255,255,0.1);
+        align-self: flex-start;
+        transition: all 0.3s ease-out;
+        background: rgba(255,255,255,0.02);
+      }
+      
+      .process-step.scroll-active .step-image {
+        align-self: center;
+        margin-top: 20px;
       }
       
       .step-image img {
@@ -1574,10 +1582,22 @@
         height: 100%;
         object-fit: cover;
         transition: transform 0.3s ease-out;
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+        filter: contrast(1.02) brightness(1.01);
+        transform: scale(1);
       }
       
       .step-image img:hover {
-        transform: scale(1.05);
+        transform: scale(1.03);
+      }
+      
+      /* Spezielle Optimierung für Konzept-Design Bild */
+      .process-step[data-step="2"] .step-image img {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+        image-rendering: pixelated;
+        filter: contrast(1.05) brightness(1.02) saturate(1.1);
       }
       
       .step-content h3 {
@@ -1681,6 +1701,11 @@
             width: 180px;
             height: 135px;
             order: -1;
+            align-self: center;
+          }
+          
+          .process-step.scroll-active .step-image {
+            margin-top: 10px;
           }
           
           .process-step.scroll-active {
@@ -1949,14 +1974,19 @@
             </div>
             <div class="timeline-connector"></div>
             <div class="step-content">
-              <div class="step-icon">🎨</div>
-              <h3>Konzept & Design</h3>
-              <p>Entwicklung eines maßgeschneiderten Konzepts mit modernem Design.</p>
-              <ul class="step-bullets">
-                <li>Erstellung des Wireframes</li>
-                <li>Design-System und Branding</li>
-                <li>Responsive Layout-Planung</li>
-              </ul>
+              <div class="step-text">
+                <div class="step-icon">🎨</div>
+                <h3>Konzept & Design</h3>
+                <p>Entwicklung eines maßgeschneiderten Konzepts mit modernem Design.</p>
+                <ul class="step-bullets">
+                  <li>Erstellung des Wireframes</li>
+                  <li>Design-System und Branding</li>
+                  <li>Responsive Layout-Planung</li>
+                </ul>
+              </div>
+              <div class="step-image">
+                <img src="Prozess-Konzept-Design.png" alt="Konzept & Design Prozess" />
+              </div>
             </div>
           </div>
           
