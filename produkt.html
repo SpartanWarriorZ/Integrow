@@ -1969,21 +1969,18 @@
         }
       }
 
-      /* --- Beispielseiten-Button: schöner Hover-Effekt & Animation --- */
+      /* --- Beispielseiten-Button: moderner Stil wie Tab-Buttons --- */
       #show-examples-btn {
-        background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
+        background: rgba(255,255,255,0.05);
         color: #ffd700;
         font-size: 1.2rem;
         padding: 18px 40px;
         border-radius: 16px;
-        border: 2px solid rgba(255, 215, 0, 0.3);
+        border: 2px solid rgba(255,215,0,0.3);
         cursor: pointer;
         font-weight: 600;
-        box-shadow: 
-          0 6px 25px rgba(255, 215, 0, 0.15),
-          0 0 0 1px rgba(255, 215, 0, 0.1),
-          inset 0 1px 0 rgba(255, 215, 0, 0.1);
-        transition: all 0.3s cubic-bezier(0.4, 1.6, 0.6, 1);
+        box-shadow: 0 0 20px rgba(255,215,0,0.1);
+        transition: all 0.3s ease-out;
         position: relative;
         overflow: hidden;
         letter-spacing: 0.5px;
@@ -1992,6 +1989,7 @@
         will-change: transform, box-shadow;
         backface-visibility: hidden;
         transform: translateZ(0);
+        text-shadow: 0 0 10px rgba(255,215,0,0.5);
         /* Desktop-Optimierungen für bessere Schärfe */
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
@@ -2000,57 +1998,19 @@
         font-feature-settings: "kern" 1;
       }
 
-      #show-examples-btn::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(90deg, transparent 0%, rgba(255, 215, 0, 0.1) 50%, transparent 100%);
-        opacity: 0;
-        transition: opacity 0.4s ease;
-        pointer-events: none;
-        transform: translateX(-100%);
-      }
 
-      #show-examples-btn::after {
-        content: "";
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: radial-gradient(circle, rgba(255, 215, 0, 0.15) 0%, transparent 70%);
-        opacity: 0;
-        transform: scale(0);
-        transition: all 0.6s cubic-bezier(0.4, 1.6, 0.6, 1);
-        pointer-events: none;
-      }
 
       #show-examples-btn:hover,
       #show-examples-btn:focus {
-        background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+        background: rgba(255,215,0,0.05);
         color: #ffd700;
-        border-color: rgba(255, 215, 0, 0.5);
-        box-shadow: 
-          0 8px 25px rgba(255, 215, 0, 0.2),
-          0 0 0 2px rgba(255, 215, 0, 0.3),
-          inset 0 1px 0 rgba(255, 215, 0, 0.2);
-        transform: translateY(-2px) scale(1.01);
-        text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+        border-color: rgba(255,215,0,0.4);
+        box-shadow: 0 0 20px rgba(255,215,0,0.2);
+        transform: translateY(-3px);
+        text-shadow: 0 0 15px rgba(255,215,0,0.6);
       }
 
-      #show-examples-btn:hover::before,
-      #show-examples-btn:focus::before {
-        opacity: 0;
-      }
 
-      #show-examples-btn:hover::after,
-      #show-examples-btn:focus::after {
-        opacity: 0.2;
-        transform: scale(1);
-      }
 
       #show-examples-btn:focus-visible {
         outline: 2px solid rgba(255, 215, 0, 0.5);
@@ -2262,6 +2222,28 @@
           text-shadow: 0 0 16px #ffffff88, 0 1px 0 #fff2;
           border: 2.5px solid #ffffff;
           filter: drop-shadow(0 0 12px #ffffff66);
+        }
+
+        /* Professional: Stärkster weißer Glow für die teuerste Basic-Variante */
+        #calendar-modal.professional .modal-package-label {
+          box-shadow: 0 0 40px #ffffffcc, 0 8px 40px 0 #ffffff88, 0 2px 8px #0002;
+          text-shadow: 0 0 24px #ffffffcc, 0 1px 0 #fff2;
+          border: 3px solid #ffffff;
+          filter: drop-shadow(0 0 20px #ffffffaa);
+          background: linear-gradient(135deg, #ffffff22, #ffffff11);
+        }
+        
+        /* Professional: Stärkster weißer Glow für den Titel */
+        #calendar-modal.professional .modal-title {
+          color: #ffffff;
+          text-shadow: 0 0 24px #ffffffcc, 0 1px 0 #fff2;
+        }
+        
+        /* Professional: Stärkster weißer Glow für den Leistungen-Titel */
+        #calendar-modal.professional #leistungen-selected-title {
+          color: #ffffff;
+          text-shadow: 0 0 24px #ffffffcc, 0 1px 0 #fff2;
+          font-weight: 700;
         }
 
         /* Basic Webseiten: Captcha-Container und Schrift weiß */
@@ -2497,206 +2479,328 @@
           border-radius: 14px; 
         }
 
-        .weitere-leistungen-section .card {
-          opacity: 1 !important;
-          transform: none !important;
-          box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.05), inset 0 1px 0 rgba(255,255,255,0.1);
-          background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
-          border-radius: 20px;
-          border: 2px solid transparent;
-          color: #e0e0e0;
-          margin-bottom: 0;
-          transition: all 0.5s cubic-bezier(0.4, 1.6, 0.6, 1);
-        }
-        .weitere-leistungen-section .card:hover {
-          box-shadow: 0 20px 45px rgba(255, 215, 0, 0.18), 0 0 0 2px rgba(255, 215, 0, 0.3), inset 0 1px 0 rgba(255, 215, 0, 0.2);
-          border-color: rgba(255, 215, 0, 0.5);
-          background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
-          color: #ffd700;
-        }
-
-        @media (max-width: 600px) {
-          .weitere-leistungen-section .pricing-section {
-            gap: 18px !important;
-            width: 100%;
-            box-sizing: border-box;
-            padding-left: 3vw;
-            padding-right: 3vw;
-          }
-          .weitere-leistungen-section .card {
-            width: 100% !important;
-            max-width: 420px !important;
-            min-width: 0;
-            margin: 0 auto 0 auto;
-            padding: 22px 10px 18px 10px !important;
-            font-size: 1.05rem;
-            border-radius: 14px !important;
-          }
-          .weitere-leistungen-section .card h3 {
-            font-size: 1.18rem !important;
-          }
-          .weitere-leistungen-section .card span[style*='font-size:2.1rem'] {
-            font-size: 1.7rem !important;
-          }
-        }
-
-        @media (min-width: 601px) {
-          .weitere-leistungen-section .pricing-section {
-            display: grid !important;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 36px 40px;
-            justify-items: center;
-            align-items: stretch;
-            padding-left: 0;
-            padding-right: 0;
-          }
-          .weitere-leistungen-section .card {
-            width: 100% !important;
-            max-width: 340px !important;
-            margin: 0;
-          }
-          .weitere-leistungen-swiper .swiper-slide {
-            border-radius: 20px;
-            padding: 50px 40px;
-            text-align: center;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
-            border: 2px solid transparent;
-            font-size: 1.08rem;
-          }
-          .weitere-leistungen-swiper .swiper-slide h3 {
-            font-size: 2rem;
-            color: silver;
-            margin-bottom: 25px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-          }
-          .weitere-leistungen-swiper .swiper-slide p,
-          .weitere-leistungen-swiper .swiper-slide .desc {
-            font-size: 1.1rem;
-            line-height: 1.7;
-            color: #ccc;
-            margin-bottom: 25px;
-          }
-          .weitere-leistungen-swiper .swiper-slide.swiper-slide-active {
-            box-shadow: 0 20px 45px rgba(255, 215, 0, 0.18), 0 0 0 2px rgba(255, 215, 0, 0.3), inset 0 1px 0 rgba(255, 215, 0, 0.2);
-            border-color: rgba(255, 215, 0, 0.5);
-            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
-            color: #ffd700;
-            z-index: 2;
-            transform: scale(1.08);
-          }
-          .weitere-leistungen-swiper .swiper-slide:not(.swiper-slide-active) {
-            opacity: 0.7;
-            filter: blur(1px);
-            transform: scale(0.92);
-            z-index: 1;
-          }
-        }
-        .weitere-leistungen-swiper {
-          width: 100%;
+        /* Moderne Weitere Leistungen Sektion - Karussell */
+        .leistungen-carousel-container {
+          position: relative;
+          max-width: 1200px;
           margin: 0 auto;
-          padding-bottom: 24px;
+          padding: 0 60px;
+          min-height: 520px;
         }
-        .weitere-leistungen-swiper .swiper-slide h3 {
-          font-size: 1.3rem;
-          margin-bottom: 10px;
+        
+        .leistungen-carousel {
+          overflow: visible;
+          padding: 120px 0 -20px 0;
+          min-height: 580px;
         }
-        .weitere-leistungen-swiper .swiper-slide span[style*='font-size:2.1rem'] {
-          font-size: 2.1rem;
-          margin-bottom: 12px;
+        
+        .leistungen-carousel .swiper-slide {
+          width: 320px;
+          height: auto;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          transition: all 0.6s cubic-bezier(0.4, 1.6, 0.6, 1);
+          padding: 60px 0 0px 0;
         }
-        .weitere-leistungen-swiper .swiper-button-next,
-        .weitere-leistungen-swiper .swiper-button-prev {
+        
+        .leistungen-carousel .swiper-slide-active {
+          transform: scale(1.08) translateY(-20px);
+          z-index: 10;
+        }
+        
+        .leistungen-carousel .swiper-slide-active .leistung-card {
+          box-shadow: 0 25px 60px rgba(0,0,0,0.6), 0 0 40px rgba(255,215,0,0.4);
+          border-color: rgba(255,215,0,0.5);
+          background: rgba(255,255,255,0.05);
+          transform: translateY(-10px);
+        }
+        
+        .leistungen-carousel .swiper-slide-active .leistung-card h3 {
           color: #ffd700;
-          top: 50%;
-          width: 44px;
-          height: 44px;
-          border-radius: 50%;
-          background: rgba(30,30,30,0.7);
-          box-shadow: 0 2px 12px #ffd70033;
-          transition: background 0.2s, color 0.2s;
+          text-shadow: 0 0 15px rgba(255,215,0,0.6);
         }
-        .weitere-leistungen-swiper .swiper-button-next:hover,
-        .weitere-leistungen-swiper .swiper-button-prev:hover {
-          background: #ffd700;
-          color: #181818;
+        
+        .leistungen-carousel .swiper-slide-active .leistung-icon {
+          filter: drop-shadow(0 0 20px rgba(255,215,0,0.8));
         }
-        @media (max-width: 600px) {
-          .weitere-leistungen-swiper {
-            max-width: 100vw;
-          }
-          .weitere-leistungen-swiper .swiper-slide {
-            width: 96vw !important;
-            max-width: 400px !important;
-            min-width: 0 !important;
-            min-height: 110px;
-            max-height: 160px;
-            padding: 12px 8px;
-            font-size: 0.98rem;
-            border-radius: 12px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-          }
-          .weitere-leistungen-swiper .swiper-slide h3 {
-            font-size: 1rem;
-            margin-bottom: 8px;
-          }
-          .weitere-leistungen-swiper .swiper-slide span[style*='font-size:2.1rem'] {
-            font-size: 1.1rem;
-            margin-bottom: 6px;
-          }
-          #leistungen-detail {
-            padding: 12px 3vw 8px 3vw !important;
-            min-height: 60px !important;
-          }
-          .weitere-leistungen-swiper .swiper-button-next,
-          .weitere-leistungen-swiper .swiper-button-prev {
-            z-index: 10;
-          }
+        
+        .leistungen-carousel .swiper-slide:not(.swiper-slide-active) {
+          opacity: 0.3;
+          filter: blur(3px) brightness(0.7);
+          transform: scale(0.85);
         }
-        @media (min-width: 601px) {
-          .weitere-leistungen-swiper {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding-bottom: 24px;
-          }
-          .weitere-leistungen-swiper .swiper-slide {
-            max-width: 340px !important;
-            min-width: 340px !important;
-            min-height: 320px;
-            padding: 50px 40px;
-            border-radius: 20px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
-            border: 2px solid transparent;
-            font-size: 1.08rem;
+        
+        .leistungen-carousel .swiper-slide:not(.swiper-slide-active) .leistung-card {
+          border-color: rgba(255,255,255,0.03);
+          box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .leistung-card {
+          background: rgba(255,255,255,0.03);
+          border: 1px solid rgba(255,255,255,0.08);
+          border-radius: 16px;
+          padding: 30px;
+          position: relative;
+          transition: all 0.3s ease-out;
+          overflow: hidden;
+          display: flex;
+          flex-direction: column;
+          min-height: 280px;
+          cursor: pointer;
+        }
+        
+        .leistung-card::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+          transition: left 0.6s ease-out;
+          pointer-events: none;
+          opacity: 0;
+          z-index: -1;
+        }
+        
+        .leistung-card:hover::before {
+          left: 100%;
+          opacity: 1;
+        }
+        
+        .leistung-card:hover {
+          transform: translateY(-12px);
+          border-color: rgba(255,255,255,0.2);
+          box-shadow: 0 25px 60px rgba(0,0,0,0.6), 0 0 40px rgba(255,255,255,0.4);
+        }
+        
+        .leistung-icon {
+          font-size: 3rem;
+          margin-bottom: 20px;
+          filter: drop-shadow(0 0 8px rgba(255,255,255,0.3));
+          transition: all 0.3s ease-out;
             text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-          }
-          .weitere-leistungen-swiper .swiper-slide h3 {
-            font-size: 2rem;
-            color: silver;
-            margin-bottom: 25px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-          }
-          .weitere-leistungen-swiper .swiper-slide p,
-          .weitere-leistungen-swiper .swiper-slide .desc {
-            font-size: 1.1rem;
-            line-height: 1.7;
+        }
+        
+        .leistung-card:hover .leistung-icon {
+          transform: scale(1.1);
+          filter: drop-shadow(0 0 15px rgba(255,255,255,0.6));
+        }
+        
+        .leistung-card h3 {
+          font-size: 1.5rem;
+          color: #fff;
+          margin-bottom: 15px;
+          font-weight: 600;
+          text-align: center;
+          transition: all 0.3s ease-out;
+        }
+        
+        .leistung-card:hover h3 {
+          color: #ffd700;
+          text-shadow: 0 0 10px rgba(255,215,0,0.5);
+        }
+        
+        .leistung-card p {
             color: #ccc;
-            margin-bottom: 25px;
+          line-height: 1.6;
+          margin-bottom: 20px;
+          flex: 1;
+          font-size: 0.95rem;
+          text-align: center;
+        }
+        
+        .leistung-benefits {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+          justify-content: center;
+        }
+        
+        .benefit-tag {
+          background: rgba(255,215,0,0.1);
+            color: #ffd700;
+          padding: 6px 12px;
+          border-radius: 20px;
+          font-size: 0.85rem;
+          font-weight: 500;
+          border: 1px solid rgba(255,215,0,0.2);
+          transition: all 0.3s ease-out;
+        }
+        
+        .leistung-card:hover .benefit-tag {
+          background: rgba(255,215,0,0.2);
+          border-color: rgba(255,215,0,0.4);
+          box-shadow: 0 0 10px rgba(255,215,0,0.3);
+        }
+        
+        /* Moderne Navigation Buttons */
+        .leistungen-nav-btn {
+          width: 60px;
+          height: 60px;
+          background: rgba(255,255,255,0.08);
+          border: 2px solid rgba(255,215,0,0.3);
+          border-radius: 50%;
+          color: #ffd700;
+          transition: all 0.4s cubic-bezier(0.4, 1.6, 0.6, 1);
+          backdrop-filter: blur(15px);
+          box-shadow: 0 8px 30px rgba(0,0,0,0.4), 0 0 20px rgba(255,215,0,0.2);
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .leistungen-nav-btn::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255,215,0,0.2), transparent);
+          transition: left 0.6s ease-out;
+          pointer-events: none;
+        }
+        
+        .leistungen-nav-btn:hover {
+          background: rgba(255,215,0,0.15);
+          border-color: rgba(255,215,0,0.5);
+          color: #ffd700;
+          transform: scale(1.15) translateY(-2px);
+          box-shadow: 0 12px 40px rgba(255,215,0,0.3), 0 0 30px rgba(255,215,0,0.4);
+        }
+        
+        .leistungen-nav-btn:hover::before {
+          left: 100%;
+        }
+        
+        .leistungen-nav-btn::after {
+          font-size: 20px;
+          font-weight: bold;
+          text-shadow: 0 0 10px rgba(255,215,0,0.5);
+        }
+        
+        /* Moderne Pagination */
+                  .leistungen-pagination {
+            position: relative;
+            margin-top: 5px;
+          }
+        
+        .leistungen-pagination .swiper-pagination-bullet {
+          width: 16px;
+          height: 16px;
+          background: rgba(255,255,255,0.1);
+          border: 2px solid rgba(255,255,255,0.2);
+          opacity: 1;
+          transition: all 0.4s cubic-bezier(0.4, 1.6, 0.6, 1);
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .leistungen-pagination .swiper-pagination-bullet::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255,215,0,0.3), transparent);
+          transition: left 0.6s ease-out;
+          pointer-events: none;
+        }
+        
+        .leistungen-pagination .swiper-pagination-bullet:hover {
+          background: rgba(255,215,0,0.2);
+          border-color: rgba(255,215,0,0.4);
+          transform: scale(1.1);
+        }
+        
+        .leistungen-pagination .swiper-pagination-bullet-active {
+          background: rgba(255,215,0,0.3);
+          border-color: rgba(255,215,0,0.6);
+          box-shadow: 0 0 20px rgba(255,215,0,0.6), 0 0 40px rgba(255,215,0,0.3);
+          transform: scale(1.3);
+        }
+        
+        .leistungen-pagination .swiper-pagination-bullet-active::before {
+          left: 100%;
+        }
+
+        .weitere-leistungen-section {
+          position: relative;
+          z-index: 1;
+          isolation: isolate;
+        }
+        
+        @media (max-width: 600px) {
+          .weitere-leistungen-section {
+            overflow: hidden;
+            padding: 0;
+            position: relative;
+            z-index: 1;
+            isolation: isolate;
+          }
+          
+          .leistungen-carousel-container {
+            padding: 0;
+            min-height: 600px;
+            overflow: hidden;
+            margin: 0 -20px;
+          }
+          
+          .leistungen-carousel {
+            padding: 80px 0 0px 0;
+            min-height: 500px;
+            overflow: visible;
+          }
+          
+          .leistungen-carousel .swiper-slide {
+            width: 280px;
+            padding: 40px 0 0px 0;
+          }
+          
+          .leistung-card {
+            min-height: 250px;
+            padding: 25px 20px;
+          }
+          
+          .leistung-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+          }
+          
+          .leistung-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+          }
+          
+          .leistung-card p {
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+          }
+          
+          .benefit-tag {
+            font-size: 0.8rem;
+            padding: 5px 10px;
+          }
+          
+          .leistungen-nav-btn {
+            width: 45px;
+            height: 45px;
+          }
+          
+          .leistungen-nav-btn::after {
+            font-size: 16px;
+          }
+          
+          .leistungen-pagination .swiper-pagination-bullet {
+            width: 12px;
+            height: 12px;
           }
         }
+
+
+
         #leistungen-termin-btn {
           position: relative;
           overflow: hidden;
@@ -3240,53 +3344,105 @@
     <div id="package-info" class="package-info"></div>
     <div class="package-info-spacer"></div>
 
-    <!-- Weitere Leistungen als Karussell -->
-    <section class="weitere-leistungen-section" style="max-width:900px;margin:-50px auto 0 auto;padding:0 10px;" data-aos="fade-up">
-      <h2 style="color:#ffd700;text-align:center;font-size:2rem;margin-bottom:28px;letter-spacing:0.5px;">Weitere Leistungen</h2>
-      <div class="swiper weitere-leistungen-swiper">
+    <!-- Weitere Leistungen als moderne Product-Cards -->
+    <section class="weitere-leistungen-section" style="max-width:1200px;margin:-70px auto 0 auto;padding:0 20px;position:relative;z-index:1;" data-aos="fade-up">
+      <h2 style="color:#ffd700;text-align:center;font-size:2.2rem;margin-bottom:40px;letter-spacing:0.5px;text-shadow:0 0 15px rgba(255,215,0,0.5);">Weitere Leistungen</h2>
+      
+      <div class="leistungen-carousel-container" data-aos="fade-up">
+        <div class="swiper leistungen-carousel">
         <div class="swiper-wrapper">
-          <div class="swiper-slide" data-title="Suchmaschinenoptimierung (SEO)" data-desc="Mehr Sichtbarkeit und bessere Google-Rankings für Ihre Website. Wir analysieren, optimieren und begleiten Ihre Website für Top-Platzierungen bei Google und Co. Sie profitieren von mehr Besuchern, mehr Anfragen und nachhaltigem Wachstum." data-benefits='["Mehr Sichtbarkeit","Mehr Anfragen","Nachhaltiges Wachstum"]'>
-            <span style="font-size:2.1rem;display:block;margin-bottom:12px;">🔍</span>
-            <h3 style="margin-bottom:10px;">SEO</h3>
+            <div class="swiper-slide">
+              <div class="leistung-card">
+                <div class="leistung-icon">🔍</div>
+                <h3>SEO Optimierung</h3>
+                <p>Mehr Sichtbarkeit und bessere Google-Rankings für Ihre Website. Wir analysieren, optimieren und begleiten Ihre Website für Top-Platzierungen.</p>
+                <div class="leistung-benefits">
+                  <span class="benefit-tag">Mehr Sichtbarkeit</span>
+                  <span class="benefit-tag">Mehr Anfragen</span>
+                  <span class="benefit-tag">Nachhaltiges Wachstum</span>
           </div>
-          <div class="swiper-slide" data-title="Texterstellung" data-desc="Professionelle, suchmaschinenoptimierte Texte für Ihre Seite. Wir liefern Inhalte, die nicht nur Google, sondern auch Ihre Kunden begeistern – individuell, verständlich und überzeugend." data-benefits='["SEO-optimiert","Individuell & verständlich","Kundenbegeisternd"]'>
-            <span style="font-size:2.1rem;display:block;margin-bottom:12px;">✍️</span>
-            <h3 style="margin-bottom:10px;">Texterstellung</h3>
           </div>
-          <div class="swiper-slide" data-title="Logoerstellung" data-desc="Individuelle Logos, die Ihre Marke perfekt repräsentieren. Wir gestalten Ihr Logo einzigartig, modern und einprägsam – für einen professionellen Auftritt auf allen Kanälen." data-benefits='["Einzigartig & modern","Markenstark","Für alle Kanäle"]'>
-            <span style="font-size:2.1rem;display:block;margin-bottom:12px;">🎨</span>
-            <h3 style="margin-bottom:10px;">Logoerstellung</h3>
           </div>
-          <div class="swiper-slide" data-title="Google Ads & Online-Werbung" data-desc="Gezielte Werbekampagnen für mehr Reichweite und Kunden. Wir richten Ihre Google Ads ein, optimieren laufend und sorgen für messbare Ergebnisse." data-benefits='["Mehr Reichweite","Messbare Ergebnisse","Laufende Optimierung"]'>
-            <span style="font-size:2.1rem;display:block;margin-bottom:12px;">📈</span>
-            <h3 style="margin-bottom:10px;">Google Ads & Werbung</h3>
+            
+            <div class="swiper-slide">
+              <div class="leistung-card">
+                <div class="leistung-icon">✍️</div>
+                <h3>Texterstellung</h3>
+                <p>Professionelle, suchmaschinenoptimierte Texte für Ihre Seite. Wir liefern Inhalte, die nicht nur Google, sondern auch Ihre Kunden begeistern.</p>
+                <div class="leistung-benefits">
+                  <span class="benefit-tag">SEO-optimiert</span>
+                  <span class="benefit-tag">Individuell</span>
+                  <span class="benefit-tag">Kundenbegeisternd</span>
           </div>
-          <div class="swiper-slide" data-title="Social Media Beratung" data-desc="Strategien und Tipps für Ihren erfolgreichen Social Media Auftritt. Wir helfen Ihnen, Ihre Zielgruppe zu erreichen, Reichweite aufzubauen und Ihre Marke zu stärken." data-benefits='["Mehr Reichweite","Starke Marke","Zielgruppen-Strategie"]'>
-            <span style="font-size:2.1rem;display:block;margin-bottom:12px;">💬</span>
-            <h3 style="margin-bottom:10px;">Social Media Beratung</h3>
           </div>
-          <div class="swiper-slide" data-title="Bildbearbeitung" data-desc="Professionelle Optimierung und Anpassung Ihrer Bilder. Wir sorgen für perfekte Farben, Schärfe und Bildwirkung – für Web, Social Media und Print." data-benefits='["Perfekte Farben","Optimale Bildwirkung","Für Web & Print"]'>
-            <span style="font-size:2.1rem;display:block;margin-bottom:12px;">🖼️</span>
-            <h3 style="margin-bottom:10px;">Bildbearbeitung</h3>
           </div>
-        </div>
-        <!-- Pfeile -->
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-button-next"></div>
-      </div>
-      <div id="leistungen-detail" style="margin:36px auto 0 auto;max-width:500px;text-align:center;background:linear-gradient(145deg,#1a1a1a,#232323);border-radius:16px;padding:28px 18px 18px 18px;box-shadow:0 4px 18px #ffd70022;color:#fff;min-height:120px;">
-        <h3 id="leistungen-detail-title" style="color:#ffd700;margin-bottom:12px;font-size:1.3rem;">Suchmaschinenoptimierung (SEO)</h3>
-        <div id="leistungen-detail-desc" style="font-size:1.08rem;">Mehr Sichtbarkeit und bessere Google-Rankings für Ihre Website. Wir analysieren, optimieren und begleiten Ihre Website für Top-Platzierungen bei Google und Co. Sie profitieren von mehr Besuchern, mehr Anfragen und nachhaltigem Wachstum.</div>
-        <div id="leistungen-detail-benefits" style="margin-top:18px;text-align:center;max-width:420px;margin-left:auto;margin-right:auto;margin-bottom:24px;">
-          <div style="color:#ffd700;font-weight:600;margin-bottom:6px;">Ihre Vorteile sind:</div>
-          <ul style="display:inline-block;padding-left:0;margin:0 0 0 0;font-size:1.01rem;list-style:square;color:#fff;text-align:left;">
-            <li>Mehr Sichtbarkeit</li>
-            <li>Mehr Anfragen</li>
-            <li>Nachhaltiges Wachstum</li>
-          </ul>
+            
+            <div class="swiper-slide">
+              <div class="leistung-card">
+                <div class="leistung-icon">🎨</div>
+                <h3>Logoerstellung</h3>
+                <p>Individuelle Logos, die Ihre Marke perfekt repräsentieren. Wir gestalten Ihr Logo einzigartig, modern und einprägsam.</p>
+                <div class="leistung-benefits">
+                  <span class="benefit-tag">Einzigartig</span>
+                  <span class="benefit-tag">Markenstark</span>
+                  <span class="benefit-tag">Für alle Kanäle</span>
         </div>
       </div>
+        </div>
+            
+            <div class="swiper-slide">
+              <div class="leistung-card">
+                <div class="leistung-icon">📈</div>
+                <h3>Google Ads & Werbung</h3>
+                <p>Gezielte Werbekampagnen für mehr Reichweite und Kunden. Wir richten Ihre Google Ads ein und optimieren laufend.</p>
+                <div class="leistung-benefits">
+                  <span class="benefit-tag">Mehr Reichweite</span>
+                  <span class="benefit-tag">Messbare Ergebnisse</span>
+                  <span class="benefit-tag">Laufende Optimierung</span>
+      </div>
+              </div>
+            </div>
+            
+            <div class="swiper-slide">
+              <div class="leistung-card">
+                <div class="leistung-icon">💬</div>
+                <h3>Social Media Beratung</h3>
+                <p>Strategien und Tipps für Ihren erfolgreichen Social Media Auftritt. Wir helfen Ihnen, Ihre Zielgruppe zu erreichen.</p>
+                <div class="leistung-benefits">
+                  <span class="benefit-tag">Mehr Reichweite</span>
+                  <span class="benefit-tag">Starke Marke</span>
+                  <span class="benefit-tag">Zielgruppen-Strategie</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="swiper-slide">
+              <div class="leistung-card">
+                <div class="leistung-icon">🖼️</div>
+                <h3>Bildbearbeitung</h3>
+                <p>Professionelle Optimierung und Anpassung Ihrer Bilder. Wir sorgen für perfekte Farben, Schärfe und Bildwirkung.</p>
+                <div class="leistung-benefits">
+                  <span class="benefit-tag">Perfekte Farben</span>
+                  <span class="benefit-tag">Optimale Bildwirkung</span>
+                  <span class="benefit-tag">Für Web & Print</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Moderne Navigation -->
+          <div class="swiper-button-prev leistungen-nav-btn"></div>
+          <div class="swiper-button-next leistungen-nav-btn"></div>
+          
+          <!-- Moderne Pagination -->
+          <div class="swiper-pagination leistungen-pagination"></div>
+        </div>
+      </div>
+      
+                            <div style="text-align:center;margin-top:10px;">
       <button id="leistungen-termin-btn" tabindex="0"><span>Termin buchen</span></button>
+          </div>
+      
       <div style="height:60px;"></div>
     </section>
 
@@ -3567,81 +3723,102 @@
     <!-- Swiper.js Script -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-      const swiper = new Swiper('.weitere-leistungen-swiper', {
+      // Modernes Leistungen Karussell mit 3D-Effekt
+      let leistungenCarousel = new Swiper('.leistungen-carousel', {
         effect: 'coverflow',
         grabCursor: true,
         loop: true,
         centeredSlides: true,
         slidesPerView: 'auto',
+        autoplay: {
+          delay: 4000,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true,
+          stopOnLastSlide: false,
+        },
         navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
+          nextEl: '.leistungen-nav-btn.swiper-button-next',
+          prevEl: '.leistungen-nav-btn.swiper-button-prev',
+        },
+        pagination: {
+          el: '.leistungen-pagination',
+          clickable: true,
+          dynamicBullets: true,
         },
         coverflowEffect: {
           rotate: 0,
-          stretch: 110,
-          depth: 130,
+          stretch: 0,
+          depth: 150,
           modifier: 1.1,
-          slideShadows: true,
+          slideShadows: false,
         },
         breakpoints: {
           600: {
+            slidesPerView: 1.2,
+            centeredSlides: true,
             coverflowEffect: {
               rotate: 0,
-              stretch: 40,
-              depth: 60,
-              modifier: 1.05,
-              slideShadows: true,
+              stretch: 0,
+              depth: 30,
+              modifier: 1.01,
+              slideShadows: false,
+            }
+          },
+          1024: {
+            coverflowEffect: {
+              rotate: 0,
+              stretch: 0,
+              depth: 180,
+              modifier: 1.15,
+              slideShadows: false,
             }
           }
         },
+        speed: 800,
         on: {
-          transitionEnd: function() {
-            updateLeistungenDetail();
-          },
-          afterInit: function() {
-            updateLeistungenDetail();
+          init: function() {
+            // Smooth Animation beim Laden
+            setTimeout(() => {
+              document.querySelector('.leistungen-carousel').style.opacity = '1';
+            }, 100);
           }
         }
       });
-      // Klickbare Hälften für Slide-Navigation
-      document.querySelector('.weitere-leistungen-swiper').addEventListener('click', function(e) {
-        const rect = this.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        if (x > rect.width / 2) {
-          swiper.slideNext();
-        } else {
-          swiper.slidePrev();
-        }
-      });
-      function updateLeistungenDetail() {
-        const active = document.querySelector('.weitere-leistungen-swiper .swiper-slide-active');
-        if (!active) return;
-        const title = active.getAttribute('data-title') || '';
-        const desc = active.getAttribute('data-desc') || '';
-        const benefits = active.getAttribute('data-benefits');
-        document.getElementById('leistungen-detail-title').textContent = title;
-        document.getElementById('leistungen-detail-desc').textContent = desc;
-        let benefitsHtml = '';
-        if (benefits) {
-          try {
-            const arr = JSON.parse(benefits);
-            if (Array.isArray(arr) && arr.length > 0) {
-              benefitsHtml = '<div style="color:#ffd700;font-weight:600;margin-bottom:6px;text-align:center;">Ihre Vorteile sind:</div>';
-              benefitsHtml += '<ul style="display:inline-block;padding-left:0;margin:0 0 0 0;font-size:1.01rem;list-style:square;color:#fff;text-align:left;">';
-              arr.forEach(v => { benefitsHtml += '<li>' + v + '</li>'; });
-              benefitsHtml += '</ul>';
-            }
-          } catch(e) {}
-        }
-        document.getElementById('leistungen-detail-benefits').innerHTML = benefitsHtml;
-      }
     </script>
     <script>
-      // Termin buchen Button für Slider
+      // Benutzerinteraktion verfolgen und Autoplay pausieren
+      let userInteractionTime = 0;
+      let autoplayPaused = false;
+      
+      // Event-Listener für Benutzerinteraktionen
+      document.addEventListener('touchstart', function() {
+        userInteractionTime = Date.now();
+        if (!autoplayPaused) {
+          leistungenCarousel.autoplay.stop();
+          autoplayPaused = true;
+        }
+      });
+      
+      document.addEventListener('mousedown', function() {
+        userInteractionTime = Date.now();
+        if (!autoplayPaused) {
+          leistungenCarousel.autoplay.stop();
+          autoplayPaused = true;
+        }
+      });
+      
+      // Prüfen alle 2 Sekunden, ob 10 Sekunden seit der letzten Interaktion vergangen sind
+      setInterval(function() {
+        if (autoplayPaused && (Date.now() - userInteractionTime) > 10000) {
+          leistungenCarousel.autoplay.start();
+          autoplayPaused = false;
+        }
+      }, 2000);
+      
+      // Termin buchen Button für Karussell
       document.getElementById('leistungen-termin-btn').onclick = function() {
-        const active = document.querySelector('.weitere-leistungen-swiper .swiper-slide-active');
-        const title = active ? (active.getAttribute('data-title') || '').trim() : '';
+        const active = document.querySelector('.leistungen-carousel .swiper-slide-active .leistung-card h3');
+        const title = active ? active.textContent.trim() : 'Weitere Leistungen';
         if (typeof openLeistungenModal === 'function') {
           openLeistungenModal(title);
         } else {
