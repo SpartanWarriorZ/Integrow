@@ -143,81 +143,109 @@
         z-index: 10;
       }
       
-      .tab-button {
-        background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
-        color: silver;
-        border: 2px solid rgba(255, 255, 255, 0.1);
-        padding: 16px 32px;
-        cursor: pointer;
-        font-size: 1.2rem;
-        font-weight: 600;
-        border-radius: 16px;
-        white-space: normal;
-        width: 220px;
-        height: 65px;
-        flex: 0 0 220px;
-        transition: all 0.4s cubic-bezier(0.4, 1.6, 0.6, 1);
+      /* Moderne Toggle-Switch Container */
+      .toggle-switch-container {
+        display: flex;
+        justify-content: center;
+        margin: 40px 0;
+        padding: 0 20px;
+      }
+
+      .toggle-switch {
         position: relative;
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 16px;
+        padding: 4px;
+        display: flex;
+        width: 400px;
+        height: 80px;
+        cursor: pointer;
         overflow: hidden;
-        box-shadow: 
-          0 6px 25px rgba(0, 0, 0, 0.3),
-          0 0 0 1px rgba(255, 255, 255, 0.05),
-          inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        letter-spacing: 0.4px;
-        text-transform: uppercase;
-        /* Desktop-Optimierungen für bessere Schärfe */
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        will-change: transform, box-shadow;
-        backface-visibility: hidden;
-        transform: translateZ(0);
-        /* Kompaktere Abstände */
-        margin: 8px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      }
+
+      /* Animierter Slider */
+      .toggle-slider {
+        position: absolute;
+        top: 4px;
+        left: 4px;
+        width: calc(50% - 4px);
+        height: calc(100% - 8px);
+        background: rgba(255,255,255,0.15);
+        border-radius: 12px;
+        transition: all 0.4s cubic-bezier(0.4, 1.6, 0.6, 1);
+        z-index: 1;
+        box-shadow: 0 2px 15px rgba(255,255,255,0.3), 0 0 20px rgba(255,255,255,0.1);
+      }
+
+      /* Slider-Position für Premium */
+      .toggle-switch.premium-active .toggle-slider {
+        left: calc(50% + 2px);
+        background: rgba(255,215,0,0.4);
+        box-shadow: 0 2px 15px rgba(255,215,0,0.5), 0 0 20px rgba(255,215,0,0.3);
+      }
+
+      /* Toggle-Buttons */
+      .toggle-button {
+        background: transparent;
+        border: none;
+        border-radius: 12px;
+        padding: 0;
+        cursor: pointer;
+        font-size: 1.1rem;
+        font-weight: 600;
+        white-space: normal;
+        width: 50%;
+        height: 100%;
+        transition: all 0.3s ease-out;
+        position: relative;
+        z-index: 2;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         text-align: center;
-        line-height: 1.2;
+        line-height: 1.3;
+        color: #ccc;
+        /* Desktop-Optimierungen */
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        will-change: transform, color;
+        backface-visibility: hidden;
+        transform: translateZ(0);
       }
       
-      .tab-button::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.05) 50%, transparent 100%);
-        opacity: 0;
-        transition: opacity 0.4s ease;
-        pointer-events: none;
-        transform: translateX(-100%);
-      }
-      
-      .tab-button::after {
-        content: '';
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-        opacity: 0;
-        transform: scale(0);
-        transition: all 0.6s cubic-bezier(0.4, 1.6, 0.6, 1);
-        pointer-events: none;
-      }
-      .tab-button.active {
-        background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+      /* Toggle-Button Hover-Effekte */
+      .toggle-button:hover {
         color: #fff;
-        border-color: rgba(255, 255, 255, 0.3);
-        box-shadow: 
-          0 8px 30px rgba(255, 255, 255, 0.2),
-          0 0 0 2px rgba(255, 255, 255, 0.2),
-          inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        transform: scale(1.02);
+      }
+
+      .toggle-button:hover:not(.active) {
+        color: #fff;
+      }
+
+      /* Aktiver Toggle-Button */
+      .toggle-button.active {
+        color: #fff;
+        text-shadow: 0 0 10px rgba(255,255,255,0.5);
+      }
+
+      /* Premium Button spezielle Styles */
+      .toggle-switch.premium-active .toggle-button:last-child {
+        color: #ffd700;
+        text-shadow: 0 0 20px rgba(255,215,0,0.8), 0 0 30px rgba(255,215,0,0.4);
+        font-weight: 700;
+      }
+      /* Aktiver Tab-Button - wie featured Product-Card */
+      .tab-button.active {
+        background: rgba(255,255,255,0.05);
+        color: #fff;
+        border: 2px solid rgba(255,255,255,0.3);
+        box-shadow: 0 0 20px rgba(255,255,255,0.1);
         transform: translateY(-2px);
-        text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+        text-shadow: 0 0 10px rgba(255,255,255,0.5);
       }
       
       .tab-button.active::before {
@@ -225,24 +253,17 @@
         animation: tabShimmer 2s infinite;
       }
       
-      .tab-button.active::after {
-        opacity: 0.3;
-        transform: scale(1);
-      }
-      
+      /* Premium Tab-Button - goldener Glow */
       .tab-button.active.gold-glow {
-        background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+        background: rgba(255,215,0,0.05);
         color: #ffd700;
-        border-color: rgba(255, 215, 0, 0.4);
-        box-shadow: 
-          0 8px 30px rgba(255, 215, 0, 0.3),
-          0 0 0 2px rgba(255, 215, 0, 0.3),
-          inset 0 1px 0 rgba(255, 215, 0, 0.3);
-        text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+        border: 2px solid rgba(255,215,0,0.4);
+        box-shadow: 0 0 20px rgba(255,215,0,0.2);
+        text-shadow: 0 0 15px rgba(255,215,0,0.6);
       }
       
       .tab-button.active.gold-glow::before {
-        background: linear-gradient(90deg, transparent 0%, rgba(255, 215, 0, 0.1) 50%, transparent 100%);
+        background: linear-gradient(90deg, transparent, rgba(255,215,0,0.1), transparent);
       }
       
       @keyframes tabShimmer {
@@ -258,16 +279,13 @@
           opacity: 0;
         }
       }
+      /* Hover-Effekte für inaktive Tab-Buttons - wie Product-Cards */
       .tab-button:hover:not(.active) {
-        transform: translateY(-3px) scale(1.02);
-        box-shadow: 
-          0 12px 35px rgba(255, 255, 255, 0.15),
-          0 0 0 2px rgba(255, 255, 255, 0.2),
-          inset 0 1px 0 rgba(255, 255, 255, 0.15);
-        border-color: rgba(255, 255, 255, 0.25);
-        background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+        transform: translateY(-3px);
+        border-color: rgba(255,255,255,0.2);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
         color: #fff;
-        text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+        background: rgba(255,255,255,0.05);
       }
       
       .tab-button:hover:not(.active)::before {
@@ -275,24 +293,16 @@
         animation: tabShimmer 1.5s infinite;
       }
       
-      .tab-button:hover:not(.active)::after {
-        opacity: 0.2;
-        transform: scale(1);
-      }
-      
       /* Premium Tab spezielle Hover-Effekte */
       .tab-button:last-child:hover:not(.active) {
         color: #ffd700;
         border-color: rgba(255, 215, 0, 0.3);
-        box-shadow: 
-          0 12px 35px rgba(255, 215, 0, 0.2),
-          0 0 0 2px rgba(255, 215, 0, 0.25),
-          inset 0 1px 0 rgba(255, 215, 0, 0.2);
-        text-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.3), 0 0 20px rgba(255,215,0,0.2);
+        background: rgba(255,215,0,0.05);
       }
       
       .tab-button:last-child:hover:not(.active)::before {
-        background: linear-gradient(90deg, transparent 0%, rgba(255, 215, 0, 0.08) 50%, transparent 100%);
+        background: linear-gradient(90deg, transparent, rgba(255,215,0,0.1), transparent);
       }
       .pricing-section {
         display: grid;
@@ -305,10 +315,338 @@
         transform: translateY(20px);
         transition: opacity 0.5s ease, transform 0.5s ease;
       }
+
+      /* Tablet Layout - 2 Cards nebeneinander, 1 Card darunter */
+      @media (max-width: 1024px) and (min-width: 769px) {
+        .pricing-section {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 30px;
+          max-width: 800px;
+        }
+        
+        .pricing-section .product-card:nth-child(3) {
+          grid-column: 1 / -1;
+          max-width: 400px;
+          margin: 0 auto;
+          margin-top: 20px;
+        }
+      }
       .pricing-section.active {
         opacity: 1;
         transform: translateY(0);
       }
+      /* Neue Product-Card Styles - exakt wie Support-Cards */
+      .product-card {
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 16px;
+        padding: 30px;
+        position: relative;
+        transition: all 0.3s ease-out;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        min-height: 500px;
+        max-height: 550px;
+        cursor: pointer;
+      }
+
+      /* Basic Product - Einfache Animation */
+      .product-card:not(.featured):not(.premium):not(.deluxe):not(.professional)::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+        transition: left 0.4s ease-out;
+        pointer-events: none;
+        opacity: 0;
+        z-index: -1;
+      }
+
+      .product-card:not(.featured):not(.premium):not(.deluxe):not(.professional):hover::before {
+        left: 100%;
+        opacity: 1;
+      }
+
+      .product-card:not(.featured):not(.premium):not(.deluxe):not(.professional):hover {
+        transform: translateY(-3px);
+        border-color: rgba(255,255,255,0.2);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+      }
+
+      /* Professional Product - Mittlere Animation (weiß statt gold) */
+      .product-card.professional::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+        transition: left 0.6s ease-out;
+        pointer-events: none;
+        opacity: 0;
+        z-index: -1;
+      }
+
+      .product-card.professional:hover::before {
+        left: 100%;
+        opacity: 1;
+      }
+
+      .product-card.professional:hover {
+        transform: translateY(-5px) scale(1.02);
+        border-color: rgba(255,255,255,0.3);
+        box-shadow: 0 15px 40px rgba(0,0,0,0.4), 0 0 20px rgba(255,255,255,0.2);
+      }
+
+      /* Business Product - Mittlere Animation (weiß statt gold) */
+      .product-card.featured::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+        transition: left 0.6s ease-out;
+        pointer-events: none;
+        opacity: 0;
+        z-index: -1;
+      }
+
+      .product-card.featured:hover::before {
+        left: 100%;
+        opacity: 1;
+      }
+
+      .product-card.featured:hover {
+        transform: translateY(-5px) scale(1.02);
+        border-color: rgba(255,255,255,0.3);
+        box-shadow: 0 15px 40px rgba(0,0,0,0.4), 0 0 20px rgba(255,255,255,0.2);
+      }
+
+      /* Premium Product - Aufwendige Animation (golden) */
+      .product-card.premium::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,215,0,0.15), transparent);
+        transition: left 0.8s ease-out;
+        pointer-events: none;
+        opacity: 0;
+        z-index: -1;
+      }
+
+      .product-card.premium::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at 50% 50%, rgba(255,215,0,0.1), transparent 70%);
+        opacity: 0;
+        transition: opacity 0.6s ease-out;
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      .product-card.premium:hover::before {
+        left: 100%;
+        opacity: 1;
+      }
+
+      .product-card.premium:hover::after {
+        opacity: 1;
+      }
+
+      .product-card.premium:hover {
+        transform: translateY(-8px) scale(1.05);
+        border-color: rgba(255,215,0,0.5);
+        box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 30px rgba(255,215,0,0.4);
+      }
+
+      /* Premium-spezifische Styles für goldene Aspekte */
+      .product-card.premium .package-features li::before {
+        color: #ffd700;
+      }
+
+      .product-card.premium .btn-primary {
+        background: linear-gradient(145deg, #ffd700, #ffdf33);
+        color: #181818;
+        box-shadow: 0 4px 15px rgba(255,215,0,0.3);
+      }
+
+      .product-card.premium .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(255,215,0,0.4);
+      }
+
+      .product-card.premium.featured {
+        border: 2px solid #ffd700;
+        box-shadow: 0 0 20px rgba(255,215,0,0.2);
+      }
+
+      .product-card.premium.featured:hover {
+        border-color: rgba(255,215,0,0.5);
+        box-shadow: 0 15px 40px rgba(0,0,0,0.4), 0 0 20px rgba(255,215,0,0.3);
+      }
+
+      .product-card.premium.featured:hover .package-icon {
+        filter: drop-shadow(0 0 15px rgba(255,215,0,0.6));
+        z-index: 150;
+        isolation: isolate;
+        mix-blend-mode: normal;
+      }
+
+      .product-card.featured {
+        border: 2px solid rgba(255,255,255,0.3);
+        box-shadow: 0 0 20px rgba(255,255,255,0.1);
+      }
+
+      .package-badge {
+        position: absolute;
+        top: 10px;
+        right: 20px;
+        background: #ffd700;
+        color: #181818;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 700;
+        font-family: 'Rajdhani', sans-serif;
+      }
+
+      .package-header {
+        text-align: center;
+        margin-bottom: 25px;
+      }
+
+      .package-icon {
+        font-size: 3rem;
+        margin-bottom: 15px;
+        filter: drop-shadow(0 0 8px rgba(255,255,255,0.3));
+        transition: all 0.3s ease-out;
+        position: relative;
+        z-index: 10;
+        isolation: isolate;
+      }
+      
+      /* Premium Icons brauchen höheren z-index wegen transform der Karte */
+      .product-card.premium .package-icon {
+        z-index: 100;
+        isolation: isolate;
+        mix-blend-mode: normal;
+      }
+
+      /* Basic Icon - Einfache Animation */
+      .product-card:not(.featured):not(.premium):not(.deluxe):not(.professional):hover .package-icon {
+        transform: scale(1.1);
+        filter: drop-shadow(0 0 12px rgba(255,255,255,0.5));
+      }
+
+      /* Professional Icon - Mittlere Animation (weiß statt gold) */
+      .product-card.professional:hover .package-icon {
+        transform: scale(1.15) rotate(5deg);
+        filter: drop-shadow(0 0 15px rgba(255,255,255,0.6));
+      }
+
+      /* Business Icon - Mittlere Animation (weiß statt gold) */
+      .product-card.featured:hover .package-icon {
+        transform: scale(1.15) rotate(5deg);
+        filter: drop-shadow(0 0 15px rgba(255,255,255,0.6));
+      }
+
+      /* Premium Icon - Aufwendige Animation */
+      .product-card.premium:hover .package-icon {
+        transform: scale(1.2) rotate(10deg);
+        filter: drop-shadow(0 0 20px rgba(255,215,0,0.8));
+        z-index: 150;
+        isolation: isolate;
+        mix-blend-mode: normal;
+      }
+
+
+
+      .package-features {
+        flex: 1;
+        margin-bottom: 25px;
+        min-height: 200px;
+      }
+
+      .package-features ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        text-align: left;
+      }
+
+      .package-features li {
+        color: #ccc;
+        margin-bottom: 12px;
+        padding-left: 20px;
+        position: relative;
+        font-size: 0.95rem;
+        line-height: 1.4;
+      }
+
+      .package-features li::before {
+        content: '✓';
+        position: absolute;
+        left: 0;
+        color: #fff;
+        font-weight: bold;
+        font-size: 1.1rem;
+      }
+
+      .package-cta {
+        text-align: center;
+        margin-top: auto;
+        padding-top: 20px;
+      }
+
+      .package-cta .btn {
+        width: 100%;
+        padding: 12px 24px;
+        font-size: 1rem;
+        font-weight: 600;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+      }
+
+      .btn-primary {
+        background: linear-gradient(145deg, #fff, #f0f0f0);
+        color: #181818;
+        box-shadow: 0 4px 15px rgba(255,255,255,0.3);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(255,255,255,0.4);
+      }
+
+      .btn-secondary {
+        background: rgba(255,255,255,0.1);
+        color: #fff;
+        border: 1px solid rgba(255,255,255,0.2);
+      }
+
+      .btn-secondary:hover {
+        background: rgba(255,255,255,0.15);
+        border-color: rgba(255,255,255,0.3);
+        transform: translateY(-2px);
+      }
+
+      /* Alte Card-Styles für Kompatibilität */
       .card {
         background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
         border-radius: 20px;
@@ -670,6 +1008,86 @@
         }
         .card:not(:last-child) {
           margin-bottom: 10px;
+        }
+
+        /* Product-Card Mobile Anpassungen */
+        .product-card {
+          padding: 20px;
+          margin-bottom: 20px;
+          max-width: 360px;
+          margin: 0 auto 20px;
+          min-height: 450px;
+          max-height: 500px;
+        }
+
+        /* Tablet Product-Card Anpassungen */
+        @media (max-width: 1024px) and (min-width: 769px) {
+          .product-card {
+            min-height: 480px;
+            max-height: 520px;
+            padding: 25px;
+          }
+          
+          .product-card .package-icon {
+            font-size: 2.8rem;
+          }
+          
+          .product-card h3 {
+            font-size: 1.7rem;
+          }
+          
+          .product-card .price {
+            font-size: 1.9rem;
+          }
+          
+          .product-card .package-features li {
+            font-size: 1rem;
+            margin-bottom: 12px;
+          }
+        }
+
+        .product-card .package-icon {
+          font-size: 2.5rem;
+        }
+
+        .product-card h3 {
+          font-size: 1.6rem;
+        }
+
+        .product-card .price {
+          font-size: 1.8rem;
+        }
+
+        .product-card .package-features li {
+          font-size: 0.9rem;
+          margin-bottom: 10px;
+        }
+
+        .package-badge {
+          font-size: 0.8rem;
+          padding: 4px 12px;
+        }
+
+        /* Toggle-Switch Mobile Anpassungen */
+        .toggle-switch {
+          width: 320px;
+          height: 70px;
+        }
+
+        .toggle-button {
+          font-size: 1rem;
+        }
+
+        /* Toggle-Switch Tablet Anpassungen */
+        @media (max-width: 1024px) and (min-width: 769px) {
+          .toggle-switch {
+            width: 360px;
+            height: 75px;
+          }
+          
+          .toggle-button {
+            font-size: 1.05rem;
+          }
         }
       }
 
@@ -2381,14 +2799,20 @@
     </style>
     <script>
       function showTab(tab, btn) {
-        document
-          .querySelectorAll(".tab-button")
-          .forEach((b) => b.classList.remove("active", "gold-glow"));
+        // Toggle-Switch Animation
+        const toggleSwitch = document.querySelector('.toggle-switch');
         if (tab === "premium") {
-          btn.classList.add("active", "gold-glow");
+          toggleSwitch.classList.add('premium-active');
         } else {
-          btn.classList.add("active");
+          toggleSwitch.classList.remove('premium-active');
         }
+
+        // Button-Status aktualisieren
+        document
+          .querySelectorAll(".toggle-button")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+
         const container = document.getElementById("pricing-container");
         container.classList.remove("active");
 
@@ -2405,42 +2829,134 @@
 
       function getBasicHTML() {
         return `
-        <div class="card" tabindex="0">
-          <h3>Starter</h3>
-          <p>1-2 Seiten, mobil optimiert<br>AOS Effekte + Glow</p>
-          <div class="price">ab 1.200 &euro;</div>
+        <div class="product-card" tabindex="0">
+          <div class="package-header">
+            <div class="package-icon">🌱</div>
+            <h3>Starter</h3>
+            <div class="price">ab 1.200 €<span>/Einmalig</span></div>
+          </div>
+          <div class="package-features">
+            <ul>
+              <li>1-2 Seiten, mobil optimiert</li>
+              <li>AOS Effekte + Glow</li>
+              <li>Responsive Design</li>
+              <li>Kontaktformular</li>
+              <li>SSL-Zertifikat</li>
+            </ul>
+          </div>
+          <div class="package-cta">
+            <button class="btn btn-secondary" onclick="showCalendar(this, 'Starter')">Jetzt buchen</button>
+          </div>
         </div>
-        <div class="card" tabindex="0">
-          <h3>Business</h3>
-          <p>3-5 Seiten, mobil optimiert<br>AOS + SEO Basics</p>
-          <div class="price">ab 2.000 &euro;</div>
+        <div class="product-card featured" tabindex="0">
+          <div class="package-badge">Beliebt</div>
+          <div class="package-header">
+            <div class="package-icon">💼</div>
+            <h3>Business</h3>
+            <div class="price">ab 2.000 €<span>/Einmalig</span></div>
+          </div>
+          <div class="package-features">
+            <ul>
+              <li>3-5 Seiten, mobil optimiert</li>
+              <li>AOS + SEO Basics</li>
+              <li>Google Analytics</li>
+              <li>Kontaktformular + Newsletter</li>
+              <li>Performance-Optimierung</li>
+              <li>Social Media Integration</li>
+            </ul>
+          </div>
+          <div class="package-cta">
+            <button class="btn btn-primary" onclick="showCalendar(this, 'Business')">Jetzt buchen</button>
+          </div>
         </div>
-        <div class="card" tabindex="0">
-          <h3>Premium</h3>
-          <p>5-8 Seiten, mobil optimiert<br>SEO + erweiterbar (Blog, KI-Chatbot)</p>
-          <div class="price">ab 3.000 &euro;</div>
+        <div class="product-card professional" tabindex="0">
+          <div class="package-header">
+            <div class="package-icon">🚀</div>
+            <h3>Professional</h3>
+            <div class="price">ab 3.000 €<span>/Einmalig</span></div>
+          </div>
+          <div class="package-features">
+            <ul>
+              <li>5-8 Seiten, mobil optimiert</li>
+              <li>SEO + erweiterbar (Blog, KI-Chatbot)</li>
+              <li>Content Management System</li>
+              <li>Blog-Funktionalität</li>
+              <li>KI-Chatbot Integration</li>
+              <li>E-Commerce Ready</li>
+              <li>24/7 Support</li>
+            </ul>
+          </div>
+          <div class="package-cta">
+            <button class="btn btn-secondary" onclick="showCalendar(this, 'Professional')">Jetzt buchen</button>
+          </div>
         </div>
       `;
       }
 
       function getPremiumHTML() {
         return `
-    <div class="card premium">
-      <h3>Starter Premium</h3>
-      <p>1-2 Seiten<br>Figma + HTML / Webflow</p>
-      <div class="price">ab 1.500 &euro;</div>
-    </div>
-    <div class="card premium">
-      <h3>Business Premium</h3>
-      <p>3-5 Seiten<br>Custom Figma + Webflow + CMS</p>
-      <div class="price">ab 3.000 &euro;</div>
-    </div>
-    <div class="card premium">
-      <h3>Premium Deluxe</h3>
-      <p>5-8 Seiten<br>Full Custom Design + CMS + Animationen + Chatbot-ready</p>
-      <div class="price">ab 5.000 &euro;</div>
-    </div>
-  `;
+        <div class="product-card premium">
+          <div class="package-header">
+            <div class="package-icon">✨</div>
+            <h3>Starter Premium</h3>
+            <div class="price">ab 1.500 €<span>/Einmalig</span></div>
+          </div>
+          <div class="package-features">
+            <ul>
+              <li>1-2 Seiten</li>
+              <li>Figma + HTML / Webflow</li>
+              <li>Custom Design</li>
+              <li>Responsive Layout</li>
+              <li>Performance optimiert</li>
+            </ul>
+          </div>
+          <div class="package-cta">
+            <button class="btn btn-secondary" onclick="showCalendar(this, 'Starter Premium')">Jetzt buchen</button>
+          </div>
+        </div>
+        <div class="product-card premium featured">
+          <div class="package-badge">Empfohlen</div>
+          <div class="package-header">
+            <div class="package-icon">🎨</div>
+            <h3>Business Premium</h3>
+            <div class="price">ab 3.000 €<span>/Einmalig</span></div>
+          </div>
+          <div class="package-features">
+            <ul>
+              <li>3-5 Seiten</li>
+              <li>Custom Figma + Webflow + CMS</li>
+              <li>Content Management System</li>
+              <li>SEO Optimierung</li>
+              <li>Analytics Integration</li>
+              <li>Social Media Ready</li>
+            </ul>
+          </div>
+          <div class="package-cta">
+            <button class="btn btn-primary" onclick="showCalendar(this, 'Business Premium')">Jetzt buchen</button>
+          </div>
+        </div>
+        <div class="product-card premium deluxe">
+          <div class="package-header">
+            <div class="package-icon">👑</div>
+            <h3>Premium Deluxe</h3>
+            <div class="price">ab 5.000 €<span>/Einmalig</span></div>
+          </div>
+          <div class="package-features">
+            <ul>
+              <li>5-8 Seiten</li>
+              <li>Full Custom Design + CMS + Animationen</li>
+              <li>Chatbot-ready</li>
+              <li>E-Commerce Integration</li>
+              <li>Multi-Language Support</li>
+              <li>Advanced Analytics</li>
+              <li>Priority Support</li>
+            </ul>
+          </div>
+          <div class="package-cta">
+            <button class="btn btn-secondary" onclick="showCalendar(this, 'Premium Deluxe')">Jetzt buchen</button>
+          </div>
+        </div>
+      `;
       }
 
       // Info-Box aktualisieren
@@ -2458,6 +2974,7 @@
 
       // Hover-Events und Modal-Events für Karten
       function addCardHoverEvents() {
+        // Alte Cards (für Kompatibilität)
         document.querySelectorAll(".card").forEach((card) => {
           // Hover-Events für Info-Box
           card.onmouseenter = function () {
@@ -2466,6 +2983,31 @@
             const name = card.querySelector("h3")?.textContent || "";
             const price = card.querySelector(".price")?.textContent || "";
             const desc = card.querySelector("p")?.textContent || "";
+            updatePackageInfo(type, name, price, desc);
+          };
+          card.onmouseleave = function () {
+            // Nur zurücksetzen, wenn kein Widget offen ist
+            if (!card.querySelector(".calendar-widget")) {
+              updatePackageInfo();
+            }
+          };
+          
+          // Modal-Events - setze onclick für showCalendar
+          const packageName = card.querySelector("h3")?.textContent || "";
+          card.onclick = function() {
+            showCalendar(this, packageName);
+          };
+        });
+
+        // Neue Product-Cards
+        document.querySelectorAll(".product-card").forEach((card) => {
+          // Hover-Events für Info-Box
+          card.onmouseenter = function () {
+            const isPremium = card.classList.contains("premium");
+            const type = isPremium ? "premium" : "basic";
+            const name = card.querySelector("h3")?.textContent || "";
+            const price = card.querySelector(".price")?.textContent || "";
+            const desc = card.querySelector(".package-features")?.textContent || "";
             updatePackageInfo(type, name, price, desc);
           };
           card.onmouseleave = function () {
@@ -2602,25 +3144,28 @@
       </div>
     </header>
 
-    <div class="tabs">
-      <button
-        class="tab-button active"
-        onclick="showTab('basis', this)"
-        tabindex="0"
-        aria-selected="true"
-      >
-        <span>Basis</span>
-        <span>Webseiten</span>
-      </button>
-      <button
-        class="tab-button"
-        onclick="showTab('premium', this)"
-        tabindex="0"
-        aria-selected="false"
-      >
-        <span>Premium</span>
-        <span>Webseiten</span>
-      </button>
+    <div class="toggle-switch-container">
+      <div class="toggle-switch">
+        <div class="toggle-slider"></div>
+        <button
+          class="toggle-button active"
+          onclick="showTab('basis', this)"
+          tabindex="0"
+          aria-selected="true"
+        >
+          <span>Basic</span>
+          <span>Webseiten</span>
+        </button>
+        <button
+          class="toggle-button"
+          onclick="showTab('premium', this)"
+          tabindex="0"
+          aria-selected="false"
+        >
+          <span>Premium</span>
+          <span>Webseiten</span>
+        </button>
+      </div>
     </div>
     <div style="text-align:center; margin: 30px 0;">
       <button id="show-examples-btn" onclick="window.location.href='beispiele.html'" style="background:linear-gradient(145deg,#1a1a1a,#2a2a2a);color:#ffd700;font-size:1.2rem;padding:18px 40px;border-radius:16px;border:2px solid rgba(255,215,0,0.3);cursor:pointer;font-weight:600;box-shadow:0 6px 25px rgba(255,215,0,0.15),0 0 0 1px rgba(255,215,0,0.1),inset 0 1px 0 rgba(255,215,0,0.1);transition:all 0.4s cubic-bezier(0.4,1.6,0.6,1);position:relative;overflow:hidden;backdrop-filter:blur(10px);letter-spacing:0.5px;text-transform:uppercase;">
@@ -2629,38 +3174,67 @@
     </div>
 
     <div id="pricing-container" class="pricing-section active">
-      <!-- Basis Pakete initial -->
-      <div
-        class="card"
-        onclick="showCalendar(this, 'Starter')"
-        data-aos="fade-up"
-        data-aos-delay="10"
-      >
-        <h3>Starter</h3>
-        <p>1-2 Seiten, mobil optimiert<br />AOS Effekte + Glow</p>
-        <div class="price">ab 1.200 &euro;</div>
+      <!-- Basis Pakete initial - neue Product-Cards -->
+      <div class="product-card" data-aos="fade-up" data-aos-delay="10">
+        <div class="package-header">
+          <div class="package-icon">🌱</div>
+          <h3>Starter</h3>
+          <div class="price">ab 1.200 €<span>/Einmalig</span></div>
+        </div>
+        <div class="package-features">
+          <ul>
+            <li>1-2 Seiten, mobil optimiert</li>
+            <li>AOS Effekte + Glow</li>
+            <li>Responsive Design</li>
+            <li>Kontaktformular</li>
+            <li>SSL-Zertifikat</li>
+          </ul>
+        </div>
+        <div class="package-cta">
+          <button class="btn btn-secondary" onclick="showCalendar(this, 'Starter')">Jetzt buchen</button>
+        </div>
       </div>
-      <div
-        class="card"
-        onclick="showCalendar(this, 'Business')"
-        data-aos="fade-up"
-        data-aos-delay="10"
-      >
-        <h3>Business</h3>
-        <p>3-5 Seiten, mobil optimiert<br />AOS + SEO Basics</p>
-        <div class="price">ab 2.000 &euro;</div>
+      <div class="product-card featured" data-aos="fade-up" data-aos-delay="10">
+        <div class="package-badge">Beliebt</div>
+        <div class="package-header">
+          <div class="package-icon">💼</div>
+          <h3>Business</h3>
+          <div class="price">ab 2.000 €<span>/Einmalig</span></div>
+        </div>
+        <div class="package-features">
+          <ul>
+            <li>3-5 Seiten, mobil optimiert</li>
+            <li>AOS + SEO Basics</li>
+            <li>Google Analytics</li>
+            <li>Kontaktformular + Newsletter</li>
+            <li>Performance-Optimierung</li>
+            <li>Social Media Integration</li>
+          </ul>
+        </div>
+        <div class="package-cta">
+          <button class="btn btn-primary" onclick="showCalendar(this, 'Business')">Jetzt buchen</button>
+        </div>
       </div>
-      <div
-        class="card"
-        onclick="showCalendar(this, 'Premium')"
-        data-aos="fade-up"
-        data-aos-delay="10"
-      >
-        <h3>Premium</h3>
-        <p>
-          5-8 Seiten, mobil optimiert<br />SEO + erweiterbar (Blog, KI-Chatbot)
-        </p>
-        <div class="price">ab 3.000 &euro;</div>
+      <div class="product-card professional" data-aos="fade-up" data-aos-delay="10">
+        <div class="package-header">
+          <div class="package-icon">🚀</div>
+          <h3>Professional</h3>
+          <div class="price">ab 3.000 €<span>/Einmalig</span></div>
+        </div>
+        <div class="package-features">
+          <ul>
+            <li>5-8 Seiten, mobil optimiert</li>
+            <li>SEO + erweiterbar (Blog, KI-Chatbot)</li>
+            <li>Content Management System</li>
+            <li>Blog-Funktionalität</li>
+            <li>KI-Chatbot Integration</li>
+            <li>E-Commerce Ready</li>
+            <li>24/7 Support</li>
+          </ul>
+        </div>
+        <div class="package-cta">
+          <button class="btn btn-secondary" onclick="showCalendar(this, 'Professional')">Jetzt buchen</button>
+        </div>
       </div>
     </div>
     <div id="package-info" class="package-info"></div>
