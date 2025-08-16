@@ -1550,6 +1550,34 @@
       
       .step-content {
         flex: 1;
+        display: flex;
+        align-items: flex-start;
+        gap: 30px;
+      }
+      
+      .step-text {
+        flex: 1;
+      }
+      
+      .step-image {
+        flex-shrink: 0;
+        width: 200px;
+        height: 150px;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        border: 1px solid rgba(255,255,255,0.1);
+      }
+      
+      .step-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease-out;
+      }
+      
+      .step-image img:hover {
+        transform: scale(1.05);
       }
       
       .step-content h3 {
@@ -1641,6 +1669,18 @@
             align-items: center;
             margin-left: 100px;
             min-height: 200px;
+          }
+          
+          .step-content {
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+          }
+          
+          .step-image {
+            width: 180px;
+            height: 135px;
+            order: -1;
           }
           
           .process-step.scroll-active {
@@ -1887,14 +1927,19 @@
             </div>
             <div class="timeline-connector"></div>
             <div class="step-content">
-              <div class="step-icon">💬</div>
-              <h3>Beratungsgespräch</h3>
-              <p>Wir analysieren Ihre Ziele und Anforderungen im persönlichen Gespräch.</p>
-              <ul class="step-bullets">
-                <li>Analyse Ihrer Geschäftsziele</li>
-                <li>Identifikation der Zielgruppe</li>
-                <li>Definition der Kernfunktionen</li>
-              </ul>
+              <div class="step-text">
+                <div class="step-icon">💬</div>
+                <h3>Beratungsgespräch</h3>
+                <p>Wir analysieren Ihre Ziele und Anforderungen im persönlichen Gespräch.</p>
+                <ul class="step-bullets">
+                  <li>Analyse Ihrer Geschäftsziele</li>
+                  <li>Identifikation der Zielgruppe</li>
+                  <li>Definition der Kernfunktionen</li>
+                </ul>
+              </div>
+              <div class="step-image">
+                <img src="Prozess-Beratung.png" alt="Beratungsgespräch Prozess" />
+              </div>
             </div>
           </div>
           
