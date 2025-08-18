@@ -137,6 +137,11 @@
           filter: drop-shadow(0 12px 30px rgba(0,0,0,0.35));
           image-rendering: -webkit-optimize-contrast;
           image-rendering: crisp-edges;
+          -ms-interpolation-mode: nearest-neighbor;
+          backface-visibility: hidden;
+          -webkit-backface-visibility: hidden;
+          -moz-backface-visibility: hidden;
+          will-change: transform;
         }
       .hero-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 8px; }
       .btn {
@@ -359,6 +364,13 @@
         flex-basis: 340px; /* Fixiert die Bildbreite im Flex-Layout */
         flex-shrink: 0;
         align-self: flex-start; /* Bild bleibt immer oben ausgerichtet */
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+        -ms-interpolation-mode: nearest-neighbor;
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+        -moz-backface-visibility: hidden;
+        will-change: transform;
       }
       .feature img:hover,
       .feature img:focus {
@@ -1231,6 +1243,13 @@
         -khtml-user-drag: none;
         -moz-user-drag: none;
         -o-user-drag: none;
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+        -ms-interpolation-mode: nearest-neighbor;
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+        -moz-backface-visibility: hidden;
+        will-change: transform;
       }
       .client-logo:hover img {
         filter: grayscale(0) brightness(1.15) contrast(1.05);
@@ -1584,8 +1603,13 @@
         transition: transform 0.3s ease-out;
         image-rendering: -webkit-optimize-contrast;
         image-rendering: crisp-edges;
-        filter: contrast(1.02) brightness(1.01);
+        image-rendering: pixelated;
+        -ms-interpolation-mode: nearest-neighbor;
         transform: scale(1);
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+        -moz-backface-visibility: hidden;
+        will-change: transform;
       }
       
       .step-image img:hover {
@@ -1596,8 +1620,28 @@
       .process-step[data-step="2"] .step-image img {
         image-rendering: -webkit-optimize-contrast;
         image-rendering: crisp-edges;
-        image-rendering: pixelated;
-        filter: contrast(1.05) brightness(1.02) saturate(1.1);
+        -ms-interpolation-mode: nearest-neighbor;
+      }
+      
+      /* Microsoft Edge spezifische Optimierungen */
+      @supports (-ms-ime-align: auto) {
+        .step-image img {
+          image-rendering: -webkit-optimize-contrast;
+          image-rendering: crisp-edges;
+          -ms-interpolation-mode: nearest-neighbor;
+          transform: translateZ(0);
+          -webkit-transform: translateZ(0);
+        }
+      }
+      
+      /* Webkit Browser Optimierungen */
+      @supports (-webkit-appearance: none) {
+        .step-image img {
+          image-rendering: -webkit-optimize-contrast;
+          image-rendering: crisp-edges;
+          transform: translate3d(0, 0, 0);
+          -webkit-transform: translate3d(0, 0, 0);
+        }
       }
       
       .step-content h3 {
@@ -1665,7 +1709,26 @@
         font-size: 1.2rem;
       }
       
-
+      /* Mittlere Bildschirmbreiten (770px - 888px) */
+      @media (min-width: 769px) and (max-width: 888px) {
+        .timeline-container {
+          padding: 0 30px;
+        }
+        
+        .process-step {
+          margin-left: 140px;
+          gap: 30px;
+        }
+        
+        .step-image {
+          width: 280px;
+          height: 210px;
+        }
+        
+        .step-content {
+          gap: 25px;
+        }
+      }
       
                     /* Mobile Anpassungen */
         @media (max-width: 768px) {
@@ -1996,14 +2059,19 @@
             </div>
             <div class="timeline-connector"></div>
             <div class="step-content">
-              <div class="step-icon">⚡</div>
-              <h3>Entwicklung</h3>
-              <p>Professionelle Umsetzung mit Fokus auf Performance und UX.</p>
-              <ul class="step-bullets">
-                <li>Clean Code & Best Practices</li>
-                <li>Performance-Optimierung</li>
-                <li>Cross-Browser Kompatibilität</li>
-              </ul>
+              <div class="step-text">
+                <div class="step-icon">⚡</div>
+                <h3>Entwicklung</h3>
+                <p>Professionelle Umsetzung mit Fokus auf Performance und UX.</p>
+                <ul class="step-bullets">
+                  <li>Clean Code & Best Practices</li>
+                  <li>Performance-Optimierung</li>
+                  <li>Cross-Browser Kompatibilität</li>
+                </ul>
+              </div>
+              <div class="step-image">
+                <img src="Prozess-Entwicklung.png" alt="Entwicklung Prozess" />
+              </div>
             </div>
           </div>
           
@@ -2013,14 +2081,19 @@
             </div>
             <div class="timeline-connector"></div>
             <div class="step-content">
-              <div class="step-icon">🚀</div>
-              <h3>Launch & Support</h3>
-              <p>Go-Live und kontinuierliche Betreuung für nachhaltigen Erfolg.</p>
-              <ul class="step-bullets">
-                <li>Go-Live & Testing</li>
-                <li>SEO-Optimierung</li>
-                <li>Kontinuierlicher Support</li>
-              </ul>
+              <div class="step-text">
+                <div class="step-icon">🚀</div>
+                <h3>Launch & Support</h3>
+                <p>Go-Live und kontinuierliche Betreuung für nachhaltigen Erfolg.</p>
+                <ul class="step-bullets">
+                  <li>Go-Live & Testing</li>
+                  <li>SEO-Optimierung</li>
+                  <li>Kontinuierlicher Support</li>
+                </ul>
+              </div>
+              <div class="step-image">
+                <img src="Prozess-Start.png" alt="Launch & Support Prozess" />
+              </div>
             </div>
           </div>
         </div>
@@ -2608,6 +2681,9 @@
           const windowHeight = window.innerHeight;
           const sectionHeight = processSection.offsetHeight;
           
+          // Prüfe ob Mobile
+          const isMobile = window.innerWidth <= 768;
+          
           // Berechne Scroll-Fortschritt innerhalb der Sektion
           const sectionTop = rect.top;
           const sectionBottom = rect.bottom;
@@ -2621,13 +2697,24 @@
             const scrolledDistance = visibleHeight - sectionTop;
             let rawProgress = Math.max(0, Math.min(1, scrolledDistance / totalScrollDistance));
             
-            // Starte später (bei 30% Scroll-Fortschritt) und mache schneller
-            if (rawProgress < 0.3) {
-              progress = 0;
+            if (isMobile) {
+              // Mobile: Starte noch früher (bei 10% Scroll-Fortschritt) aber langsamer durchlaufen
+              if (rawProgress < 0.1) {
+                progress = 0;
+              } else {
+                // Beschleunige den Fortschritt zwischen 10% und 100%
+                const adjustedProgress = (rawProgress - 0.1) / 0.9;
+                progress = Math.min(1, adjustedProgress * 1.0); // 1.6x statt 2.2x für Mobile
+              }
             } else {
-              // Beschleunige den Fortschritt zwischen 30% und 100%
-              const adjustedProgress = (rawProgress - 0.3) / 0.7;
-              progress = Math.min(1, adjustedProgress * 1.4); // 1.4x schneller
+              // Desktop: Ursprüngliche Werte beibehalten
+              if (rawProgress < 0.3) {
+                progress = 0;
+              } else {
+                // Beschleunige den Fortschritt zwischen 30% und 100%
+                const adjustedProgress = (rawProgress - 0.3) / 0.7;
+                progress = Math.min(1, adjustedProgress * 1.4); // 1.4x schneller (ursprünglich)
+              }
             }
           }
           
@@ -2659,7 +2746,8 @@
             }
             
             // Automatisches Auffächern der Prozess-Schritte beim Scrollen
-            if (index < stepProgress - 0.3) {
+            const activationOffset = isMobile ? 0.15 : 0.3; // Desktop ursprünglich, Mobile früher
+            if (index < stepProgress - activationOffset) {
               // Schritt ist erreicht - auffächern
               step.classList.add('scroll-active');
             } else {
