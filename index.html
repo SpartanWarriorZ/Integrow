@@ -1101,7 +1101,7 @@
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 26px;
-        align-items: stretch;
+        align-items: start;
       }
       .service-card {
         background: linear-gradient(180deg, rgba(24,24,28,0.92), rgba(22,22,24,0.92));
@@ -1114,23 +1114,8 @@
         box-shadow: 0 10px 34px rgba(0,0,0,0.45);
         transition: all .4s cubic-bezier(.4,1.6,.6,1);
         position: relative;
-        overflow: hidden;
-      }
-      .service-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
-        transition: left 0.5s ease-out;
-        pointer-events: none;
-        opacity: 0;
-      }
-      .service-card:hover::before {
-        left: 100%;
-        opacity: 1;
+        overflow: visible;
+        min-height: auto;
       }
       .service-card:hover {
         transform: translateY(-4px);
@@ -1141,7 +1126,112 @@
       .service-card h3 { color: #fff; margin: 6px 0; }
       .service-card p { color: #cfcfcf; margin: 0 0 8px 0; }
       .service-card .btn { width: fit-content; }
-      @media (max-width: 900px) { .services-grid { grid-template-columns: 1fr; } }
+      
+      /* Erweiterte Service-Card Animation */
+      .service-details {
+        max-height: 0;
+        overflow: hidden;
+        margin-top: 0;
+        padding: 0;
+        border-top: 2px solid transparent;
+        background: transparent;
+        border-radius: 8px;
+        margin-left: -10px;
+        margin-right: -10px;
+        padding-left: 20px;
+        padding-right: 20px;
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                    opacity 0.5s ease 0.1s,
+                    transform 0.5s ease 0.1s,
+                    margin-top 0.6s ease,
+                    padding 0.6s ease,
+                    border-top-color 0.5s ease 0.2s,
+                    background 0.5s ease 0.2s;
+      }
+      
+      .service-details.expanded {
+        max-height: 500px;
+        margin-top: 15px;
+        padding: 15px 0;
+        border-top-color: rgba(255, 215, 0, 0.3);
+        background: rgba(255, 215, 0, 0.05);
+        opacity: 1;
+        transform: translateY(0);
+      }
+      
+      .service-details ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      
+      .service-details li {
+        color: #e0e0e0;
+        padding: 8px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        position: relative;
+        padding-left: 30px;
+        font-size: 0.95rem;
+        line-height: 1.4;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: all 0.4s ease;
+      }
+      
+      .service-details.expanded li {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      
+      .service-details.expanded li:nth-child(1) { transition-delay: 0.1s; }
+      .service-details.expanded li:nth-child(2) { transition-delay: 0.2s; }
+      .service-details.expanded li:nth-child(3) { transition-delay: 0.3s; }
+      .service-details.expanded li:nth-child(4) { transition-delay: 0.4s; }
+      .service-details.expanded li:nth-child(5) { transition-delay: 0.5s; }
+      
+      .service-details li:before {
+        content: "✓";
+        position: absolute;
+        left: 5px;
+        color: #ffd700;
+        font-weight: bold;
+      }
+      
+      .service-details li:last-child {
+        border-bottom: none;
+      }
+      
+      .expand-btn {
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .expand-btn.expanded {
+        background: linear-gradient(135deg, #ffd700, #ffed4e);
+        color: #000;
+        transform: scale(1.05);
+      }
+      
+      .service-card.expanded {
+        transform: translateY(-12px) scale(1.05);
+        box-shadow: 0 25px 60px rgba(255, 215, 0, 0.25), 
+                    0 0 30px rgba(255, 215, 0, 0.1);
+        border-color: rgba(255, 215, 0, 0.5);
+        background: linear-gradient(180deg, rgba(30,30,35,0.95), rgba(25,25,30,0.95));
+        z-index: 10;
+        position: relative;
+        overflow: visible;
+      }
+      
+      @media (max-width: 900px) { 
+        .services-grid { grid-template-columns: 1fr; }
+        .service-details.expanded {
+          max-height: 400px;
+        }
+      }
       /* Scroll-Story – Sticky Timeline mit Steps */
       .process .process-grid { display: grid; grid-template-columns: 120px 1fr; gap: 26px; align-items: start; }
       @media (max-width: 900px) { .process .process-grid { grid-template-columns: 1fr; } }
@@ -1918,10 +2008,10 @@
           </div>
           <div class="hero-stats" data-aos="fade-up" data-aos-delay="1000">
             <div class="hero-stat" data-aos="zoom-in" data-aos-delay="1100">
-              <div class="num"><span>25+</span></div><div class="lbl">Partner</div>
+              <div class="num"><span id="partner-count">0</span><span>+</span></div><div class="lbl">Partner</div>
             </div>
             <div class="hero-stat" data-aos="zoom-in" data-aos-delay="1200">
-              <div class="num"><span>99%</span></div><div class="lbl">CWV-Score</div>
+              <div class="num"><span id="score-count">0</span><span>%</span></div><div class="lbl">CWV-Score</div>
             </div>
             <div class="hero-stat" data-aos="zoom-in" data-aos-delay="1300">
               <div class="num"><span>24/7</span></div><div class="lbl">Support</div>
@@ -1938,9 +2028,6 @@
             </div>
             <div class="slide">
               <img src="MiCare-Ref.webp" alt="MiCare Referenzwebsite"/>
-            </div>
-            <div class="slide">
-              <img src="Wessel-GmbH-Ref.webp" alt="Wessel GmbH Referenzwebsite"/>
             </div>
             <div class="slide">
               <img src="Nagel-design-Ref.webp" alt="Nagel Design Referenzwebsite"/>
@@ -1981,19 +2068,46 @@
           <div class="service-icon">💻</div>
           <h3>Webseiten</h3>
           <p>Modern, schnell, responsiv – perfekt auf Ihr Ziel ausgerichtet.</p>
-          <a class="btn btn-secondary" href="produkt.html">Mehr erfahren</a>
+          <div class="service-details" style="display: none;">
+            <ul>
+              <li>Responsive Design für alle Geräte</li>
+              <li>SEO-optimierte Struktur</li>
+              <li>Moderne Technologien</li>
+              <li>Performance-Optimierung</li>
+              <li>Benutzerfreundliche Navigation</li>
+            </ul>
+          </div>
+          <button class="btn btn-secondary expand-btn" data-target="0">Mehr erfahren</button>
         </div>
         <div class="service-card" data-aos="slide-up" data-aos-delay="300" data-aos-duration="600">
           <div class="service-icon">🤖</div>
           <h3>KI & Sichtbarkeit</h3>
           <p>Struktur, SEO-Basics und Automatisierung für mehr Reichweite.</p>
-          <a class="btn btn-secondary" href="produkt.html">Mehr erfahren</a>
+          <div class="service-details" style="display: none;">
+            <ul>
+              <li>KI-gestützte Content-Optimierung</li>
+              <li>Automatisierte SEO-Analysen</li>
+              <li>Suchmaschinenoptimierung</li>
+              <li>Social Media Integration</li>
+              <li>Analytics & Reporting</li>
+            </ul>
+          </div>
+          <button class="btn btn-secondary expand-btn" data-target="1">Mehr erfahren</button>
         </div>
         <div class="service-card" data-aos="slide-up" data-aos-delay="400" data-aos-duration="600">
           <div class="service-icon">🛟</div>
           <h3>Support & Betreuung</h3>
           <p>Updates und persönliche Begleitung – dauerhaft stark.</p>
-          <a class="btn btn-secondary" href="support.html">Mehr erfahren</a>
+          <div class="service-details" style="display: none;">
+            <ul>
+              <li>24/7 technischer Support</li>
+              <li>Regelmäßige Updates</li>
+              <li>Backup & Sicherheit</li>
+              <li>Performance-Monitoring</li>
+              <li>Persönliche Betreuung</li>
+            </ul>
+          </div>
+          <button class="btn btn-secondary expand-btn" data-target="2">Mehr erfahren</button>
         </div>
       </div>
     </section>
@@ -2806,6 +2920,166 @@
           setTimeout(() => {
             setInterval(nextSlide, 4000);
           }, 2000);
+        })();
+
+        // Count-Up Animation für Statistiken
+        function animateCountUp(elementId, targetValue, suffix = '') {
+          const element = document.getElementById(elementId);
+          if (!element) return;
+          
+          // Setze Startwert explizit auf 0
+          element.textContent = '0';
+          
+          const duration = 4000; // 6 Sekunden (3x langsamer)
+          const startTime = performance.now();
+          const startValue = 0;
+          
+          function updateCount(currentTime) {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            
+            // Easing-Funktion für sanfte Animation
+            const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+            const currentValue = Math.floor(startValue + (targetValue - startValue) * easeOutQuart);
+            
+            // Setze nur die Zahl, das Suffix wird im HTML hinzugefügt
+            element.textContent = currentValue;
+            
+            if (progress < 1) {
+              requestAnimationFrame(updateCount);
+            } else {
+              element.textContent = targetValue;
+            }
+          }
+          
+          requestAnimationFrame(updateCount);
+        }
+
+        // Intersection Observer für Count-Up Animation
+        const observerOptions = {
+          threshold: 0.5,
+          rootMargin: '0px 0px -100px 0px'
+        };
+
+        const statsObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              // Kleine Verzögerung für bessere Sichtbarkeit
+              setTimeout(() => {
+                // Starte Animation für Partner-Count
+                animateCountUp('partner-count', 25, '');
+                // Starte Animation für Score-Count
+                animateCountUp('score-count', 99, '');
+              }, 100);
+              
+              // Stoppe Observer nach einmaliger Ausführung
+              statsObserver.unobserve(entry.target);
+            }
+          });
+        }, observerOptions);
+
+        // Observer für hero-stats Element starten
+        document.addEventListener('DOMContentLoaded', () => {
+          const heroStats = document.querySelector('.hero-stats');
+          if (heroStats) {
+            statsObserver.observe(heroStats);
+          }
+        });
+
+        // Service Card Expand Animation - Nach AOS-Animationen initialisieren
+        (function() {
+          'use strict';
+          
+          function toggleServiceCard(button) {
+            console.log('Toggle function called');
+            const serviceCard = button.closest('.service-card');
+            const serviceDetails = serviceCard.querySelector('.service-details');
+            const isExpanded = serviceDetails.classList.contains('expanded');
+            
+            console.log('Service details found:', serviceDetails);
+            console.log('Is expanded:', isExpanded);
+            
+            // Schließe alle anderen erweiterten Cards
+            document.querySelectorAll('.service-details.expanded').forEach(details => {
+              if (details !== serviceDetails) {
+                details.classList.remove('expanded');
+                details.closest('.service-card').classList.remove('expanded');
+                const otherButton = details.closest('.service-card').querySelector('.expand-btn');
+                otherButton.classList.remove('expanded');
+                otherButton.textContent = 'Mehr erfahren';
+                
+                // Verstecke andere Details nach der Animation
+                setTimeout(() => {
+                  details.style.display = 'none';
+                  details.style.visibility = 'hidden';
+                }, 600);
+              }
+            });
+            
+            // Toggle aktuelle Card
+            if (isExpanded) {
+              console.log('Collapsing card');
+              serviceDetails.classList.remove('expanded');
+              serviceCard.classList.remove('expanded');
+              button.classList.remove('expanded');
+              button.textContent = 'Mehr erfahren';
+              
+              // Verstecke die Details nach der Animation
+              setTimeout(() => {
+                serviceDetails.style.display = 'none';
+                serviceDetails.style.visibility = 'hidden';
+              }, 600);
+            } else {
+              console.log('Expanding card');
+              
+              // Mache das Element erst sichtbar, dann starte Animation
+              serviceDetails.style.display = 'block';
+              serviceDetails.style.visibility = 'visible';
+              
+              // Kurze Verzögerung für die Animation
+              setTimeout(() => {
+                serviceDetails.classList.add('expanded');
+                serviceCard.classList.add('expanded');
+                button.classList.add('expanded');
+                button.textContent = 'Weniger anzeigen';
+                console.log('Classes added. Animation started');
+              }, 10);
+            }
+          }
+          
+          function initServiceCardListeners() {
+            // Entferne alle bestehenden Listener
+            document.querySelectorAll('.expand-btn').forEach(button => {
+              button.replaceWith(button.cloneNode(true));
+            });
+            
+            // Füge neue Listener hinzu
+            document.querySelectorAll('.expand-btn').forEach(button => {
+              button.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                toggleServiceCard(this);
+              });
+            });
+          }
+          
+          // Warte bis AOS-Animationen fertig sind
+          document.addEventListener('DOMContentLoaded', function() {
+            // Warte 3 Sekunden für AOS-Animationen
+            setTimeout(initServiceCardListeners, 3000);
+            
+            // Zusätzlicher Fallback nach 5 Sekunden
+            setTimeout(initServiceCardListeners, 5000);
+          });
+          
+          // Event-Delegation als Backup (funktioniert sofort)
+          document.addEventListener('click', function(e) {
+            if (e.target && e.target.classList.contains('expand-btn')) {
+              e.preventDefault();
+              e.stopPropagation();
+              toggleServiceCard(e.target);
+            }
+          });
         })();
       </script>
     </body>
