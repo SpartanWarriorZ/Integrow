@@ -1,0 +1,1593 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Portfolio & Bewerbung – Live-Präsentation" />
+  <title>Portfolio – Bewerbung</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <!-- ========== ALLES CSS ISOLIERT IN DIESER DATEI ========== -->
+  <style>
+    /* Smooth Scroll Fallback */
+    html { scroll-behavior: smooth; }
+    /* ----- Reset & Base (nur für diese Seite) ----- */
+    .bp-root,
+    .bp-root * {
+      box-sizing: border-box;
+    }
+    .bp-root {
+      margin: 0;
+      padding: 0;
+      --bp-bg: #0a0a0a;
+      --bp-bg2: #1c1c1c;
+      --bp-text: #e0e0e0;
+      --bp-text-muted: #cfcfcf;
+      --bp-accent: #ffd700;
+      --bp-accent2: #ffdf33;
+      --bp-border: rgba(255,255,255,0.1);
+      --bp-section-padding: clamp(4rem, 10vw, 7rem);
+      --bp-max-width: 1000px;
+      --bp-font: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      --bp-font-head: "Rajdhani", "Segoe UI", sans-serif;
+      background: linear-gradient(to bottom right, var(--bp-bg), var(--bp-bg2));
+      color: var(--bp-text);
+      font-family: var(--bp-font);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    /* ----- Scroll Progress Bar ----- */
+    .bp-progress-wrap {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      z-index: 1000;
+      background: rgba(255,255,255,0.08);
+    }
+    .bp-progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--bp-accent), var(--bp-accent2));
+      transition: width 0.12s ease-out;
+    }
+
+    /* ----- Kapitel-Navigation (Scroll-Spy) ----- */
+    .bp-nav-chapters {
+      position: fixed;
+      right: 24px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .bp-nav-chapters a {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      border: 2px solid transparent;
+      transition: background 0.2s, transform 0.2s, border-color 0.2s;
+      text-indent: -9999px;
+      overflow: hidden;
+    }
+    .bp-nav-chapters a:hover,
+    .bp-nav-chapters a:focus {
+      background: rgba(255,215,0,0.5);
+      transform: scale(1.2);
+      outline: none;
+    }
+    .bp-nav-chapters a.bp-active {
+      background: var(--bp-accent);
+      border-color: #fff;
+      transform: scale(1.25);
+    }
+    @media (max-width: 900px) {
+      .bp-nav-chapters { right: 12px; }
+      .bp-nav-chapters a { width: 10px; height: 10px; }
+    }
+
+    /* ----- Dekorative Blobs ----- */
+    .bp-blob {
+      position: fixed;
+      z-index: 0;
+      pointer-events: none;
+      filter: blur(46px);
+      opacity: 0.2;
+    }
+    .bp-blob-1 { width: 360px; height: 360px; left: -100px; top: 20vh; background: radial-gradient(circle at 30% 30%, #b7bcc6, transparent 60%); }
+    .bp-blob-2 { width: 300px; height: 300px; right: -80px; top: 60vh; background: radial-gradient(circle at 70% 70%, #d8dbe2, transparent 60%); opacity: 0.15; }
+
+    /* ----- Sections Container ----- */
+    .bp-main {
+      position: relative;
+      z-index: 1;
+    }
+    .bp-section {
+      padding: var(--bp-section-padding) 24px;
+      max-width: var(--bp-max-width);
+      margin: 0 auto;
+      min-height: 60vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .bp-section-title {
+      font-family: var(--bp-font-head);
+      font-size: clamp(2.4rem, 5vw, 3.5rem);
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: #fff;
+      margin: 0 0 1.5rem 0;
+    }
+    .bp-section-intro {
+      font-size: clamp(1.15rem, 2.2vw, 1.25rem);
+      line-height: 1.7;
+      color: var(--bp-text-muted);
+      max-width: 65ch;
+      margin-bottom: 2rem;
+    }
+
+    /* ----- 1) HEADER: Nur Hintergrundbild (wie Index), kein schwarzer Verlauf ----- */
+    .bp-header {
+      position: relative;
+      min-height: 100vh;
+      padding: 60px 40px 50px;
+      background: transparent;
+      text-align: center;
+      border-bottom: 1px solid #444;
+      box-shadow: 0 0 40px rgba(192, 192, 192, 0.1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    /* Dasselbe Bild wie Index-Header: Integrow-Background.png mit Parallax */
+    .bp-parallax-bg {
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .bp-parallax-bg img {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      display: block;
+    }
+    /* Header-Inhalt über dem Parallax-Bild (aber Parallax-Layer nicht überschreiben) */
+    .bp-header > :not(.bp-parallax-bg) {
+      position: relative;
+      z-index: 3;
+    }
+    .bp-header-inner {
+      max-width: 800px;
+      width: 100%;
+    }
+    .bp-hero-title {
+      font-family: var(--bp-font-head);
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      color: #fff;
+      margin: 0 0 0.5rem 0;
+      text-shadow: 0 0 24px rgba(255,255,255,0.2), 0 0 18px rgba(255,255,255,0.18);
+    }
+    .bp-hero-claim {
+      font-size: clamp(1.2rem, 2.8vw, 1.5rem);
+      color: var(--bp-text-muted);
+      margin: 0 0 2rem 0;
+    }
+    .bp-hero-pills {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 2.5rem;
+    }
+    .bp-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 10px 18px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--bp-border);
+      border-radius: 999px;
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 0.3px;
+      transition: background 0.2s, border-color 0.2s, transform 0.2s;
+    }
+    .bp-pill:hover {
+      background: rgba(255,215,0,0.08);
+      border-color: rgba(255,215,0,0.25);
+      transform: translateY(-2px);
+    }
+    .bp-hero-cta .bp-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 28px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 1.05rem;
+      text-decoration: none;
+      background: linear-gradient(135deg, var(--bp-accent), var(--bp-accent2));
+      color: #181818;
+      box-shadow: 0 10px 28px rgba(255,215,0,0.35);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .bp-hero-cta .bp-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(255,215,0,0.45);
+    }
+
+    /* ----- 2) ÜBER MICH ----- */
+    .bp-about-text {
+      font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+      line-height: 1.75;
+      color: var(--bp-text-muted);
+      max-width: 60ch;
+      margin-bottom: 1.5rem;
+    }
+    .bp-values {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .bp-chip {
+      padding: 10px 20px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--bp-border);
+      border-radius: 10px;
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    /* ----- 3) PROFIL IN 60 SEK (Cards) ----- */
+    .bp-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .bp-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--bp-border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+    }
+    .bp-card:hover {
+      border-color: rgba(255,215,0,0.2);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+    }
+    .bp-card-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #fff;
+      margin: 0 0 1rem 0;
+    }
+    .bp-card ul {
+      margin: 0;
+      padding-left: 1.2rem;
+      line-height: 1.7;
+      color: var(--bp-text-muted);
+      font-size: 0.98rem;
+    }
+    .bp-card li { margin-bottom: 0.4rem; }
+
+    /* ----- 4) BERUFLICHER WERDEGANG – großzügiges Layout für Präsentation ----- */
+    .bp-career {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    /* Ein Schritt = Node + Liniensegment + Karte; kompakt, damit alles auf einen Blick sichtbar */
+    .bp-career-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 0;
+      position: relative;
+      margin-bottom: 2rem;
+    }
+    .bp-career-step:last-child {
+      margin-bottom: 0;
+    }
+    .bp-career-step:last-child .bp-career-line { display: none; }
+
+    /* Linke Spalte: Node (Jahr) + Verbindungslinie */
+    .bp-career-left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-shrink: 0;
+      width: 80px;
+      padding-top: 0.1rem;
+    }
+
+    /* Kreis mit Jahr/Nummer */
+    .bp-career-node {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, rgba(255,215,0,0.2), rgba(255,215,0,0.05));
+      border: 2px solid var(--bp-accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 0 24px rgba(255,215,0,0.18), inset 0 1px 0 rgba(255,255,255,0.1);
+      opacity: 0;
+      transform: scale(0.3);
+      transition: opacity 0.5s cubic-bezier(0.34, 1.2, 0.64, 1),
+                  transform 0.5s cubic-bezier(0.34, 1.2, 0.64, 1),
+                  box-shadow 0.3s ease;
+    }
+    .bp-career.bp-items-visible .bp-career-step:nth-child(1) .bp-career-node { opacity: 1; transform: scale(1); transition-delay: 0.25s; }
+    .bp-career.bp-items-visible .bp-career-step:nth-child(2) .bp-career-node { opacity: 1; transform: scale(1); transition-delay: 0.55s; }
+    .bp-career.bp-items-visible .bp-career-step:nth-child(3) .bp-career-node { opacity: 1; transform: scale(1); transition-delay: 0.85s; }
+    .bp-career-step:hover .bp-career-node {
+      box-shadow: 0 0 32px rgba(255,215,0,0.28), inset 0 1px 0 rgba(255,255,255,0.15);
+    }
+    .bp-career-node span {
+      font-family: var(--bp-font-head);
+      font-weight: 800;
+      font-size: clamp(0.7rem, 1.2vw, 0.9rem);
+      line-height: 1.15;
+      color: var(--bp-accent);
+      text-align: center;
+      letter-spacing: 0.02em;
+    }
+
+    /* Vertikale Linie zwischen den Nodes */
+    .bp-career-line {
+      width: 2px;
+      flex: 1;
+      min-height: 32px;
+      margin: 6px 0 0;
+      background: linear-gradient(to bottom, var(--bp-accent), rgba(255,215,0,0.2));
+      transform-origin: top;
+      transform: scaleY(0);
+      transition: transform 0.8s cubic-bezier(0.22, 0.9, 0.36, 1);
+    }
+    .bp-career.bp-drawn .bp-career-step:nth-child(1) .bp-career-line { transform: scaleY(1); transition-delay: 0.4s; }
+    .bp-career.bp-drawn .bp-career-step:nth-child(2) .bp-career-line { transform: scaleY(1); transition-delay: 0.7s; }
+
+    /* Rechte Karte – kompakteres Padding, Design unverändert */
+    .bp-career-card {
+      flex: 1;
+      min-width: 0;
+      margin-left: 1rem;
+      padding: 1.35rem 1.75rem;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+      border-left: 4px solid var(--bp-accent);
+      opacity: 0;
+      transform: translateX(24px);
+      transition: opacity 0.5s cubic-bezier(0.22, 0.9, 0.36, 1),
+                  transform 0.5s cubic-bezier(0.22, 0.9, 0.36, 1),
+                  border-color 0.25s ease, background 0.25s ease;
+    }
+    .bp-career.bp-items-visible .bp-career-step:nth-child(1) .bp-career-card { opacity: 1; transform: translateX(0); transition-delay: 0.4s; }
+    .bp-career.bp-items-visible .bp-career-step:nth-child(2) .bp-career-card { opacity: 1; transform: translateX(0); transition-delay: 0.7s; }
+    .bp-career.bp-items-visible .bp-career-step:nth-child(3) .bp-career-card { opacity: 1; transform: translateX(0); transition-delay: 1s; }
+    .bp-career-step:hover .bp-career-card {
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,215,0,0.3);
+    }
+
+    .bp-career-role {
+      font-weight: 700;
+      font-size: clamp(1.25rem, 2.2vw, 1.45rem);
+      color: #fff;
+      margin: 0 0 0.35rem 0;
+      line-height: 1.25;
+    }
+    .bp-career-meta {
+      font-size: clamp(0.95rem, 1.6vw, 1.1rem);
+      color: var(--bp-accent);
+      margin-bottom: 0.4rem;
+      font-weight: 600;
+    }
+    .bp-career-desc {
+      font-size: clamp(0.98rem, 1.7vw, 1.12rem);
+      line-height: 1.5;
+      color: var(--bp-text-muted);
+      margin: 0;
+    }
+
+    @media (max-width: 640px) {
+      .bp-career-step { margin-bottom: 1.5rem; }
+      .bp-career-left { width: 64px; }
+      .bp-career-node { width: 48px; height: 48px; }
+      .bp-career-node span { font-size: 0.65rem; }
+      .bp-career-line { min-height: 24px; }
+      .bp-career-card { padding: 1.1rem 1.35rem; margin-left: 0.75rem; }
+      .bp-career-role { font-size: 1.1rem; }
+      .bp-career-meta { font-size: 0.9rem; }
+      .bp-career-desc { font-size: 0.95rem; }
+    }
+
+    /* ----- 5) CASE STUDIES ----- */
+    .bp-case-grid { display: grid; gap: 20px; }
+    .bp-case-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--bp-border);
+      border-radius: 16px;
+      overflow: hidden;
+      -webkit-transition: border-color 0.3s ease, transform 0.7s cubic-bezier(0.25, 0.1, 0.25, 1), box-shadow 0.7s ease;
+      transition: border-color 0.3s ease, transform 0.7s cubic-bezier(0.25, 0.1, 0.25, 1), box-shadow 0.7s ease;
+    }
+    .bp-case-card:hover { border-color: rgba(255,215,0,0.2); }
+    .bp-case-card.bp-open {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.4), 0 0 24px rgba(255,215,0,0.12);
+      border-color: rgba(255,215,0,0.35);
+      z-index: 5;
+      position: relative;
+    }
+    .bp-case-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 1.25rem 1.5rem;
+      cursor: pointer;
+    }
+    .bp-case-title { font-size: 1.35rem; font-weight: 700; color: #fff; margin: 0; }
+    .bp-case-toggle { font-size: 1.2rem; color: var(--bp-accent); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+    .bp-case-card.bp-open .bp-case-toggle { transform: rotate(180deg); }
+    /* Langsame, flüssige Aufklapp-Animation: Kasten erweitert sich sichtbar nach unten */
+    .bp-case-body {
+      max-height: 0;
+      overflow: hidden;
+      margin-top: 0;
+      padding: 0;
+      opacity: 0;
+      transform: translateY(-10px);
+      -webkit-transition: max-height 1.2s cubic-bezier(0.25, 0.1, 0.25, 1),
+                  opacity 0.6s ease 0.25s,
+                  transform 0.6s ease 0.25s,
+                  margin-top 1.2s cubic-bezier(0.25, 0.1, 0.25, 1),
+                  padding 1.2s ease;
+      transition: max-height 1.2s cubic-bezier(0.25, 0.1, 0.25, 1),
+                  opacity 0.6s ease 0.25s,
+                  transform 0.6s ease 0.25s,
+                  margin-top 1.2s cubic-bezier(0.25, 0.1, 0.25, 1),
+                  padding 1.2s ease;
+    }
+    .bp-case-card.bp-open .bp-case-body {
+      max-height: 900px;
+      margin-top: 4px;
+      padding: 0;
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .bp-case-inner {
+      padding: 0 1.5rem 1.5rem;
+    }
+    .bp-case-inner p,
+    .bp-case-inner .bp-case-tech,
+    .bp-case-inner .bp-case-screenshot {
+      opacity: 0;
+      transform: translateY(10px);
+      -webkit-transition: opacity 0.5s ease, transform 0.5s ease;
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .bp-case-card.bp-open .bp-case-inner p,
+    .bp-case-card.bp-open .bp-case-inner .bp-case-tech,
+    .bp-case-card.bp-open .bp-case-inner .bp-case-screenshot {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .bp-case-card.bp-open .bp-case-inner p:nth-child(1) { transition-delay: 0.35s; }
+    .bp-case-card.bp-open .bp-case-inner p:nth-child(2) { transition-delay: 0.45s; }
+    .bp-case-card.bp-open .bp-case-inner p:nth-child(3) { transition-delay: 0.55s; }
+    .bp-case-card.bp-open .bp-case-inner p:nth-child(4) { transition-delay: 0.65s; }
+    .bp-case-card.bp-open .bp-case-inner .bp-case-tech { transition-delay: 0.75s; }
+    .bp-case-card.bp-open .bp-case-inner .bp-case-screenshot { transition-delay: 0.85s; }
+    .bp-case-inner p { margin: 0 0 0.75rem 0; font-size: 0.98rem; line-height: 1.65; color: var(--bp-text-muted); }
+    .bp-case-inner strong { color: #fff; }
+    .bp-case-screenshot {
+      width: 100%;
+      height: 200px;
+      background: rgba(0,0,0,0.3);
+      border-radius: 12px;
+      margin-top: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--bp-text-muted);
+      font-size: 0.9rem;
+    }
+    .bp-case-tech { margin-top: 0.75rem; }
+    .bp-case-tech span {
+      display: inline-block;
+      padding: 4px 10px;
+      background: rgba(255,215,0,0.1);
+      border-radius: 6px;
+      font-size: 0.85rem;
+      color: var(--bp-accent);
+      margin-right: 6px;
+      margin-bottom: 6px;
+    }
+
+    /* ----- 6) SKILLS ----- */
+    .bp-skills-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 1.5rem;
+    }
+    .bp-skills-filters button {
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: 1px solid var(--bp-border);
+      background: rgba(255,255,255,0.05);
+      color: var(--bp-text);
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .bp-skills-filters button:hover,
+    .bp-skills-filters button.bp-active {
+      background: rgba(255,215,0,0.1);
+      border-color: rgba(255,215,0,0.3);
+      color: #fff;
+    }
+    .bp-skills-group { margin-bottom: 1.5rem; }
+    .bp-skills-group-title { font-size: 1rem; font-weight: 700; color: var(--bp-accent); margin: 0 0 0.5rem 0; }
+    .bp-skills-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .bp-skill-tag {
+      padding: 6px 12px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--bp-border);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: var(--bp-text-muted);
+    }
+    .bp-skills-wrapper[data-current-filter="all"] .bp-skill-tag { opacity: 1; }
+    .bp-skills-wrapper[data-current-filter="ops"] .bp-skill-tag:not([data-category="ops"]) { opacity: 0.35; }
+    .bp-skills-wrapper[data-current-filter="cloud"] .bp-skill-tag:not([data-category="cloud"]) { opacity: 0.35; }
+    .bp-skills-wrapper[data-current-filter="web"] .bp-skill-tag:not([data-category="web"]) { opacity: 0.35; }
+    .bp-skills-wrapper[data-current-filter="security"] .bp-skill-tag:not([data-category="security"]) { opacity: 0.35; }
+
+    /* ----- 7) ARBEITSWEISE (Stepper) ----- */
+    .bp-stepper {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .bp-step {
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+      padding: 1.25rem 0;
+      border-bottom: 1px solid var(--bp-border);
+    }
+    .bp-step:last-child { border-bottom: none; }
+    .bp-step-num {
+      flex-shrink: 0;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--bp-accent), var(--bp-accent2));
+      color: #181818;
+      font-weight: 800;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .bp-step-content h4 { margin: 0 0 0.35rem 0; font-size: 1.1rem; color: #fff; }
+    .bp-step-content p { margin: 0; font-size: 0.98rem; line-height: 1.6; color: var(--bp-text-muted); }
+
+    /* ----- 8) LEARNINGS (Accordions) ----- */
+    .bp-accordion {
+      border: 1px solid var(--bp-border);
+      border-radius: 12px;
+      margin-bottom: 12px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.03);
+    }
+    .bp-accordion-head {
+      width: 100%;
+      padding: 1rem 1.25rem;
+      text-align: left;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .bp-accordion-head:hover { background: rgba(255,255,255,0.04); }
+    .bp-accordion-icon { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); color: var(--bp-accent); }
+    .bp-accordion.bp-open .bp-accordion-icon { transform: rotate(180deg); }
+    /* Höhe wird per JS animiert (von 0 auf gemessene scrollHeight) */
+    .bp-accordion-body {
+      overflow: hidden;
+      -webkit-transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .bp-accordion-inner {
+      padding: 0 1.25rem 1.25rem;
+      opacity: 0;
+      transform: translateY(-8px);
+      -webkit-transition: opacity 0.4s ease 0.1s, transform 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.1s;
+      transition: opacity 0.4s ease 0.1s, transform 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.1s;
+    }
+    .bp-accordion.bp-open .bp-accordion-inner {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .bp-accordion-inner p { margin: 0 0 0.5rem 0; font-size: 0.95rem; line-height: 1.65; color: var(--bp-text-muted); }
+    .bp-accordion-inner strong { color: #fff; }
+
+    /* ----- 9) WARUM DIESE STELLE ----- */
+    .bp-reasons { margin-bottom: 2rem; }
+    .bp-reasons ul { margin: 0; padding-left: 1.3rem; line-height: 1.7; color: var(--bp-text-muted); }
+    .bp-plan-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    @media (max-width: 700px) { .bp-plan-cards { grid-template-columns: 1fr; } }
+    .bp-plan-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--bp-border);
+      border-radius: 14px;
+      padding: 1.25rem;
+    }
+    .bp-plan-card h4 { margin: 0 0 0.75rem 0; font-size: 1.1rem; color: var(--bp-accent); }
+    .bp-plan-card ul { margin: 0; padding-left: 1.2rem; font-size: 0.95rem; line-height: 1.6; color: var(--bp-text-muted); }
+
+    /* ----- 10) CONTACT / FINAL ----- */
+    .bp-contact-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 1.5rem;
+    }
+    .bp-contact-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 20px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--bp-border);
+      border-radius: 12px;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .bp-contact-links a:hover {
+      background: rgba(255,215,0,0.1);
+      border-color: rgba(255,215,0,0.3);
+    }
+    .bp-qr-placeholder {
+      width: 160px;
+      height: 160px;
+      background: rgba(0,0,0,0.3);
+      border: 2px dashed var(--bp-border);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--bp-text-muted);
+      font-size: 0.85rem;
+      text-align: center;
+      padding: 8px;
+    }
+    /* ----- Reveal Animation (IntersectionObserver) ----- */
+    .bp-reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    .bp-reveal.bp-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .bp-reveal-stagger > * { transition-delay: 0s; }
+    .bp-reveal-stagger.bp-visible > *:nth-child(1) { transition-delay: 0.05s; }
+    .bp-reveal-stagger.bp-visible > *:nth-child(2) { transition-delay: 0.1s; }
+    .bp-reveal-stagger.bp-visible > *:nth-child(3) { transition-delay: 0.15s; }
+    .bp-reveal-stagger.bp-visible > *:nth-child(4) { transition-delay: 0.2s; }
+    .bp-reveal-stagger.bp-visible > *:nth-child(5) { transition-delay: 0.25s; }
+    .bp-reveal-stagger.bp-visible > *:nth-child(6) { transition-delay: 0.3s; }
+
+    /* ----- Edu Card ----- */
+    .bp-edu-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      background: rgba(255,215,0,0.06);
+      border: 1px solid rgba(255,215,0,0.18);
+      border-radius: 14px;
+      padding: 1.4rem 1.8rem;
+      margin: 1.5rem 0;
+      max-width: 600px;
+      line-height: 1.6;
+      font-size: 1.1rem;
+    }
+    .bp-edu-icon { font-size: 1.8rem; flex-shrink: 0; }
+    .bp-edu-company { color: var(--bp-accent); font-size: 0.9em; font-weight: 600; }
+
+    /* ----- Hero Eyebrow + Sub ----- */
+    .bp-hero-eyebrow {
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--bp-accent);
+      opacity: 0.85;
+      margin: 0 0 0.5rem;
+      font-family: var(--bp-font-head);
+    }
+    .bp-hero-sub {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: rgba(255,255,255,0.65);
+      font-style: italic;
+      margin: 0.3rem 0 1.5rem;
+    }
+
+    /* ----- Slide Counter ----- */
+    .bp-slide-counter {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 200;
+      background: rgba(0,0,0,0.55);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 999px;
+      padding: 0.35rem 0.9rem;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.5);
+      font-family: var(--bp-font-head);
+      letter-spacing: 0.05em;
+    }
+    .bp-slide-current { color: var(--bp-accent); font-weight: 700; }
+    .bp-slide-sep { margin: 0 3px; }
+
+    /* ----- Card Icon ----- */
+    .bp-card-icon-wrap {
+      font-size: 2rem;
+      margin-bottom: 0.6rem;
+      display: block;
+    }
+
+    /* ----- Case Badge ----- */
+    .bp-case-head-content { display: flex; flex-direction: column; gap: 0.3rem; flex: 1; }
+    .bp-case-badge {
+      display: inline-block;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--bp-accent);
+      font-family: var(--bp-font-head);
+      font-weight: 700;
+    }
+
+    /* ----- Subsection Title ----- */
+    .bp-subsection-title {
+      font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+      font-family: var(--bp-font-head);
+      color: var(--bp-accent);
+      margin: 2.5rem 0 0.8rem;
+      letter-spacing: 0.04em;
+    }
+
+    /* ----- Closing Grid ----- */
+    .bp-closing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .bp-closing-item {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 14px;
+      padding: 1.4rem 1.6rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      transition: border-color 0.25s, background 0.25s, transform 0.25s;
+    }
+    .bp-closing-item:hover {
+      border-color: rgba(255,215,0,0.3);
+      background: rgba(255,215,0,0.05);
+      transform: translateY(-4px);
+    }
+    .bp-closing-icon { font-size: 1.8rem; }
+    .bp-closing-item strong { color: #fff; font-size: 1.15rem; }
+    .bp-closing-item p { font-size: 1rem; color: rgba(255,255,255,0.65); margin: 0; line-height: 1.5; }
+
+    /* ----- Closing Quote ----- */
+    .bp-closing-quote {
+      border-left: 3px solid var(--bp-accent);
+      padding: 1.1rem 1.8rem;
+      margin: 2rem 0 1.5rem;
+      font-size: clamp(1.1rem, 2.2vw, 1.4rem);
+      color: rgba(255,255,255,0.85);
+      line-height: 1.75;
+      background: rgba(255,215,0,0.04);
+      border-radius: 0 12px 12px 0;
+    }
+    .bp-closing-quote em {
+      display: block;
+      margin-top: 0.5rem;
+      color: var(--bp-accent);
+      font-style: italic;
+    }
+
+    /* ----- Section Flash on keyboard nav ----- */
+    @keyframes bp-section-flash {
+      0%   { box-shadow: 0 0 0 0 rgba(255,215,0,0); }
+      40%  { box-shadow: 0 0 0 6px rgba(255,215,0,0.18); }
+      100% { box-shadow: 0 0 0 0 rgba(255,215,0,0); }
+    }
+    .bp-section-flash {
+      animation: bp-section-flash 0.7s ease-out forwards;
+      border-radius: 24px;
+    }
+
+    /* ----- Nav dots with tooltip ----- */
+    .bp-nav-chapters a {
+      position: relative;
+      font-size: 0.55rem;
+    }
+    .bp-nav-chapters a::after {
+      content: attr(data-label);
+      position: absolute;
+      right: calc(100% + 10px);
+      top: 50%;
+      transform: translateY(-50%) scale(0.85);
+      background: rgba(0,0,0,0.75);
+      color: #fff;
+      font-size: 0.7rem;
+      white-space: nowrap;
+      padding: 3px 8px;
+      border-radius: 4px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s, transform 0.2s;
+      transform-origin: right center;
+    }
+    .bp-nav-chapters a:hover::after,
+    .bp-nav-chapters a.bp-active::after { opacity: 1; transform: translateY(-50%) scale(1); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .bp-reveal { transition: none; }
+      .bp-reveal.bp-visible { opacity: 1; transform: none; }
+      .bp-career-node,
+      .bp-career-line,
+      .bp-career-card { transition: none; }
+      .bp-career.bp-drawn .bp-career-line,
+      .bp-career.bp-items-visible .bp-career-node,
+      .bp-career.bp-items-visible .bp-career-card { opacity: 1; transform: none; }
+      .bp-case-body,
+      .bp-accordion-body { -webkit-transition: none; transition: none; }
+      .bp-case-inner,
+      .bp-accordion-inner,
+      .bp-case-inner p,
+      .bp-case-inner .bp-case-tech,
+      .bp-case-inner .bp-case-screenshot { transition: none; }
+      .bp-closing-item:hover { transform: none; }
+      .bp-section-flash { animation: none; }
+    }
+  </style>
+</head>
+<body class="bp-root">
+  <!-- Scroll Progress -->
+  <div class="bp-progress-wrap" role="presentation" aria-hidden="true">
+    <div class="bp-progress-bar" id="bp-progress-bar"></div>
+  </div>
+
+  <!-- Kapitel-Navigation mit Tooltip-Labels -->
+  <nav class="bp-nav-chapters" aria-label="Kapitel-Navigation">
+    <a href="#bp-hero"        data-bp-chapter="0" aria-label="Vorstellung"  data-label="Vorstellung">●</a>
+    <a href="#bp-ueber-mich"  data-bp-chapter="1" aria-label="Ausbildung"   data-label="Ausbildung">●</a>
+    <a href="#bp-profil"      data-bp-chapter="2" aria-label="Profil"       data-label="Profil">●</a>
+    <a href="#bp-timeline"    data-bp-chapter="3" aria-label="Werdegang"    data-label="Werdegang">●</a>
+    <a href="#bp-cases"       data-bp-chapter="4" aria-label="Projekt"      data-label="Projekt">●</a>
+    <a href="#bp-skills"      data-bp-chapter="5" aria-label="Skills"       data-label="Skills">●</a>
+    <a href="#bp-arbeitsweise" data-bp-chapter="6" aria-label="Arbeitsweise" data-label="Selbst­ständig">●</a>
+    <a href="#bp-learnings"   data-bp-chapter="7" aria-label="Learnings"    data-label="Learnings">●</a>
+    <a href="#bp-warum"       data-bp-chapter="8" aria-label="Warum GB"     data-label="Warum GB">●</a>
+    <a href="#bp-contact"     data-bp-chapter="9" aria-label="Abschluss"    data-label="Abschluss">●</a>
+  </nav>
+
+  <!-- Folien-Zähler (zeigt aktuelle Folie) -->
+  <div class="bp-slide-counter" id="bp-slide-counter" aria-live="polite">
+    <span id="bp-slide-current">1</span><span class="bp-slide-sep">/</span><span>14</span>
+  </div>
+
+  <div class="bp-blob bp-blob-1" aria-hidden="true"></div>
+  <div class="bp-blob bp-blob-2" aria-hidden="true"></div>
+
+  <!-- 1) HEADER: Gleiches Hintergrundbild wie Index + Parallax-Effekt -->
+  <header class="bp-header" id="bp-hero" data-aos="fade-down" aria-labelledby="bp-hero-title">
+    <div class="bp-parallax-bg" aria-hidden="true">
+      <img src="./Integrow-Background.png" alt="" fetchpriority="high" decoding="async" />
+    </div>
+    <div class="bp-header-inner">
+      <p class="bp-hero-eyebrow" data-aos="fade-down" data-aos-delay="100">Bewerbungspräsentation</p>
+      <h1 class="bp-hero-title" id="bp-hero-title" data-aos="fade-up" data-aos-delay="250">Leonidas Pyka</h1>
+      <p class="bp-hero-claim" data-aos="fade-up" data-aos-delay="450">IT-Systemadministrator · 26 Jahre</p>
+      <p class="bp-hero-sub" data-aos="fade-up" data-aos-delay="620">„Strukturierte IT-Lösungen mit Verantwortung“</p>
+      <div class="bp-hero-pills" data-aos="fade-up" data-aos-delay="780">
+        <span class="bp-pill">AD &amp; Serveradministration</span>
+        <span class="bp-pill">Kritische Infrastruktur</span>
+        <span class="bp-pill">Prozessdenken</span>
+      </div>
+      <div class="bp-hero-cta" data-aos="fade-up" data-aos-delay="960">
+        <a href="#bp-ueber-mich" class="bp-btn">Präsentation starten →</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="bp-main">
+
+    <!-- 2) AUSBILDUNG / ÜBER MICH -->
+    <section class="bp-section" id="bp-ueber-mich" aria-labelledby="bp-ueber-title" data-aos="fade-up" data-aos-duration="700">
+      <h2 class="bp-section-title" id="bp-ueber-title" data-aos="fade-down" data-aos-delay="100">Ausbildung &amp; Hintergrund</h2>
+      <div class="bp-about-text" data-aos="fade-up" data-aos-delay="200">
+        IT-Systemadministrator mit Wurzeln in der Industrie-IT und Erfahrung in kritischer Krankenhaus-Infrastruktur.
+        Seit Kindheit technikbegeistert &ndash; mein Vater hat mir früh gezeigt, wie Systeme funktionieren.
+      </div>
+      <div class="bp-edu-card" data-aos="zoom-in" data-aos-delay="350">
+        <div class="bp-edu-icon">&#127891;</div>
+        <div>
+          <strong>Fachinformatiker für Systemintegration</strong><br />
+          Abschluss: Informationstechnischer Assistent<br />
+          <span class="bp-edu-company">thyssenkrupp Steel Europe AG &middot; Duisburg</span>
+        </div>
+      </div>
+      <div class="bp-values" data-aos="fade-up" data-aos-delay="500">
+        <span class="bp-chip">Strukturiert</span>
+        <span class="bp-chip">Verantwortungsbewusst</span>
+        <span class="bp-chip">Technisch orientiert</span>
+      </div>
+    </section>
+
+    <!-- 3) PROFIL -->
+    <section class="bp-section" id="bp-profil" aria-labelledby="bp-profil-title" data-aos="fade-up" data-aos-duration="700">
+      <h2 class="bp-section-title" id="bp-profil-title" data-aos="fade-down" data-aos-delay="100">Profil &ndash; 3 Kernbereiche</h2>
+      <div class="bp-cards-grid">
+        <article class="bp-card" data-aos="flip-left" data-aos-delay="200" data-aos-duration="700">
+          <div class="bp-card-icon-wrap">&#128187;</div>
+          <h3 class="bp-card-title">Ops &amp; Infrastruktur</h3>
+          <ul>
+            <li>AD + Serveradministration</li>
+            <li>Druckserver + Virtualisierung</li>
+            <li>Stabile Infra im Klinikumfeld</li>
+          </ul>
+        </article>
+        <article class="bp-card" data-aos="flip-left" data-aos-delay="370" data-aos-duration="700">
+          <div class="bp-card-icon-wrap">&#128274;</div>
+          <h3 class="bp-card-title">Security &amp; Datenschutz</h3>
+          <ul>
+            <li>RFID-Kartenlogin implementiert</li>
+            <li>Keine offenen Ausdrucke mehr</li>
+            <li>DSGVO-konform im Klinikum</li>
+          </ul>
+        </article>
+        <article class="bp-card" data-aos="flip-left" data-aos-delay="540" data-aos-duration="700">
+          <div class="bp-card-icon-wrap">&#127760;</div>
+          <h3 class="bp-card-title">Web &amp; Eigenverantwortung</h3>
+          <ul>
+            <li>Eigenständige Kundenprojekte</li>
+            <li>Webdesign, SEO, Deployment</li>
+            <li>Unternehmerisches Denken</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- 4) BERUFLICHER WERDEGANG – neues Karten-Layout mit Nodes & Linie -->
+    <section class="bp-section" id="bp-timeline" aria-labelledby="bp-timeline-title" data-aos="fade-up" data-aos-duration="700">
+      <h2 class="bp-section-title" id="bp-timeline-title" data-aos="fade-down" data-aos-delay="100">Beruflicher Werdegang</h2>
+      <div class="bp-career" id="bp-timeline-el">
+        <div class="bp-career-step">
+          <div class="bp-career-left">
+            <div class="bp-career-node"><span>Ausbildung</span></div>
+            <div class="bp-career-line" aria-hidden="true"></div>
+          </div>
+          <div class="bp-career-card">
+            <p class="bp-career-role">Fachinformatiker Systemintegration &middot; thyssenkrupp Steel Europe AG</p>
+            <p class="bp-career-meta">Duisburg</p>
+            <p class="bp-career-desc">Einstieg in große, strukturierte Unternehmens-IT der Industrie.</p>
+          </div>
+        </div>
+        <div class="bp-career-step">
+          <div class="bp-career-left">
+            <div class="bp-career-node"><span>2021–24</span></div>
+            <div class="bp-career-line" aria-hidden="true"></div>
+          </div>
+          <div class="bp-career-card">
+            <p class="bp-career-role">IT-Systemadministrator &middot; Ev. Klinikum Gelsenkirchen</p>
+            <p class="bp-career-meta">März 2021 – September 2024 &middot; Server, AD, Druckinfra, Support</p>
+            <p class="bp-career-desc">Kritische Krankenhaus-IT – höchste Verantwortung, höchster Datenschutz.</p>
+          </div>
+        </div>
+        <div class="bp-career-step">
+          <div class="bp-career-left">
+            <div class="bp-career-node"><span>Ab 2024</span></div>
+          </div>
+          <div class="bp-career-card">
+            <p class="bp-career-role">Webentwickler &amp; Designer &middot; Selbstständig</p>
+            <p class="bp-career-meta">Kundenprojekte, Eigenverantwortung</p>
+            <p class="bp-career-desc">Bewusste Entscheidung zur Rückkehr in strukturierte IT-Infrastruktur.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5) DRUCKPROJEKT (Case Studies) -->
+    <section class="bp-section" id="bp-cases" aria-labelledby="bp-cases-title" data-aos="fade-up" data-aos-duration="700">
+      <h2 class="bp-section-title" id="bp-cases-title" data-aos="fade-down" data-aos-delay="100">Projekt: Druckinfrastruktur</h2>
+      <p class="bp-section-intro" data-aos="fade-up" data-aos-delay="180">Ausgangslage &rarr; Lösung &rarr; Ergebnis &middot; Details per Klick.</p>
+      <div class="bp-case-grid" data-aos="fade-up" data-aos-delay="230">
+
+        <div class="bp-case-card" data-bp-case>
+          <div class="bp-case-head" tabindex="0" role="button" aria-expanded="false" aria-controls="bp-case-body-1" id="bp-case-btn-1" onclick="bpToggleCase(1)">
+            <div class="bp-case-head-content">
+              <span class="bp-case-badge">Folie 4</span>
+              <h3 class="bp-case-title">Das Problem &ndash; Ausgangssituation</h3>
+            </div>
+            <span class="bp-case-toggle" aria-hidden="true">&#9660;</span>
+          </div>
+          <div class="bp-case-body" id="bp-case-body-1" role="region" aria-labelledby="bp-case-btn-1">
+            <div class="bp-case-inner">
+              <p><strong>Situation:</strong> Kein einheitlicher Druckstandard. Offene Ausdrucke mit Patientendaten lagen unbeaufsichtigt.</p>
+              <p><strong>Risiken:</strong> Datenschutzverstöße, fehlende Steuerung, Gerätechaos &ndash; nicht tolerierbar im Klinikum.</p>
+              <div class="bp-case-tech">Probleme: <span>Keine Authentifizierung</span> <span>Offene Ausdrucke</span> <span>Kein AD</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bp-case-card" data-bp-case>
+          <div class="bp-case-head" tabindex="0" role="button" aria-expanded="false" aria-controls="bp-case-body-2" id="bp-case-btn-2" onclick="bpToggleCase(2)">
+            <div class="bp-case-head-content">
+              <span class="bp-case-badge">Folie 5</span>
+              <h3 class="bp-case-title">Meine Lösung &ndash; Umsetzung</h3>
+            </div>
+            <span class="bp-case-toggle" aria-hidden="true">&#9660;</span>
+          </div>
+          <div class="bp-case-body" id="bp-case-body-2" role="region" aria-labelledby="bp-case-btn-2">
+            <div class="bp-case-inner">
+              <p><strong>Standardisierung:</strong> Vereinheitlichung auf Kyocera. Einheitliche Treiber, zentrale Verwaltung.</p>
+              <p><strong>Sicherheit:</strong> RFID-Kartenlogin + AD-Anbindung + Follow-Me-Printing &ndash; kein Dokument liegt offen.</p>
+              <div class="bp-case-tech">Tech: <span>Kyocera</span> <span>Active Directory</span> <span>RFID</span> <span>Follow-Me-Print</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bp-case-card" data-bp-case>
+          <div class="bp-case-head" tabindex="0" role="button" aria-expanded="false" aria-controls="bp-case-body-3" id="bp-case-btn-3" onclick="bpToggleCase(3)">
+            <div class="bp-case-head-content">
+              <span class="bp-case-badge">Folie 6</span>
+              <h3 class="bp-case-title">Ergebnisse &ndash; Messbarer Mehrwert</h3>
+            </div>
+            <span class="bp-case-toggle" aria-hidden="true">&#9660;</span>
+          </div>
+          <div class="bp-case-body" id="bp-case-body-3" role="region" aria-labelledby="bp-case-btn-3">
+            <div class="bp-case-inner">
+              <p><strong>Datenschutz:</strong> Keine offenen Ausdrucke. DSGVO-Anforderungen erfüllt.</p>
+              <p><strong>Effizienz:</strong> Stationen entlastet. Skalierbare Standardinfrastruktur fürs gesamte Klinikum.</p>
+              <div class="bp-case-tech">Ergebnisse: <span>&#10003; Datenschutz</span> <span>&#10003; Effizienz</span> <span>&#10003; Skalierbar</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 6) SKILLS -->
+    <section class="bp-section" id="bp-skills" aria-labelledby="bp-skills-title" data-aos="fade-up" data-aos-duration="700">
+      <h2 class="bp-section-title" id="bp-skills-title" data-aos="fade-down" data-aos-delay="100">Skills &amp; Technologien</h2>
+      <div class="bp-skills-filters" data-aos="fade-up" data-aos-delay="170">
+        <button type="button" class="bp-active" data-bp-filter="all">Alle</button>
+        <button type="button" data-bp-filter="ops">Infrastruktur</button>
+        <button type="button" data-bp-filter="cloud">Cloud &amp; MS</button>
+        <button type="button" data-bp-filter="web">Web</button>
+        <button type="button" data-bp-filter="security">Security</button>
+      </div>
+      <div class="bp-skills-wrapper" id="bp-skills-wrapper" data-current-filter="all" data-aos="fade-up" data-aos-delay="280">
+        <div class="bp-skills-group">
+          <p class="bp-skills-group-title">Core &ndash; täglich im Einsatz</p>
+          <div class="bp-skills-tags">
+            <span class="bp-skill-tag" data-category="ops">Active Directory</span>
+            <span class="bp-skill-tag" data-category="ops">Serveradministration</span>
+            <span class="bp-skill-tag" data-category="ops">Druckserver</span>
+            <span class="bp-skill-tag" data-category="ops">Virtualisierung</span>
+            <span class="bp-skill-tag" data-category="cloud">Microsoft 365</span>
+            <span class="bp-skill-tag" data-category="cloud">Exchange</span>
+            <span class="bp-skill-tag" data-category="security">Benutzer- &amp; Rechteverwaltung</span>
+          </div>
+        </div>
+        <div class="bp-skills-group">
+          <p class="bp-skills-group-title">Strong &ndash; sicher anwendbar</p>
+          <div class="bp-skills-tags">
+            <span class="bp-skill-tag" data-category="security">RFID-Authentifizierung</span>
+            <span class="bp-skill-tag" data-category="security">DSGVO / Datenschutz</span>
+            <span class="bp-skill-tag" data-category="security">Backup-Konzepte</span>
+            <span class="bp-skill-tag" data-category="web">HTML / CSS / JS</span>
+            <span class="bp-skill-tag" data-category="web">Webdesign</span>
+            <span class="bp-skill-tag" data-category="web">SEO</span>
+          </div>
+        </div>
+        <div class="bp-skills-group">
+          <p class="bp-skills-group-title">Working knowledge</p>
+          <div class="bp-skills-tags">
+            <span class="bp-skill-tag" data-category="cloud">Azure AD</span>
+            <span class="bp-skill-tag" data-category="ops">PowerShell</span>
+            <span class="bp-skill-tag" data-category="cloud">Intune / MDM</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7) SELBSTSTÄNDIGE PHASE -->
+    <section class="bp-section" id="bp-arbeitsweise" aria-labelledby="bp-arbeitsweise-title" data-aos="fade-up" data-aos-duration="700">
+      <h2 class="bp-section-title" id="bp-arbeitsweise-title" data-aos="fade-down" data-aos-delay="100">Selbstständige Phase</h2>
+      <p class="bp-section-intro" data-aos="fade-up" data-aos-delay="180">
+        Kein Rückschritt &ndash; eine bewusste Entscheidung. Und dann die Erkenntnis:
+        Komplexe IT-Infrastruktur liegt mir langfristig mehr.
+      </p>
+      <div class="bp-stepper">
+        <div class="bp-step" data-aos="fade-right" data-aos-delay="200" data-aos-duration="600">
+          <span class="bp-step-num">1</span>
+          <div class="bp-step-content">
+            <h4>Eigenverantwortung</h4>
+            <p>Projekte von Anforderung bis Übergabe allein verantwortet.</p>
+          </div>
+        </div>
+        <div class="bp-step" data-aos="fade-left" data-aos-delay="310" data-aos-duration="600">
+          <span class="bp-step-num">2</span>
+          <div class="bp-step-content">
+            <h4>Kundenkommunikation</h4>
+            <p>Technisches klar vermittelt &ndash; Erwartungen gemanagt.</p>
+          </div>
+        </div>
+        <div class="bp-step" data-aos="fade-right" data-aos-delay="420" data-aos-duration="600">
+          <span class="bp-step-num">3</span>
+          <div class="bp-step-content">
+            <h4>Wirtschaftliches Denken</h4>
+            <p>Kosten, Zeit und Qualität ganzheitlich im Blick.</p>
+          </div>
+        </div>
+        <div class="bp-step" data-aos="fade-left" data-aos-delay="530" data-aos-duration="600">
+          <span class="bp-step-num">4</span>
+          <div class="bp-step-content">
+            <h4>Bewusste Rückkehr</h4>
+            <p>Gezielte Entscheidung für strukturierte IT, Team und Tiefe.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8) LERNMOMENTE -->
+    <section class="bp-section" id="bp-learnings" aria-labelledby="bp-learnings-title" data-aos="fade-up" data-aos-duration="700">
+      <h2 class="bp-section-title" id="bp-learnings-title" data-aos="fade-down" data-aos-delay="100">Lernmoment &amp; Reflexion</h2>
+      <div data-aos="zoom-in-up" data-aos-delay="200">
+        <div class="bp-accordion" data-bp-accordion>
+          <button type="button" class="bp-accordion-head" aria-expanded="false" aria-controls="bp-acc-body-1" id="bp-acc-btn-1" onclick="bpToggleAccordion(1)">
+            <span>Gerätevergabe ohne Dokumentation</span>
+            <span class="bp-accordion-icon" aria-hidden="true">&#9660;</span>
+          </button>
+          <div class="bp-accordion-body" id="bp-acc-body-1" role="region" aria-labelledby="bp-acc-btn-1">
+            <div class="bp-accordion-inner">
+              <p><strong>Situation:</strong> Laptop intern mündlich zugesagt &ndash; kein Systemeintrag.</p>
+              <p><strong>Folge:</strong> Gerät anderweitig vergeben. Interner Konflikt entstand.</p>
+              <p><strong>Lektion:</strong> Dokumentation ist kein Extra &ndash; sie ist die Basis professioneller IT-Arbeit.</p>
+            </div>
+          </div>
+        </div>
+        <div class="bp-accordion" data-bp-accordion>
+          <button type="button" class="bp-accordion-head" aria-expanded="false" aria-controls="bp-acc-body-2" id="bp-acc-btn-2" onclick="bpToggleAccordion(2)">
+            <span>Was ich daraus gemacht habe</span>
+            <span class="bp-accordion-icon" aria-hidden="true">&#9660;</span>
+          </button>
+          <div class="bp-accordion-body" id="bp-acc-body-2" role="region" aria-labelledby="bp-acc-btn-2">
+            <div class="bp-accordion-inner">
+              <p><strong>Konsequenz:</strong> Konsequente Ressourcendokumentation seitdem.</p>
+              <p><strong>Prinzip:</strong> Transparenz vor Effizienz &ndash; strukturierte Prozesse schützen das Team.</p>
+              <p><strong>Ergebnis:</strong> Entwicklung vom Techniker zum prozessorientierten IT-Profi.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9) WARUM GENIUS BYTES -->
+    <section class="bp-section" id="bp-warum" aria-labelledby="bp-warum-title" data-aos="fade-up" data-aos-duration="700">
+      <h2 class="bp-section-title" id="bp-warum-title" data-aos="fade-down" data-aos-delay="100">Warum Genius Bytes</h2>
+      <div class="bp-reasons" data-aos="fade-up" data-aos-delay="200">
+        <ul>
+          <li>Druckprojekt = direkte fachliche Überschneidung</li>
+          <li>Digitalisierung &amp; Nachhaltigkeit als Mission</li>
+          <li>Technik <strong>und</strong> Prozess &ndash; mein Thema</li>
+          <li>Erstgespräch hat Eindruck bestätigt</li>
+        </ul>
+      </div>
+      <h3 class="bp-subsection-title" data-aos="fade-up" data-aos-delay="300">30 / 60 / 90 Tage</h3>
+      <div class="bp-plan-cards">
+        <div class="bp-plan-card" data-aos="flip-up" data-aos-delay="370" data-aos-duration="700">
+          <h4>30 Tage</h4>
+          <ul>
+            <li>Systeme &amp; Team kennenlernen</li>
+            <li>Erste Aufgaben übernehmen</li>
+          </ul>
+        </div>
+        <div class="bp-plan-card" data-aos="flip-up" data-aos-delay="490" data-aos-duration="700">
+          <h4>60 Tage</h4>
+          <ul>
+            <li>Verantwortung festigen</li>
+            <li>Potenziale identifizieren</li>
+          </ul>
+        </div>
+        <div class="bp-plan-card" data-aos="flip-up" data-aos-delay="610" data-aos-duration="700">
+          <h4>90 Tage</h4>
+          <ul>
+            <li>Projekte eigenständig vorantreiben</li>
+            <li>Messbaren Mehrwert liefern</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10) ABSCHLUSS -->
+    <section class="bp-section" id="bp-contact" aria-labelledby="bp-contact-title" data-aos="fade-up" data-aos-duration="700">
+      <h2 class="bp-section-title" id="bp-contact-title" data-aos="fade-down" data-aos-delay="100">Was ich mitbringe</h2>
+      <div class="bp-closing-grid">
+        <div class="bp-closing-item" data-aos="zoom-in" data-aos-delay="200">
+          <span class="bp-closing-icon">&#127973;</span>
+          <strong>Kritische Infrastruktur</strong>
+          <p>Klinikum &ndash; höchste Ansprüche an Stabilität und Datenschutz.</p>
+        </div>
+        <div class="bp-closing-item" data-aos="zoom-in" data-aos-delay="310">
+          <span class="bp-closing-icon">&#128203;</span>
+          <strong>Struktur &amp; Verantwortung</strong>
+          <p>Prozessdenken, Dokumentation, Verantwortung &uuml;bernehmen.</p>
+        </div>
+        <div class="bp-closing-item" data-aos="zoom-in" data-aos-delay="420">
+          <span class="bp-closing-icon">&#128161;</span>
+          <strong>Unternehmerisches Denken</strong>
+          <p>Durch Selbstständigkeit: ganzheitlich und wirtschaftlich denken.</p>
+        </div>
+      </div>
+      <blockquote class="bp-closing-quote" data-aos="fade-up" data-aos-delay="550">
+        &bdquo;Keine kurzfristige Station &ndash; eine langfristige Perspektive mit Verantwortung.&ldquo;
+        <em>Ich freue mich auf Ihre Fragen.</em>
+      </blockquote>
+      <div class="bp-contact-links" data-aos="fade-up" data-aos-delay="680">
+        <a href="mailto:leonidas.pyka@email.de">E-Mail</a>
+        <a href="https://integrow.de" target="_blank" rel="noopener noreferrer">Website</a>
+      </div>
+      <div class="bp-qr-placeholder" data-aos="zoom-in" data-aos-delay="780">QR-Code</div>
+    </section>
+
+  </main>
+
+  <!-- AOS + Lenis (wie Index-Seite) -->
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.18/bundled/lenis.min.js"></script>
+  <!-- ========== ALLES JS ISOLIERT IN DIESER DATEI ========== -->
+  <script>
+    (function() {
+      'use strict';
+      var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // ----- AOS: Animationen erst, wenn Inhalt gut im Viewport (z. B. nach Leertaste-Sprung) -----
+      document.addEventListener('DOMContentLoaded', function() {
+        var aosOffset = window.innerWidth > 900 ? 320 : 180;
+        if (typeof AOS !== 'undefined') {
+          AOS.init({ once: true, duration: 800, offset: aosOffset, delay: 0, easing: 'ease-out-cubic' });
+        }
+      });
+
+      // ----- Lenis Smooth Scroll (wie Index) -----
+      var lenis;
+      var onLenisScroll = function() {
+        if (typeof updateProgress === 'function') updateProgress();
+        if (typeof updateSpy === 'function') updateSpy();
+        if (typeof parallaxHeader === 'function') parallaxHeader();
+      };
+      document.addEventListener('DOMContentLoaded', function() {
+        if (typeof Lenis !== 'undefined') {
+          lenis = new Lenis({ duration: 1.6, easing: function(t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); }, smooth: true });
+          window.lenis = lenis;
+          lenis.on('scroll', onLenisScroll);
+          function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+          requestAnimationFrame(raf);
+        }
+      });
+
+      // ----- Anchor-Klicks: Smooth Scroll per Lenis oder nativ -----
+      document.addEventListener('click', function(e) {
+        var a = e.target.closest('a[href^="#"]');
+        if (!a || a.getAttribute('href') === '#') return;
+        var id = a.getAttribute('href');
+        var el = document.querySelector(id);
+        if (!el) return;
+        e.preventDefault();
+        if (window.lenis) window.lenis.scrollTo(el); else el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+
+      // ----- Parallax Header-Hintergrund (wie Index) -----
+      function parallaxHeader() {
+        var scrolled = window.scrollY;
+        var parallax = document.querySelector('.bp-parallax-bg');
+        var header = document.querySelector('.bp-header');
+        if (parallax && header) {
+          var maxOffset = header.offsetHeight * 0.6;
+          parallax.style.transform = 'translateY(' + Math.min(scrolled * 0.25, maxOffset) + 'px)';
+        }
+      }
+      window.addEventListener('scroll', parallaxHeader, { passive: true });
+      window.addEventListener('DOMContentLoaded', parallaxHeader);
+
+                  // ----- Präsenter-Navigation: Leertaste / Pfeil / Klick = nächster Schritt -----
+      (function() {
+        var steps = [
+          { type: 'scroll', id: 'bp-hero',         slide: 1  },
+          { type: 'scroll', id: 'bp-ueber-mich',   slide: 2  },
+          { type: 'scroll', id: 'bp-profil',        slide: 3  },
+          { type: 'scroll', id: 'bp-timeline',      slide: 4  },
+          { type: 'scroll', id: 'bp-cases',         slide: 5  },
+          { type: 'expandCase', index: 1,            slide: 5  },
+          { type: 'expandCase', index: 2,            slide: 6  },
+          { type: 'expandCase', index: 3,            slide: 7  },
+          { type: 'scroll', id: 'bp-skills',        slide: 8  },
+          { type: 'scroll', id: 'bp-arbeitsweise',  slide: 9  },
+          { type: 'scroll', id: 'bp-learnings',     slide: 10 },
+          { type: 'expandAccordion', index: 1,       slide: 10 },
+          { type: 'expandAccordion', index: 2,       slide: 11 },
+          { type: 'scroll', id: 'bp-warum',         slide: 12 },
+          { type: 'scroll', id: 'bp-contact',       slide: 13 }
+        ];
+        var TOTAL = 13;
+        var currentStep = -1;
+        var slideEl = document.getElementById('bp-slide-current');
+        var totalEl = document.querySelector('#bp-slide-counter span:last-child');
+        if (totalEl) totalEl.textContent = TOTAL;
+
+        function updateCounter(n) { if (slideEl) slideEl.textContent = n; }
+        function flashSection(id) {
+          var el = document.getElementById(id);
+          if (!el) return;
+          el.classList.remove('bp-section-flash');
+          void el.offsetWidth;
+          el.classList.add('bp-section-flash');
+          setTimeout(function() { el.classList.remove('bp-section-flash'); }, 800);
+        }
+        function goToStep(index) {
+          if (index < 0 || index >= steps.length) return;
+          currentStep = index;
+          var step = steps[index];
+          updateCounter(step.slide);
+          if (step.type === 'scroll') {
+            var el = document.getElementById(step.id);
+            if (el) {
+              if (window.lenis) window.lenis.scrollTo(el, { offset: 0 });
+              else el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              setTimeout(function() { flashSection(step.id); }, 400);
+            }
+          } else if (step.type === 'expandCase') {
+            var cards = document.querySelectorAll('.bp-case-card');
+            var card = cards[step.index - 1];
+            if (card) {
+              if (!card.classList.contains('bp-open') && window.bpToggleCase) window.bpToggleCase(step.index);
+              card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+          } else if (step.type === 'expandAccordion') {
+            var accs = document.querySelectorAll('.bp-accordion');
+            var acc = accs[step.index - 1];
+            if (acc) {
+              if (!acc.classList.contains('bp-open') && window.bpToggleAccordion) window.bpToggleAccordion(step.index);
+              acc.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+          }
+        }
+        function nextStep() { goToStep(Math.min(currentStep + 1, steps.length - 1)); }
+        function prevStep() { goToStep(Math.max(currentStep - 1, 0)); }
+        document.addEventListener('keydown', function(e) {
+          var tag = e.target.tagName;
+          if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+          if (e.key === ' ' || e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === 'Enter') {
+            e.preventDefault(); nextStep();
+          } else if (e.key === 'ArrowUp' || e.key === 'PageUp' || e.key === 'Backspace') {
+            e.preventDefault(); prevStep();
+          }
+        });
+        document.body.addEventListener('click', function(e) {
+          if (e.target.closest('a') || e.target.closest('button') || e.target.closest('.bp-case-head') || e.target.closest('.bp-accordion-head') || e.target.closest('.bp-nav-chapters')) return;
+          nextStep();
+        });
+      })();
+
+      // ----- Scroll Progress -----
+      var progressBar = document.getElementById('bp-progress-bar');
+      function updateProgress() {
+        if (!progressBar) return;
+        var h = document.documentElement.scrollHeight - window.innerHeight;
+        progressBar.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
+      }
+      window.addEventListener('scroll', updateProgress, { passive: true });
+      window.addEventListener('resize', updateProgress);
+      updateProgress();
+
+      // ----- Scroll-Spy (Kapitel-Navigation): Header + Sections -----
+      var navLinks = document.querySelectorAll('.bp-nav-chapters a[href^="#"]');
+      function getSections() {
+        var hero = document.getElementById('bp-hero');
+        var secs = document.querySelectorAll('.bp-section[id]');
+        return hero ? [hero].concat(Array.from(secs)) : Array.from(secs);
+      }
+      function updateSpy() {
+        var sections = getSections();
+        var y = window.scrollY + 120;
+        var current = 0;
+        sections.forEach(function(sec, i) { if (y >= sec.offsetTop) current = i; });
+        navLinks.forEach(function(a) {
+          a.classList.toggle('bp-active', parseInt(a.getAttribute('data-bp-chapter'), 10) === current);
+        });
+      }
+      window.addEventListener('scroll', updateSpy, { passive: true });
+      window.addEventListener('resize', updateSpy);
+      updateSpy();
+
+      // ----- Timeline: Linie + Punkte erst animieren, wenn Sektion „Beruflicher Werdegang“ im Viewport -----
+      var timelineSection = document.getElementById('bp-timeline');
+      var timelineEl = document.getElementById('bp-timeline-el');
+      if (timelineSection && timelineEl) {
+        var ioTime = new IntersectionObserver(function(entries) {
+          entries.forEach(function(e) {
+            if (e.isIntersecting) {
+              timelineEl.classList.add('bp-drawn', 'bp-items-visible');
+            }
+          });
+        }, { threshold: 0.28, rootMargin: '0px 0px -10% 0px' });
+        ioTime.observe(timelineSection);
+        if (prefersReduced) {
+          timelineEl.classList.add('bp-drawn', 'bp-items-visible');
+        }
+      }
+
+      // ----- Skills filter -----
+      var filterBtns = document.querySelectorAll('.bp-skills-filters [data-bp-filter]');
+      var wrapper = document.getElementById('bp-skills-wrapper');
+      if (wrapper) {
+        filterBtns.forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            var filter = this.getAttribute('data-bp-filter');
+            filterBtns.forEach(function(b) { b.classList.toggle('bp-active', b === btn); });
+            wrapper.setAttribute('data-current-filter', filter);
+          });
+        });
+      }
+
+      // ----- Case & Accordion toggles (global for onclick) -----
+      window.bpToggleCase = function(id) {
+        var body = document.getElementById('bp-case-body-' + id);
+        if (!body) return;
+        var parent = body.closest('.bp-case-card');
+        var btn = document.getElementById('bp-case-btn-' + id);
+        var isOpen = parent.classList.contains('bp-open');
+        if (isOpen) {
+          parent.classList.remove('bp-open');
+          if (btn) btn.setAttribute('aria-expanded', 'false');
+        } else {
+          /* Wie Index „Mehr erfahren“: kurze Verzögerung, dann Klasse setzen → CSS-Transition läuft */
+          setTimeout(function() {
+            parent.classList.add('bp-open');
+            if (btn) btn.setAttribute('aria-expanded', 'true');
+          }, 10);
+        }
+      };
+      window.bpToggleAccordion = function(id) {
+        var body = document.getElementById('bp-acc-body-' + id);
+        if (!body) return;
+        var parent = body.closest('.bp-accordion');
+        var btn = document.getElementById('bp-acc-btn-' + id);
+        var isOpen = parent.classList.contains('bp-open');
+        document.querySelectorAll('.bp-accordion').forEach(function(a) {
+          a.classList.remove('bp-open');
+          var b = a.querySelector('.bp-accordion-body');
+          if (b) b.style.maxHeight = '0';
+        });
+        document.querySelectorAll('.bp-accordion-head').forEach(function(b) { b.setAttribute('aria-expanded', 'false'); });
+        if (!isOpen) {
+          body.style.maxHeight = 'none';
+          var fullHeight = body.scrollHeight;
+          body.style.maxHeight = '0';
+          parent.classList.add('bp-open');
+          if (btn) btn.setAttribute('aria-expanded', 'true');
+          requestAnimationFrame(function() {
+            requestAnimationFrame(function() {
+              body.style.maxHeight = fullHeight + 'px';
+            });
+          });
+        }
+      };
+      document.querySelectorAll('.bp-accordion-body').forEach(function(body) {
+        body.style.maxHeight = '0';
+      });
+
+      // Keyboard: Enter/Space on case and accordion buttons
+      document.querySelectorAll('.bp-case-head, .bp-accordion-head').forEach(function(btn) {
+        btn.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            var id = (btn.id || '').replace('bp-acc-btn-', '').replace('bp-case-btn-', '');
+            if (btn.classList.contains('bp-accordion-head')) window.bpToggleAccordion(parseInt(id, 10) || 1);
+            else window.bpToggleCase(parseInt(id, 10) || 1);
+          }
+        });
+      });
+    })();
+  </script>
+
+  <!--
+  ========== ANLEITUNG: INHALTE AUSTAUSCHEN ==========
+
+  1) TEXT INHALTE SCHNELL ERSETZEN
+     - Hero: .bp-hero-title (Name), .bp-hero-claim (Rolle/Claim), .bp-hero-pills (Proof-Pills), .bp-btn Link
+     - Über mich: Absatz in .bp-about-text, Chips in .bp-values .bp-chip
+     - Profil 60 Sek: In jeder .bp-card die <ul><li> mit Problem/Lösung/Ergebnis füllen
+     - Werdegang: .bp-career-step duplizieren/entfernen, .bp-career-node span, .bp-career-role, .bp-career-meta, .bp-career-desc anpassen
+     - Case Studies: .bp-case-title, .bp-case-inner <p>, .bp-case-tech <span>, Screenshot-Bereich
+     - Skills: .bp-skill-tag data-category="ops|cloud|web|security" und Text; Filter-Buttons ggf. anpassen
+     - Arbeitsweise: .bp-step-content h4 und p pro Schritt
+     - Learnings: .bp-accordion-head span, .bp-accordion-inner p
+     - Warum: .bp-reasons ul li, .bp-plan-card h4 und ul li
+     - Kontakt: .bp-contact-links a href und Text
+
+  2) SCREENSHOTS EINFÜGEN
+     - Case Studies: In jedem .bp-case-screenshot den Platzhalter ersetzen durch:
+       <img src="pfad/zu/screenshot.jpg" alt="Projekt X" loading="lazy" style="width:100%;height:100%;object-fit:cover;border-radius:12px;" />
+     - Optional: Bilder lazy laden lassen (loading="lazy" ist bereits empfohlen).
+
+  3) LINKS EINFÜGEN
+     - Hero CTA: .bp-hero-cta .bp-btn href="#bp-ueber-mich" (bleibt Anker) oder eigene URL
+     - Kontakt: .bp-contact-links a href="mailto:...", href="https://linkedin.com/...", href="https://..."
+
+  4) QR-PLATZHALTER
+     - .bp-qr-placeholder: Inhalt ersetzen durch <img src="qr-code.png" alt="QR Code" width="160" height="160" /> oder Link zu Generator
+
+  5) AKZENTFARBE & TYPOGRAFIE (optional)
+     - Aktuell: Akzent #ffd700 (Gold, wie Integrow), Schrift Rajdhani (Headings) + Segoe UI (Body).
+     - Andere Akzente: Im <style> ersetzen --bp-accent und --bp-accent2 (z. B. Blau: #3b82f6 / #60a5fa).
+     - Typo: --bp-font und --bp-font-head anpassen; für Headlines z. B. "Space Grotesk" oder "Outfit" von Google Fonts einbinden.
+  -->
+</body>
+</html>
