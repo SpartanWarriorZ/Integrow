@@ -11,8 +11,7 @@
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
   <!-- ========== ALLES CSS ISOLIERT IN DIESER DATEI ========== -->
   <style>
-    /* Smooth Scroll Fallback */
-    html { scroll-behavior: smooth; }
+    /* Smooth Scroll: Lenis übernimmt – kein scroll-behavior, um Konflikte zu vermeiden */
     /* ----- Reset & Base (nur für diese Seite) ----- */
     .bp-root,
     .bp-root * {
@@ -1453,9 +1452,24 @@
 
   </main>
 
-  <!-- AOS + Lenis (wie Index-Seite) -->
+  <!-- AOS + Lenis (exakt wie Index-Seite: Lenis sofort, schlank, ohne Extra-Callbacks) -->
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.18/bundled/lenis.min.js"></script>
+  <!-- Lenis sofort initialisieren (wie Index – kein DOMContentLoaded, keine on-scroll-Hooks) -->
+  <script>
+    (function() {
+      if (typeof Lenis !== 'undefined') {
+        var lenis = new Lenis({
+          duration: 1.6,
+          easing: function(t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+          smooth: true
+        });
+        window.lenis = lenis;
+        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+        requestAnimationFrame(raf);
+      }
+    })();
+  </script>
   <!-- ========== ALLES JS ISOLIERT IN DIESER DATEI ========== -->
   <script>
     (function() {
@@ -1467,23 +1481,6 @@
         var aosOffset = window.innerWidth > 900 ? 320 : 180;
         if (typeof AOS !== 'undefined') {
           AOS.init({ once: true, duration: 800, offset: aosOffset, delay: 0, easing: 'ease-out-cubic' });
-        }
-      });
-
-      // ----- Lenis Smooth Scroll (wie Index) -----
-      var lenis;
-      var onLenisScroll = function() {
-        if (typeof updateProgress === 'function') updateProgress();
-        if (typeof updateSpy === 'function') updateSpy();
-        if (typeof parallaxHeader === 'function') parallaxHeader();
-      };
-      document.addEventListener('DOMContentLoaded', function() {
-        if (typeof Lenis !== 'undefined') {
-          lenis = new Lenis({ duration: 1.6, easing: function(t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); }, smooth: true });
-          window.lenis = lenis;
-          lenis.on('scroll', onLenisScroll);
-          function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
-          requestAnimationFrame(raf);
         }
       });
 
@@ -1556,9 +1553,12 @@
           if (step.type === 'scroll') {
             var el = document.getElementById(step.id);
             if (el) {
-              if (window.lenis) window.lenis.scrollTo(el, { offset: 0 });
-              else el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-              setTimeout(function() { flashSection(step.id); }, 400);
+              if (window.lenis) {
+                window.lenis.scrollTo(el, { offset: 0 });
+              } else {
+                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }
+              setTimeout(function() { flashSection(step.id); }, 350);
             }
             if (step.id === 'bp-cases' && caseGridEl) {
               caseGridEl.classList.add('bp-case-steps-visible');
