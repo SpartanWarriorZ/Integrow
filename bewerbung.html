@@ -29,6 +29,7 @@
       --bp-accent2: #ffdf33;
       --bp-border: rgba(255,255,255,0.1);
       --bp-section-padding: clamp(4rem, 10vw, 7rem);
+      --bp-section-gap: clamp(8rem, 18vh, 14rem);
       --bp-max-width: 1000px;
       --bp-font: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       --bp-font-head: "Rajdhani", "Segoe UI", sans-serif;
@@ -110,12 +111,17 @@
     }
     .bp-section {
       padding: var(--bp-section-padding) 24px;
+      margin-bottom: var(--bp-section-gap);
       max-width: var(--bp-max-width);
-      margin: 0 auto;
+      margin-left: auto;
+      margin-right: auto;
       min-height: 60vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
+    }
+    .bp-section:last-of-type {
+      margin-bottom: var(--bp-section-padding);
     }
     .bp-section-title {
       font-family: var(--bp-font-head);
@@ -124,6 +130,14 @@
       letter-spacing: 0.5px;
       color: #fff;
       margin: 0 0 1.5rem 0;
+    }
+    /* Titel erst mit Sektion einblenden – kein Spoilern der nächsten Sektion */
+    .bp-section[data-aos] .bp-section-title {
+      opacity: 0;
+      transition: opacity 0.45s ease-out 0.1s;
+    }
+    .bp-section[data-aos].aos-animate .bp-section-title {
+      opacity: 1;
     }
     .bp-section-intro {
       font-size: clamp(1.15rem, 2.2vw, 1.25rem);
@@ -343,9 +357,10 @@
                   transform 0.5s cubic-bezier(0.34, 1.2, 0.64, 1),
                   box-shadow 0.3s ease;
     }
-    .bp-career.bp-items-visible .bp-career-step:nth-child(1) .bp-career-node { opacity: 1; transform: scale(1); transition-delay: 0.25s; }
-    .bp-career.bp-items-visible .bp-career-step:nth-child(2) .bp-career-node { opacity: 1; transform: scale(1); transition-delay: 0.55s; }
-    .bp-career.bp-items-visible .bp-career-step:nth-child(3) .bp-career-node { opacity: 1; transform: scale(1); transition-delay: 0.85s; }
+    /* Nacheinander: Card 1 → 0,5 s → Card 2 → 0,5 s → Card 3 */
+    .bp-career.bp-items-visible .bp-career-step:nth-child(1) .bp-career-node { opacity: 1; transform: scale(1); transition-delay: 0.15s; }
+    .bp-career.bp-items-visible .bp-career-step:nth-child(2) .bp-career-node { opacity: 1; transform: scale(1); transition-delay: 0.65s; }
+    .bp-career.bp-items-visible .bp-career-step:nth-child(3) .bp-career-node { opacity: 1; transform: scale(1); transition-delay: 1.15s; }
     .bp-career-step:hover .bp-career-node {
       box-shadow: 0 0 32px rgba(255,215,0,0.28), inset 0 1px 0 rgba(255,255,255,0.15);
     }
@@ -370,8 +385,8 @@
       transform: scaleY(0);
       transition: transform 0.8s cubic-bezier(0.22, 0.9, 0.36, 1);
     }
-    .bp-career.bp-drawn .bp-career-step:nth-child(1) .bp-career-line { transform: scaleY(1); transition-delay: 0.4s; }
-    .bp-career.bp-drawn .bp-career-step:nth-child(2) .bp-career-line { transform: scaleY(1); transition-delay: 0.7s; }
+    .bp-career.bp-drawn .bp-career-step:nth-child(1) .bp-career-line { transform: scaleY(1); transition-delay: 0.5s; }
+    .bp-career.bp-drawn .bp-career-step:nth-child(2) .bp-career-line { transform: scaleY(1); transition-delay: 1s; }
 
     /* Rechte Karte – kompakteres Padding, Design unverändert */
     .bp-career-card {
@@ -389,9 +404,9 @@
                   transform 0.5s cubic-bezier(0.22, 0.9, 0.36, 1),
                   border-color 0.25s ease, background 0.25s ease;
     }
-    .bp-career.bp-items-visible .bp-career-step:nth-child(1) .bp-career-card { opacity: 1; transform: translateX(0); transition-delay: 0.4s; }
-    .bp-career.bp-items-visible .bp-career-step:nth-child(2) .bp-career-card { opacity: 1; transform: translateX(0); transition-delay: 0.7s; }
-    .bp-career.bp-items-visible .bp-career-step:nth-child(3) .bp-career-card { opacity: 1; transform: translateX(0); transition-delay: 1s; }
+    .bp-career.bp-items-visible .bp-career-step:nth-child(1) .bp-career-card { opacity: 1; transform: translateX(0); transition-delay: 0.15s; }
+    .bp-career.bp-items-visible .bp-career-step:nth-child(2) .bp-career-card { opacity: 1; transform: translateX(0); transition-delay: 0.65s; }
+    .bp-career.bp-items-visible .bp-career-step:nth-child(3) .bp-career-card { opacity: 1; transform: translateX(0); transition-delay: 1.15s; }
     .bp-career-step:hover .bp-career-card {
       background: rgba(255,255,255,0.06);
       border-color: rgba(255,215,0,0.3);
@@ -429,144 +444,243 @@
       .bp-career-desc { font-size: 0.95rem; }
     }
 
-    /* ----- 5) CASE STUDIES ----- */
-    .bp-case-grid { display: grid; gap: 20px; }
-    .bp-case-card {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--bp-border);
-      border-radius: 16px;
-      overflow: hidden;
-      -webkit-transition: border-color 0.3s ease, transform 0.7s cubic-bezier(0.25, 0.1, 0.25, 1), box-shadow 0.7s ease;
-      transition: border-color 0.3s ease, transform 0.7s cubic-bezier(0.25, 0.1, 0.25, 1), box-shadow 0.7s ease;
+    /* ----- 5) PROJEKT DRUCKINFRASTRUKTUR – 3 Schritte mit Leitfaden (1 → 2 → 3) ----- */
+    #bp-cases.bp-section {
+      max-width: min(1200px, 96vw);
     }
-    .bp-case-card:hover { border-color: rgba(255,215,0,0.2); }
-    .bp-case-card.bp-open {
-      transform: translateY(-10px) scale(1.02);
-      box-shadow: 0 20px 50px rgba(0,0,0,0.4), 0 0 24px rgba(255,215,0,0.12);
-      border-color: rgba(255,215,0,0.35);
-      z-index: 5;
+    .bp-case-grid {
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      gap: 0;
+      max-width: 100%;
       position: relative;
     }
-    .bp-case-head {
+    .bp-case-step {
+      flex: 1;
+      min-width: 0;
+      max-width: 420px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-top: 4px solid var(--bp-accent);
+      border-radius: 16px;
+      padding: 1.5rem 1.35rem;
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 12px;
-      padding: 1.25rem 1.5rem;
-      cursor: pointer;
-    }
-    .bp-case-title { font-size: 1.35rem; font-weight: 700; color: #fff; margin: 0; }
-    .bp-case-toggle { font-size: 1.2rem; color: var(--bp-accent); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-    .bp-case-card.bp-open .bp-case-toggle { transform: rotate(180deg); }
-    /* Langsame, flüssige Aufklapp-Animation: Kasten erweitert sich sichtbar nach unten */
-    .bp-case-body {
-      max-height: 0;
-      overflow: hidden;
-      margin-top: 0;
-      padding: 0;
+      flex-direction: column;
       opacity: 0;
-      transform: translateY(-10px);
-      -webkit-transition: max-height 1.2s cubic-bezier(0.25, 0.1, 0.25, 1),
-                  opacity 0.6s ease 0.25s,
-                  transform 0.6s ease 0.25s,
-                  margin-top 1.2s cubic-bezier(0.25, 0.1, 0.25, 1),
-                  padding 1.2s ease;
-      transition: max-height 1.2s cubic-bezier(0.25, 0.1, 0.25, 1),
-                  opacity 0.6s ease 0.25s,
-                  transform 0.6s ease 0.25s,
-                  margin-top 1.2s cubic-bezier(0.25, 0.1, 0.25, 1),
-                  padding 1.2s ease;
+      transform: translateY(24px) scale(0.96);
+      transition: opacity 0.55s ease-out, transform 0.55s ease-out, border-color 0.25s, background 0.25s, box-shadow 0.25s;
     }
-    .bp-case-card.bp-open .bp-case-body {
-      max-height: 900px;
-      margin-top: 4px;
-      padding: 0;
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .bp-case-inner {
-      padding: 0 1.5rem 1.5rem;
-    }
-    .bp-case-inner p,
-    .bp-case-inner .bp-case-tech,
-    .bp-case-inner .bp-case-screenshot {
+    /* Schritt 1 sichtbar wenn Sektion da; Schritt 2+3 versteckt, swipen von links nach rechts beim Reveal */
+    .bp-case-steps-visible .bp-case-step:nth-child(1) { opacity: 1; transform: translateY(0) scale(1); transition-delay: 0.2s; }
+    .bp-case-steps-visible .bp-case-step:nth-child(3),
+    .bp-case-steps-visible .bp-case-step:nth-child(5) {
       opacity: 0;
-      transform: translateY(10px);
-      -webkit-transition: opacity 0.5s ease, transform 0.5s ease;
-      transition: opacity 0.5s ease, transform 0.5s ease;
+      transform: translateX(-90px) translateY(0) scale(0.97);
+      pointer-events: none;
+      transition: opacity 0.55s cubic-bezier(0.22, 0.9, 0.36, 1), transform 0.65s cubic-bezier(0.22, 0.9, 0.36, 1);
     }
-    .bp-case-card.bp-open .bp-case-inner p,
-    .bp-case-card.bp-open .bp-case-inner .bp-case-tech,
-    .bp-case-card.bp-open .bp-case-inner .bp-case-screenshot {
+    .bp-case-steps-visible .bp-case-connector:nth-child(2),
+    .bp-case-steps-visible .bp-case-connector:nth-child(4) {
+      opacity: 0;
+      transform: scale(0.6);
+      pointer-events: none;
+      transition: opacity 0.4s ease-out 0.25s, transform 0.4s cubic-bezier(0.22, 0.9, 0.36, 1) 0.25s;
+    }
+    .bp-case-steps-visible.bp-case-reveal-2 .bp-case-connector:nth-child(2) {
       opacity: 1;
-      transform: translateY(0);
+      transform: scale(1);
+      pointer-events: auto;
     }
-    .bp-case-card.bp-open .bp-case-inner p:nth-child(1) { transition-delay: 0.35s; }
-    .bp-case-card.bp-open .bp-case-inner p:nth-child(2) { transition-delay: 0.45s; }
-    .bp-case-card.bp-open .bp-case-inner p:nth-child(3) { transition-delay: 0.55s; }
-    .bp-case-card.bp-open .bp-case-inner p:nth-child(4) { transition-delay: 0.65s; }
-    .bp-case-card.bp-open .bp-case-inner .bp-case-tech { transition-delay: 0.75s; }
-    .bp-case-card.bp-open .bp-case-inner .bp-case-screenshot { transition-delay: 0.85s; }
-    .bp-case-inner p { margin: 0 0 0.75rem 0; font-size: 0.98rem; line-height: 1.65; color: var(--bp-text-muted); }
-    .bp-case-inner strong { color: #fff; }
-    .bp-case-screenshot {
-      width: 100%;
-      height: 200px;
-      background: rgba(0,0,0,0.3);
-      border-radius: 12px;
-      margin-top: 1rem;
+    .bp-case-steps-visible.bp-case-reveal-2 .bp-case-step:nth-child(3) {
+      opacity: 1;
+      transform: translateX(0) translateY(0) scale(1);
+      transition-delay: 0.12s;
+      pointer-events: auto;
+    }
+    .bp-case-steps-visible.bp-case-reveal-3 .bp-case-connector:nth-child(4) {
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: auto;
+    }
+    .bp-case-steps-visible.bp-case-reveal-3 .bp-case-step:nth-child(5) {
+      opacity: 1;
+      transform: translateX(0) translateY(0) scale(1);
+      transition-delay: 0.12s;
+      pointer-events: auto;
+    }
+    .bp-case-connector {
+      flex-shrink: 0;
+      width: 36px;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--bp-text-muted);
-      font-size: 0.9rem;
+      opacity: 0;
+      transform: scale(0.5);
+      transition: opacity 0.4s ease-out, transform 0.4s ease-out;
     }
-    .bp-case-tech { margin-top: 0.75rem; }
-    .bp-case-tech span {
-      display: inline-block;
-      padding: 4px 10px;
-      background: rgba(255,215,0,0.1);
-      border-radius: 6px;
-      font-size: 0.85rem;
+    .bp-case-connector-line {
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--bp-accent), rgba(255,215,0,0.4));
+      position: relative;
+    }
+    .bp-case-connector-line::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
+      border: 6px solid transparent;
+      border-left-color: var(--bp-accent);
+      border-right: none;
+      margin-right: -6px;
+    }
+    .bp-case-step:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,215,0,0.2);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+    }
+    .bp-case-step-num {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, rgba(255,215,0,0.25), rgba(255,215,0,0.08));
+      border: 2px solid var(--bp-accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--bp-font-head);
+      font-size: 1.45rem;
+      font-weight: 800;
       color: var(--bp-accent);
-      margin-right: 6px;
-      margin-bottom: 6px;
+      margin-bottom: 0.9rem;
+      flex-shrink: 0;
+      box-shadow: 0 0 20px rgba(255,215,0,0.15);
     }
-
-    /* ----- 6) SKILLS ----- */
-    .bp-skills-filters {
+    .bp-case-step-title {
+      font-family: var(--bp-font-head);
+      font-size: clamp(1.45rem, 2.5vw, 1.9rem);
+      font-weight: 700;
+      color: #fff;
+      margin: 0 0 0.85rem 0;
+      line-height: 1.2;
+    }
+    .bp-case-step-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .bp-case-step-body p {
+      font-size: clamp(1.1rem, 2vw, 1.4rem);
+      line-height: 1.5;
+      color: var(--bp-text-muted);
+      margin: 0 0 0.65rem 0;
+    }
+    .bp-case-step-body p:last-of-type { margin-bottom: 0; }
+    .bp-case-step-body strong { color: #fff; font-size: 1.05em; }
+    .bp-case-step-tags {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      margin-bottom: 1.5rem;
+      margin-top: 1rem;
+    }
+    .bp-case-step-tags span {
+      display: inline-block;
+      padding: 8px 14px;
+      background: rgba(255,215,0,0.1);
+      border-radius: 8px;
+      font-size: clamp(1rem, 1.5vw, 1.2rem);
+      font-weight: 600;
+      color: var(--bp-accent);
+    }
+    @media (max-width: 900px) {
+      .bp-case-grid {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+      }
+      .bp-case-grid .bp-case-connector {
+        width: 100%;
+        height: 28px;
+        transform: rotate(90deg);
+      }
+      .bp-case-grid .bp-case-connector-line::after {
+        right: auto;
+        left: 50%;
+        top: auto;
+        bottom: 0;
+        transform: translate(-50%, 50%);
+        border-left-color: transparent;
+        border-right-color: transparent;
+        border-top-color: var(--bp-accent);
+        border-bottom: none;
+      }
+      .bp-case-step {
+        max-width: none;
+        width: 100%;
+        padding: 1.5rem 1.75rem;
+      }
+      .bp-case-step-title { font-size: 1.65rem; }
+      .bp-case-step-body p { font-size: 1.2rem; }
+      .bp-case-step-tags span { font-size: 1.05rem; }
+    }
+
+    /* ----- 6) SKILLS (präsentationsfreundlich, gut lesbar) ----- */
+    .bp-skills-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 2rem;
     }
     .bp-skills-filters button {
-      padding: 8px 16px;
-      border-radius: 8px;
+      padding: 12px 22px;
+      border-radius: 12px;
       border: 1px solid var(--bp-border);
-      background: rgba(255,255,255,0.05);
+      background: rgba(255,255,255,0.06);
       color: var(--bp-text);
-      font-size: 0.9rem;
+      font-size: clamp(1rem, 1.8vw, 1.15rem);
+      font-weight: 600;
       cursor: pointer;
-      transition: background 0.2s, border-color 0.2s;
+      transition: background 0.2s, border-color 0.2s, transform 0.2s;
     }
     .bp-skills-filters button:hover,
     .bp-skills-filters button.bp-active {
-      background: rgba(255,215,0,0.1);
-      border-color: rgba(255,215,0,0.3);
+      background: rgba(255,215,0,0.12);
+      border-color: rgba(255,215,0,0.35);
       color: #fff;
     }
-    .bp-skills-group { margin-bottom: 1.5rem; }
-    .bp-skills-group-title { font-size: 1rem; font-weight: 700; color: var(--bp-accent); margin: 0 0 0.5rem 0; }
-    .bp-skills-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .bp-skills-filters button.bp-active {
+      box-shadow: 0 0 20px rgba(255,215,0,0.15);
+    }
+    .bp-skills-group { margin-bottom: 2rem; }
+    .bp-skills-group:last-child { margin-bottom: 0; }
+    .bp-skills-group-title {
+      font-family: var(--bp-font-head);
+      font-size: clamp(1.25rem, 2.2vw, 1.5rem);
+      font-weight: 700;
+      color: var(--bp-accent);
+      margin: 0 0 1rem 0;
+      letter-spacing: 0.03em;
+    }
+    .bp-skills-tags { display: flex; flex-wrap: wrap; gap: 12px; }
     .bp-skill-tag {
-      padding: 6px 12px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid var(--bp-border);
-      border-radius: 8px;
-      font-size: 0.9rem;
-      color: var(--bp-text-muted);
+      padding: 12px 20px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 12px;
+      font-size: clamp(1.05rem, 2vw, 1.2rem);
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: 0.02em;
+      transition: background 0.2s, border-color 0.2s, transform 0.2s, opacity 0.25s;
+    }
+    .bp-skill-tag:hover {
+      background: rgba(255,215,0,0.08);
+      border-color: rgba(255,215,0,0.25);
+      transform: translateY(-2px);
     }
     .bp-skills-wrapper[data-current-filter="all"] .bp-skill-tag { opacity: 1; }
     .bp-skills-wrapper[data-current-filter="ops"] .bp-skill-tag:not([data-category="ops"]) { opacity: 0.35; }
@@ -783,18 +897,6 @@
       display: block;
     }
 
-    /* ----- Case Badge ----- */
-    .bp-case-head-content { display: flex; flex-direction: column; gap: 0.3rem; flex: 1; }
-    .bp-case-badge {
-      display: inline-block;
-      font-size: 0.65rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--bp-accent);
-      font-family: var(--bp-font-head);
-      font-weight: 700;
-    }
-
     /* ----- Subsection Title ----- */
     .bp-subsection-title {
       font-size: clamp(1.3rem, 2.5vw, 1.8rem);
@@ -885,6 +987,8 @@
     .bp-nav-chapters a.bp-active::after { opacity: 1; transform: translateY(-50%) scale(1); }
 
     @media (prefers-reduced-motion: reduce) {
+      .bp-section[data-aos] .bp-section-title { transition: none; }
+      .bp-section[data-aos].aos-animate .bp-section-title { opacity: 1; }
       .bp-reveal { transition: none; }
       .bp-reveal.bp-visible { opacity: 1; transform: none; }
       .bp-career-node,
@@ -893,13 +997,15 @@
       .bp-career.bp-drawn .bp-career-line,
       .bp-career.bp-items-visible .bp-career-node,
       .bp-career.bp-items-visible .bp-career-card { opacity: 1; transform: none; }
-      .bp-case-body,
+      .bp-case-step { transition: none; }
+      .bp-case-steps-visible .bp-case-step:nth-child(1) { opacity: 1; transform: none; }
+      .bp-case-steps-visible.bp-case-reveal-2 .bp-case-step:nth-child(3),
+      .bp-case-steps-visible.bp-case-reveal-3 .bp-case-step:nth-child(5),
+      .bp-case-steps-visible.bp-case-reveal-2 .bp-case-connector:nth-child(2),
+      .bp-case-steps-visible.bp-case-reveal-3 .bp-case-connector:nth-child(4) { opacity: 1; transform: none; }
+      .bp-case-connector { transition: none; }
       .bp-accordion-body { -webkit-transition: none; transition: none; }
-      .bp-case-inner,
-      .bp-accordion-inner,
-      .bp-case-inner p,
-      .bp-case-inner .bp-case-tech,
-      .bp-case-inner .bp-case-screenshot { transition: none; }
+      .bp-accordion-inner { transition: none; }
       .bp-closing-item:hover { transform: none; }
       .bp-section-flash { animation: none; }
     }
@@ -915,8 +1021,8 @@
   <nav class="bp-nav-chapters" aria-label="Kapitel-Navigation">
     <a href="#bp-hero"        data-bp-chapter="0" aria-label="Vorstellung"  data-label="Vorstellung">●</a>
     <a href="#bp-ueber-mich"  data-bp-chapter="1" aria-label="Ausbildung"   data-label="Ausbildung">●</a>
-    <a href="#bp-profil"      data-bp-chapter="2" aria-label="Profil"       data-label="Profil">●</a>
-    <a href="#bp-timeline"    data-bp-chapter="3" aria-label="Werdegang"    data-label="Werdegang">●</a>
+    <a href="#bp-timeline"    data-bp-chapter="2" aria-label="Werdegang"    data-label="Werdegang">●</a>
+    <a href="#bp-profil"      data-bp-chapter="3" aria-label="Profil"       data-label="Profil">●</a>
     <a href="#bp-cases"       data-bp-chapter="4" aria-label="Projekt"      data-label="Projekt">●</a>
     <a href="#bp-skills"      data-bp-chapter="5" aria-label="Skills"       data-label="Skills">●</a>
     <a href="#bp-arbeitsweise" data-bp-chapter="6" aria-label="Arbeitsweise" data-label="Selbst­ständig">●</a>
@@ -927,7 +1033,7 @@
 
   <!-- Folien-Zähler (zeigt aktuelle Folie) -->
   <div class="bp-slide-counter" id="bp-slide-counter" aria-live="polite">
-    <span id="bp-slide-current">1</span><span class="bp-slide-sep">/</span><span>14</span>
+    <span id="bp-slide-current">1</span><span class="bp-slide-sep">/</span><span>13</span>
   </div>
 
   <div class="bp-blob bp-blob-1" aria-hidden="true"></div>
@@ -958,7 +1064,7 @@
 
     <!-- 2) AUSBILDUNG / ÜBER MICH -->
     <section class="bp-section" id="bp-ueber-mich" aria-labelledby="bp-ueber-title" data-aos="fade-up" data-aos-duration="700">
-      <h2 class="bp-section-title" id="bp-ueber-title" data-aos="fade-down" data-aos-delay="100">Ausbildung &amp; Hintergrund</h2>
+      <h2 class="bp-section-title" id="bp-ueber-title">Ausbildung &amp; Hintergrund</h2>
       <div class="bp-about-text" data-aos="fade-up" data-aos-delay="200">
         IT-Systemadministrator mit Wurzeln in der Industrie-IT und Erfahrung in kritischer Krankenhaus-Infrastruktur.
         Seit Kindheit technikbegeistert &ndash; mein Vater hat mir früh gezeigt, wie Systeme funktionieren.
@@ -978,43 +1084,9 @@
       </div>
     </section>
 
-    <!-- 3) PROFIL -->
-    <section class="bp-section" id="bp-profil" aria-labelledby="bp-profil-title" data-aos="fade-up" data-aos-duration="700">
-      <h2 class="bp-section-title" id="bp-profil-title" data-aos="fade-down" data-aos-delay="100">Profil &ndash; 3 Kernbereiche</h2>
-      <div class="bp-cards-grid">
-        <article class="bp-card" data-aos="flip-left" data-aos-delay="200" data-aos-duration="700">
-          <div class="bp-card-icon-wrap">&#128187;</div>
-          <h3 class="bp-card-title">Ops &amp; Infrastruktur</h3>
-          <ul>
-            <li>AD + Serveradministration</li>
-            <li>Druckserver + Virtualisierung</li>
-            <li>Stabile Infra im Klinikumfeld</li>
-          </ul>
-        </article>
-        <article class="bp-card" data-aos="flip-left" data-aos-delay="370" data-aos-duration="700">
-          <div class="bp-card-icon-wrap">&#128274;</div>
-          <h3 class="bp-card-title">Security &amp; Datenschutz</h3>
-          <ul>
-            <li>RFID-Kartenlogin implementiert</li>
-            <li>Keine offenen Ausdrucke mehr</li>
-            <li>DSGVO-konform im Klinikum</li>
-          </ul>
-        </article>
-        <article class="bp-card" data-aos="flip-left" data-aos-delay="540" data-aos-duration="700">
-          <div class="bp-card-icon-wrap">&#127760;</div>
-          <h3 class="bp-card-title">Web &amp; Eigenverantwortung</h3>
-          <ul>
-            <li>Eigenständige Kundenprojekte</li>
-            <li>Webdesign, SEO, Deployment</li>
-            <li>Unternehmerisches Denken</li>
-          </ul>
-        </article>
-      </div>
-    </section>
-
-    <!-- 4) BERUFLICHER WERDEGANG – neues Karten-Layout mit Nodes & Linie -->
+    <!-- 3) BERUFLICHER WERDEGANG – Karten-Layout mit Nodes & Linie -->
     <section class="bp-section" id="bp-timeline" aria-labelledby="bp-timeline-title" data-aos="fade-up" data-aos-duration="700">
-      <h2 class="bp-section-title" id="bp-timeline-title" data-aos="fade-down" data-aos-delay="100">Beruflicher Werdegang</h2>
+      <h2 class="bp-section-title" id="bp-timeline-title">Beruflicher Werdegang</h2>
       <div class="bp-career" id="bp-timeline-el">
         <div class="bp-career-step">
           <div class="bp-career-left">
@@ -1051,69 +1123,96 @@
       </div>
     </section>
 
-    <!-- 5) DRUCKPROJEKT (Case Studies) -->
+    <!-- 4) PROFIL – 3 Kernbereiche -->
+    <section class="bp-section" id="bp-profil" aria-labelledby="bp-profil-title" data-aos="fade-up" data-aos-duration="700">
+      <h2 class="bp-section-title" id="bp-profil-title">Profil &ndash; 3 Kernbereiche</h2>
+      <div class="bp-cards-grid">
+        <article class="bp-card" data-aos="flip-left" data-aos-delay="200" data-aos-duration="700">
+          <div class="bp-card-icon-wrap">&#128187;</div>
+          <h3 class="bp-card-title">Ops &amp; Infrastruktur</h3>
+          <ul>
+            <li>AD + Serveradministration</li>
+            <li>Druckserver + Virtualisierung</li>
+            <li>Stabile Infra im Klinikumfeld</li>
+          </ul>
+        </article>
+        <article class="bp-card" data-aos="flip-left" data-aos-delay="370" data-aos-duration="700">
+          <div class="bp-card-icon-wrap">&#128274;</div>
+          <h3 class="bp-card-title">Security &amp; Datenschutz</h3>
+          <ul>
+            <li>RFID-Kartenlogin implementiert</li>
+            <li>Keine offenen Ausdrucke mehr</li>
+            <li>DSGVO-konform im Klinikum</li>
+          </ul>
+        </article>
+        <article class="bp-card" data-aos="flip-left" data-aos-delay="540" data-aos-duration="700">
+          <div class="bp-card-icon-wrap">&#127760;</div>
+          <h3 class="bp-card-title">Web &amp; Eigenverantwortung</h3>
+          <ul>
+            <li>Eigenständige Kundenprojekte</li>
+            <li>Webdesign, SEO, Deployment</li>
+            <li>Unternehmerisches Denken</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- 5) DRUCKPROJEKT – 3 Schritte, präsentationsfreundlich, immer sichtbar -->
     <section class="bp-section" id="bp-cases" aria-labelledby="bp-cases-title" data-aos="fade-up" data-aos-duration="700">
-      <h2 class="bp-section-title" id="bp-cases-title" data-aos="fade-down" data-aos-delay="100">Projekt: Druckinfrastruktur</h2>
-      <p class="bp-section-intro" data-aos="fade-up" data-aos-delay="180">Ausgangslage &rarr; Lösung &rarr; Ergebnis &middot; Details per Klick.</p>
-      <div class="bp-case-grid" data-aos="fade-up" data-aos-delay="230">
-
-        <div class="bp-case-card" data-bp-case>
-          <div class="bp-case-head" tabindex="0" role="button" aria-expanded="false" aria-controls="bp-case-body-1" id="bp-case-btn-1" onclick="bpToggleCase(1)">
-            <div class="bp-case-head-content">
-              <span class="bp-case-badge">Folie 4</span>
-              <h3 class="bp-case-title">Das Problem &ndash; Ausgangssituation</h3>
-            </div>
-            <span class="bp-case-toggle" aria-hidden="true">&#9660;</span>
-          </div>
-          <div class="bp-case-body" id="bp-case-body-1" role="region" aria-labelledby="bp-case-btn-1">
-            <div class="bp-case-inner">
-              <p><strong>Situation:</strong> Kein einheitlicher Druckstandard. Offene Ausdrucke mit Patientendaten lagen unbeaufsichtigt.</p>
-              <p><strong>Risiken:</strong> Datenschutzverstöße, fehlende Steuerung, Gerätechaos &ndash; nicht tolerierbar im Klinikum.</p>
-              <div class="bp-case-tech">Probleme: <span>Keine Authentifizierung</span> <span>Offene Ausdrucke</span> <span>Kein AD</span></div>
+      <h2 class="bp-section-title" id="bp-cases-title">Projekt: Druckinfrastruktur</h2>
+      <p class="bp-section-intro" data-aos="fade-up" data-aos-delay="180">Ausgangslage &rarr; Lösung &rarr; Ergebnis</p>
+      <div class="bp-case-grid" id="bp-case-grid" aria-label="Projekt-Schritte">
+        <article class="bp-case-step">
+          <div class="bp-case-step-num" aria-hidden="true">1</div>
+          <h3 class="bp-case-step-title">Ausgangssituation</h3>
+          <div class="bp-case-step-body">
+            <p><strong>Problem:</strong> Kein einheitlicher Druck. Offene Ausdrucke mit Patientendaten.</p>
+            <p><strong>Risiken:</strong> Datenschutzverstöße, keine Steuerung &ndash; im Klinikum inakzeptabel.</p>
+            <div class="bp-case-step-tags">
+              <span>Keine Auth</span>
+              <span>Offene Ausdrucke</span>
+              <span>Kein AD</span>
+              <span>Verschiedene Drucker</span>
+              <span>Papierverschwendung</span>
             </div>
           </div>
-        </div>
-
-        <div class="bp-case-card" data-bp-case>
-          <div class="bp-case-head" tabindex="0" role="button" aria-expanded="false" aria-controls="bp-case-body-2" id="bp-case-btn-2" onclick="bpToggleCase(2)">
-            <div class="bp-case-head-content">
-              <span class="bp-case-badge">Folie 5</span>
-              <h3 class="bp-case-title">Meine Lösung &ndash; Umsetzung</h3>
-            </div>
-            <span class="bp-case-toggle" aria-hidden="true">&#9660;</span>
-          </div>
-          <div class="bp-case-body" id="bp-case-body-2" role="region" aria-labelledby="bp-case-btn-2">
-            <div class="bp-case-inner">
-              <p><strong>Standardisierung:</strong> Vereinheitlichung auf Kyocera. Einheitliche Treiber, zentrale Verwaltung.</p>
-              <p><strong>Sicherheit:</strong> RFID-Kartenlogin + AD-Anbindung + Follow-Me-Printing &ndash; kein Dokument liegt offen.</p>
-              <div class="bp-case-tech">Tech: <span>Kyocera</span> <span>Active Directory</span> <span>RFID</span> <span>Follow-Me-Print</span></div>
+        </article>
+        <div class="bp-case-connector" aria-hidden="true"><div class="bp-case-connector-line"></div></div>
+        <article class="bp-case-step">
+          <div class="bp-case-step-num" aria-hidden="true">2</div>
+          <h3 class="bp-case-step-title">Umsetzung</h3>
+          <div class="bp-case-step-body">
+            <p><strong>Standard:</strong> Kyocera, einheitliche Treiber, zentrale Verwaltung.</p>
+            <p><strong>Sicherheit:</strong> RFID + AD + Follow-Me-Print &ndash; kein Dokument offen.</p>
+            <div class="bp-case-step-tags">
+              <span>Kyocera</span>
+              <span>AD</span>
+              <span>RFID</span>
+              <span>Follow-Me</span>
             </div>
           </div>
-        </div>
-
-        <div class="bp-case-card" data-bp-case>
-          <div class="bp-case-head" tabindex="0" role="button" aria-expanded="false" aria-controls="bp-case-body-3" id="bp-case-btn-3" onclick="bpToggleCase(3)">
-            <div class="bp-case-head-content">
-              <span class="bp-case-badge">Folie 6</span>
-              <h3 class="bp-case-title">Ergebnisse &ndash; Messbarer Mehrwert</h3>
-            </div>
-            <span class="bp-case-toggle" aria-hidden="true">&#9660;</span>
-          </div>
-          <div class="bp-case-body" id="bp-case-body-3" role="region" aria-labelledby="bp-case-btn-3">
-            <div class="bp-case-inner">
-              <p><strong>Datenschutz:</strong> Keine offenen Ausdrucke. DSGVO-Anforderungen erfüllt.</p>
-              <p><strong>Effizienz:</strong> Stationen entlastet. Skalierbare Standardinfrastruktur fürs gesamte Klinikum.</p>
-              <div class="bp-case-tech">Ergebnisse: <span>&#10003; Datenschutz</span> <span>&#10003; Effizienz</span> <span>&#10003; Skalierbar</span></div>
+        </article>
+        <div class="bp-case-connector" aria-hidden="true"><div class="bp-case-connector-line"></div></div>
+        <article class="bp-case-step">
+          <div class="bp-case-step-num" aria-hidden="true">3</div>
+          <h3 class="bp-case-step-title">Messbarer Mehrwert</h3>
+          <div class="bp-case-step-body">
+            <p><strong>Datenschutz:</strong> Keine offenen Ausdrucke. DSGVO erfüllt.</p>
+            <p><strong>Effizienz:</strong> Stationen entlastet. Skalierbar fürs Klinikum.</p>
+            <div class="bp-case-step-tags">
+              <span>&#10003; Datenschutz</span>
+              <span>&#10003; Effizienz</span>
+              <span>&#10003; Skalierbar</span>
+              <span>&#10003; Papier gespart</span>
             </div>
           </div>
-        </div>
-
+        </article>
       </div>
     </section>
 
     <!-- 6) SKILLS -->
     <section class="bp-section" id="bp-skills" aria-labelledby="bp-skills-title" data-aos="fade-up" data-aos-duration="700">
-      <h2 class="bp-section-title" id="bp-skills-title" data-aos="fade-down" data-aos-delay="100">Skills &amp; Technologien</h2>
+      <h2 class="bp-section-title" id="bp-skills-title">Skills &amp; Technologien</h2>
       <div class="bp-skills-filters" data-aos="fade-up" data-aos-delay="170">
         <button type="button" class="bp-active" data-bp-filter="all">Alle</button>
         <button type="button" data-bp-filter="ops">Infrastruktur</button>
@@ -1158,7 +1257,7 @@
 
     <!-- 7) SELBSTSTÄNDIGE PHASE -->
     <section class="bp-section" id="bp-arbeitsweise" aria-labelledby="bp-arbeitsweise-title" data-aos="fade-up" data-aos-duration="700">
-      <h2 class="bp-section-title" id="bp-arbeitsweise-title" data-aos="fade-down" data-aos-delay="100">Selbstständige Phase</h2>
+      <h2 class="bp-section-title" id="bp-arbeitsweise-title">Selbstständige Phase</h2>
       <p class="bp-section-intro" data-aos="fade-up" data-aos-delay="180">
         Kein Rückschritt &ndash; eine bewusste Entscheidung. Und dann die Erkenntnis:
         Komplexe IT-Infrastruktur liegt mir langfristig mehr.
@@ -1197,7 +1296,7 @@
 
     <!-- 8) LERNMOMENTE -->
     <section class="bp-section" id="bp-learnings" aria-labelledby="bp-learnings-title" data-aos="fade-up" data-aos-duration="700">
-      <h2 class="bp-section-title" id="bp-learnings-title" data-aos="fade-down" data-aos-delay="100">Lernmoment &amp; Reflexion</h2>
+      <h2 class="bp-section-title" id="bp-learnings-title">Lernmoment &amp; Reflexion</h2>
       <div data-aos="zoom-in-up" data-aos-delay="200">
         <div class="bp-accordion" data-bp-accordion>
           <button type="button" class="bp-accordion-head" aria-expanded="false" aria-controls="bp-acc-body-1" id="bp-acc-btn-1" onclick="bpToggleAccordion(1)">
@@ -1230,7 +1329,7 @@
 
     <!-- 9) WARUM GENIUS BYTES -->
     <section class="bp-section" id="bp-warum" aria-labelledby="bp-warum-title" data-aos="fade-up" data-aos-duration="700">
-      <h2 class="bp-section-title" id="bp-warum-title" data-aos="fade-down" data-aos-delay="100">Warum Genius Bytes</h2>
+      <h2 class="bp-section-title" id="bp-warum-title">Warum Genius Bytes</h2>
       <div class="bp-reasons" data-aos="fade-up" data-aos-delay="200">
         <ul>
           <li>Druckprojekt = direkte fachliche Überschneidung</li>
@@ -1267,7 +1366,7 @@
 
     <!-- 10) ABSCHLUSS -->
     <section class="bp-section" id="bp-contact" aria-labelledby="bp-contact-title" data-aos="fade-up" data-aos-duration="700">
-      <h2 class="bp-section-title" id="bp-contact-title" data-aos="fade-down" data-aos-delay="100">Was ich mitbringe</h2>
+      <h2 class="bp-section-title" id="bp-contact-title">Was ich mitbringe</h2>
       <div class="bp-closing-grid">
         <div class="bp-closing-item" data-aos="zoom-in" data-aos-delay="200">
           <span class="bp-closing-icon">&#127973;</span>
@@ -1361,12 +1460,11 @@
         var steps = [
           { type: 'scroll', id: 'bp-hero',         slide: 1  },
           { type: 'scroll', id: 'bp-ueber-mich',   slide: 2  },
-          { type: 'scroll', id: 'bp-profil',        slide: 3  },
-          { type: 'scroll', id: 'bp-timeline',      slide: 4  },
+          { type: 'scroll', id: 'bp-timeline',      slide: 3  },
+          { type: 'scroll', id: 'bp-profil',        slide: 4  },
           { type: 'scroll', id: 'bp-cases',         slide: 5  },
-          { type: 'expandCase', index: 1,            slide: 5  },
-          { type: 'expandCase', index: 2,            slide: 6  },
-          { type: 'expandCase', index: 3,            slide: 7  },
+          { type: 'revealCaseStep', index: 2,       slide: 6  },
+          { type: 'revealCaseStep', index: 3,       slide: 7  },
           { type: 'scroll', id: 'bp-skills',        slide: 8  },
           { type: 'scroll', id: 'bp-arbeitsweise',  slide: 9  },
           { type: 'scroll', id: 'bp-learnings',     slide: 10 },
@@ -1395,6 +1493,7 @@
           currentStep = index;
           var step = steps[index];
           updateCounter(step.slide);
+          var caseGridEl = document.getElementById('bp-case-grid');
           if (step.type === 'scroll') {
             var el = document.getElementById(step.id);
             if (el) {
@@ -1402,13 +1501,16 @@
               else el.scrollIntoView({ behavior: 'smooth', block: 'start' });
               setTimeout(function() { flashSection(step.id); }, 400);
             }
-          } else if (step.type === 'expandCase') {
-            var cards = document.querySelectorAll('.bp-case-card');
-            var card = cards[step.index - 1];
-            if (card) {
-              if (!card.classList.contains('bp-open') && window.bpToggleCase) window.bpToggleCase(step.index);
-              card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            if (step.id === 'bp-cases' && caseGridEl) {
+              caseGridEl.classList.add('bp-case-steps-visible');
+              caseGridEl.classList.remove('bp-case-reveal-2', 'bp-case-reveal-3');
             }
+          } else if (step.type === 'revealCaseStep' && caseGridEl) {
+            caseGridEl.classList.add('bp-case-steps-visible');
+            if (step.index >= 2) caseGridEl.classList.add('bp-case-reveal-2');
+            if (step.index >= 3) caseGridEl.classList.add('bp-case-reveal-3');
+            if (step.index < 3) caseGridEl.classList.remove('bp-case-reveal-3');
+            if (step.index < 2) caseGridEl.classList.remove('bp-case-reveal-2');
           } else if (step.type === 'expandAccordion') {
             var accs = document.querySelectorAll('.bp-accordion');
             var acc = accs[step.index - 1];
@@ -1430,7 +1532,7 @@
           }
         });
         document.body.addEventListener('click', function(e) {
-          if (e.target.closest('a') || e.target.closest('button') || e.target.closest('.bp-case-head') || e.target.closest('.bp-accordion-head') || e.target.closest('.bp-nav-chapters')) return;
+          if (e.target.closest('a') || e.target.closest('button') || e.target.closest('.bp-accordion-head') || e.target.closest('.bp-nav-chapters')) return;
           nextStep();
         });
       })();
@@ -1483,6 +1585,24 @@
         }
       }
 
+      // ----- Projekt Druckinfrastruktur: Schritt 1 sichtbar wenn Sektion im Viewport; Schritt 2+3 per Leertaste -----
+      var caseSection = document.getElementById('bp-cases');
+      var caseGrid = document.getElementById('bp-case-grid');
+      if (caseSection && caseGrid) {
+        var ioCase = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              caseGrid.classList.add('bp-case-steps-visible');
+              caseGrid.classList.remove('bp-case-reveal-2', 'bp-case-reveal-3');
+            }
+          });
+        }, { threshold: 0.2, rootMargin: '0px 0px -5% 0px' });
+        ioCase.observe(caseSection);
+        if (prefersReduced) {
+          caseGrid.classList.add('bp-case-steps-visible', 'bp-case-reveal-2', 'bp-case-reveal-3');
+        }
+      }
+
       // ----- Skills filter -----
       var filterBtns = document.querySelectorAll('.bp-skills-filters [data-bp-filter]');
       var wrapper = document.getElementById('bp-skills-wrapper');
@@ -1496,24 +1616,7 @@
         });
       }
 
-      // ----- Case & Accordion toggles (global for onclick) -----
-      window.bpToggleCase = function(id) {
-        var body = document.getElementById('bp-case-body-' + id);
-        if (!body) return;
-        var parent = body.closest('.bp-case-card');
-        var btn = document.getElementById('bp-case-btn-' + id);
-        var isOpen = parent.classList.contains('bp-open');
-        if (isOpen) {
-          parent.classList.remove('bp-open');
-          if (btn) btn.setAttribute('aria-expanded', 'false');
-        } else {
-          /* Wie Index „Mehr erfahren“: kurze Verzögerung, dann Klasse setzen → CSS-Transition läuft */
-          setTimeout(function() {
-            parent.classList.add('bp-open');
-            if (btn) btn.setAttribute('aria-expanded', 'true');
-          }, 10);
-        }
-      };
+      // ----- Accordion toggles (global for onclick) -----
       window.bpToggleAccordion = function(id) {
         var body = document.getElementById('bp-acc-body-' + id);
         if (!body) return;
@@ -1544,13 +1647,12 @@
       });
 
       // Keyboard: Enter/Space on case and accordion buttons
-      document.querySelectorAll('.bp-case-head, .bp-accordion-head').forEach(function(btn) {
+      document.querySelectorAll('.bp-accordion-head').forEach(function(btn) {
         btn.addEventListener('keydown', function(e) {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
-            var id = (btn.id || '').replace('bp-acc-btn-', '').replace('bp-case-btn-', '');
-            if (btn.classList.contains('bp-accordion-head')) window.bpToggleAccordion(parseInt(id, 10) || 1);
-            else window.bpToggleCase(parseInt(id, 10) || 1);
+            var id = (btn.id || '').replace('bp-acc-btn-', '');
+            window.bpToggleAccordion(parseInt(id, 10) || 1);
           }
         });
       });
