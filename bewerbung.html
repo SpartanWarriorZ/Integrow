@@ -293,37 +293,90 @@
       font-size: 0.95rem;
     }
 
-    /* ----- 3) PROFIL IN 60 SEK (Cards) ----- */
-    .bp-cards-grid {
+    /* ----- 3) PROFIL – 3 Kernbereiche (augenfällig, einheitlich) ----- */
+    #bp-profil.bp-section {
+      max-width: min(1100px, 96vw);
+    }
+    .bp-profil-intro {
+      font-size: clamp(1.05rem, 1.8vw, 1.2rem);
+      color: var(--bp-text-muted);
+      max-width: 42ch;
+      margin: 0 0 2rem 0;
+      line-height: 1.6;
+    }
+    .bp-profil-cards {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.75rem;
+      margin-top: 0.5rem;
     }
-    .bp-card {
+    .bp-profil-card {
       background: rgba(255,255,255,0.04);
-      border: 1px solid var(--bp-border);
-      border-radius: 16px;
-      padding: 1.5rem;
-      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-top: 4px solid var(--bp-accent);
+      border-radius: 18px;
+      padding: 2.25rem 1.75rem;
+      width: 100%;
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: border-color 0.25s, background 0.25s, transform 0.25s, box-shadow 0.25s;
+      box-sizing: border-box;
     }
-    .bp-card:hover {
-      border-color: rgba(255,215,0,0.2);
-      box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+    .bp-profil-card:hover {
+      border-color: rgba(255,215,0,0.35);
+      background: rgba(255,215,0,0.06);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 36px rgba(0,0,0,0.25);
     }
-    .bp-card-title {
-      font-size: 1.2rem;
+    .bp-profil-card-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: rgba(255,215,0,0.12);
+      border: 2px solid var(--bp-accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.9rem;
+      margin-bottom: 1.25rem;
+      flex-shrink: 0;
+    }
+    .bp-profil-card h3 {
+      margin: 0 0 1rem 0;
+      font-family: var(--bp-font-head);
+      font-size: clamp(1.2rem, 2vw, 1.45rem);
       font-weight: 700;
       color: #fff;
-      margin: 0 0 1rem 0;
+      line-height: 1.3;
+      letter-spacing: 0.02em;
     }
-    .bp-card ul {
+    .bp-profil-card ul {
+      list-style: none;
       margin: 0;
-      padding-left: 1.2rem;
-      line-height: 1.7;
+      padding: 0;
+      font-size: clamp(0.95rem, 1.2vw, 1.05rem);
+      line-height: 1.65;
       color: var(--bp-text-muted);
-      font-size: 0.98rem;
+      text-align: center;
     }
-    .bp-card li { margin-bottom: 0.4rem; }
+    .bp-profil-card li {
+      margin-bottom: 0.5rem;
+      padding-left: 0;
+      position: relative;
+    }
+    .bp-profil-card li::before {
+      content: '\2022';
+      color: var(--bp-accent);
+      font-weight: 700;
+      margin-right: 0.5rem;
+    }
+    @media (max-width: 800px) {
+      .bp-profil-cards { grid-template-columns: 1fr; }
+      .bp-profil-card { min-height: 240px; }
+    }
 
     /* ----- 4) BERUFLICHER WERDEGANG – großzügiges Layout für Präsentation ----- */
     .bp-career {
@@ -1040,23 +1093,89 @@
       .bp-learning-box { padding: 1.25rem 1.25rem; }
     }
 
-    /* ----- 9) WARUM DIESE STELLE ----- */
-    .bp-reasons { margin-bottom: 2rem; }
-    .bp-reasons ul { margin: 0; padding-left: 1.3rem; line-height: 1.7; color: var(--bp-text-muted); }
-    .bp-plan-cards {
+    /* ----- 9) WARUM GENIUS BYTES – 4 Karten mit Icons ----- */
+    #bp-warum.bp-section {
+      max-width: min(1200px, 96vw);
+    }
+    .bp-warum-title .bp-title-wavy {
+      text-decoration: underline;
+      text-decoration-style: wavy;
+      text-underline-offset: 0.2em;
+      text-decoration-color: var(--bp-accent);
+    }
+    .bp-warum-cards {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1.75rem;
+      margin-top: 2.5rem;
     }
-    @media (max-width: 700px) { .bp-plan-cards { grid-template-columns: 1fr; } }
-    .bp-plan-card {
+    .bp-warum-card {
       background: rgba(255,255,255,0.04);
-      border: 1px solid var(--bp-border);
-      border-radius: 14px;
-      padding: 1.25rem;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-top: 4px solid var(--bp-accent);
+      border-radius: 18px;
+      padding: 2.75rem 2rem;
+      width: 100%;
+      height: 360px;
+      min-height: 360px;
+      max-height: 360px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      text-align: center;
+      transition: border-color 0.25s, background 0.25s, transform 0.25s, box-shadow 0.25s;
+      box-sizing: border-box;
     }
-    .bp-plan-card h4 { margin: 0 0 0.75rem 0; font-size: 1.1rem; color: var(--bp-accent); }
-    .bp-plan-card ul { margin: 0; padding-left: 1.2rem; font-size: 0.95rem; line-height: 1.6; color: var(--bp-text-muted); }
+    .bp-warum-card:hover {
+      border-color: rgba(255,215,0,0.35);
+      background: rgba(255,215,0,0.06);
+      transform: translateY(-4px);
+      box-shadow: 0 10px 32px rgba(0,0,0,0.2);
+    }
+    .bp-warum-card-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: rgba(255,215,0,0.12);
+      border: 2px solid var(--bp-accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.9rem;
+      margin-bottom: 1.25rem;
+      flex-shrink: 0;
+    }
+    .bp-warum-card h3 {
+      margin: 0 0 0.65rem 0;
+      font-family: var(--bp-font-head);
+      font-size: clamp(1.2rem, 2vw, 1.45rem);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.4;
+      letter-spacing: 0.01em;
+    }
+    .bp-warum-card h3 .bp-card-wavy {
+      text-decoration: underline;
+      text-decoration-style: wavy;
+      text-underline-offset: 2px;
+      text-decoration-color: var(--bp-accent);
+    }
+    .bp-warum-card p {
+      margin: 0;
+      font-size: clamp(1.05rem, 1.4vw, 1.18rem);
+      line-height: 1.6;
+      color: var(--bp-text-muted);
+      max-width: 22ch;
+    }
+    @media (max-width: 900px) {
+      .bp-warum-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .bp-warum-card { height: 340px; min-height: 340px; max-height: 340px; padding: 2.5rem 1.75rem; }
+    }
+    @media (max-width: 500px) {
+      .bp-warum-cards { grid-template-columns: 1fr; }
+      .bp-warum-card { height: 320px; min-height: 320px; max-height: 320px; padding: 2.25rem 1.5rem; }
+    }
 
     /* ----- 10) CONTACT / FINAL ----- */
     .bp-contact-links {
@@ -1082,19 +1201,28 @@
       background: rgba(255,215,0,0.1);
       border-color: rgba(255,215,0,0.3);
     }
+    .bp-closing-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
     .bp-qr-placeholder {
-      width: 160px;
-      height: 160px;
-      background: rgba(0,0,0,0.3);
-      border: 2px dashed var(--bp-border);
-      border-radius: 12px;
+      width: 320px;
+      height: 320px;
+      max-width: min(320px, 85vw);
+      max-height: min(320px, 85vw);
+      margin-top: 2.5rem;
+      border-radius: 16px;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--bp-text-muted);
-      font-size: 0.85rem;
-      text-align: center;
-      padding: 8px;
+      overflow: hidden;
+    }
+    .bp-qr-placeholder img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
     }
     /* ----- Reveal Animation (IntersectionObserver) ----- */
     .bp-reveal {
@@ -1183,31 +1311,69 @@
       letter-spacing: 0.04em;
     }
 
-    /* ----- Closing Grid ----- */
-    .bp-closing-grid {
+    /* ----- Meine Erwartungen (2x2 Grid) ----- */
+    .bp-expectations-intro {
+      font-size: clamp(1.05rem, 1.8vw, 1.2rem);
+      color: var(--bp-accent);
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      margin: 0 0 1.5rem 0;
+    }
+    .bp-expectations-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1rem;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
       margin: 1.5rem 0;
     }
-    .bp-closing-item {
+    .bp-expectations-item {
       background: rgba(255,255,255,0.04);
       border: 1px solid rgba(255,255,255,0.1);
+      border-top: 4px solid var(--bp-accent);
       border-radius: 14px;
-      padding: 1.4rem 1.6rem;
+      padding: 1.4rem 1.5rem;
       display: flex;
       flex-direction: column;
-      gap: 0.4rem;
-      transition: border-color 0.25s, background 0.25s, transform 0.25s;
+      gap: 0.5rem;
+      transition: border-color 0.25s, background 0.25s, transform 0.25s, box-shadow 0.25s;
     }
-    .bp-closing-item:hover {
+    .bp-expectations-item:hover {
       border-color: rgba(255,215,0,0.3);
-      background: rgba(255,215,0,0.05);
-      transform: translateY(-4px);
+      background: rgba(255,215,0,0.06);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.2);
     }
-    .bp-closing-icon { font-size: 1.8rem; }
-    .bp-closing-item strong { color: #fff; font-size: 1.15rem; }
-    .bp-closing-item p { font-size: 1rem; color: rgba(255,255,255,0.65); margin: 0; line-height: 1.5; }
+    .bp-expectations-num {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(255,215,0,0.2), rgba(255,215,0,0.08));
+      border: 2px solid var(--bp-accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--bp-font-head);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--bp-accent);
+      flex-shrink: 0;
+    }
+    .bp-expectations-item h3 {
+      margin: 0;
+      font-family: var(--bp-font-head);
+      font-size: clamp(1.1rem, 1.8vw, 1.3rem);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.25;
+    }
+    .bp-expectations-item p {
+      margin: 0;
+      font-size: 0.95rem;
+      line-height: 1.55;
+      color: var(--bp-text-muted);
+    }
+    @media (max-width: 600px) {
+      .bp-expectations-grid { grid-template-columns: 1fr; }
+    }
 
     /* ----- Closing Quote ----- */
     .bp-closing-quote {
@@ -1283,7 +1449,9 @@
       .bp-case-connector { transition: none; }
       .bp-accordion-body { -webkit-transition: none; transition: none; }
       .bp-accordion-inner { transition: none; }
-      .bp-closing-item:hover { transform: none; }
+      .bp-expectations-item:hover { transform: none; }
+      .bp-warum-card:hover { transform: none; }
+      .bp-profil-card:hover { transform: none; }
       .bp-learning-box:hover { transform: none; }
       .bp-learning-row .bp-learning-box:nth-child(1),
       .bp-learning-row .bp-learning-arrow:nth-child(2),
@@ -1406,29 +1574,30 @@
 
     <!-- 4) PROFIL – 3 Kernbereiche -->
     <section class="bp-section" id="bp-profil" aria-labelledby="bp-profil-title" data-aos="fade-up" data-aos-duration="700">
-      <h2 class="bp-section-title" id="bp-profil-title">Profil &ndash; 3 Kernbereiche</h2>
-      <div class="bp-cards-grid">
-        <article class="bp-card" data-aos="flip-left" data-aos-delay="200" data-aos-duration="700">
-          <div class="bp-card-icon-wrap">&#128187;</div>
-          <h3 class="bp-card-title">Ops &amp; Infrastruktur</h3>
+      <h2 class="bp-section-title" id="bp-profil-title">Profil &ndash; Meine Kernbereiche</h2>
+      <p class="bp-profil-intro" data-aos="fade-up" data-aos-delay="100">Drei Schwerpunkte, in denen ich mich zu Hause fühle und messbar beitrage.</p>
+      <div class="bp-profil-cards">
+        <article class="bp-profil-card" data-aos="fade-right" data-aos-delay="200" data-aos-duration="600">
+          <span class="bp-profil-card-icon" aria-hidden="true">&#128187;</span>
+          <h3>Ops &amp; Infrastruktur</h3>
           <ul>
             <li>AD + Serveradministration</li>
             <li>Druckserver + Virtualisierung</li>
             <li>Stabile Infra im Klinikumfeld</li>
           </ul>
         </article>
-        <article class="bp-card" data-aos="flip-left" data-aos-delay="370" data-aos-duration="700">
-          <div class="bp-card-icon-wrap">&#128274;</div>
-          <h3 class="bp-card-title">Security &amp; Datenschutz</h3>
+        <article class="bp-profil-card" data-aos="fade-up" data-aos-delay="350" data-aos-duration="600">
+          <span class="bp-profil-card-icon" aria-hidden="true">&#128274;</span>
+          <h3>Security &amp; Datenschutz</h3>
           <ul>
             <li>RFID-Kartenlogin implementiert</li>
             <li>Keine offenen Ausdrucke mehr</li>
             <li>DSGVO-konform im Klinikum</li>
           </ul>
         </article>
-        <article class="bp-card" data-aos="flip-left" data-aos-delay="540" data-aos-duration="700">
-          <div class="bp-card-icon-wrap">&#127760;</div>
-          <h3 class="bp-card-title">Web &amp; Eigenverantwortung</h3>
+        <article class="bp-profil-card" data-aos="fade-left" data-aos-delay="200" data-aos-duration="600">
+          <span class="bp-profil-card-icon" aria-hidden="true">&#127760;</span>
+          <h3>Web &amp; Eigenverantwortung</h3>
           <ul>
             <li>Eigenständige Kundenprojekte</li>
             <li>Webdesign, SEO, Deployment</li>
@@ -1517,20 +1686,14 @@
         <div class="bp-skills-group">
           <p class="bp-skills-group-title">Strong &ndash; sicher anwendbar</p>
           <div class="bp-skills-tags">
+            <span class="bp-skill-tag" data-category="cloud">Azure AD</span>
+            <span class="bp-skill-tag" data-category="ops">PowerShell</span>
             <span class="bp-skill-tag" data-category="security">RFID-Authentifizierung</span>
             <span class="bp-skill-tag" data-category="security">DSGVO / Datenschutz</span>
             <span class="bp-skill-tag" data-category="security">Backup-Konzepte</span>
             <span class="bp-skill-tag" data-category="web">HTML / CSS / JS</span>
             <span class="bp-skill-tag" data-category="web">Webdesign</span>
             <span class="bp-skill-tag" data-category="web">SEO</span>
-          </div>
-        </div>
-        <div class="bp-skills-group">
-          <p class="bp-skills-group-title">Working knowledge</p>
-          <div class="bp-skills-tags">
-            <span class="bp-skill-tag" data-category="cloud">Azure AD</span>
-            <span class="bp-skill-tag" data-category="ops">PowerShell</span>
-            <span class="bp-skill-tag" data-category="cloud">Intune / MDM</span>
           </div>
         </div>
       </div>
@@ -1616,70 +1779,71 @@
 
     <!-- 9) WARUM GENIUS BYTES -->
     <section class="bp-section" id="bp-warum" aria-labelledby="bp-warum-title" data-aos="fade-up" data-aos-duration="700">
-      <h2 class="bp-section-title" id="bp-warum-title">Warum Genius Bytes</h2>
-      <div class="bp-reasons" data-aos="fade-up" data-aos-delay="200">
-        <ul>
-          <li>Druckprojekt = direkte fachliche Überschneidung</li>
-          <li>Digitalisierung &amp; Nachhaltigkeit als Mission</li>
-          <li>Technik <strong>und</strong> Prozess &ndash; mein Thema</li>
-          <li>Erstgespräch hat Eindruck bestätigt</li>
-        </ul>
-      </div>
-      <h3 class="bp-subsection-title" data-aos="fade-up" data-aos-delay="300">30 / 60 / 90 Tage</h3>
-      <div class="bp-plan-cards">
-        <div class="bp-plan-card" data-aos="flip-up" data-aos-delay="370" data-aos-duration="700">
-          <h4>30 Tage</h4>
-          <ul>
-            <li>Systeme &amp; Team kennenlernen</li>
-            <li>Erste Aufgaben übernehmen</li>
-          </ul>
-        </div>
-        <div class="bp-plan-card" data-aos="flip-up" data-aos-delay="490" data-aos-duration="700">
-          <h4>60 Tage</h4>
-          <ul>
-            <li>Verantwortung festigen</li>
-            <li>Potenziale identifizieren</li>
-          </ul>
-        </div>
-        <div class="bp-plan-card" data-aos="flip-up" data-aos-delay="610" data-aos-duration="700">
-          <h4>90 Tage</h4>
-          <ul>
-            <li>Projekte eigenständig vorantreiben</li>
-            <li>Messbaren Mehrwert liefern</li>
-          </ul>
-        </div>
+      <h2 class="bp-section-title" id="bp-warum-title"><span class="bp-title-wavy">Warum</span> Genius Bytes?</h2>
+      <div class="bp-warum-cards">
+        <article class="bp-warum-card" data-aos="fade-up" data-aos-delay="200" data-aos-duration="550">
+          <span class="bp-warum-card-icon" aria-hidden="true">&#128424;</span>
+          <h3>Fokus auf Druck- &amp; Dokumentenmanagement</h3>
+          <p>Projekterfahrung mit Druckinfrastruktur passt perfekt.</p>
+        </article>
+        <article class="bp-warum-card" data-aos="fade-up" data-aos-delay="450" data-aos-duration="550">
+          <span class="bp-warum-card-icon" aria-hidden="true">&#127793;</span>
+          <h3>Digitalisierung &amp; Nachhaltigkeit</h3>
+          <p>Nachhaltiger Digitalisierungsansatz überzeugt.</p>
+        </article>
+        <article class="bp-warum-card" data-aos="fade-up" data-aos-delay="700" data-aos-duration="550">
+          <span class="bp-warum-card-icon" aria-hidden="true">&#9776;</span>
+          <h3>Technik &amp; Prozessoptimierung</h3>
+          <p>Technik und Prozessorientierung vereint.</p>
+        </article>
+        <article class="bp-warum-card" data-aos="fade-up" data-aos-delay="950" data-aos-duration="550">
+          <span class="bp-warum-card-icon" aria-hidden="true">&#129309;</span>
+          <h3>Positiver Ersteindruck</h3>
+          <p>Erstgespräch sehr positiv verlaufen.</p>
+        </article>
       </div>
     </section>
 
-    <!-- 10) ABSCHLUSS -->
+    <!-- 10) ABSCHLUSS – Meine Erwartungen -->
     <section class="bp-section" id="bp-contact" aria-labelledby="bp-contact-title" data-aos="fade-up" data-aos-duration="700">
-      <h2 class="bp-section-title" id="bp-contact-title">Was ich mitbringe</h2>
-      <div class="bp-closing-grid">
-        <div class="bp-closing-item" data-aos="zoom-in" data-aos-delay="200">
-          <span class="bp-closing-icon">&#127973;</span>
-          <strong>Kritische Infrastruktur</strong>
-          <p>Klinikum &ndash; höchste Ansprüche an Stabilität und Datenschutz.</p>
+      <h2 class="bp-section-title" id="bp-contact-title">Klare Erwartungen an Einarbeitung und Entwicklungsmöglichkeiten</h2>
+      <p class="bp-expectations-intro" data-aos="fade-up" data-aos-delay="100">Meine Erwartungen</p>
+      <div class="bp-expectations-grid">
+        <!-- Diagonal aus den Ecken: 1 oben links, 2 oben rechts, 3 unten links, 4 unten rechts -->
+        <article class="bp-expectations-item" data-aos="fade-down-right" data-aos-delay="200" data-aos-duration="600">
+          <span class="bp-expectations-num" aria-hidden="true">1</span>
+          <h3>Strukturierte Einarbeitung</h3>
+          <p>Strukturierte Einarbeitung, idealerweise mit Pate.</p>
+        </article>
+        <article class="bp-expectations-item" data-aos="fade-down-left" data-aos-delay="200" data-aos-duration="600">
+          <span class="bp-expectations-num" aria-hidden="true">2</span>
+          <h3>Klare Verantwortungsbereiche</h3>
+          <p>Definierte Aufgaben und Verantwortlichkeiten.</p>
+        </article>
+        <article class="bp-expectations-item" data-aos="fade-up-right" data-aos-delay="200" data-aos-duration="600">
+          <span class="bp-expectations-num" aria-hidden="true">3</span>
+          <h3>Weiterbildungsmöglichkeiten</h3>
+          <p>Fachliche Entwicklung und Weiterbildung.</p>
+        </article>
+        <article class="bp-expectations-item" data-aos="fade-up-left" data-aos-delay="200" data-aos-duration="600">
+          <span class="bp-expectations-num" aria-hidden="true">4</span>
+          <h3>Transparente Kommunikation &amp; Teamkultur</h3>
+          <p>Offenes Miteinander und transparente Kommunikation.</p>
+        </article>
+      </div>
+      <div class="bp-closing-wrap" id="bp-contact-closing" data-aos="fade-up" data-aos-delay="650" data-aos-offset="500">
+        <blockquote class="bp-closing-quote">
+          Vielen Dank für Ihre Aufmerksamkeit.
+          <em>Ich freue mich auf Ihre Fragen!</em>
+        </blockquote>
+        <div class="bp-contact-links">
+          <a href="mailto:leonidas.pyka@email.de">E-Mail</a>
+          <a href="https://integrow.de" target="_blank" rel="noopener noreferrer">Website</a>
         </div>
-        <div class="bp-closing-item" data-aos="zoom-in" data-aos-delay="310">
-          <span class="bp-closing-icon">&#128203;</span>
-          <strong>Struktur &amp; Verantwortung</strong>
-          <p>Prozessdenken, Dokumentation, Verantwortung &uuml;bernehmen.</p>
-        </div>
-        <div class="bp-closing-item" data-aos="zoom-in" data-aos-delay="420">
-          <span class="bp-closing-icon">&#128161;</span>
-          <strong>Unternehmerisches Denken</strong>
-          <p>Durch Selbstständigkeit: ganzheitlich und wirtschaftlich denken.</p>
+        <div class="bp-qr-placeholder">
+          <img src="BewerbungQR.svg" alt="QR-Code – Präsentation auf dem Handy öffnen" width="320" height="320" loading="lazy" />
         </div>
       </div>
-      <blockquote class="bp-closing-quote" data-aos="fade-up" data-aos-delay="550">
-        &bdquo;Keine kurzfristige Station &ndash; eine langfristige Perspektive mit Verantwortung.&ldquo;
-        <em>Ich freue mich auf Ihre Fragen.</em>
-      </blockquote>
-      <div class="bp-contact-links" data-aos="fade-up" data-aos-delay="680">
-        <a href="mailto:leonidas.pyka@email.de">E-Mail</a>
-        <a href="https://integrow.de" target="_blank" rel="noopener noreferrer">Website</a>
-      </div>
-      <div class="bp-qr-placeholder" data-aos="zoom-in" data-aos-delay="780">QR-Code</div>
     </section>
 
   </main>
@@ -1760,13 +1924,18 @@
           { type: 'revealCaseStep', index: 2,       slide: 8  },
           { type: 'revealCaseStep', index: 3,       slide: 9  },
           { type: 'scroll', id: 'bp-skills',        slide: 10 },
-          { type: 'scroll', id: 'bp-arbeitsweise',  slide: 11 },
-          { type: 'scroll', id: 'bp-learnings',     slide: 12 },
-          { type: 'revealLearningStep',              slide: 13 },
-          { type: 'scroll', id: 'bp-warum',         slide: 14 },
-          { type: 'scroll', id: 'bp-contact',       slide: 15 }
+          { type: 'skillsFilter', filter: 'ops',    slide: 11 },
+          { type: 'skillsFilter', filter: 'cloud',  slide: 12 },
+          { type: 'skillsFilter', filter: 'web',    slide: 13 },
+          { type: 'skillsFilter', filter: 'security', slide: 14 },
+          { type: 'scroll', id: 'bp-arbeitsweise',  slide: 15 },
+          { type: 'scroll', id: 'bp-learnings',     slide: 16 },
+          { type: 'revealLearningStep',              slide: 17 },
+          { type: 'scroll', id: 'bp-warum',         slide: 18 },
+          { type: 'scroll', id: 'bp-contact',       slide: 19 },
+          { type: 'scroll', id: 'bp-contact-closing', slide: 20 }
         ];
-        var TOTAL = 15;
+        var TOTAL = 20;
         var currentStep = -1;
         var slideEl = document.getElementById('bp-slide-current');
         var totalEl = document.querySelector('#bp-slide-counter span:last-child');
@@ -1812,6 +1981,19 @@
                 learningRow.classList.remove('bp-learning-reveal');
               }
             }
+            if (step.id === 'bp-skills') {
+              var skillsWrapper = document.getElementById('bp-skills-wrapper');
+              var skillsFilterBtns = document.querySelectorAll('.bp-skills-filters [data-bp-filter]');
+              if (skillsWrapper) skillsWrapper.setAttribute('data-current-filter', 'all');
+              skillsFilterBtns.forEach(function(b) { b.classList.toggle('bp-active', b.getAttribute('data-bp-filter') === 'all'); });
+            }
+          } else if (step.type === 'skillsFilter') {
+            var skillsWrapper = document.getElementById('bp-skills-wrapper');
+            var skillsFilterBtns = document.querySelectorAll('.bp-skills-filters [data-bp-filter]');
+            if (skillsWrapper) skillsWrapper.setAttribute('data-current-filter', step.filter);
+            skillsFilterBtns.forEach(function(b) { b.classList.toggle('bp-active', b.getAttribute('data-bp-filter') === step.filter); });
+            var skillsSection = document.getElementById('bp-skills');
+            if (skillsSection && window.lenis) window.lenis.scrollTo(skillsSection, { offset: 0 });
           } else if (step.type === 'revealLearningStep') {
             var learningRow = document.getElementById('bp-learning-row');
             if (learningRow) {
@@ -2000,13 +2182,13 @@
   1) TEXT INHALTE SCHNELL ERSETZEN
      - Hero: .bp-hero-title (Name), .bp-hero-claim (Rolle/Claim), .bp-hero-pills (Proof-Pills), .bp-btn Link
      - Über mich: Absatz in .bp-about-text, Chips in .bp-values .bp-chip
-     - Profil 60 Sek: In jeder .bp-card die <ul><li> mit Problem/Lösung/Ergebnis füllen
+     - Profil Kernbereiche: .bp-profil-card (h3, ul li), .bp-profil-intro
      - Werdegang: .bp-career-step duplizieren/entfernen, .bp-career-node span, .bp-career-role, .bp-career-meta, .bp-career-desc anpassen
      - Case Studies: .bp-case-title, .bp-case-inner <p>, .bp-case-tech <span>, Screenshot-Bereich
      - Skills: .bp-skill-tag data-category="ops|cloud|web|security" und Text; Filter-Buttons ggf. anpassen
      - Arbeitsweise: .bp-step-content h4 und p pro Schritt
      - Learnings: .bp-learning-box (links: was passiert ist, rechts: was gelernt) – .bp-learning-box-body p
-     - Warum: .bp-reasons ul li, .bp-plan-card h4 und ul li
+     - Warum: .bp-warum-title .bp-title-wavy, .bp-warum-card (h3, p, .bp-warum-card-icon)
      - Kontakt: .bp-contact-links a href und Text
 
   2) SCREENSHOTS EINFÜGEN
