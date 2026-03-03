@@ -5,31 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Portfolio & Bewerbung – Live-Präsentation" />
   <title>Portfolio – Bewerbung</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700;800&display=swap" rel="stylesheet" />
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
   <!-- ========== ALLES CSS ISOLIERT IN DIESER DATEI ========== -->
   <style>
-    /* Rajdhani lokal für file:// (Font-Dateien im selben Ordner) */
-    @font-face {
-      font-family: 'Rajdhani';
-      font-style: normal;
-      font-weight: 600;
-      font-display: swap;
-      src: url('rajdhani-600.woff2') format('woff2');
-    }
-    @font-face {
-      font-family: 'Rajdhani';
-      font-style: normal;
-      font-weight: 700;
-      font-display: swap;
-      src: url('rajdhani-700.woff2') format('woff2');
-    }
-    @font-face {
-      font-family: 'Rajdhani';
-      font-style: normal;
-      font-weight: 800;
-      font-display: swap;
-      src: url('rajdhani-700.woff2') format('woff2');
-    }
     /* Smooth Scroll: Lenis übernimmt – kein scroll-behavior, um Konflikte zu vermeiden */
     /* ----- Reset & Base (nur für diese Seite) ----- */
     .bp-root,
@@ -837,209 +818,6 @@
     .bp-accordion-inner p { margin: 0 0 0.5rem 0; font-size: 0.95rem; line-height: 1.65; color: var(--bp-text-muted); }
     .bp-accordion-inner strong { color: #fff; }
 
-    /* ----- 8b) LEARNINGS – Exakt wie Projekt: Row braucht .bp-learning-visible (Sektion im Viewport), dann .bp-learning-reveal für Pfeil + rechte Karte ----- */
-    .bp-learning-intro {
-      font-size: clamp(1.05rem, 1.8vw, 1.15rem);
-      line-height: 1.6;
-      color: var(--bp-text-muted);
-      max-width: 50ch;
-      margin: 0 0 2rem 0;
-    }
-    .bp-learning-row {
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      gap: 0;
-      align-items: stretch;
-      max-width: 100%;
-      column-gap: 1rem;
-    }
-    /* Wie .bp-case-step: alle Karten/Pfeil starten unsichtbar; Transition immer auf den animierten Elementen setzen */
-    .bp-learning-row .bp-learning-box:nth-child(1) {
-      opacity: 0;
-      transform: translateY(24px) scale(0.96);
-      transition: opacity 0.55s ease-out, transform 0.55s ease-out, background 0.25s, border-color 0.25s, box-shadow 0.25s;
-    }
-    .bp-learning-row .bp-learning-arrow:nth-child(2) {
-      opacity: 0;
-      transform: scale(0.6);
-      pointer-events: none;
-      transition: opacity 0.4s ease-out 0.25s, transform 0.4s cubic-bezier(0.22, 0.9, 0.36, 1) 0.25s;
-    }
-    .bp-learning-row .bp-learning-box:nth-child(3) {
-      opacity: 0;
-      transform: translateX(-90px) translateY(0) scale(0.97);
-      pointer-events: none;
-      transition: opacity 0.55s cubic-bezier(0.22, 0.9, 0.36, 1), transform 0.65s cubic-bezier(0.22, 0.9, 0.36, 1);
-    }
-    /* Sektion aktiv (Viewport oder Schritt 12): nur linke Karte sichtbar; Pfeil + rechte Karte weiter versteckt */
-    .bp-learning-row.bp-learning-visible .bp-learning-box:nth-child(1) {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-      transition-delay: 0.2s;
-    }
-    .bp-learning-row.bp-learning-visible .bp-learning-arrow:nth-child(2) {
-      opacity: 0;
-      transform: scale(0.6);
-      pointer-events: none;
-      transition: opacity 0.4s ease-out 0.25s, transform 0.4s cubic-bezier(0.22, 0.9, 0.36, 1) 0.25s;
-    }
-    .bp-learning-row.bp-learning-visible .bp-learning-box:nth-child(3) {
-      opacity: 0;
-      transform: translateX(-90px) translateY(0) scale(0.97);
-      pointer-events: none;
-      transition: opacity 0.55s cubic-bezier(0.22, 0.9, 0.36, 1), transform 0.65s cubic-bezier(0.22, 0.9, 0.36, 1);
-    }
-    /* Reveal (Schritt 13 / Leertaste): Pfeil + rechte Karte mit Einflieger-Animation (wie Projekt) */
-    .bp-learning-row.bp-learning-visible.bp-learning-reveal .bp-learning-arrow:nth-child(2) {
-      opacity: 1;
-      transform: scale(1);
-      pointer-events: auto;
-      transition: opacity 0.4s ease-out 0.25s, transform 0.4s cubic-bezier(0.22, 0.9, 0.36, 1) 0.25s;
-    }
-    .bp-learning-row.bp-learning-visible.bp-learning-reveal .bp-learning-box:nth-child(3) {
-      opacity: 1;
-      transform: translateX(0) translateY(0) scale(1);
-      transition-delay: 0.12s;
-      pointer-events: auto;
-      transition: opacity 0.55s cubic-bezier(0.22, 0.9, 0.36, 1), transform 0.65s cubic-bezier(0.22, 0.9, 0.36, 1);
-    }
-    .bp-learning-box {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 16px;
-      padding: 1.6rem 1.5rem;
-      display: flex;
-      flex-direction: column;
-      min-height: 0;
-      /* Hover-Transition getrennt, damit Reveal-Animation nicht überschrieben wird (nth-child-Regeln haben Vorrang) */
-      transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-    }
-    .bp-learning-box.bp-learning-what {
-      border-top: 4px solid rgba(255,255,255,0.35);
-      border-left: 3px solid rgba(255,255,255,0.2);
-    }
-    .bp-learning-box.bp-learning-learned {
-      border-top: 4px solid var(--bp-accent);
-      border-left: 3px solid rgba(255,215,0,0.4);
-    }
-    .bp-learning-box:hover {
-      background: rgba(255,255,255,0.08);
-      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-      transform: translateY(-2px);
-    }
-    .bp-learning-box.bp-learning-what:hover { border-color: rgba(255,255,255,0.2); }
-    .bp-learning-box.bp-learning-learned:hover { border-color: rgba(255,215,0,0.35); }
-    .bp-learning-box-header {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      margin-bottom: 1.1rem;
-    }
-    .bp-learning-box-icon {
-      font-size: 1.5rem;
-      line-height: 1;
-      opacity: 0.9;
-    }
-    .bp-learning-box.bp-learning-learned .bp-learning-box-icon { color: var(--bp-accent); }
-    .bp-learning-box-title {
-      font-family: var(--bp-font-head);
-      font-size: clamp(1.2rem, 2vw, 1.45rem);
-      font-weight: 700;
-      color: #fff;
-      margin: 0;
-      line-height: 1.2;
-      letter-spacing: 0.02em;
-    }
-    .bp-learning-box-body {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-    .bp-learning-item {
-      padding: 0.75rem 1rem;
-      background: rgba(0,0,0,0.2);
-      border-radius: 10px;
-      border-left: 3px solid rgba(255,255,255,0.15);
-    }
-    .bp-learning-label {
-      display: inline-block;
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--bp-accent);
-      margin-bottom: 0.35rem;
-    }
-    .bp-learning-item p {
-      font-size: clamp(1rem, 1.6vw, 1.15rem);
-      line-height: 1.5;
-      color: var(--bp-text-muted);
-      margin: 0;
-    }
-    .bp-learning-arrow {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0 0.5rem;
-    }
-    .bp-learning-arrow span {
-      width: 44px;
-      height: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, rgba(255,215,0,0.2), rgba(255,215,0,0.08));
-      border: 2px solid var(--bp-accent);
-      border-radius: 50%;
-      font-size: 1.4rem;
-      color: var(--bp-accent);
-      font-weight: 700;
-      box-shadow: 0 0 20px rgba(255,215,0,0.15);
-    }
-    .bp-learning-list {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 0.85rem;
-    }
-    .bp-learning-list li {
-      font-size: clamp(1rem, 1.6vw, 1.12rem);
-      line-height: 1.55;
-      color: var(--bp-text-muted);
-      padding: 0.6rem 0 0.6rem 1rem;
-      border-left: 3px solid rgba(255,215,0,0.4);
-      padding-left: 1rem;
-      position: relative;
-    }
-    .bp-learning-list-label {
-      display: inline-block;
-      font-weight: 700;
-      color: #fff;
-      margin-right: 0.35em;
-      font-size: 0.95em;
-    }
-    .bp-learning-list-label::after {
-      content: ':';
-    }
-    @media (max-width: 700px) {
-      .bp-learning-row {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto auto;
-        row-gap: 1.25rem;
-      }
-      .bp-learning-arrow {
-        order: 0;
-        padding: 0.25rem 0;
-      }
-      .bp-learning-arrow span {
-        transform: rotate(90deg);
-      }
-      .bp-learning-box { padding: 1.25rem 1.25rem; }
-    }
-
     /* ----- 9) WARUM DIESE STELLE ----- */
     .bp-reasons { margin-bottom: 2rem; }
     .bp-reasons ul { margin: 0; padding-left: 1.3rem; line-height: 1.7; color: var(--bp-text-muted); }
@@ -1284,10 +1062,6 @@
       .bp-accordion-body { -webkit-transition: none; transition: none; }
       .bp-accordion-inner { transition: none; }
       .bp-closing-item:hover { transform: none; }
-      .bp-learning-box:hover { transform: none; }
-      .bp-learning-row .bp-learning-box:nth-child(1),
-      .bp-learning-row .bp-learning-arrow:nth-child(2),
-      .bp-learning-row .bp-learning-box:nth-child(3) { opacity: 1; transform: none; pointer-events: auto; transition: none; }
       .bp-section-flash { animation: none; }
     }
   </style>
@@ -1555,7 +1329,7 @@
           <span class="bp-step-num">2</span>
           <div class="bp-step-content">
             <h4>Kundenkommunikation</h4>
-            <p>Technisches klar vermittelt &ndash; Erwartungen gemanaged.</p>
+            <p>Technisches klar vermittelt &ndash; Erwartungen gemanagt.</p>
           </div>
         </div>
         <div class="bp-step" data-aos="fade-right" data-aos-delay="420" data-aos-duration="600">
@@ -1578,39 +1352,33 @@
     <!-- 8) LERNMOMENTE -->
     <section class="bp-section" id="bp-learnings" aria-labelledby="bp-learnings-title" data-aos="fade-up" data-aos-duration="700">
       <h2 class="bp-section-title" id="bp-learnings-title">Lernmoment &amp; Reflexion</h2>
-      <p class="bp-learning-intro" data-aos="fade-up" data-aos-delay="100">Ein konkretes Beispiel: Was passiert ist und was ich daraus mitgenommen habe.</p>
-      <div class="bp-learning-row" id="bp-learning-row" aria-label="Lernmoment: Was passiert ist und was ich daraus gelernt habe">
-        <article class="bp-learning-box bp-learning-what">
-          <div class="bp-learning-box-header">
-            <span class="bp-learning-box-icon" aria-hidden="true">&#128203;</span>
-            <h3 class="bp-learning-box-title">Was passiert ist</h3>
-          </div>
-          <div class="bp-learning-box-body">
-            <div class="bp-learning-item">
-              <span class="bp-learning-label">Situation</span>
-              <p>Laptop intern mündlich zugesagt &ndash; kein Systemeintrag.</p>
-            </div>
-            <div class="bp-learning-item">
-              <span class="bp-learning-label">Folge</span>
-              <p>Gerät anderweitig vergeben. Interner Konflikt entstand.</p>
+      <div data-aos="zoom-in-up" data-aos-delay="200">
+        <div class="bp-accordion" data-bp-accordion>
+          <button type="button" class="bp-accordion-head" aria-expanded="false" aria-controls="bp-acc-body-1" id="bp-acc-btn-1" onclick="bpToggleAccordion(1)">
+            <span>Gerätevergabe ohne Dokumentation</span>
+            <span class="bp-accordion-icon" aria-hidden="true">&#9660;</span>
+          </button>
+          <div class="bp-accordion-body" id="bp-acc-body-1" role="region" aria-labelledby="bp-acc-btn-1">
+            <div class="bp-accordion-inner">
+              <p><strong>Situation:</strong> Laptop intern mündlich zugesagt &ndash; kein Systemeintrag.</p>
+              <p><strong>Folge:</strong> Gerät anderweitig vergeben. Interner Konflikt entstand.</p>
+              <p><strong>Lektion:</strong> Dokumentation ist kein Extra &ndash; sie ist die Basis professioneller IT-Arbeit.</p>
             </div>
           </div>
-        </article>
-        <div class="bp-learning-arrow" aria-hidden="true">
-          <span>&rarr;</span>
         </div>
-        <article class="bp-learning-box bp-learning-learned">
-          <div class="bp-learning-box-header">
-            <span class="bp-learning-box-icon" aria-hidden="true">&#128161;</span>
-            <h3 class="bp-learning-box-title">Was ich daraus gelernt habe</h3>
+        <div class="bp-accordion" data-bp-accordion>
+          <button type="button" class="bp-accordion-head" aria-expanded="false" aria-controls="bp-acc-body-2" id="bp-acc-btn-2" onclick="bpToggleAccordion(2)">
+            <span>Was ich daraus gemacht habe</span>
+            <span class="bp-accordion-icon" aria-hidden="true">&#9660;</span>
+          </button>
+          <div class="bp-accordion-body" id="bp-acc-body-2" role="region" aria-labelledby="bp-acc-btn-2">
+            <div class="bp-accordion-inner">
+              <p><strong>Konsequenz:</strong> Konsequente Ressourcendokumentation seitdem.</p>
+              <p><strong>Prinzip:</strong> Transparenz vor Effizienz &ndash; strukturierte Prozesse schützen das Team.</p>
+              <p><strong>Ergebnis:</strong> Entwicklung vom Techniker zum prozessorientierten IT-Profi.</p>
+            </div>
           </div>
-          <ul class="bp-learning-list">
-            <li><span class="bp-learning-list-label">Lektion</span> Dokumentation ist kein Extra &ndash; sie ist die Basis professioneller IT-Arbeit.</li>
-            <li><span class="bp-learning-list-label">Konsequenz</span> Konsequente Ressourcendokumentation seitdem.</li>
-            <li><span class="bp-learning-list-label">Prinzip</span> Transparenz vor Effizienz &ndash; strukturierte Prozesse schützen das Team.</li>
-            <li><span class="bp-learning-list-label">Ergebnis</span> Entwicklung vom Techniker zum prozessorientierten IT-Profi.</li>
-          </ul>
-        </article>
+        </div>
       </div>
     </section>
 
@@ -1714,13 +1482,6 @@
         if (typeof AOS !== 'undefined') {
           AOS.init({ once: true, duration: 800, offset: aosOffset, delay: 0, easing: 'ease-out-cubic' });
         }
-        // Fallback für file://: Wenn AOS nicht geladen (CDN blockiert), Titel trotzdem sichtbar machen
-        setTimeout(function() {
-          var hasAnimated = document.querySelector('.bp-section.aos-animate');
-          if (!hasAnimated && document.querySelector('.bp-section[data-aos]')) {
-            document.querySelectorAll('.bp-section[data-aos]').forEach(function(el) { el.classList.add('aos-animate'); });
-          }
-        }, 900);
       });
 
       // ----- Anchor-Klicks: Smooth Scroll per Lenis oder nativ -----
@@ -1762,7 +1523,8 @@
           { type: 'scroll', id: 'bp-skills',        slide: 10 },
           { type: 'scroll', id: 'bp-arbeitsweise',  slide: 11 },
           { type: 'scroll', id: 'bp-learnings',     slide: 12 },
-          { type: 'revealLearningStep',              slide: 13 },
+          { type: 'expandAccordion', index: 1,       slide: 12 },
+          { type: 'expandAccordion', index: 2,       slide: 13 },
           { type: 'scroll', id: 'bp-warum',         slide: 14 },
           { type: 'scroll', id: 'bp-contact',       slide: 15 }
         ];
@@ -1805,23 +1567,6 @@
               timelineEl.classList.add('bp-drawn', 'bp-items-visible');
               timelineEl.classList.remove('bp-career-reveal-2', 'bp-career-reveal-3');
             }
-            if (step.id === 'bp-learnings') {
-              var learningRow = document.getElementById('bp-learning-row');
-              if (learningRow) {
-                learningRow.classList.add('bp-learning-visible');
-                learningRow.classList.remove('bp-learning-reveal');
-              }
-            }
-          } else if (step.type === 'revealLearningStep') {
-            var learningRow = document.getElementById('bp-learning-row');
-            if (learningRow) {
-              learningRow.classList.add('bp-learning-visible');
-              requestAnimationFrame(function() {
-                requestAnimationFrame(function() {
-                  learningRow.classList.add('bp-learning-reveal');
-                });
-              });
-            }
           } else if (step.type === 'revealCareerStep' && timelineEl) {
             timelineEl.classList.add('bp-drawn', 'bp-items-visible');
             if (step.index >= 2) timelineEl.classList.add('bp-career-reveal-2');
@@ -1834,6 +1579,13 @@
             if (step.index >= 3) caseGridEl.classList.add('bp-case-reveal-3');
             if (step.index < 3) caseGridEl.classList.remove('bp-case-reveal-3');
             if (step.index < 2) caseGridEl.classList.remove('bp-case-reveal-2');
+          } else if (step.type === 'expandAccordion') {
+            var accs = document.querySelectorAll('.bp-accordion');
+            var acc = accs[step.index - 1];
+            if (acc) {
+              if (!acc.classList.contains('bp-open') && window.bpToggleAccordion) window.bpToggleAccordion(step.index);
+              acc.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
           }
         }
         function nextStep() { goToStep(Math.min(currentStep + 1, steps.length - 1)); }
@@ -1841,9 +1593,9 @@
         document.addEventListener('keydown', function(e) {
           var tag = e.target.tagName;
           if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
-          if (e.key === ' ' || e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === 'Enter') {
+          if (e.key === ' ' || e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === 'Enter') {
             e.preventDefault(); nextStep();
-          } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft' || e.key === 'PageUp' || e.key === 'Backspace') {
+          } else if (e.key === 'ArrowUp' || e.key === 'PageUp' || e.key === 'Backspace') {
             e.preventDefault(); prevStep();
           }
         });
@@ -1920,24 +1672,6 @@
         }
       }
 
-      // ----- Lernmoment: linke Karte sichtbar wenn Sektion im Viewport; Pfeil + rechte Karte per Leertaste/Pfeil -----
-      var learningSection = document.getElementById('bp-learnings');
-      var learningRow = document.getElementById('bp-learning-row');
-      if (learningSection && learningRow) {
-        var ioLearning = new IntersectionObserver(function(entries) {
-          entries.forEach(function(entry) {
-            if (entry.isIntersecting) {
-              learningRow.classList.add('bp-learning-visible');
-              learningRow.classList.remove('bp-learning-reveal');
-            }
-          });
-        }, { threshold: 0.2, rootMargin: '0px 0px -5% 0px' });
-        ioLearning.observe(learningSection);
-        if (prefersReduced) {
-          learningRow.classList.add('bp-learning-visible', 'bp-learning-reveal');
-        }
-      }
-
       // ----- Skills filter -----
       var filterBtns = document.querySelectorAll('.bp-skills-filters [data-bp-filter]');
       var wrapper = document.getElementById('bp-skills-wrapper');
@@ -2005,7 +1739,7 @@
      - Case Studies: .bp-case-title, .bp-case-inner <p>, .bp-case-tech <span>, Screenshot-Bereich
      - Skills: .bp-skill-tag data-category="ops|cloud|web|security" und Text; Filter-Buttons ggf. anpassen
      - Arbeitsweise: .bp-step-content h4 und p pro Schritt
-     - Learnings: .bp-learning-box (links: was passiert ist, rechts: was gelernt) – .bp-learning-box-body p
+     - Learnings: .bp-accordion-head span, .bp-accordion-inner p
      - Warum: .bp-reasons ul li, .bp-plan-card h4 und ul li
      - Kontakt: .bp-contact-links a href und Text
 
