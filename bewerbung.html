@@ -111,13 +111,15 @@
       .bp-nav-chapters a { width: 10px; height: 10px; }
     }
 
-    /* ----- Dekorative Blobs ----- */
+    /* ----- Dekorative Blobs (Lichtreflexe) – scrollgebunden, leicht animiert ----- */
     .bp-blob {
       position: fixed;
       z-index: 0;
       pointer-events: none;
       filter: blur(46px);
       opacity: 0.2;
+      will-change: transform;
+      transition: transform 0.2s ease-out;
     }
     .bp-blob-1 { width: 360px; height: 360px; left: -100px; top: 20vh; background: radial-gradient(circle at 30% 30%, #b7bcc6, transparent 60%); }
     .bp-blob-2 { width: 300px; height: 300px; right: -80px; top: 60vh; background: radial-gradient(circle at 70% 70%, #d8dbe2, transparent 60%); opacity: 0.15; }
@@ -1910,6 +1912,18 @@
       }
       window.addEventListener('scroll', parallaxHeader, { passive: true });
       window.addEventListener('DOMContentLoaded', parallaxHeader);
+
+      // ----- Lichtreflexe (Blobs): mit Scroll mitbewegen, lebendiger Effekt -----
+      function updateBlobs() {
+        var scrolled = window.scrollY;
+        var blob1 = document.querySelector('.bp-blob-1');
+        var blob2 = document.querySelector('.bp-blob-2');
+        /* Beim Runterscroll: Lichtkugeln langsam nach oben (ca. 1/10–1/8), Effekt bleibt sichtbar */
+        if (blob1) blob1.style.transform = 'translateY(' + (-scrolled * 0.1) + 'px)';
+        if (blob2) blob2.style.transform = 'translateY(' + (-scrolled * 0.08) + 'px)';
+      }
+      window.addEventListener('scroll', updateBlobs, { passive: true });
+      window.addEventListener('DOMContentLoaded', updateBlobs);
 
                   // ----- Präsenter-Navigation: Leertaste / Pfeil / Klick = nächster Schritt -----
       (function() {
